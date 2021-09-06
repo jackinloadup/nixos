@@ -1,4 +1,4 @@
-{ config, pkgs, nixosConfig, lib, ... }:
+{ config, pkgs, nixosConfig, lib, inputs, ... }:
 let
   settings = import ../settings;
   colorscheme = settings.colorscheme;
@@ -13,6 +13,7 @@ in
 {
   imports = [
     ../common/waybar
+    inputs.base16.hmModule
   ];
 
   home.packages = with pkgs; [
@@ -49,73 +50,79 @@ in
 
       terminal = "${pkgs.alacritty}/bin/alacritty";
 
-      #workspaceAutoBackAndForth = true;
+      workspaceAutoBackAndForth = true;
       window = {
         titlebar = true;
         hideEdgeBorders = "smart";
       };
 
-      bars = [{
+      bars = with config.lib.base16.theme; [{
         #statusCommand = "${pkgs.i3status}/bin/i3status";
         command = "${pkgs.waybar}/bin/waybar";
         position = "top";
         #fonts = fontConf;
         trayOutput = "*";
         colors = {
-          background = "#${colorscheme.bg_0}";
-          statusline = "#${colorscheme.fg_0}";
-          separator = "#${colorscheme.fg_0}";
+          background = "#${base00-hex}";
+          statusline = "#${base04-hex}";
+          separator = "#${base01-hex}";
           focusedWorkspace = {
-            border = "#${colorscheme.bg_1}";
-            background = "#${colorscheme.bg_2}";
-            text = "#${colorscheme.fg_1}";
+            border = "#${base05-hex}";
+            background = "#${base0D-hex}";
+            text = "#${base00-hex}";
           };
           activeWorkspace = {
-            border = "#${colorscheme.bg_0}";
-            background = "#${colorscheme.bg_1}";
-            text = "#${colorscheme.fg_1}";
+            border = "#${base05-hex}";
+            background = "#${base03-hex}";
+            text = "#${base00-hex}";
           };
           inactiveWorkspace = {
-            border = "#${colorscheme.bg_0}";
-            background = "#${colorscheme.bg_0}";
-            text = "#${colorscheme.dim_0}";
+            border = "#${base03-hex}";
+            background = "#${base01-hex}";
+            text = "#${base05-hex}";
           };
           urgentWorkspace = {
-            border = "#${colorscheme.bg_1}";
-            background = "#${colorscheme.red}";
-            text = "#${colorscheme.fg_1}";
+            border = "#${base08-hex}";
+            background = "#${base08-hex}";
+            text = "#${base00-hex}";
+          };
+          bindingMode = {
+            border = "#${base00-hex}";
+            background = "#${base0A-hex}";
+            text = "#${base00-hex}";
           };
         };
       }];
 
-      colors = {
+      colors = with config.lib.base16.theme; {
+        background = "#${base00-hex}";
         focused = {
-          border = "#${colorscheme.blue}";
-          background = "#${colorscheme.blue}";
-          text = "#${colorscheme.fg_1}";
-          indicator = "#${colorscheme.blue}";
-          childBorder = "#${colorscheme.blue}";
+          border = "#${base05-hex}";
+          background = "#${base0D-hex}";
+          text = "#${base00-hex}";
+          indicator = "#${base0D-hex}";
+          childBorder = "#${base0D-hex}";
         };
         focusedInactive = {
-          border = "#${colorscheme.bg_1}";
-          background = "#${colorscheme.bg_1}";
-          text = "#${colorscheme.fg_0}";
-          indicator = "#${colorscheme.bg_1}";
-          childBorder = "#${colorscheme.bg_1}";
+          border = "#${base03-hex}";
+          background = "#${base01-hex}";
+          text = "#${base05-hex}";
+          indicator = "#${base03-hex}";
+          childBorder = "#${base01-hex}";
         };
         unfocused = {
-          border = "#${colorscheme.bg_0}";
-          background = "#${colorscheme.bg_0}";
-          text = "#${colorscheme.dim_0}";
-          indicator = "#${colorscheme.bg_0}";
-          childBorder = "#${colorscheme.bg_0}";
+          border = "#${base03-hex}";
+          background = "#${base01-hex}";
+          text = "#${base05-hex}";
+          indicator = "#${base01-hex}";
+          childBorder = "#${base01-hex}";
         };
         urgent = {
-          border = "#${colorscheme.red}";
-          background = "#${colorscheme.red}";
-          text = "#${colorscheme.fg_1}";
-          indicator = "#${colorscheme.red}";
-          childBorder = "#${colorscheme.red}";
+          border = "#${base08-hex}";
+          background = "#${base08-hex}";
+          text = "#${base00-hex}";
+          indicator = "#${base08-hex}";
+          childBorder = "#${base08-hex}";
         };
       };
 

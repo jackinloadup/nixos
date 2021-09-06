@@ -7,9 +7,9 @@ in {
     ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
 
     window#waybar {
-      background: #${settings.colorscheme.bg_0};
+      background: #${config.lib.base16.theme.base00-hex};
       opacity: 0.95;
-      border-top: 2px solid #${settings.colorscheme.bg_1};
+      border-top: 2px solid #${config.lib.base16.theme.base03-hex};
       border-bottom: none;
     }
 

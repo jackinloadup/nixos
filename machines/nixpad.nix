@@ -1,10 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
     ../full-encrypt.nix
     ../configuration.nix
     ../profiles/amd.nix
+    inputs.base16.hmModule
   ];
 
   boot = {

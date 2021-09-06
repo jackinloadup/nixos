@@ -6,7 +6,6 @@
  
 let
   settings = import ./settings;
-  colorscheme = settings.colorscheme;
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -15,6 +14,20 @@ in {
      # "$(modulesPath)/installer/scan/not-detected.nix"
      ./common/autologin-tty1
     ];
+  themes.base16 = {
+    enable = true;
+    #scheme = "solarized";
+    #variant = "solarized-dark";
+    scheme = "gruvbox";
+    variant = "gruvbox-dark-hard";
+    #variant = "gruvbox-dark-medium";
+    defaultTemplateType = "default";
+    # Add extra variables for inclusion in custom templates
+    extraParams = {
+      fontName = "FiraCode Nerd Font";
+      fontSize = "12";
+    };
+  };
 
   # tmp hack to allow swaylock to work
   security.pam.services.swaylock = {};
@@ -80,24 +93,6 @@ in {
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  console.colors = with colorscheme; [
-   bg_0		# 0
-   red		# 1
-   green	# 2
-   yellow 	# 3
-   blue		# 4
-   violet	# 5
-   cyan		# 6
-   dim_0	# 7
-   fg_0		# 8
-   br_red	# 9
-   br_green	# 10
-   br_yellow	# 11
-   br_blue	# 12
-   br_violet	# 13
-   br_cyan	# 14
-   fg_1		# 15 
-  ];
 
   # Nerdfonts is kinda heavy. We are cutting it fown but still looks like it might be 4-10mb
   fonts.fonts = with pkgs; [
@@ -107,6 +102,24 @@ in {
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
+    colors = with config.lib.base16.theme; [
+     base00-hex # 0 bg
+     base08-hex # 1 red
+     base0B-hex # 2 green
+     base0A-hex # 3 yellow
+     base0D-hex # 4 blue
+     base0E-hex # 5 violet
+     base0C-hex # 6 cyan
+     base05-hex # 7 gray/dim
+     base03-hex # 8 fg
+     base08-hex # 9 bright red
+     base0B-hex # 10 bright green
+     base0A-hex # 11 bright yellow
+     base0D-hex # 12 bright blue
+     base0E-hex # 13 bright violet
+     base0C-hex # 14 bright cyan
+     base07-hex # 15 fg 2
+    ];
   };
 
   # Enable CUPS to print documents.

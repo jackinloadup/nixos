@@ -1,4 +1,4 @@
-{ config, pkgs, nixosConfig, ... }: 
+{ config, pkgs, lib, inputs, ... }: 
 let
   settings = import ../settings;
 in
@@ -7,10 +7,27 @@ in
     ./sway.nix
     ./alacritty.nix
     ../common/neovim
+    inputs.base16.hmModule
   ];
+  themes.base16 = {
+    enable = true;
+    #scheme = "solarized";
+    #variant = "solarized-dark";
+    scheme = "gruvbox";
+    variant = "gruvbox-dark-hard";
+    #variant = "gruvbox-dark-medium";
+    defaultTemplateType = "default";
+    # Add extra variables for inclusion in custom templates
+    extraParams = {
+      fontName = "FiraCode Nerd Font";
+      fontSize = "12";
+    };
+  };
+
 
   programs.bash.enable = true;
   programs.bash.initExtra = ''
+    source ${config.lib.base16.templateFile { name = "shell"; }}
     [[ "$(tty)" == /dev/tty1 ]] && sway
   '';
 

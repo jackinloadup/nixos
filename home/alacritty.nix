@@ -17,38 +17,51 @@ in
       };
 
       background_opacity = 0.95;
-      cursor.style = "Underline";
+      cursor = with config.lib.base16.theme; {
+        style = "Underline";
+        text = "0x${base00-hex}";
+        cursor = "0x${base05-hex}";
+      };
 
-      colors = {
+      colors = with config.lib.base16.theme; {
         # Default colors
         primary = {
-          background = "0x${colorscheme.bg_0}";
-          foreground = "0x${colorscheme.fg_1}";
+          background = "0x${base00-hex}";
+          foreground = "0x${base05-hex}";
         };
 
         # Normal colors
         normal = {
-          black =   "0x${colorscheme.bg_1}";
-          red =     "0x${colorscheme.red}";
-          green =   "0x${colorscheme.green}";
-          yellow =  "0x${colorscheme.yellow}";
-          blue =    "0x${colorscheme.blue}";
-          magenta = "0x${colorscheme.magenta}";
-          cyan =    "0x${colorscheme.cyan}";
-          white =   "0x${colorscheme.fg_0}";
+          black =   "0x${base00-hex}";
+          red =     "0x${base08-hex}";
+          green =   "0x${base0B-hex}";
+          yellow =  "0x${base0A-hex}";
+          blue =    "0x${base0D-hex}";
+          magenta = "0x${base0E-hex}";
+          cyan =    "0x${base0C-hex}";
+          white =   "0x${base05-hex}";
         };
 
         # Bright colors
         bright = {
-          black =   "0x${colorscheme.bg_2}";
-          red =     "0x${colorscheme.br_red}";
-          green =   "0x${colorscheme.br_green}";
-          yellow =  "0x${colorscheme.br_yellow}";
-          blue =    "0x${colorscheme.br_blue}";
-          magenta = "0x${colorscheme.br_magenta}";
-          cyan =    "0x${colorscheme.br_cyan}";
-          white =   "0x${colorscheme.dim_0}";
+          black =   "0x${base03-hex}";
+          red =     "0x${base08-hex}";
+          green =   "0x${base0B-hex}";
+          yellow =  "0x${base0A-hex}";
+          blue =    "0x${base0D-hex}";
+          magenta = "0x${base0E-hex}";
+          cyan =    "0x${base0C-hex}";
+          white =   "0x${base07-hex}";
         };
+
+        indexed_colors = [
+          { index = 16; color = "0x${base09-hex}"; }
+          { index = 17; color = "0x${base0F-hex}"; }
+          { index = 18; color = "0x${base01-hex}"; }
+          { index = 19; color = "0x${base02-hex}"; }
+          { index = 20; color = "0x${base04-hex}"; }
+          { index = 21; color = "0x${base06-hex}"; }
+        ];
       };
     };
   };
