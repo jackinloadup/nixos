@@ -25,6 +25,9 @@
       "let g:context_nvim_no_redraw = 1
       set background=dark
 
+      " set background to be terminals
+      highlight Normal guibg=none
+
       "" Set some junk {{{
       "set completeopt-=preview " Disable scratch buffer for completion preview
       set cursorline " Highlight current line
