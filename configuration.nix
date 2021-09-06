@@ -29,8 +29,6 @@ in {
     };
   };
 
-  # tmp hack to allow swaylock to work
-  security.pam.services.swaylock = {};
   nixpkgs.config.allowUnfree = true;
 
   nix.package = pkgs.nixUnstable;
@@ -44,8 +42,7 @@ in {
     consoleLogLevel = 0;
     kernelParams = [ "quiet" "udev.log_priority=3" ]; 
 
-    # don't keep /tmp on disk
-    tmpOnTmpfs = true;
+    tmpOnTmpfs = true; # don't keep /tmp on disk
     #plymouth.enable = true;
 
     loader = {
@@ -117,7 +114,11 @@ in {
   # Enable sound.
   sound.enable = false; # conflicts with pipewire?
 
-  security.rtkit.enable = true; # allows pipewire to run "realtime"
+  security = {
+    pam.services.swaylock = {}; # tmp hack to allow swaylock to work
+    rtkit.enable = true; # allows pipewire to run "realtime"
+  };
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -220,7 +221,6 @@ in {
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
