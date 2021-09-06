@@ -12,7 +12,7 @@ in {
       #./hardware-configuration.nix
       #<nixpkgs/nixos/modules/installer/scan/not-detected.nix>
      # "$(modulesPath)/installer/scan/not-detected.nix"
-     ./common/autologin-tty1
+     ./common/autologin-tty1 # Enable auto login on tty1
     ];
   themes.base16 = {
     enable = true;
@@ -60,17 +60,6 @@ in {
     };
   };
 
-  # Enable auto login
-  #services.getty.autologinUser = settings.user.username;
-  #services."autovt@tty1" = {
-  #  after = [ "systemd-logind.service" ];
-  #  restartIfChanged = false;
-  #  serviceConfig = {
-  #    Type = "simple";
-  #    ExecStart = "${pkgs.utillinux}/sbin/agetty --autologin ${settings.user.username} --noclear %I $TERM";
-  #    Restart = "always";
-  #  };
-  #};
 
   networking = {
     networkmanager.enable = true;
