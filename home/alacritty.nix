@@ -2,7 +2,8 @@
 
 let
   settings = import ../settings;
-  colorscheme = settings.colorscheme;
+  theme = settings.theme;
+  font = theme.font;
 in
 {
   programs.alacritty = {
@@ -11,13 +12,13 @@ in
       "live_config_reload" = true; # should work in next release
       font = {
         normal = {
-          family = "FiraCode Nerd Font";
-          style = "Regular";
+          family = font.mono.family;
+          style = font.mono.style;
         };
-        size = 12;
+        size = font.size;
       };
 
-      background_opacity = 0.95;
+      background_opacity = theme.background_opacity;
       cursor = with config.lib.base16.theme; {
         style = "Underline";
         text = "0x${base00-hex}";

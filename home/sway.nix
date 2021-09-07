@@ -1,13 +1,12 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 let
   settings = import ../settings;
-  colorscheme = settings.colorscheme;
   hostName = nixosConfig.networking.hostName;
-  theme = "Adwaita";
+  theme = settings.theme;
   #wallpaper = pkgs.callPackage ./wallpaper/wallpaper.nix { };
   fontConf = {
-    names = [ "FuraCode Nerd Font" ];
-    size = 12.0;
+    names = [ theme.font.mono.family ];
+    size = builtins.mul theme.font.size 0.0; # typecast to float
   };
 in
 {
@@ -304,14 +303,16 @@ in
         {
           command =
             #let lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"\$(${wallpaper}/bin/wallpaper get)\"'";
-            let lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/background.jpg\"'";
+            let
+              lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/background.jpg\"'";
+              timeouts = settings.security.timeouts;
             in
             ''${pkgs.swayidle}/bin/swayidle -w \
-            timeout 600 ${lockCmd} \
-            timeout 1200 'swaymsg "output * dpms off"' \
-            resume 'swaymsg "output * dpms on"' \
-            before-sleep ${lockCmd}
-      '';
+              timeout ${timeouts.screenLock} ${lockCmd} \
+              timeout ${timeouts.displayOff} 'swaymsg "output * dpms off"' \
+              resume 'swaymsg "output * dpms on"' \
+              before-sleep ${lockCmd}
+           '';
         }
         { command = "${config.programs.firefox.package}/bin/firefox"; }
         #{ command = "${pkgs.foot}/bin/foot --title weechat --app-id weechat weechat"; }
@@ -340,7 +341,7 @@ in
     };
 
     extraConfig = ''
-      seat seat0 xcursor_theme ${theme}\n
+      seat seat0 xcursor_theme ${theme.gtk}\n
       default_border pixel 2\n
       workspace 1
     '';
