@@ -18,7 +18,7 @@ in
 
   home.packages = with pkgs; [
     #sway-contrib.grimshot
-    alacritty
+    alacritty # look into foot term for ram usage
     sway
     swaylock
     swayidle
@@ -27,11 +27,9 @@ in
     waybar
     #mako
     #dmenu
-    firefox
     gnome.adwaita-icon-theme
     bemenu
     j4-dmenu-desktop
-    thunderbird
   ];
 
   wayland.windowManager.sway = {
@@ -144,8 +142,6 @@ in
       #  };
       #};
 
-      #menu = "${pkgs.bemenu}/bin/bemenu-run -m all --fn 'Concourse T7' --tf '#${colorscheme.dark.bg_0}' --hf '#${colorscheme.dark.fg_0}' --no-exec | xargs swaymsg exec --";
-      #menu = "${pkgs.bemenu}/bin/bemenu-run -m all -l 10 --tf '#${colorscheme.dark.bg_0}' --hf '#${colorscheme.dark.fg_0}' --no-exec | xargs swaymsg exec --";
       menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=alacritty --dmenu='bemenu -i -l 10'" ;
 
       keybindings =
@@ -239,7 +235,7 @@ in
 
           "${mod}+minus" = "scratchpad show";
           "${mod}+underscore" = "move container to scratchpad";
-        } // (if hostName == "spica" then {
+        } // (if hostName == "spica" then { # smart. use hostname then append based on that
           "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
           "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
         } else { });

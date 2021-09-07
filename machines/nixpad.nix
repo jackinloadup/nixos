@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ honfig, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -26,7 +26,6 @@
       };
     };
 
-
     # Required for throttled when running on the 5.9 kernel.
     kernelParams = [
       "msr.allow_writes=on"
@@ -43,8 +42,6 @@
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
-
-
 
   hardware = {
     # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).

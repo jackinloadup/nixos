@@ -33,16 +33,12 @@ in
 
   programs.home-manager.enable = true;
 
-  home.username = settings.user.username;
-  home.homeDirectory = "/home/${settings.user.username}";
-
   programs.git = {
     enable = true;
     userName = settings.user.name;
     userEmail = settings.user.email;
   };
 
-  
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -57,16 +53,26 @@ in
     EDITOR = "vim";
     MOZ_ENABLE_WAYLAND = 1;
     XDG_CURRENT_DESKTOP = "sway"; 
+    XDG_SESSION_TYPE = "wayland";
+    NVIM_TUI_ENABLE_TRUE_COLOR = 1;
+    NVIM_TUI_ENABLE_CURSOR_SHAPE = 2; # blink cursor maybe? https://github.com/neovim/neovim/pull/5977
   };
+
+  home.username = settings.user.username;
+  home.homeDirectory = "/home/${settings.user.username}";
 
   home.packages = with pkgs; [
     #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-    curl
-    jq
-    ripgrep
-    rsync
-    tree
-    mpv
-    pavucontrol
+    mpv # media player
+    pavucontrol # GUI volume source/sink manager
+    zathura # PDF / Document viewer
+    libreoffice # Office suite
+    fractal # matrix client
+    thunderbird # Email client
+    firefox # Web browser
+    tixati # bittorrent client
+    mumble # voice chat application
   ];
+
+
 }

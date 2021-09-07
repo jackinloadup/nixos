@@ -4,6 +4,7 @@
   boot = {
     initrd.kernelModules = [ "amdgpu" ];
   };
+  #boot.kernelModules = [ "kvm-amd" ]; need to investigate
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
@@ -15,6 +16,7 @@
     opengl = {
       extraPackages = with pkgs; [
         rocm-opencl-icd # Enable opencl
+        rocm-opencl-runtime
       ];
     };
   };

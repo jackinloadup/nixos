@@ -8,6 +8,7 @@ in
   programs.alacritty = {
     enable = true;
     settings = {
+      "live_config_reload" = true; # should work in next release
       font = {
         normal = {
           family = "FiraCode Nerd Font";

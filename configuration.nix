@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, modulesPath, ... }:
- 
+
 let
   settings = import ./settings;
 in {
@@ -11,9 +11,10 @@ in {
     [ # Include the results of the hardware scan.
       #./hardware-configuration.nix
       #<nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-     # "$(modulesPath)/installer/scan/not-detected.nix"
-     ./common/autologin-tty1 # Enable auto login on tty1
+      # "$(modulesPath)/installer/scan/not-detected.nix"
+      ./common/autologin-tty1 # Enable auto login on tty1
     ];
+
   themes.base16 = {
     enable = true;
     #scheme = "solarized";
@@ -31,18 +32,24 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
+  nix.trustedUsers = [ "root"  settings.user.username ];
   nix.package = pkgs.nixUnstable;
+  # 1) Enable extra-builtins-file option for nix
+  # 2) stuff to get flakes working
+  #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
 
   boot = {
-    # quiet durring boot
+    # Quiet durring boot
     initrd.verbose = false;
     consoleLogLevel = 0;
     kernelParams = [ "quiet" "udev.log_priority=3" ]; 
 
     tmpOnTmpfs = true; # don't keep /tmp on disk
+    cleanTmpDir = true;
+
     #plymouth.enable = true;
 
     loader = {
@@ -56,7 +63,6 @@ in {
       efi.efiSysMountPoint = "/boot/EFI";
     };
   };
-
 
   networking = {
     networkmanager.enable = true;
@@ -89,27 +95,24 @@ in {
     font = "Lat2-Terminus16";
     keyMap = "us";
     colors = with config.lib.base16.theme; [
-     base00-hex # 0 bg
-     base08-hex # 1 red
-     base0B-hex # 2 green
-     base0A-hex # 3 yellow
-     base0D-hex # 4 blue
-     base0E-hex # 5 violet
-     base0C-hex # 6 cyan
-     base05-hex # 7 gray/dim
-     base03-hex # 8 fg
-     base08-hex # 9 bright red
-     base0B-hex # 10 bright green
-     base0A-hex # 11 bright yellow
-     base0D-hex # 12 bright blue
-     base0E-hex # 13 bright violet
-     base0C-hex # 14 bright cyan
-     base07-hex # 15 fg 2
+      base00-hex # 0 bg
+      base08-hex # 1 red
+      base0B-hex # 2 green
+      base0A-hex # 3 yellow
+      base0D-hex # 4 blue
+      base0E-hex # 5 violet
+      base0C-hex # 6 cyan
+      base05-hex # 7 gray/dim
+      base03-hex # 8 fg
+      base08-hex # 9 bright red
+      base0B-hex # 10 bright green
+      base0A-hex # 11 bright yellow
+      base0D-hex # 12 bright blue
+      base0E-hex # 13 bright violet
+      base0C-hex # 14 bright cyan
+      base07-hex # 15 fg 2
     ];
   };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable sound.
   sound.enable = false; # conflicts with pipewire?
@@ -119,6 +122,9 @@ in {
     rtkit.enable = true; # allows pipewire to run "realtime"
   };
 
+  # Disable pulseaudio
+  hardware.pulseaudio.enable = false;
+  # Enable pipewire
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -163,7 +169,7 @@ in {
       }
     ];
   };
-  hardware.pulseaudio.enable = false;
+
   hardware.enableRedistributableFirmware = true;
 
   # Enable backlight control
@@ -200,23 +206,38 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
-    wget
-    git
-    tmux
-    htop
-    lynx
-    ncdu
-    mtr
+    vim # text editor
+    wget # http client
+    curl # http client
+    git # source code manager
+    tmux # terminal multiplexer
+    htop # process, cpu, memory viewer
+    lynx # text web browser
+    ncdu # ncurses disk usage viewer
+    mtr # traceroute and ping
     pulseaudio # for pactl and other things like it just not enabled
     #ncpamixer # couldn't get it to work
-    vlock
+    vlock # tty/vtty locker
+    jq # json parsing
+    tree # file/directory viewer in tree format
+    ripgrep # grep alternative
+    rsync
+    #flavours
+    nix-tree # A terminal curses application to browse a Nix store paths dependencies
+    pass # password manager
+    nix-plugins # Collection of miscellaneous plugins for the nix expression language
   ];
 
+  programs.tmux = {
+    enable = true;
+    terminal = "tmux-256color";
+    extraConfig = ''
+      set -ga terminal-overrides ',*256col*:Tc'
+    '';
+  };
+
   environment.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = "1";
-    XDG_CURRENT_DESKTOP = "sway"; 
-    XDG_SESSION_TYPE = "wayland";
+    EDITOR = "vim";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -243,11 +264,14 @@ in {
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
 
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
