@@ -1,6 +1,8 @@
 vm system like qemu or w/e
+yubikey
+gnupg
 pass
-hybernation
+zsh + spaceship
 different size builds eg: replace libreoffice for somethings smaller
 explore quick shells for rust / secops / private + colors per shell in case of multi-tasking?
 ephemeral boot option
@@ -14,3 +16,26 @@ wireshark
 mpd
 option to enable docker.
 steam compartment?
+kexec reboot
+kexec emergency
+profile-sync-daemon
+
++ hybernation
+
+# works but needs integration
+
+## list monitor contorls
+ddccontrol -d dev:/dev/i2c-5
+
+## brightness control
+### main monitor
+ddccontrol -r 0x10 -w 100 dev:/dev/i2c-5
+ddccontrol -r 0x10 -w 50 dev:/dev/i2c-5
+### alt monitor
+ddccontrol -r 0x10 -w 50 dev:/dev/i2c-6
+
+## picture mode
+### photo
+ddccontrol -r 0x15 -w 32 dev:/dev/i2c-5
+### reader mode
+ddccontrol -r 0x15 -w 1 dev:/dev/i2c-5
