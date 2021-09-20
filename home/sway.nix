@@ -199,6 +199,11 @@ in
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
 
+          "${mod}+Shift+bracketleft" = "move workspace to output left";
+          "${mod}+Shift+equal" = "move workspace to output up";
+          "${mod}+Shift+minus" = "move workspace to output down";
+          "${mod}+Shift+bracketright" = "move workspace to output right";
+
           "${mod}+p" =
             "exec ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g- screenshot-$(date +%Y%m%d-%H%M).png";
 
@@ -213,7 +218,7 @@ in
 
           "${mod}+Shift+c" = "reload";
           "${mod}+Shift+r" = "restart";
-          "${mod}+Shift+v" = ''mode "system:  [r]eboot  [p]oweroff  [l]ogout"'';
+          "${mod}+Shift+v" = ''mode "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout"'';
 
           "${mod}+r" = "mode resize";
 
@@ -239,8 +244,12 @@ in
           "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
         } else { });
 
-      modes = {
-        "system:  [r]eboot  [p]oweroff  [l]ogout" = {
+        modes =
+        let
+          terminal = config.wayland.windowManager.sway.config.terminal;
+        in {
+        "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout" = {
+          s = "exec ${terminal} -e ./kexec-systemd.sh";
           r = "exec reboot";
           p = "exec poweroff";
           l = "exit";
@@ -275,6 +284,10 @@ in
           command = "move to workspace 10";
           criteria.class = "Spotify";
         }
+        {
+          command = "opacity ${builtins.toString theme.background_opacity}";
+          criteria.app_id = "firefox";
+        }
         #{
         #  command = "move to scratchpad";
         #  criteria = {
@@ -284,7 +297,10 @@ in
         #}
       ];
 
-      output = { "*".bg = ''~/background.jpg fit''; };
+      output = {
+        "*".bg = ''~/background.jpg fit'';
+        "DP-2".transform = "270";
+      };
       #  (if hostName == "sirius" then {
       #    "Unknown LCD QHD 1 110503_3" = {
       #      pos = "1920 0";
@@ -314,7 +330,7 @@ in
               before-sleep ${lockCmd}
            '';
         }
-        { command = "${config.programs.firefox.package}/bin/firefox"; }
+        #{ command = "${config.programs.firefox.package}/bin/firefox"; }
         #{ command = "${pkgs.foot}/bin/foot --title weechat --app-id weechat weechat"; }
         #{ command = "${pkgs.slack}/bin/slack"; }
         #{ command = "${pkgs.element-desktop-wayland}/bin/element-desktop"; }
