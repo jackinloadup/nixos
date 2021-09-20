@@ -75,7 +75,22 @@ in
     firefox # Web browser
     tixati # bittorrent client
     mumble # voice chat application
+    spotify-tui # music player w/ spotify subscription
+    spotifyd
+
+    bitwarden-cli
+
+    tor-browser-bundle-bin
+
+    gnome.simple-scan
+
+    xfce.thunar
+    #pantheon.elementary-files
+
   ];
 
+  services.spotifyd = {
+    enable = true;
+  };
 
 }
