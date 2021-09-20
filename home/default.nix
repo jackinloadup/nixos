@@ -28,7 +28,10 @@ in
   programs.bash.enable = true;
   programs.bash.initExtra = ''
     source ${config.lib.base16.templateFile { name = "shell"; }}
-    [[ "$(tty)" == /dev/tty1 ]] && sway
+
+    # if tty1 then dont fork, instead transfer execution to sway
+    # thus if sway crashes the resulting terminal will not be logged in
+    [[ "$(tty)" == /dev/tty1 ]] && exec sway
   '';
 
   programs.home-manager.enable = true;
