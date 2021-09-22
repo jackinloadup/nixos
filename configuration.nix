@@ -168,6 +168,26 @@ in {
         };
       }
     ];
+    media-session.config.alsa-monitor.rules = [
+      {
+        matches = [{ "device.vendor.id" = "4130"; }];
+        actions = {
+          "update-props" = {
+            "device.description" = "AMD Motherboard";
+            "device.product.name" = "AMD Motherboard";
+          };
+        };
+      }
+      {
+        matches = [{ "device.vendor.id" = "4098"; }];
+        actions = {
+          "update-props" = {
+            "device.description" = "AMD GPU";
+            "device.product.name" = "AMD GPU";
+          };
+        };
+      }
+    ];
   };
 
   hardware.enableRedistributableFirmware = true;
