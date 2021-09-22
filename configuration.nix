@@ -219,6 +219,8 @@ in {
           "video"
           "networkmanager"
           "corectrl"
+          "scanner" "lp"
+          "i2c"
         ];
       };
     };
@@ -287,6 +289,19 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = with pkgs; [ brlaser cups-filters ];
+
+  # Enable Sane to scan documents.
+  hardware.sane.enable = true;
+  hardware.sane.brscan4.enable = true;
+  hardware.sane.brscan4.netDevices = {
+    "Home" = {
+      "ip" = "10.16.1.64";
+      "model" = "MFC-9130CW";
+    };
+  };
+  hardware.i2c.enable = true;
+  services.ddccontrol.enable = true;
 
   # Enable CoreCtrl
   programs.corectrl.enable = true;
