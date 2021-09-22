@@ -198,6 +198,7 @@ in {
           "audio"
           "video"
           "networkmanager"
+          "corectrl"
         ];
       };
     };
@@ -266,6 +267,9 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Enable CoreCtrl
+  programs.corectrl.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
