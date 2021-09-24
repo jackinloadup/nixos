@@ -261,6 +261,10 @@ in
           Down = "resize grow height 10 px or 10 ppt";
           Up = "resize shrink height 10 px or 10 ppt";
           Right = "resize grow width 10 px or 10 ppt";
+          h = "resize shrink width 10 px or 10 ppt";
+          j = "resize grow height 10 px or 10 ppt";
+          k = "resize shrink height 10 px or 10 ppt";
+          l = "resize grow width 10 px or 10 ppt";
           Return = "mode default";
           Escape = "mode default";
         };
