@@ -10,7 +10,7 @@
   security = {
     timeouts = { # screensaver timeout then lock after
       screenLock = "300";
-      displayOff = "360";
+      displayOff = "330";
     };
   };
 
