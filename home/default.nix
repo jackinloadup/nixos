@@ -1,4 +1,6 @@
-{ config, pkgs, lib, inputs, ... }: 
+{ inputs, pkgs, ... }: 
+
+with inputs;
 let
   settings = import ../settings;
 in
@@ -7,8 +9,12 @@ in
     ./sway.nix
     ./alacritty.nix
     ../common/neovim
-    inputs.base16.hmModule
+    base16.hmModule
   ];
+
+  config = {
+  nixpkgs.config.allowUnfree = true;
+
   themes.base16 = {
     enable = true;
     #scheme = "solarized";
@@ -25,9 +31,9 @@ in
   };
 
 
+  #source ${config.lib.base16.templateFile { name = "shell"; }}
   programs.bash.enable = true;
   programs.bash.initExtra = ''
-    source ${config.lib.base16.templateFile { name = "shell"; }}
 
     # if tty1 then dont fork, instead transfer execution to sway
     # thus if sway crashes the resulting terminal will not be logged in
@@ -88,9 +94,5 @@ in
     #pantheon.elementary-files
 
   ];
-
-  services.spotifyd = {
-    enable = true;
-  };
-
+};
 }

@@ -22,6 +22,12 @@ profile-sync-daemon
 
 + hybernation
 
+# new/alt browser?
+https://nyxt.atlas.engineer/
+
+# Kexec set JIT `systemctl kexec`
+https://lists.freedesktop.org/archives/systemd-devel/2012-March/004760.html
+
 # works but needs integration
 
 ## list monitor contorls

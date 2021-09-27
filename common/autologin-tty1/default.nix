@@ -1,5 +1,6 @@
 { pkgs, ... }:
 
+# @TODO start something like agetty@tty1.service after autovt@tty1 stops
 let
   settings = import ../../settings;
 in {
@@ -24,7 +25,7 @@ in {
           "agetty --login-program ${pkgs.shadow}/bin/login"
           "--autologin ${settings.user.username} --noclear %I $TERM"
         ]);
-        Restart = "always";
+        Restart = "no";
         Type = "idle";
       };
     };

@@ -237,9 +237,8 @@ in
 
           #"${mod}+z" = "exec ${pkgs.zathura}/bin/zathura";
 
+          "${mod}+underscore" = "move scratchpad";
           "${mod}+minus" = "scratchpad show";
-          "${mod}+underscore" = "move container to scratchpad";
-          "${mod}+plus" = "move container to window";
         } // (if hostName == "spica" then { # smart. use hostname then append based on that
           "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
           "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
