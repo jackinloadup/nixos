@@ -70,8 +70,8 @@ in {
         matches = [{ "device.vendor.id" = "4130"; }];
         actions = {
           "update-props" = {
-            "device.description" = "AMD Motherboard";
-            "device.product.name" = "AMD Motherboard";
+            "device.description" =  "Motherboard";
+            "device.product.name" = "Motherboard";
           };
         };
       }
@@ -79,8 +79,8 @@ in {
         matches = [{ "device.vendor.id" = "4098"; }];
         actions = {
           "update-props" = {
-            "device.description" = "AMD GPU";
-            "device.product.name" = "AMD GPU";
+            "device.description" =  "GPU";
+            "device.product.name" = "GPU";
           };
         };
       }
