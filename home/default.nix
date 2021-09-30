@@ -65,12 +65,16 @@ in
     XDG_SESSION_TYPE = "wayland";
     NVIM_TUI_ENABLE_TRUE_COLOR = 1;
     NVIM_TUI_ENABLE_CURSOR_SHAPE = 2; # blink cursor maybe? https://github.com/neovim/neovim/pull/5977
+
+    TERMINFO_DIRS="/home/lriutzel/.nix-profile/share/terminfo";
+    WSLENV="TERMINFO_DIRS";
   };
 
   home.username = settings.user.username;
   home.homeDirectory = "/home/${settings.user.username}";
 
   home.packages = with pkgs; [
+    foot # terminal
     #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     mpv # media player
     pavucontrol # GUI volume source/sink manager
@@ -83,6 +87,8 @@ in
     mumble # voice chat application
     spotify-tui # music player w/ spotify subscription
     spotifyd
+    imv # minimal image viewer
+
 
     bitwarden-cli
 
@@ -92,7 +98,6 @@ in
 
     xfce.thunar
     #pantheon.elementary-files
-
   ];
 };
 }

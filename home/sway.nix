@@ -54,8 +54,8 @@ in
       };
 
       bars = with config.lib.base16.theme; [{
+        command = "${pkgs.foot}/bin/foot";
         #statusCommand = "${pkgs.i3status}/bin/i3status";
-        command = "${pkgs.waybar}/bin/waybar";
         position = "top";
         #fonts = fontConf;
         trayOutput = "*";
@@ -151,6 +151,8 @@ in
         in
         {
           "${mod}+Return" = "exec ${terminal}";
+          "${mod}+Shift+Return" = "exec ${pkgs.foot}/bin/foot";
+
           "${mod}+Shift+q" = "kill";
           "${mod}+space" = "exec ${menu}";
 
@@ -199,10 +201,10 @@ in
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
 
-          "${mod}+Shift+bracketleft" = "move workspace to output left";
-          "${mod}+Shift+equal" = "move workspace to output up";
-          "${mod}+Shift+minus" = "move workspace to output down";
-          "${mod}+Shift+bracketright" = "move workspace to output right";
+          #"${mod}+Shift+bracketleft" = "move workspace to output left";
+          #"${mod}+Shift+equal" = "move workspace to output up";
+          #"${mod}+Shift+minus" = "move workspace to output down";
+          #"${mod}+Shift+bracketright" = "move workspace to output right";
 
           "${mod}+p" =
             "exec ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g- screenshot-$(date +%Y%m%d-%H%M).png";
@@ -232,12 +234,9 @@ in
           #  "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
           #"XF86AudioLowerVolume" =
           #  "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-
-          "${mod}+apostrophe" = "move workspace to output right";
-
           #"${mod}+z" = "exec ${pkgs.zathura}/bin/zathura";
 
-          "${mod}+underscore" = "move scratchpad";
+          "${mod}+Shift+minus" = "move container to scratchpad";
           "${mod}+minus" = "scratchpad show";
         } // (if hostName == "spica" then { # smart. use hostname then append based on that
           "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
