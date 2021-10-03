@@ -159,7 +159,7 @@ in {
     networking = {
       # Enable wifi powersaving.
       networkmanager = {
-        enable = true;
+        enable = lib.mkDefault true;
         wifi = {
           #enable = true;  # Enables wireless support via wpa_supplicant.
           powersave = true;

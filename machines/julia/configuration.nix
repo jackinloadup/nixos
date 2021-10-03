@@ -12,6 +12,8 @@ in {
   imports = [
     <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
+    #nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
+    #nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
     ./hardware-configuration.nix
     ../../common/autologin-tty1 # Enable auto login on tty1
 
