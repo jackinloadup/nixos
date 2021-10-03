@@ -54,7 +54,7 @@ in
       };
 
       bars = with config.lib.base16.theme; [{
-        command = "${pkgs.foot}/bin/foot";
+        command = "${pkgs.waybar}/bin/waybar";
         #statusCommand = "${pkgs.i3status}/bin/i3status";
         position = "top";
         #fonts = fontConf;
@@ -151,7 +151,6 @@ in
         in
         {
           "${mod}+Return" = "exec ${terminal}";
-          "${mod}+Shift+Return" = "exec ${pkgs.foot}/bin/foot";
 
           "${mod}+Shift+q" = "kill";
           "${mod}+space" = "exec ${menu}";
