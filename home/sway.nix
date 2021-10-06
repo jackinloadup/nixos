@@ -6,7 +6,7 @@ let
   #wallpaper = pkgs.callPackage ./wallpaper/wallpaper.nix { };
   fontConf = {
     names = [ theme.font.mono.family ];
-    size = builtins.mul theme.font.size 0.0; # typecast to float
+    size = builtins.mul theme.font.size 1.0; # typecast to float
   };
 in
 {
