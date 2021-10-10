@@ -12,11 +12,13 @@
       #unstable.tree-sitter
       rnix-lsp
     ];
+
     plugins = with pkgs.vimPlugins; [
       gruvbox-community
       vim-nix
       nvim-lspconfig
     ];
+
     extraConfig = ''
        syntax on
       " review gruvbox settings later for 256 color ect
