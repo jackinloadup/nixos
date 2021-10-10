@@ -128,9 +128,12 @@ in
 
       python39Packages.xdot # graphviz viewer
       graphviz
+
+      playerctl
     ];
 
     services = {
+      playerctld.enable = true;
       # Display desktop notfications.
       dunst = {
         enable = true;

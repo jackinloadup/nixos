@@ -75,6 +75,7 @@ in {
       };
     };
 
+    # support flakes
     nix.package = pkgs.nixUnstable;
 
     # Nerdfonts is kinda heavy. We are cutting it fown but still looks like it might be 4-10mb
@@ -96,6 +97,9 @@ in {
         { keys = [ 113 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-mute @DEFAULT_SINK@ toggle'"; }
         { keys = [ 114 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ -5%'"; }
         { keys = [ 115 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ +5%'"; }
+        { keys = [ 163 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.playerctl}/bin/playerctl next       2>&1 >> /tmp/woot'"; }
+        { keys = [ 164 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.playerctl}/bin/playerctl play-pause 2>&1 >> /tmp/woot'"; }
+        { keys = [ 165 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.playerctl}/bin/playerctl previous   2>&1 >> /tmp/woot'"; }
       ];
     };
 
