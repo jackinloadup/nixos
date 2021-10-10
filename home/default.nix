@@ -13,7 +13,9 @@ in
   ];
 
   config = {
-  nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfree = true;
+    nixpkgs.overlays =
+      [ self.overlay-unstable self.overlay nur.overlay ];
 
   themes.base16 = {
     enable = true;

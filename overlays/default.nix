@@ -4,6 +4,7 @@ let
   # instead of having to keep sha256 hashes in each package for src
   inherit inputs;
 in self: super: {
+  neovim-unwrapped = self.unstable.neovim-unwrapped;
   ## Example package, used only for tests
   #hello-custom = super.callPackage ../packages/hello-custom { };
   #darktile = super.callPackage ../packages/darktile { };

@@ -21,7 +21,7 @@
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, secrets, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, nixpkgs-unstable, secrets, ... }@inputs:
     with inputs;
     let
       # Function to create default (common) system config options
@@ -30,7 +30,7 @@
 
           specialArgs = { inherit inputs; };
           system = "x86_64-linux";
-          modules = 
+          modules =
           # This was how I figure out how to get nixos-hardware stuff working.
           # imports didn't work and README showed modules
           ( import (./machines + "/${machineName}/modules.nix") { nixos-hardware=nixos-hardware; } )
@@ -47,7 +47,7 @@
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
                   nixpkgs.overlays =
-                    [ self.overlay nur.overlay ];
+                    [ self.overlay-unstable self.overlay nur.overlay ];
 
                   # DON'T set useGlobalPackages! It's not necessary in newer
                   # home-manager versions and does not work with configs using
@@ -71,6 +71,13 @@
           ];
         };
     in {
+      # Allow unstable packages.
+      nixpkgs.config.allowUnfree = true;
+
+      # Create overlay to allow the use of unstable pkgs
+      overlay-unstable = self: super: {
+        unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+      };
 
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
