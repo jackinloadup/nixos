@@ -20,13 +20,6 @@
     ];
 
     extraConfig = ''
-       syntax on
-      " review gruvbox settings later for 256 color ect
-      " https://github.com/gruvbox-community/gruvbox/wiki/Terminal-specific
-      colorscheme gruvbox
-      "let g:context_nvim_no_redraw = 1
-      set background=dark
-
       " set background to be terminals
       highlight Normal guibg=none
 
@@ -104,6 +97,13 @@
       "set winminheight=0 " Allow splits to be reduced to a single line
       set wrapscan " Searches wrap around end of file
       "" }}}
+
+       syntax on
+      " review gruvbox settings later for 256 color ect
+      " https://github.com/gruvbox-community/gruvbox/wiki/Terminal-specific
+      colorscheme gruvbox
+      "let g:context_nvim_no_redraw = 1
+      set background=dark
     '';
   };
 }
