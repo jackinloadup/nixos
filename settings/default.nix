@@ -3,6 +3,7 @@
 
   user = {
     name = "Lucas Riutzel";
+    uid = 1000;
     email = "lriutzel@gmail.com";
     username = "lriutzel";
   };
