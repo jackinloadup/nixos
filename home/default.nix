@@ -42,12 +42,67 @@ in
       [[ "$(tty)" == /dev/tty1 ]] && exec sway
     '';
 
+    programs.mpv.enable = true;
+    programs.mpv.config = {
+      profile = "gpu-hq";
+      force-window = true;
+      video-sync ="display-resample";
+      interpolation =true;
+      ytdl-format = "bestvideo+bestaudio"; #TODO adjust for laptop screen size
+      hwdec = "auto-safe"; # battery
+      #cache-default = 4000000;
+      #tscale = "oversample";
+    };
+
     programs.home-manager.enable = true;
 
     programs.git = {
       enable = true;
       userName = settings.user.name;
       userEmail = settings.user.email;
+    };
+
+    programs.firefox = {
+      enable = true;
+      package = pkgs.firefox-bin;
+      #package = pkgs.wrapFirefox pkgs.firefox-esr {
+      #  nixExtensions = [
+      #    (pkgs.fetchFirefoxAddon {
+      #      name = "ublock"; # Has to be unique!
+      #      url = "https://addons.mozilla.org/firefox/downloads/file/3679754/ublock_origin-1.31.0-an+fx.xpi";
+      #      sha256 = "1h768ljlh3pi23l27qp961v1hd0nbj2vasgy11bmcrlqp40zgvnr";
+      #    })
+      #  ];
+
+      #  extraPolicies = {
+      #    CaptivePortal = false;
+      #    DisableFirefoxStudies = true;
+      #    DisablePocket = true;
+      #    DisableTelemetry = true;
+      #    DisableFirefoxAccounts = true;
+      #    FirefoxHome = {
+      #      Pocket = false;
+      #      Snippets = false;
+      #    };
+      #     UserMessaging = {
+      #       ExtensionRecommendations = false;
+      #       SkipOnboarding = true;
+      #     };
+      #  };
+
+      #  extraPrefs = ''
+      #    // Show more ssl cert infos
+      #    lockPref("security.identityblock.show_extended_validation", true);
+      #  '';
+      #};
+      #package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      #  #ffmpegSupport = true;
+      #  #pipewireSupport = true;
+      #  forceWayland = true;
+      #  #extraPolicies = {
+      #  #  ExtensionSettings = {};
+      #  #};
+      #};
     };
 
     # This value determines the Home Manager release that your
@@ -78,13 +133,12 @@ in
     home.packages = with pkgs; [
       #unstable.neovim
       #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-      mpv # media player
       pavucontrol # GUI volume source/sink manager
       zathura # PDF / Document viewer
       libreoffice # Office suite
       fractal # matrix client
       thunderbird # Email client
-      firefox # Web browser
+      #firefox # Web browser
       tixati # bittorrent client
       mumble # voice chat application
       imv # minimal image viewer
@@ -118,6 +172,8 @@ in
 
 
       bitwarden-cli
+
+      python39Packages.youtube-dl # there is an alt youtube-dl-lite
 
       tor-browser-bundle-bin
 
@@ -174,14 +230,14 @@ in
             background ="#${base00-hex}";
             foreground ="#${base04-hex}";
             frame_color ="#${base03-hex}";
-            timeout = 4;
+            timeout = "30s";
           };
 
           urgency_normal = with config.lib.base16.theme; {
             background ="#${base00-hex}";
             foreground ="#${base04-hex}";
             frame_color ="#${base0A-hex}";
-            timeout = 6;
+            timeout = "1m";
           };
 
           urgency_critical = with config.lib.base16.theme; {

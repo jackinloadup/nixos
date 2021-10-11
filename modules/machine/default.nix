@@ -94,12 +94,12 @@ in {
       bindings = [
         { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
         { keys = [ 225 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -A 10"; }
-        { keys = [ 113 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-mute @DEFAULT_SINK@ toggle'"; }
-        { keys = [ 114 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ -5%'"; }
-        { keys = [ 115 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ +5%'"; }
-        { keys = [ 163 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.playerctl}/bin/playerctl next       2>&1 >> /tmp/woot'"; }
-        { keys = [ 164 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.playerctl}/bin/playerctl play-pause 2>&1 >> /tmp/woot'"; }
-        { keys = [ 165 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -c 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.playerctl}/bin/playerctl previous   2>&1 >> /tmp/woot'"; }
+        { keys = [ 113 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-mute @DEFAULT_SINK@ toggle && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:0'"; }
+        { keys = [ 114 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ -5%  && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:$(${pkgs.light}/bin/light -G)"; }
+        { keys = [ 115 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ +5%  && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:$(${pkgs.light}/bin/light -G)"; }
+        { keys = [ 163 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus; ${pkgs.playerctl}/bin/playerctl next       && ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:60"; }
+        { keys = [ 164 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus; ${pkgs.playerctl}/bin/playerctl play-pause && ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:60"; }
+        { keys = [ 165 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus; ${pkgs.playerctl}/bin/playerctl previous   && ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:60"; }
       ];
     };
 
@@ -152,7 +152,19 @@ in {
       nix-plugins # Collection of miscellaneous plugins for the nix expression language
       yubikey-manager
       yubikey-personalization
+      lsof
+      neovim
+
+      # Debug
       pciutils
+      powertop
+      iftop
+      latencytop
+      jnettop
+      iotop
+      dnstop
+      # atop?
+
     ];
 
     powerManagement = {
@@ -283,5 +295,15 @@ in {
       EDITOR = "vim";
     };
 
+    programs.tmux = {
+      enable = true;
+      terminal = "tmux-256color";
+      extraConfig = ''
+        set -ga terminal-overrides ',*256col*:Tc'
+        source ${config.lib.base16.templateFile { name="tmux"; }}
+      '';
+    };
+
+    # add config above here
   };
 }
