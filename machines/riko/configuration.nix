@@ -48,28 +48,12 @@ in {
         configurationLimit = 5;
         consoleMode = "auto";
       };
-      #systemd-boot.enable = false;
-      #grub = {
-      #  enable = true;
-      #  efiSupport = true;
-      #  device = "nodev";
-      #  efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-      #  forcei686 = true;
-      #};
-
     };
   };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [ brlaser cups-filters ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
 
   # Enable Sane to scan documents.
   hardware.sane.enable = true;
