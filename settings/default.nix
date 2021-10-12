@@ -9,6 +9,7 @@
   };
 
   timeouts = { 
+    show_age_after = "60";
     idle = "150";
     screenLock = "300";
     displayOff = "330";
