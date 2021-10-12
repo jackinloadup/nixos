@@ -17,6 +17,7 @@
       extraPackages = with pkgs; [
         rocm-opencl-icd # Enable opencl
         rocm-opencl-runtime
+        radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
       ];
     };
   };
