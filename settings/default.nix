@@ -8,11 +8,10 @@
     username = "lriutzel";
   };
 
-  security = {
-    timeouts = { # screensaver timeout then lock after
-      screenLock = "300";
-      displayOff = "330";
-    };
+  timeouts = { 
+    idle = "150";
+    screenLock = "300";
+    displayOff = "330";
   };
 
   theme = {
@@ -28,6 +27,10 @@
         style = "Regular";
       };
       size = 12;
+    };
+    base16 = {
+      scheme = "gruvbox";
+      variant = "gruvbox-dark-hard";
     };
   };
 }

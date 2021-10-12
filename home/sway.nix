@@ -24,6 +24,7 @@ in
     wev
     wl-clipboard
     waybar
+    wdisplays
     #mako
     #dmenu
     gnome.adwaita-icon-theme
@@ -322,7 +323,7 @@ in
             #let lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"\$(${wallpaper}/bin/wallpaper get)\"'";
             let
               lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/background.jpg\"'";
-              timeouts = settings.security.timeouts;
+              timeouts = settings.timeouts;
             in
             ''${pkgs.swayidle}/bin/swayidle -w \
               timeout ${timeouts.screenLock} ${lockCmd} \
