@@ -89,17 +89,31 @@ in {
 
     # Enable if minimal setup. Dont use for Gnome/KDE/Xfce
     #sound.mediaKeys.enable = true; # uses alsa amixer by default
-    services.actkbd = {
-      enable = true;
-      bindings = [
-        { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
-        { keys = [ 225 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -A 10"; }
-        { keys = [ 113 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-mute @DEFAULT_SINK@ toggle && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:0'"; }
-        { keys = [ 114 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ -5%  && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:$(${pkgs.light}/bin/light -G)"; }
-        { keys = [ 115 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c '${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ +5%  && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:$(${pkgs.light}/bin/light -G)"; }
-        { keys = [ 163 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus; ${pkgs.playerctl}/bin/playerctl next       && ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:60"; }
-        { keys = [ 164 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus; ${pkgs.playerctl}/bin/playerctl play-pause && ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:60"; }
-        { keys = [ 165 ]; events = [ "key" ]; command = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash} -c 'export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus; ${pkgs.playerctl}/bin/playerctl previous   && ${pkgs.dunst}/bin/dunstify \"Progress: \" -h int:value:60"; }
+    services.actkbd = 
+      let
+        dbus = "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${toString settings.user.uid}/bus";
+        dunstify = "${pkgs.dunst}/bin/dunstify --replace=${toString settings.user.uid} --timeout=2000";
+        bash = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash}/bin/bash";
+        playerctl = "${pkgs.playerctl}/bin/playerctl";
+
+        # get mute as 0=yes,mutted 1=no,umutted
+        is_mute = "${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native list sinks | ${pkgs.ripgrep}/bin/rg -A 7 RUNNING | ${pkgs.coreutils}/bin/tail -n 1 | ${pkgs.coreutils}/bin/head -1  | ${pkgs.coreutils}/bin/cut -d \"/\" -f2 | ${pkgs.coreutils}/bin/tr -d \" \" | ${pkgs.gnugrep}/bin/grep -q yes";
+        # get audio volume as percent int eg 80
+        current_volume = "${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native list sinks | ${pkgs.ripgrep}/bin/rg -A 8 RUNNING | ${pkgs.coreutils}/bin/tail -n 1 | ${pkgs.coreutils}/bin/head -1  | ${pkgs.coreutils}/bin/cut -d \"/\" -f2 | ${pkgs.coreutils}/bin/tr -d \" %\"";
+        set_volume_mute = "${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-mute @DEFAULT_SINK@ toggle";
+        set_volume_up = "${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ +5%";
+        set_volume_down = "${pkgs.pulseaudio}/bin/pactl -s /run/user/1000/pulse/native set-sink-volume @DEFAULT_SINK@ -5%";
+      in {
+        enable = true;
+        bindings = [
+          { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
+          { keys = [ 225 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -A 10"; }
+          { keys = [ 113 ]; events = [ "key" ]; command = "${bash} -c '${set_volume_mute} && ${is_mute} && ${dbus} ${dunstify} \"Volume Muted\" -t 0 -h int:value:0 || ${dbus} ${dunstify} \"Volume\" -h int:value:`${current_volume}`'"; }
+          { keys = [ 114 ]; events = [ "key" ]; command = "${bash} -c '${set_volume_down} && ${dbus} ${dunstify} \"Volume\" -h int:value:`${current_volume}`'"; }
+          { keys = [ 115 ]; events = [ "key" ]; command = "${bash} -c '${set_volume_up}   && ${dbus} ${dunstify} \"Volume\" -h int:value:`${current_volume}`'"; }
+          { keys = [ 163 ]; events = [ "key" ]; command = "${bash} -c '${dbus} ${playerctl} next       '"; }
+          { keys = [ 164 ]; events = [ "key" ]; command = "${bash} -c '${dbus} ${playerctl} play-pause && ${dbus} ${dunstify} \"Play-Pause: \"'"; }
+          { keys = [ 165 ]; events = [ "key" ]; command = "${bash} -c '${dbus} ${playerctl} previous   '"; }
       ];
     };
 
