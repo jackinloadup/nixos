@@ -57,7 +57,7 @@
                 secrets.nixosModules.default
                 baseCfg
                 home-manager.nixosModules.home-manager {
-                  home-manager.users.lriutzel = import ./home ;
+                  home-manager.users.lriutzel = import ./home;
                   home-manager.extraSpecialArgs = { inherit inputs; };
                 }
 
@@ -83,6 +83,10 @@
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
       overlay = final: prev: (import ./overlays inputs) final prev;
+
+
+      # allow modules to use inputs in addition to their normal args
+      _module.args.inputs = inputs;
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file

@@ -16,11 +16,6 @@ in {
     base16.hmModule
   ];
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ brlaser cups-filters ];
-
-
   themes.base16 = {
     enable = true;
     scheme = settings.theme.base16.scheme;
@@ -31,6 +26,12 @@ in {
       fontName = settings.theme.font.mono.family;
       fontSize = settings.theme.font.size;
     };
+  };
+
+  machine = {
+    steam = true;
+    starlight = false;
+    encryptedRoot = true;
   };
 
   networking.hostName = "reg";
@@ -49,14 +50,6 @@ in {
         configurationLimit = 5;
         consoleMode = "auto";
       };
-      #systemd-boot.enable = false;
-      #grub = {
-      #  enable = true;
-      #  efiSupport = true;
-      #  device = "nodev";
-      #  efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-      #  forcei686 = true;
-      #};
     };
   };
 
@@ -87,16 +80,16 @@ in {
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
+  #programs.gnupg.agent = {
+  #  enable = true;
+  #  enableSSHSupport = true;
+  #};
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+  services.printing.drivers = with pkgs; [ brlaser cups-filters ];
 
   # Enable Sane to scan documents.
   hardware.sane.enable = true;
@@ -117,12 +110,6 @@ in {
   # Enable network discovery
   #services.avahi.enable = true;
   #services.avahi.nssmdns = true;
-
-  services.logind.lidSwitch = "suspend-then-hibernate";
-  #services.logind.lidSwitch = "hibernate";
-
-  #services.upower.enable = true;
-  #services.upower.criticalPowerAction = "Hibernate";
 
   # set logitec mouse to autosuspend after 60 seconds
   services.udev.extraRules = ''

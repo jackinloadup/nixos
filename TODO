@@ -1,24 +1,32 @@
+# completed
+spotify
+signal
+
+# partial
+build plan to migrate desktop and laptop
+steam compartment?
+kexec reboot
+
+# proposed
 vm system like qemu or w/e
 yubikey
 gnupg
-pass
+pass / secrets
 zsh + spaceship
 different size builds eg: replace libreoffice for somethings smaller
 explore quick shells for rust / secops / private + colors per shell in case of multi-tasking?
 ephemeral boot option
 nixops deploy to other computer
-build plan to migrate desktop and laptop
-spotify
-signal
 autostart fractal
 labled menu in sway for rando application browsing / searching
 wireshark
+kexec emergency
 mpd
 option to enable docker.
-steam compartment?
-kexec reboot
-kexec emergency
 profile-sync-daemon
+firefox wayland/drm
+
+kms glsl shader boot experience like plymouth?
 
 + hybernation
 

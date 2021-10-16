@@ -35,6 +35,7 @@ in
   wayland.windowManager.sway = {
     enable = true;
     package = null; # don't override system-installed one
+    wrapperFeatures.gtk = true;
 
     config = {
       left = "h";
@@ -97,7 +98,7 @@ in
           border = "#${base05-hex}";
           background = "#${base0D-hex}";
           text = "#${base00-hex}";
-          indicator = "#${base0D-hex}";
+          indicator = "#${base0B-hex}";
           childBorder = "#${base0D-hex}";
         };
         focusedInactive = {
@@ -111,7 +112,7 @@ in
           border = "#${base03-hex}";
           background = "#${base01-hex}";
           text = "#${base05-hex}";
-          indicator = "#${base01-hex}";
+          indicator = "#${base0B-hex}";
           childBorder = "#${base01-hex}";
         };
         urgent = {
@@ -300,8 +301,11 @@ in
       ];
 
       output = {
-        "*".bg = ''~/background.jpg fit'';
-        "DP-2".transform = "270";
+        "*".bg = ''~/background.jpg fill'';
+        "DP-2" = {
+          transform = "270";
+          bg = ''~/background-virt.jpg fill'';
+        };
       };
       #  (if hostName == "sirius" then {
       #    "Unknown LCD QHD 1 110503_3" = {
@@ -359,7 +363,7 @@ in
     };
 
     extraConfig = ''
-      seat seat0 xcursor_theme ${theme.gtk}\n
+      seat seat0 xcursor_theme ${theme.gtk.name}\n
       default_border pixel 2\n
       workspace 1
     '';

@@ -1,7 +1,6 @@
 # to /etc/nixos/configuration.nix instead.
 { self, nixos-hardware, ... }: {
   imports = [
-    ../../full-encrypt.nix
     ../../profiles/intel.nix
   ];
 

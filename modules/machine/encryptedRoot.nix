@@ -6,8 +6,8 @@ in {
   config = mkIf cfg.encryptedRoot {
     boot = {
       initrd = {
-        luks.devices."${luksDeviceName}" = {
-          device = "/dev/disk/by-partlabel/${encryptedPartLabel}";
+        luks.devices."os-decrypted" = {
+          device = "/dev/disk/by-partlabel/primary";
           preLVM = true;
           allowDiscards = true; # maybe insecure?? could hint at structure?
           #  keyFile = "/etc/secrets/initrd/keyfile0.bin";

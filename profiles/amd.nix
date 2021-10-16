@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot = {
-    initrd.kernelModules = [ "amdgpu" ];
-  };
   #boot.kernelModules = [ "kvm-amd" ]; need to investigate
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
@@ -15,8 +12,6 @@
     # Enable intel opengl hardware acceleration.
     opengl = {
       extraPackages = with pkgs; [
-        rocm-opencl-icd # Enable opencl
-        rocm-opencl-runtime
         radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
       ];
     };

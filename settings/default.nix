@@ -9,7 +9,7 @@
   };
 
   timeouts = { 
-    show_age_after = "60";
+    show_age_after = 60;
     idle = "150";
     screenLock = "300";
     displayOff = "330";
@@ -17,14 +17,18 @@
 
   theme = {
     background_opacity = 0.95;
-    gtk = "Adwaita";
+    gtk = {
+      name = "gruvbox-dark";
+      package = "gruvbox-dark-gtk";
+    };
+    borderWidth = 2;
     font = {
       normal = {
-        family = "FiraCode Nerd Font";
+        family = "Lato";
         style = "Regular";
       };
       mono = {
-        family = "FiraCode Nerd Font";
+        family = "DroidSansMono Nerd Font Mono";
         style = "Regular";
       };
       size = 12;

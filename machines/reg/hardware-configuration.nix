@@ -1,7 +1,6 @@
 # to /etc/nixos/configuration.nix instead.
 { self, nixos-hardware, ... }: {
   imports = [
-    ../../full-encrypt.nix
     ../../profiles/amd.nix
   ];
 
@@ -25,7 +24,7 @@
   };
 
   swapDevices = [
-    { device = "/var/swapfile"; size = 34000; }
+    { device = "/var/swapfile"; size = 34000; } # this big for hibernation 34Gb~
   ];
 
   boot.resumeDevice = "/dev/disk/by-label/nixos";

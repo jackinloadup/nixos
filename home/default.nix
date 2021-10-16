@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, ... }: 
+{ inputs, pkgs, config, ... }:
 
 with inputs;
 let
@@ -19,19 +19,27 @@ in
 
     themes.base16 = {
       enable = true;
-      #scheme = "solarized";
-      #variant = "solarized-dark";
-      scheme = "gruvbox";
-      variant = "gruvbox-dark-hard";
-      #variant = "gruvbox-dark-medium";
+      scheme = settings.theme.base16.scheme;
+      variant = settings.theme.base16.variant;
       defaultTemplateType = "default";
       # Add extra variables for inclusion in custom templates
       extraParams = {
-        fontName = "FiraCode Nerd Font";
-        fontSize = "12";
+        fontName = settings.theme.font.mono.family;
+        fontSize = settings.theme.font.size;
       };
     };
 
+    xdg = {
+      enable = true;
+      userDirs.enable = true;
+    };
+
+    gtk = with settings.theme; {
+      enable = true;
+      font.name = "${font.normal.family} ${font.normal.style} ${toString font.size}";
+      theme.name = gtk.name;
+      theme.package = pkgs.${gtk.package};
+    };
 
     programs.bash.enable = true;
     programs.bash.initExtra = ''
@@ -199,16 +207,17 @@ in
             follow = "keyboard"; # Show notifications where the keyboard has foucs.
             font = "${font.normal.family} ${font.normal.style} ${toString(font.size)}";
             word_wrap = "yes";
-            format = "<b>%s</b>\\n%b%p";
-            frame_width = 2; # Border size.
+            format = "<b>%s</b>\\n%b";
+            frame_width = borderWidth; # Border size.
             geometry = "400x5-18+42"; # Size & location of notifications.
             markup = "full"; # Enable basic markup in messages.
-            show_age_threshold = 60;
+            show_age_threshold = settings.timeouts.show_age_after;
+            icon_position = "left";
             max_icon_size = 32; # Put a limit on image/icon size.
             padding = 6; # Vertical padding
             horizontal_padding = 6;
             separator_color = "frame"; # Match to the frame color.
-            separator_height = 2; # Space between notifications.
+            separator_height = borderWidth; # Space between notifications.
             sort = "yes"; # Sort messages by urgency.
             stack_duplicates = true;
             hide_duplicate_count = false;

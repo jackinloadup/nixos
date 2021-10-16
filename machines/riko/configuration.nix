@@ -32,6 +32,10 @@ in {
     };
   };
 
+  machine = {
+    encryptedRoot = true;
+  }
+
   networking.hostName = "riko";
 
   boot = {
