@@ -6,27 +6,46 @@ signal
 build plan to migrate desktop and laptop
 steam compartment?
 kexec reboot
+zsh + spaceship
 
 # proposed
 vm system like qemu or w/e
 yubikey
 gnupg
-pass / secrets
-zsh + spaceship
+
+# Requires secret storage
+- autostart fractal - matrix client
+- pass
+- yubikey
+- gnupg
+- spotify
+- signal
+- steam compartment?
+- fractal?
+
+# to autostart possibly
+ - fractal
+ - irc client
+ - signal
+
+vm system like qemu or w/e
 different size builds eg: replace libreoffice for somethings smaller
 explore quick shells for rust / secops / private + colors per shell in case of multi-tasking?
 ephemeral boot option
 nixops deploy to other computer
-autostart fractal
+
+build plan to migrate desktop
 labled menu in sway for rando application browsing / searching
 wireshark
-kexec emergency
+kexec emergency - already exists but explore options
 mpd
 option to enable docker.
 profile-sync-daemon
 firefox wayland/drm
 
 kms glsl shader boot experience like plymouth?
+
+look into wayfire vs sway. animations look neat
 
 + hybernation
 
@@ -35,6 +54,9 @@ https://nyxt.atlas.engineer/
 
 # Kexec set JIT `systemctl kexec`
 https://lists.freedesktop.org/archives/systemd-devel/2012-March/004760.html
+
+# graphviz alternative http://blockdiag.com/en/
+# makes cool network and process diagrams
 
 # works but needs integration
 
@@ -53,3 +75,5 @@ ddccontrol -r 0x10 -w 50 dev:/dev/i2c-6
 ddccontrol -r 0x15 -w 32 dev:/dev/i2c-5
 ### reader mode
 ddccontrol -r 0x15 -w 1 dev:/dev/i2c-5
+
+

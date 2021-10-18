@@ -19,22 +19,21 @@ in {
 
   themes.base16 = {
     enable = true;
-    #scheme = "solarized";
-    #variant = "solarized-dark";
-    scheme = "gruvbox";
-    variant = "gruvbox-dark-hard";
-    #variant = "gruvbox-dark-medium";
+    scheme = settings.theme.base16.scheme;
+    variant = settings.theme.base16.variant;
     defaultTemplateType = "default";
     # Add extra variables for inclusion in custom templates
     extraParams = {
-      fontName = "FiraCode Nerd Font";
-      fontSize = "12";
+      fontName = settings.theme.font.mono.family;
+      fontSize = settings.theme.font.size;
     };
   };
 
   machine = {
+    bluetooth = true;
     encryptedRoot = true;
-  }
+    quietBoot = true;
+  };
 
   networking.hostName = "riko";
 
@@ -50,7 +49,6 @@ in {
         enable = true;
         memtest86.enable = true; # show memtest
         configurationLimit = 5;
-        consoleMode = "auto";
       };
     };
   };

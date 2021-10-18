@@ -6,15 +6,32 @@ let
 in {
   imports = [
     ./encryptedRoot.nix
+    ./quietBoot.nix
   ];
 
 
   options.machine = {
     encryptedRoot = mkEnableOption "Enable luks handling for /root is encyption";
     useSystemdBoot = mkEnableOption "Use systemd-boot instead of grub";
+    hasBattery = mkEnableOption "Does this machines have a battery?";
+    quietBoot = mkEnableOption "Hide boot log";
   };
 
   config = {
+    themes.base16 = {
+      enable = true;
+      #scheme = "solarized";
+      #variant = "solarized-dark";
+      scheme = "gruvbox";
+      variant = "gruvbox-dark-hard";
+      #variant = "gruvbox-dark-medium";
+      defaultTemplateType = "default";
+      # Add extra variables for inclusion in custom templates
+      extraParams = {
+        fontName = "FiraCode Nerd Font";
+        fontSize = "12";
+      };
+    };
 
     nixpkgs.config.allowUnfree = true;
 
@@ -58,15 +75,10 @@ in {
         ];
       };
 
-      # Quiet durring boot
-      initrd.verbose = false;
-      consoleLogLevel = 0;
-      kernelParams = [ "quiet" "udev.log_priority=3" ]; 
-
       # don't keep /tmp on disk
       tmpOnTmpfs = true;
       cleanTmpDir = true;
-
+      loader.systemd-boot.consoleMode = mkDefault "auto";
     };
 
     xdg = {
@@ -125,6 +137,7 @@ in {
     };
 
     console = {
+      earlySetup = mkDefault true;
       font = "Lat2-Terminus16";
       keyMap = "us";
       colors = with config.lib.base16.theme; [
@@ -220,14 +233,7 @@ in {
 
     hardware = {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).
-      enableRedistributableFirmware = true;
-
-      # Enable bluetooth support.
-      bluetooth = {
-        enable = true;
-        # High quality BT calls
-        hsphfpd.enable = true;
-      };
+      enableRedistributableFirmware = mkDefault true;
 
       opengl = {
         enable = true;
@@ -288,11 +294,6 @@ in {
         }
       ];
     };
-
-    ## Detect and managing bluetooth connections.
-    #services.blueman = {
-    #  enable = true;
-    #};
 
     ## Enable periodic trim for long term SSD performance.
     #services.fstrim.enable = true;

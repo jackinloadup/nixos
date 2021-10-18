@@ -50,6 +50,14 @@ in
       [[ "$(tty)" == /dev/tty1 ]] && exec sway
     '';
 
+    programs.zsh.initExtra = ''
+      source ${config.lib.base16.templateFile { name = "shell"; }}
+
+      # if tty1 then dont fork, instead transfer execution to sway
+      # thus if sway crashes the resulting terminal will not be logged in
+      [[ "$(tty)" == /dev/tty1 ]] && exec sway
+    '';
+
     programs.mpv.enable = true;
     programs.mpv.config = {
       profile = "gpu-hq";

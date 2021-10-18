@@ -29,9 +29,11 @@ in {
   };
 
   machine = {
+    bluetooth = true;
     steam = true;
     starlight = false;
     encryptedRoot = true;
+    quietBoot = true;
   };
 
   networking.hostName = "reg";
@@ -48,7 +50,6 @@ in {
         enable = true;
         memtest86.enable = true; # show memtest
         configurationLimit = 5;
-        consoleMode = "auto";
       };
     };
   };

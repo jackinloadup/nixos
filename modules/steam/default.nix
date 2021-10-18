@@ -12,6 +12,5 @@ in {
   config = mkIf cfg.steam {
     programs.steam.enable = true;
     hardware.steam-hardware.enable = true;
-    # add config above here
   };
 }
