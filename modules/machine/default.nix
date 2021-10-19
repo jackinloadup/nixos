@@ -307,11 +307,6 @@ in {
     ## Enable fix for lenovo cpu throttling issue.
     #services.throttled.enable = true;
 
-    ## Enable general power saving features.
-    #services.tlp = {
-    #  enable = true;
-    #};
-
     #nix.maxJobs = lib.mkDefault 8;
 
     environment.sessionVariables = {
