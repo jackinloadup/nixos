@@ -198,6 +198,7 @@ in {
       jnettop
       iotop
       dnstop
+      input-utils # lsinput
       # atop?
 
     ];
