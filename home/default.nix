@@ -76,6 +76,27 @@ in
       enable = true;
       userName = settings.user.name;
       userEmail = settings.user.email;
+
+      delta.enable = true;
+
+      aliases = {
+        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+        lb = "!git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'";
+        tracked = "for-each-ref --format='%(refname:short) <- %(upstream:short)' refs/heads";
+        poke = "!git ls-remote origin | grep -w refs/heads/poke && git push origin :poke || git push origin master:poke";
+        board = "!f() { php $HOME/bin/gitboard $@; }; f";
+        co = "checkout";
+        br = "branch";
+        git = "!exec git";
+      };
+
+      ignores = [
+        "*.pyc"
+        "*.swo"
+        "*.swp"
+        ".DS_Store"
+        ".settings.xml"
+      ];
     };
 
     programs.firefox = {
