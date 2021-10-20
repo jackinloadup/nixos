@@ -317,6 +317,7 @@ in {
     programs.tmux = {
       enable = true;
       terminal = "tmux-256color";
+      newSession = true;
       extraConfig = ''
         set -ga terminal-overrides ',*256col*:Tc'
         source ${config.lib.base16.templateFile { name="tmux"; }}
