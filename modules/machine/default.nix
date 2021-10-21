@@ -110,7 +110,7 @@ in {
         dbus = "DBUS_SESSION_BUS_ADDRESS=unix:path=${user_run}/bus";
         dunstify = "${dbus} ${pkgs.dunst}/bin/dunstify --replace=${toString settings.user.uid} --timeout=2000";
         bash = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash}/bin/bash";
-        playerctl = "${dbus} ${pkgs.playerctl}/bin/playerctl";
+        playerctl = "${dbus} ${pkgs.playerctl}/bin/playerctl --player=spotify,%any";
         pactl = "${pkgs.pulseaudio}/bin/pactl -s ${user_run}/pulse/native";
 
         # get mute as 0=yes,mutted 1=no,umutted
