@@ -223,7 +223,7 @@ set keymap vi-insert
       zathura # PDF / Document viewer
       libreoffice # Office suite
       fractal # matrix client
-      thunderbird # Email client
+      thunderbird-91 # Email client
       #firefox # Web browser
       tixati # bittorrent client
       mumble # voice chat application
