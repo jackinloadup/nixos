@@ -2,6 +2,27 @@
 
 with lib;
 {
+  programs.zsh = {
+    enable = true;
+
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = [
+        "main"
+        "brackets"
+        "root"
+      ];
+    };
+    autosuggestions.enable = false; #for systemwide?
+    interactiveShellInit = ''
+      source ${config.lib.base16.templateFile { name = "shell"; }}
+      eval "$(starship init zsh)"
+
+      bindkey '^R' history-incremental-pattern-search-backward
+      bindkey '^F' history-incremental-pattern-search-forward
+    '';
+  };
+
   home-manager.users.lriutzel.programs = {
     zsh = {
       enable = true;
@@ -18,25 +39,8 @@ with lib;
         expireDuplicatesFirst = true;
       };
 
-      syntaxHighlighting = {
-        enable = true;
-        highlighters = [
-          "main"
-          "brackets"
-          "root"
-        ];
-      };
-
-      autosuggestions.enable = false;
-
-      interactiveShellInit = ''
-        source ${config.lib.base16.templateFile { name = "shell"; }}
-        eval "$(starship init zsh)"
-
-        bindkey '^R' history-incremental-pattern-search-backward
-        bindkey '^F' history-incremental-pattern-search-forward
-      '';
     };
+
 
     starship = {
       enable = true;
