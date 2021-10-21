@@ -32,6 +32,15 @@ in
     xdg = {
       enable = true;
       userDirs.enable = true;
+
+      mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "application/pdf" = "org.pwmt.zathura.desktop";
+          "application/xhtml+xml" = "firefox.desktop";
+          "text/html" = "firefox.desktop";
+        };
+      };
     };
 
     gtk = with settings.theme; {
