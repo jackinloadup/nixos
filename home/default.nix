@@ -119,17 +119,33 @@ set keymap vi-insert
         poke = "!git ls-remote origin | grep -w refs/heads/poke && git push origin :poke || git push origin master:poke";
         board = "!f() { php $HOME/bin/gitboard $@; }; f";
         co = "checkout";
+        ci = "commit";
+        cia = "commit --amend";
+        s = "status";
+        st = "status";
+        b = "branch";
         br = "branch";
+        p = "pull --rebase";
+        pu = "push";
         git = "!exec git";
       };
 
       ignores = [
+        "*~"
         "*.pyc"
         "*.swo"
         "*.swp"
         ".DS_Store"
         ".settings.xml"
       ];
+
+      extraConfig = {
+        init.defaultBranch = "master";
+        core.editor = "nvim";
+        #protocol.keybase.allow = "always";
+        #credential.helper = "store --file ~/.git-credentials";
+        #pull.rebase = "false";
+      };
     };
 
     programs.firefox = {
