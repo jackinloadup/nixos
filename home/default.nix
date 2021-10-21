@@ -280,6 +280,11 @@ set keymap vi-insert
       dunst = {
         enable = true;
 
+        #iconTheme = {
+        #  package = pkgs.gnome.adwaita-icon-theme;
+        #  name = "Adwaita";
+        #};
+
         settings = {
           global = with settings.theme; {
             follow = "keyboard"; # Show notifications where the keyboard has foucs.
