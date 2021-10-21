@@ -59,13 +59,37 @@ in
       [[ "$(tty)" == /dev/tty1 ]] && exec sway
     '';
 
-    programs.zsh.initExtra = ''
-      source ${config.lib.base16.templateFile { name = "shell"; }}
+    programs.zsh = {
 
-      # if tty1 then dont fork, instead transfer execution to sway
-      # thus if sway crashes the resulting terminal will not be logged in
-      [[ "$(tty)" == /dev/tty1 ]] && exec sway
-    '';
+      initExtra = ''
+        # if tty1 then dont fork, instead transfer execution to sway
+        # thus if sway crashes the resulting terminal will not be logged in
+        [[ "$(tty)" == /dev/tty1 ]] && exec sway
+      '';
+    };
+
+    programs.readline = {
+      enable = true;
+      bindings = {
+        "\\C-h" = "backward-kill-word";
+      };
+      extraConfig = ''
+set editing-mode vi
+
+set show-mode-in-prompt on
+set vi-ins-mode-string "\1\e[5 q\2"
+set vi-cmd-mode-string "\1\e[2 q\2"
+
+set keymap vi-command
+# j and k should search for the string of characters preceding the cursor
+"k": history-search-backward
+"j": history-search-forward
+
+set keymap vi-insert
+# inoremap jk <Esc>
+"jk": vi-movement-mode
+      '';
+    };
 
     programs.mpv.enable = true;
     programs.mpv.config = {

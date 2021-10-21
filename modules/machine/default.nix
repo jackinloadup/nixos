@@ -160,11 +160,24 @@ in {
       ];
     };
 
+    programs.autojump.enable = true;
+    programs.bash = {
+      interactiveShellInit = ''
+        source ${config.lib.base16.templateFile { name = "shell"; }}
+        eval "$(starship init bash)"
+      '';
+      undistractMe = {
+        enable = true;
+        timeout = 10;
+        playSound = true;
+      };
+    };
 
-    programs.zsh.enable = true;
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+      starship
+
       vim # text editor
       wget # http client
       curl # http client
