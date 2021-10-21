@@ -7,6 +7,7 @@ in
 {
   imports = [
     ./sway.nix
+    ./i3.nix
     ./alacritty.nix
     ../common/neovim
     base16.hmModule
