@@ -287,10 +287,10 @@ in
           command = "move to workspace 10";
           criteria.class = "Spotify";
         }
-        {
-          command = "opacity ${builtins.toString theme.background_opacity}";
-          criteria.app_id = "firefox";
-        }
+        #{
+        #  command = "opacity ${builtins.toString theme.background_opacity}";
+        #  criteria.app_id = "firefox";
+        #}
         #{
         #  command = "move to scratchpad";
         #  criteria = {
