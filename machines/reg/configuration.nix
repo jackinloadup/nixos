@@ -34,6 +34,7 @@ in {
     starlight = false;
     encryptedRoot = true;
     quietBoot = true;
+    simula = true;
     home-assistant = true;
     gaming = true;
   };
