@@ -4,6 +4,7 @@
     uid = 1000;
     email = "lriutzel@gmail.com";
     username = "lriutzel";
+    historySize = 2000; # used for zsh history atm
   };
 
   home = {

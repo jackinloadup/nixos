@@ -5,6 +5,9 @@ let
   inherit inputs;
 in self: super: {
   neovim-unwrapped = self.unstable.neovim-unwrapped;
+  home-assistant = self.unstable.home-assistant.override {
+    extraPackages = py: with py; [ psycopg2 ];
+  };
   ## Example package, used only for tests
   #hello-custom = super.callPackage ../packages/hello-custom { };
   #darktile = super.callPackage ../packages/darktile { };
