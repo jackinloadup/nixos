@@ -10,6 +10,11 @@ in {
   options.machine.gaming = mkEnableOption "Enable steam game platform";
 
   config = mkIf cfg.gaming {
+    environment.systemPackages = with pkgs; [
+      monado
+      libgdiplus
+      gnome.adwaita-icon-theme
+    ];
     services.xserver = {
       enable = true;
       autorun = false;
@@ -24,7 +29,5 @@ in {
     qt5.enable = true;
     qt5.platformTheme = "gtk2";
     qt5.style = "gtk2";
-
-    programs.steam.enable = true;
   };
 }
