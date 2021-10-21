@@ -160,7 +160,7 @@ in {
       ];
     };
 
-    programs.autojump.enable = true;
+    #programs.autojump.enable = true;
     programs.bash = {
       interactiveShellInit = ''
         source ${config.lib.base16.templateFile { name = "shell"; }}
