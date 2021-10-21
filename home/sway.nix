@@ -282,6 +282,10 @@ in
           command = "inhibit_idle fullscreen";
           criteria.class = "Kodi";
         }
+        { # I don't think this works atm because zoom sucks at labeling it's window
+          command = "inhibit_idle fullscreen";
+          criteria.title = "^Zoom*";
+        }
         {
           # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
           command = "move to workspace 10";
