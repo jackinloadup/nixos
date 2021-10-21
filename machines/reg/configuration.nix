@@ -34,6 +34,7 @@ in {
     starlight = false;
     encryptedRoot = true;
     quietBoot = true;
+    home-assistant = true;
   };
 
   networking.hostName = "reg";
