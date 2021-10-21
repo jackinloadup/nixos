@@ -16,11 +16,13 @@
   fileSystems."/boot/EFI" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";
+    options = [ "defaults" "x-gvfs-hide" ];
   };
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
+    options = [ "defaults" "x-gvfs-hide" ];
   };
 
   swapDevices = [
