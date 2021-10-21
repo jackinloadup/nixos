@@ -1,6 +1,4 @@
 {
-  timezone = "America/Chicago";
-
   user = {
     name = "Lucas Riutzel";
     uid = 1000;
@@ -8,11 +6,21 @@
     username = "lriutzel";
   };
 
+  home = {
+    name = "Starbase";
+    latitude = "36.629727";
+    longitude = "-93.216178";
+    elevation = 70; # meters 230ft
+    unit_system = "imperial";
+    timezone = "America/Chicago";
+    currency = "USD";
+  };
+
   timeouts = { 
     show_age_after = 60;
-    idle = "150";
-    screenLock = "300";
-    displayOff = "330";
+    idle = 150;
+    screenLock = 300;
+    displayOff = 330;
   };
 
   theme = {
@@ -36,6 +44,10 @@
     base16 = {
       scheme = "gruvbox";
       variant = "gruvbox-dark-hard";
+      #scheme = "tomorrow";
+      #variant = "tomorrow-night";
+      #scheme = "woodland";
+      #variant = "woodland";
     };
   };
 }

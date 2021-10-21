@@ -330,8 +330,8 @@ in
               timeouts = settings.timeouts;
             in
             ''${pkgs.swayidle}/bin/swayidle -w \
-              timeout ${timeouts.screenLock} ${lockCmd} \
-              timeout ${timeouts.displayOff} 'swaymsg "output * dpms off"' \
+              timeout ${toString timeouts.screenLock} ${lockCmd} \
+              timeout ${toString timeouts.displayOff} 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
               before-sleep ${lockCmd}
            '';

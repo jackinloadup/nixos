@@ -256,7 +256,7 @@ in {
     };
 
     # Set your time zone.
-    time.timeZone = settings.timezone;
+    time.timeZone = settings.home.timezone;
 
     # networking.interfaces.enp0s3.useDHCP = true;
 
