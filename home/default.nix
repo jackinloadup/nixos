@@ -122,6 +122,8 @@ set keymap vi-insert
         co = "checkout";
         ci = "commit";
         cia = "commit --amend";
+        d = "diff";
+        ds = "diff --staged";
         s = "status";
         st = "status";
         b = "branch";
@@ -273,6 +275,10 @@ set keymap vi-insert
       graphviz
 
       playerctl
+
+      lftp
+
+      wireshark
     ];
 
     services = {
