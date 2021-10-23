@@ -58,6 +58,7 @@ in {
             "networkmanager"
             "scanner" "lp"
             "i2c"
+            "wireshark"
           ];
         };
       };
@@ -173,6 +174,8 @@ in {
       };
     };
 
+    programs.wireshark.enable = true;
+
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
@@ -202,6 +205,18 @@ in {
       yubikey-personalization
       lsof
       neovim
+
+      lf # file manager
+      file
+      highlight
+      unzip
+      unrar
+      p7zip
+      #haskellPackages.pdftotext check again later. never seen an official package state it's broken
+      python39Packages.pdftotext
+      bat # cat alternative
+      viu # terminal image viewer
+      emulsion # mimimal linux image viewer built in rust
 
       # Debug
       pciutils
@@ -336,6 +351,34 @@ in {
         source ${config.lib.base16.templateFile { name="tmux"; }}
       '';
     };
+    environment.etc."lf/lfrc".text = ''
+set previewer /etc/lf/pv.sh
+map i $LESSOPEN='| /etc/lf/pv.sh %s' less -R $f
+cmd open ''${{
+    case $(file --mime-type $f -b) in
+        text/*) vi $fx;;
+        image/*) imv $fx;;
+        *) for f in $fx; do xdg-open $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+      '';
+    environment.etc."lf/pv.sh".mode = "0755";
+    environment.etc."lf/pv.sh".text = ''
+#!/bin/sh
+
+case "$1" in
+    *.tar*) tar tf "$1";;
+    *.zip) unzip -l "$1";;
+    *.rar) unrar l "$1";;
+    *.7z) 7z l "$1";;
+    *.pdf) pdftotext "$1" -;;
+    *.jpg) viu -t "$1" -;;
+    *.png) viu -t "$1" -;;
+    *.gif) viu -t "$1" -;;
+    *) bat -f --theme gruvbox-dark "$1";;
+esac
+'';
+    #*) highlight -O truecolor "$1";;
 
     # add config above here
   };
