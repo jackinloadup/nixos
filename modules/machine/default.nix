@@ -181,11 +181,14 @@ in {
     environment.systemPackages = with pkgs; [
       starship
 
+      pv
+
       vim # text editor
       wget # http client
       curl # http client
       git # source code manager
       tmux # terminal multiplexer
+      #tmux-cssh
       htop # process, cpu, memory viewer
       lynx # text web browser
       ncdu # ncurses disk usage viewer
@@ -272,8 +275,6 @@ in {
 
     # Set your time zone.
     time.timeZone = settings.home.timezone;
-
-    # networking.interfaces.enp0s3.useDHCP = true;
 
     # Configure network proxy if necessary
     # networking.proxy.default = "http://user:password@proxy:port/";
