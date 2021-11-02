@@ -21,6 +21,39 @@ in {
       }];
     };
 
+    # Needed for some integrations
+    users.users.lriutzel.extraGroups = [ "dialout" ];
+
+    # Open port for mqtt
+    networking.firewall = {
+
+      allowedTCPPorts = [ 1883 8123 ];
+
+      # Expose home-assitant over wireguard
+      interfaces.wg0.allowedTCPPorts = [ 8123 ];
+    };
+
+   # Enable mosquitto MQTT broker
+   services.mosquitto = {
+     enable = true;
+
+     checkPasswords = true;
+
+     # Mosquitto is only listening on the local IP, traffic from outside is not
+     # allowed.
+     host = "10.16.1.11";
+     port = 1883;
+     users = {
+       # No real authentication needed here, since the local network is
+       # trusted.
+       mosquitto = {
+         acl = [ "pattern readwrite #" ];
+         password = "mosquitto";
+       };
+     };
+   };
+
+
     services.home-assistant = {
       enable = true;
       #package = (pkgs.home-assistant.override {
@@ -43,15 +76,31 @@ in {
           elevation = elevation;
           unit_system = unit_system;
           time_zone = timezone;
-          #currency = currency;
+          currency = currency;
           # external_url = "https://home.pablo.tools";
+          auth_providers = {
+            #type = "trusted_networks";
+            type = "homeassistant";
+            trusted_networks = [
+              "10.16.1.0/24"
+              "fd00::/8"
+            ];
+          };
         };
 
         http = {
-          use_x_forwarded_for = true;
-          trusted_proxies = [
-            "10.16.1.1"
+          #use_x_forwarded_for = true;
+          #trusted_proxies = [
+          #  "10.16.1.1"
+          #];
+          #trusted_networks = [
+          #  "127.0.0.1"
+          #  "10.16.0.0/16"
+          #];
+          cors_allowed_origins = [
+            "http://10.16.1.11:8123/"
           ];
+          server_host = "0.0.0.0";
         };
 
         frontend = { };
@@ -60,7 +109,6 @@ in {
         logger.default = "info";
         sun = { };
         config = { };
-        mobile_app = { };
         cloud = { };
         system_health = { };
 
@@ -90,12 +138,12 @@ in {
         # };
 
         # Enable MQTT and configure it to use the mosquitto broker
-        #mqtt = {
-        #  broker = "192.168.2.84";
-        #  port = "1883";
-        #  username = "mosquitto";
-        #  password = "mosquitto";
-        #};
+        mqtt = {
+          broker = "10.16.1.11";
+          port = "1883";
+          username = "mosquitto";
+          password = "mosquitto";
+        };
 
         # Enables a map showing the location of tracked devies
         map = { };
