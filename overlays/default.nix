@@ -5,6 +5,7 @@ let
   inherit inputs;
   #cp = f: (super.callPackage f) {};
 in self: super: {
+  nmap-graphical = self.unstable.nmap-graphical;
   neovim-unwrapped = self.unstable.neovim-unwrapped;
   home-assistant = self.unstable.home-assistant.override {
     extraPackages = py: with py; [ psycopg2 ];

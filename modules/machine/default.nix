@@ -216,7 +216,7 @@ in {
       unrar
       p7zip
       #haskellPackages.pdftotext check again later. never seen an official package state it's broken
-      python39Packages.pdftotext
+      poppler_utils
       bat # cat alternative
       viu # terminal image viewer
       emulsion # mimimal linux image viewer built in rust
@@ -231,6 +231,7 @@ in {
       dnstop
       input-utils # lsinput
       # atop?
+      nmap-graphical
 
     ];
 
@@ -384,7 +385,7 @@ case "$1" in
     *.jpg) viu -t "$1" -;;
     *.png) viu -t "$1" -;;
     *.gif) viu -t "$1" -;;
-    *) bat -f --theme gruvbox-dark "$1";;
+    *) bat --force-colorization --style=numbers --theme gruvbox-dark "$1";;
 esac
 '';
     #*) highlight -O truecolor "$1";;
