@@ -34,6 +34,8 @@ explore quick shells for rust / secops / private + colors per shell in case of m
 ephemeral boot option
 nixops deploy to other computer
 
+nvim: limit tree siter language support
+
 build plan to migrate desktop
 labled menu in sway for rando application browsing / searching
 wireshark
