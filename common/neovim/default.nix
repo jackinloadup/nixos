@@ -11,12 +11,27 @@
     extraPackages = with pkgs; [
       #unstable.tree-sitter
       rnix-lsp
+      gcc
     ];
 
     plugins = with pkgs.vimPlugins; [
-      gruvbox-community
+      # Syntax
       vim-nix
+      vim-go
+      rust-vim
+
+      # Language Server
       nvim-lspconfig
+
+      # UI
+      gruvbox-community
+      vim-gitgutter # git status in the gutter
+      vim-airline # like starship for status line
+      nvim-treesitter
+
+      # Editor Features
+      vim-surround
+      indentLine # thin line at each indent level
     ];
 
     extraConfig = ''
@@ -104,6 +119,24 @@
       colorscheme gruvbox
       "let g:context_nvim_no_redraw = 1
       set background=dark
+
+      let g:airline_powerline_fonts = 1
+
+      lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    -- disable = { "c", "rust" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
     '';
   };
 }
