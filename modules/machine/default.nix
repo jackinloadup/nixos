@@ -261,7 +261,15 @@ in {
 
 
     # Enable the OpenSSH daemon.
-    services.openssh.enable = true; #TODO limit to authorized keys only
+    services.openssh = {
+      enable = true; #TODO limit to authorized keys only
+      startWhenNeeded = true;
+    };
+
+    services.sshguard = {
+      enable = true;
+      detection_time = 3600;
+    };
 
     hardware = {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).

@@ -98,6 +98,8 @@ with lib;
       settings = {
         format = concatStrings [
           "$time"
+          "$username"
+          "$hostname"
           "$character"
         ];
         right_format = concatStrings [
