@@ -280,6 +280,10 @@ set keymap vi-insert
 
       wireshark
 
+      units
+
+      mindforger
+
       wineApps.winbox
       winetricks
       wineWowPackages.stable

@@ -22,6 +22,10 @@ gnupg
 - signal
 - steam compartment?
 - fractal?
+- custom kernel that cuts out cruft like support for sandards or subsystems the computer will never need
+- explore kernelshark debug tool
+- possible to customize bios with tool like AMI Firmware Update linux (like amibcp?)
+- uefi tools and isos to keep on me.
 
 # to autostart possibly
  - fractal

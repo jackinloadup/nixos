@@ -116,6 +116,9 @@ with lib;
           utc_time_offset = "-5";
           format = "$time($style) ";
         };
+        username = {
+          disabled = false;
+        };
       };
     };
   };
