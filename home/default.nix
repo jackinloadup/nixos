@@ -279,6 +279,10 @@ set keymap vi-insert
       lftp
 
       wireshark
+
+      wineApps.winbox
+      winetricks
+      wineWowPackages.stable
     ];
 
     services = {
