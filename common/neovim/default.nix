@@ -1,6 +1,13 @@
 { config, pkgs, nixosConfig, ... }:
 
-{
+let
+  nvim-syntax-rsc-mikrotik = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/olejor/mikrotik/master/syntax/vim/rsc.vim";
+    sha256 = "b32568b014864eb7399c900d82f8e2d921c5b7cc83cafd5525296a7acbdfc20e";
+  };
+in {
+  home.file."${config.xdg.configHome}/nvim/syntax/rsc.vim".source = nvim-syntax-rsc-mikrotik;
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -137,6 +144,8 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+      source ${config.xdg.configHome}/nvim/syntax/rsc.vim
     '';
   };
 }
