@@ -141,27 +141,5 @@
     #    # defaultPackage = packages.hello;
     #    # defaultApp = apps.hello;
     #  });
-
-  #outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
-  #  nixosConfigurations = {
-  #    nixpad = with nixpkgs.lib;
-  #      let
-  #        system = "x86_64-linux";
-  #        modules = [
-  #          ./machines/nixpad.nix
-  #          home-manager.nixosModules.home-manager
-  #          {
-  #            nix.registry.nixpkgs.flake = nixpkgs;
-  #            home-manager.useGlobalPkgs = true;
-  #            home-manager.useUserPackages = false;
-  #            home-manager.users.lriutzel = import ./home;
-  #            home-manager.extraSpecialArgs = { inherit inputs; };
-  #          }
-  #          #(./. + "/hosts/${hostname}/configuration.nix")
-  #        ];
-  #        specialArgs = { inherit inputs; };
-  #      in nixosSystem { inherit system modules specialArgs; };
-  #  };
-  #};
 }
 
