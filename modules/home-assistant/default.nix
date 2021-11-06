@@ -67,7 +67,7 @@ in {
 
         shelly = { };
 
-        zeroconf = { default_interface = true; };
+        zeroconf = { };
         # Basic settings for home-assistant
         homeassistant = with settings.home; {
           name = name;
@@ -78,24 +78,27 @@ in {
           time_zone = timezone;
           currency = currency;
           # external_url = "https://home.pablo.tools";
-          auth_providers = {
-            #type = "trusted_networks";
-            type = "homeassistant";
-            trusted_networks = [
-              "10.16.1.0/24"
-              "fd00::/8"
-            ];
-          };
+          auth_providers = [
+            {
+              type = "trusted_networks";
+              trusted_networks = [
+                "10.16.1.0/24"
+                "fd00::/8"
+              ];
+              #trusted_users = {
+              #  "10.16.1.11" = "lucas";
+              #};
+            }
+            {
+              type = "homeassistant";
+            }
+          ];
         };
 
         http = {
           #use_x_forwarded_for = true;
           #trusted_proxies = [
           #  "10.16.1.1"
-          #];
-          #trusted_networks = [
-          #  "127.0.0.1"
-          #  "10.16.0.0/16"
           #];
           cors_allowed_origins = [
             "http://10.16.1.11:8123/"
@@ -136,6 +139,20 @@ in {
         # prometheus = {
         #   namespace = "hass";
         # };
+
+        #media_player:
+        # - platform: yamaha
+        #   host: 192.168.0.10
+        #   source_ignore:
+        #     - "AUX"
+        #     - "HDMI6"
+        #   source_names:
+        #     HDMI1: "ChromeCast"
+        #     AV4: "Vinyl"
+        #   zone_ignore:
+        #     - "Zone_2"
+        #   zone_names:
+        #     Main_Zone: "Family Room"
 
         # Enable MQTT and configure it to use the mosquitto broker
         mqtt = {
