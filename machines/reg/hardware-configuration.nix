@@ -1,8 +1,6 @@
 # to /etc/nixos/configuration.nix instead.
-{ self, nixos-hardware, ... }: {
-  imports = [
-    ../../profiles/amd.nix
-  ];
+{ self, ... }: {
+  imports = [ ];
 
   # Required for throttled when running on the 5.9 kernel.
   #boot.kernelParams = [ "msr.allow_writes=on" ];
@@ -25,9 +23,13 @@
     options = [ "defaults" "x-gvfs-hide" ];
   };
 
-  swapDevices = [
-    { device = "/var/swapfile"; size = 34000; } # this big for hibernation 34Gb~
-  ];
+  #swapDevices = [
+  #  { device = "/var/swapfile"; size = 34000; } # this big for hibernation 34Gb~
+  #];
 
-  boot.resumeDevice = "/dev/disk/by-label/nixos";
+  #boot = {
+  #  # filefrag -v /var/swapfile to get offset
+  #  kernelParams = ["resume=/var/swapfile" "resume_offset=17887232" ]; 
+  #  resumeDevice = "/dev/disk/by-label/nixos";
+  #};
 }

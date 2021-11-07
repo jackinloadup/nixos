@@ -14,6 +14,9 @@ in {
       monado
       libgdiplus
       gnome.adwaita-icon-theme
+
+      # xorg stuff
+      xorg.xhost # for `xhost si:localuser:root`
     ];
     services.xserver = {
       enable = true;

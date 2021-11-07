@@ -2,6 +2,9 @@
 
 with lib;
 {
+  #users.defaultUserShell = pkgs.zsh; # haven't tried
+  users.users.lriutzel.shell = pkgs.zsh;
+
   programs.zsh = {
     enable = true;
 
@@ -55,7 +58,7 @@ with lib;
               [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
           fi
       }
-      bindkey -s '^o' ' lfcd\n'
+      bindkey -s '^o' 'lfcd\n'
     '';
   };
 
@@ -71,7 +74,7 @@ with lib;
         size = 100000;
         save = size;
         path = "$HOME/.local/share/zsh/history";
-        ignorePatterns = [ "rm *" "pkill *" ];
+        ignorePatterns = [ "rm *" "pkill *" "lscd" ];
         expireDuplicatesFirst = true;
       };
 
@@ -122,5 +125,4 @@ with lib;
       };
     };
   };
-  users.users.lriutzel.shell = pkgs.zsh;
 }

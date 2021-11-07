@@ -17,19 +17,11 @@ in
 
   home.packages = with pkgs; [
     #sway-contrib.grimshot
-    alacritty # look into foot term for ram usage
-    sway
-    swaylock
-    swayidle
-    wev
     wl-clipboard
     waybar
-    wdisplays
     #mako
     #dmenu
     gnome.adwaita-icon-theme
-    bemenu
-    j4-dmenu-desktop
   ];
 
   wayland.windowManager.sway = {
