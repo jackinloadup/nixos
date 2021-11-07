@@ -3,6 +3,8 @@ with lib;
 let
   cfg = config.machine;
 in {
+  options.machine.encryptedRoot = mkEnableOption "Enable luks handling for /root is encyption";
+
   config = mkIf cfg.encryptedRoot {
     boot = {
       initrd = {

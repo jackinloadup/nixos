@@ -214,6 +214,7 @@ set keymap vi-insert
 
       TERMINFO_DIRS="/home/lriutzel/.nix-profile/share/terminfo";
       WSLENV="TERMINFO_DIRS";
+      XAUTHORITY="/home/lriutzel/.Xauthority";
     };
 
     home.username = settings.user.username;

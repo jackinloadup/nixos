@@ -7,29 +7,40 @@ in {
   imports = [
     ./encryptedRoot.nix
     ./quietBoot.nix
+    ./lowLevelXF86keys.nix
+    ./sway.nix
   ];
 
 
   options.machine = {
-    encryptedRoot = mkEnableOption "Enable luks handling for /root is encyption";
-    useSystemdBoot = mkEnableOption "Use systemd-boot instead of grub";
-    hasBattery = mkEnableOption "Does this machines have a battery?";
-    quietBoot = mkEnableOption "Hide boot log";
+    #useSystemdBoot = mkEnableOption "Use systemd-boot instead of grub";
+    #hasBattery = mkEnableOption "Does this machines have a battery?";
+    sizeTarget = mkOption {
+      type = types.int;
+      default = 2;
+      example = 0;
+      description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Lite 2=Normal";
+    };
+    debugTools = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      example = [ "hardware" "network" "os" "fs" "tui" "gui" "all" ];
+      description = "The category of debug tools to be install";
+    };
+    includeDocs = mkEnableOption "Should documentation be installed?";
   };
 
   config = {
-    themes.base16 = {
+    themes.base16 = with settings.theme; {
       enable = true;
-      #scheme = "solarized";
-      #variant = "solarized-dark";
-      scheme = "gruvbox";
-      variant = "gruvbox-dark-hard";
-      #variant = "gruvbox-dark-medium";
+      scheme = base16.scheme;
+      variant = base16.variant;
       defaultTemplateType = "default";
       # Add extra variables for inclusion in custom templates
+      # not sure the "extraParams" are being used. No custom templates afaik
       extraParams = {
-        fontName = "FiraCode Nerd Font";
-        fontSize = "12";
+        fontName = font.mono.family;
+        fontSize = font.size;
       };
     };
 
@@ -45,19 +56,16 @@ in {
       experimental-features = nix-command flakes
     '';
 
-    programs.dconf.enable = true; # needed for HM.gtk.enable true
-
     users = {
-      users = {
-        ${settings.user.username} = {
+      users = with settings.user; {
+
+        ${username} = {
           isNormalUser = true;
           extraGroups = [
             "wheel"
             "audio"
             "video"
             "networkmanager"
-            "scanner" "lp"
-            "i2c"
             "wireshark"
           ];
         };
@@ -65,6 +73,7 @@ in {
     };
 
     boot = {
+      #plymouth.enable = true;
       initrd = {
         availableKernelModules = [
           "xhci_pci"
@@ -79,17 +88,19 @@ in {
       # don't keep /tmp on disk
       tmpOnTmpfs = true;
       cleanTmpDir = true;
-      loader.systemd-boot.consoleMode = mkDefault "auto";
+
+      loader.systemd-boot = {
+        enable = mkDefault true;
+        #memtest86.enable = true; # show memtest
+        configurationLimit = mkDefault 5;
+        consoleMode = mkDefault "auto";
+      };
     };
 
     xdg = {
       portal = {
         enable = true;
         gtkUsePortal = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-wlr
-          xdg-desktop-portal-gtk
-        ];
       };
     };
 
@@ -98,44 +109,6 @@ in {
       (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
       lato
     ];
-
-    #TODO light doesn't work for all systems or is needed for all systems
-    # Enable backlight control
-    programs.light.enable = true;
-
-    # Enable if minimal setup. Dont use for Gnome/KDE/Xfce
-    #sound.mediaKeys.enable = true; # uses alsa amixer by default
-    services.actkbd =
-      let
-        user_run = "/run/user/${toString settings.user.uid}";
-        dbus = "DBUS_SESSION_BUS_ADDRESS=unix:path=${user_run}/bus";
-        dunstify = "${dbus} ${pkgs.dunst}/bin/dunstify --replace=${toString settings.user.uid} --timeout=2000";
-        bash = "${pkgs.su}/bin/su ${settings.user.username} -s ${pkgs.bash}/bin/bash";
-        playerctl = "${dbus} ${pkgs.playerctl}/bin/playerctl --player=spotify,%any";
-        pactl = "${pkgs.pulseaudio}/bin/pactl -s ${user_run}/pulse/native";
-
-        # get mute as 0=yes,mutted 1=no,umutted
-        is_mute = "${pactl} list sinks | ${pkgs.ripgrep}/bin/rg -A 7 RUNNING | ${pkgs.coreutils}/bin/tail -n 1 | ${pkgs.coreutils}/bin/head -1  | ${pkgs.coreutils}/bin/cut -d \"/\" -f2 | ${pkgs.coreutils}/bin/tr -d \" \" | ${pkgs.gnugrep}/bin/grep -q yes";
-        # get audio volume as percent int eg 80
-        current_volume  = "${pactl} list sinks | ${pkgs.ripgrep}/bin/rg -A 8 RUNNING | ${pkgs.coreutils}/bin/tail -n 1 | ${pkgs.coreutils}/bin/head -1  | ${pkgs.coreutils}/bin/cut -d \"/\" -f2 | ${pkgs.coreutils}/bin/tr -d \" %\"";
-        set_volume_mute = "${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
-        set_volume_up   = "${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
-        set_volume_down = "${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
-        notify_current_volume = "${dunstify} \"Volume\" -h int:value:`${current_volume}`";
-        notify_muted          = "${dunstify} \"Volume Muted\" -t 0 -h int:value:0";
-      in {
-        enable = true;
-        bindings = [
-          { keys = [ 224 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -U 10"; }
-          { keys = [ 225 ]; events = [ "key" ]; command = "${pkgs.light}/bin/light -A 10"; }
-          { keys = [ 113 ]; events = [ "key" ]; command = "${bash} -c '${set_volume_mute} && ${is_mute} && ${notify_muted} || ${notify_current_volume}'"; }
-          { keys = [ 114 ]; events = [ "key" ]; command = "${bash} -c '${set_volume_down} && ${notify_current_volume}'"; }
-          { keys = [ 115 ]; events = [ "key" ]; command = "${bash} -c '${set_volume_up}   && ${notify_current_volume}'"; }
-          { keys = [ 163 ]; events = [ "key" ]; command = "${bash} -c '${playerctl} next       '"; }
-          { keys = [ 164 ]; events = [ "key" ]; command = "${bash} -c '${playerctl} play-pause && ${dunstify} \"Play-Pause: \"'"; }
-          { keys = [ 165 ]; events = [ "key" ]; command = "${bash} -c '${playerctl} previous   '"; }
-      ];
-    };
 
     console = {
       earlySetup = mkDefault true;
@@ -181,72 +154,83 @@ in {
     environment.systemPackages = with pkgs; [
       starship
 
-      pv
+      pv # progress meter
 
-      vim # text editor
-      wget # http client
-      curl # http client
+      #vim # text editor
+      neovim # text editor
+
       git # source code manager
+
       tmux # terminal multiplexer
       #tmux-cssh
-      htop # process, cpu, memory viewer
-      lynx # text web browser
-      ncdu # ncurses disk usage viewer
-      mtr # traceroute and ping
+
       pulseaudio # for pactl and other things like it just not enabled
       #ncpamixer # couldn't get it to work
-      vlock # tty/vtty locker
+      #vlock # tty/vtty locker
       jq # json parsing
       tree # file/directory viewer in tree format
       ripgrep # grep alternative
       rsync
-      #flavours
-      nix-tree # A terminal curses application to browse a Nix store paths dependencies
       pass # password manager
       nix-plugins # Collection of miscellaneous plugins for the nix expression language
-      yubikey-manager
-      yubikey-personalization
-      lsof
-      neovim
-
       lf # file manager
-      file
-      highlight
-      unzip
-      unrar
-      p7zip
-      #haskellPackages.pdftotext check again later. never seen an official package state it's broken
+      highlight # highlight files for previews
       poppler_utils
       bat # cat alternative
       viu # terminal image viewer
       emulsion # mimimal linux image viewer built in rust
 
+      ## compression tools
+      unzip
+      unrar
+      p7zip
+
+      ## http/web
+      lynx # text web browser
+      wget # http client
+      curl # http client
+
       # Debug
+      ## hardware
       pciutils
       powertop
+
+      ## network
       iftop
       latencytop
       jnettop
-      iotop
       dnstop
-      input-utils # lsinput
-      # atop?
       nmap-graphical
+      mtr # traceroute and ping
+
+      ## io
+      iotop
+      input-utils # lsinput
+
+      ## files
+      lsof
+      ncdu # ncurses disk usage viewer
+      file
+
+      ## OS (nix/linux)
+      nix-tree # A terminal curses application to browse a Nix store paths dependencies
+      # atop?
+      htop # process, cpu, memory viewer
 
     ];
 
     powerManagement = {
       enable = true;
-      powertop.enable = true;
+      cpuFreqGovernor = lib.mkDefault "ondemand";
+      powertop.enable = true; # if debug?
     };
 
     networking = {
-      # Enable wifi powersaving.
       networkmanager = {
         enable = lib.mkDefault true;
         wifi = {
           #enable = true;  # Enables wireless support via wpa_supplicant.
-          powersave = true;
+          powersave = true; # Enable wifi powersaving. Not exactly sure if this is working
           macAddress = "random";
         };
       };
@@ -277,7 +261,6 @@ in {
       enableRedistributableFirmware = mkDefault true;
 
       opengl = {
-        enable = true;
         driSupport = true;
       };
     };
@@ -285,18 +268,24 @@ in {
     # Set your time zone.
     time.timeZone = settings.home.timezone;
 
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-    # Select internationalisation properties.
-    i18n.defaultLocale = "en_US.UTF-8";
+    # Select and limit locales
+    i18n = with settings.user;
+    let
+      localeFull = "${locale}.${characterSet}";
+      localeExtended = "${localeFull}/${characterSet}";
+    in {
+      supportedLocales = [ localeExtended ];
+      defaultLocale = localeFull;
+      glibcLocales = pkgs.glibcLocales.override {
+        allLocales = false;
+        locales = [ localeExtended ];
+      };
+    };
 
     # Enable sound.
     sound.enable = false; # conflicts with pipewire?
 
     security = {
-      pam.services.swaylock = {}; # tmp hack to allow swaylock to work
       rtkit.enable = true; # allows pipewire to run "realtime"
     };
 
@@ -308,48 +297,20 @@ in {
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-
-      # High quality BT calls
-      media-session.config.bluez-monitor.rules = [
-        {
-          # Matches all cards
-          matches = [{ "device.name" = "~bluez_card.*"; }];
-          actions = {
-            "update-props" = {
-              "bluez5.auto-connect" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-            };
-          };
-        }
-        {
-          matches = [
-            # Matches all sources
-            { "node.name" = "~bluez_input.*"; }
-            # Matches all outputs
-            { "node.name" = "~bluez_output.*"; }
-          ];
-          actions = {
-            "node.pause-on-idle" = false;
-          };
-        }
-      ];
     };
-
-    ## Enable periodic trim for long term SSD performance.
-    #services.fstrim.enable = true;
 
     ## Enable updating firmware via the command line.
     services.fwupd.enable = true;
 
-    ## Enable cpu specific power saving features.
-    #services.thermald.enable = true;
-
-    ## Enable fix for lenovo cpu throttling issue.
-    #services.throttled.enable = true;
-
-    #nix.maxJobs = lib.mkDefault 8;
-
     environment.sessionVariables = {
       EDITOR = "vim";
+    };
+
+    environment.shellAliases = {
+      "ncdu" = "ncdu --color dark";
+    };
+
+    programs.less.configFile = {
     };
 
     programs.tmux = {
@@ -389,6 +350,14 @@ case "$1" in
 esac
 '';
     #*) highlight -O truecolor "$1";;
+
+
+    # Enable network discovery
+    #services.avahi.enable = true;
+    #services.avahi.nssmdns = true;
+
+    # Set on each machine that builds
+    #nix.maxJobs = lib.mkDefault 8;
 
     # add config above here
   };

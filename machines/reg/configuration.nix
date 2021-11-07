@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ self, inputs, pkgs, ... }:
+{ self, inputs, pkgs, lib, ... }:
 
 with inputs;
 let
@@ -11,24 +11,11 @@ in {
   imports = [
     ./hardware-configuration.nix
     ../../common/autologin-tty1 # Enable auto login on tty1
-    #<nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    # "$(modulesPath)/installer/scan/not-detected.nix"
     base16.hmModule
   ];
 
-  themes.base16 = {
-    enable = true;
-    scheme = settings.theme.base16.scheme;
-    variant = settings.theme.base16.variant;
-    defaultTemplateType = "default";
-    # Add extra variables for inclusion in custom templates
-    extraParams = {
-      fontName = settings.theme.font.mono.family;
-      fontSize = settings.theme.font.size;
-    };
-  };
-
   machine = {
+    sway = true;
     bluetooth = true;
     steam = true;
     starlight = false;
@@ -37,27 +24,20 @@ in {
     simula = true;
     home-assistant = true;
     gaming = true;
+    lowLevelXF86keys.enable = true;
+  };
+
+  starbase = {
+    printerScanner = true;
   };
 
   networking.hostName = "reg";
+  nix.maxJobs = lib.mkDefault 16;
 
-  boot = {
-    # filefrag -v /var/swapfile to get offset
-    kernelParams = ["resume=/var/swapfile" "resume_offset=17887232" ]; 
+  networking.firewall.allowedTCPPorts = [ 8000 ];
+  networking.firewall.allowedUDPPorts = [ 8000 ];
 
-    #plymouth.enable = true;
-
-    loader = {
-      # Use the systemd-boot EFI boot loader.
-      systemd-boot = {
-        enable = true;
-        memtest86.enable = true; # show memtest
-        configurationLimit = 5;
-      };
-    };
-  };
-
-  # Enable pipewire
+  # Rename pipewire sinks
   services.pipewire = {
     media-session.config.alsa-monitor.rules = [
       {
@@ -91,47 +71,25 @@ in {
 
   # List services that you want to enable:
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ brlaser cups-filters ];
-
-  # Enable Sane to scan documents.
-  hardware.sane.enable = true;
-  hardware.sane.brscan4.enable = true;
-  hardware.sane.brscan4.netDevices = {
-    "Home" = {
-      "ip" = "10.16.1.64";
-      "model" = "MFC-9130CW";
-    };
-  };
-
   hardware.i2c.enable = true;
   services.ddccontrol.enable = true;
   # pkgs that might be desired
   # ddccontrol-db
   # i2c-tools
+  users.users = with settings.user; {
+    ${username} = {
+      extraGroups = [ "i2c" ];
+    };
+  };
 
-  # Enable network discovery
-  #services.avahi.enable = true;
-  #services.avahi.nssmdns = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
+  ];
 
   # set logitec mouse to autosuspend after 60 seconds
   services.udev.extraRules = ''
 ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTR{idProduct}=="c52b", TEST=="power/control", ATTR{power/control}:="auto", TEST=="power/autosuspend_delay_ms", ATTR{power/autosuspend_delay_ms}:="120000"
-
-ACTION!="add|change", GOTO="yubico_end"
-
-# Udev rules for letting the console user access the Yubikey USB
-# device node, needed for challenge/response to work correctly.
-
-# Yubico Yubikey II
-ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0010|0110|0111|0114|0116|0401|0403|0405|0407|0410", \
-    ENV{ID_SECURITY_TOKEN}="1"
-
-LABEL="yubico_end"
   '';
-
-  services.pcscd.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
