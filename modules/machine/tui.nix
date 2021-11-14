@@ -1,8 +1,12 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, ... }:
 with lib;
 let
   cfg = config.machine;
+  settings = import ../../settings;
 in {
+  imports = [
+    inputs.base16.hmModule
+  ];
   options.machine.tui = mkEnableOption "Hide boot log from tui/gui";
 
   config = mkIf cfg.tui {
@@ -17,7 +21,7 @@ in {
       tmux # terminal multiplexer
       #tmux-cssh
 
-      pulseaudio # for pactl and other things like it just not enabled
+    #  pulseaudio # for pactl and other things like it just not enabled
       #ncpamixer # couldn't get it to work
 
       #vlock # tty/vtty locker
@@ -28,14 +32,14 @@ in {
       rsync
       pass # password manager
       lf # file manager
-      highlight # highlight files for previews
-      poppler_utils # for pdf2text
+    #  highlight # highlight files for previews
+    #  poppler_utils # for pdf2text
       bat # cat alternative
       viu # terminal image viewer
 
       ## compression tools
       unzip
-      unrar
+      #unrar #unfree
       p7zip
 
       ## http/web
@@ -53,7 +57,6 @@ in {
       latencytop
       jnettop
       dnstop
-      nmap-graphical
       mtr # traceroute and ping
 
       ## io

@@ -7,7 +7,7 @@ in {
 
   imports = [
     ./hardware-configuration.nix
-    base16.hmModule
+    #base16.hmModule
   ];
 
   machine = {
@@ -15,7 +15,8 @@ in {
       "lriutzel"
     ];
     sizeTarget = 1;
-    home-assistant = true;
+    #home-assistant = true;
+    tui = true;
   };
 
   starbase = {
