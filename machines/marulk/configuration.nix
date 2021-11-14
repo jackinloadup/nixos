@@ -27,7 +27,7 @@ in {
   #security.wrappers.fusemount3 = { source = "${pkgs.bash}/bin/bash";};
 
   networking.hostName = "marulk";
-  #nix.maxJobs = lib.mkDefault 4;
+  nix.maxJobs = lib.mkDefault 2;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
