@@ -32,4 +32,8 @@
     fsType = "ext4";
     options = [ "defaults" "x-gvfs-hide" ];
   };
+
+  swapDevices = [
+    { device = "/var/swapfile"; size = 2048; } # this big for hibernation 34Gb~
+  ];
 }
