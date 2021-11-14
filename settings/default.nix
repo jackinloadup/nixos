@@ -13,7 +13,7 @@
     name = "Starbase";
     latitude = "36.629727";
     longitude = "-93.216178";
-    elevation = 70; # meters 230ft
+    elevation = 70; # in meters = 230ft
     unit_system = "imperial";
     timezone = "America/Chicago";
     currency = "USD";

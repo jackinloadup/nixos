@@ -10,6 +10,9 @@ in {
   };
 
   config = mkIf config.starbase.printerScanner {
+    environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
+      gnome.simple-scan
+    ];
     # Enable CUPS to print documents.
     services.printing.enable = true;
     services.printing.drivers = with pkgs; [ brlaser cups-filters ];

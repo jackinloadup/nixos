@@ -33,6 +33,8 @@ with lib;
             { "node.name" = "~bluez_output.*"; }
           ];
           actions = {
+            # prevent poping sound when devices are stopped and started
+            # may not happen to all devices so maybe check per machine?
             "node.pause-on-idle" = false;
           };
         }

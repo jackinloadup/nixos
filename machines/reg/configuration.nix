@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { self, inputs, pkgs, lib, ... }:
 
 with inputs;
@@ -10,21 +6,25 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    ../../common/autologin-tty1 # Enable auto login on tty1
     base16.hmModule
   ];
 
   machine = {
-    sway = true;
+    users = [
+      "lriutzel"
+    ];
+    autologin-tty1 = true;
     bluetooth = true;
-    steam = true;
-    starlight = false;
     encryptedRoot = true;
-    quietBoot = true;
-    simula = true;
     home-assistant = true;
     gaming = true;
     lowLevelXF86keys.enable = true;
+    quietBoot = true;
+    simula = true;
+    sound = true;
+    steam = true;
+    starlight = false;
+    sway = true;
   };
 
   starbase = {

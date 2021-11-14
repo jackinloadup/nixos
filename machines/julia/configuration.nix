@@ -15,12 +15,15 @@ in {
     #nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
     #nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
     ./hardware-configuration.nix
-    ../../common/autologin-tty1 # Enable auto login on tty1
 
     #<nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     # "$(modulesPath)/installer/scan/not-detected.nix"
     base16.hmModule
   ];
+
+  #machine = {
+  #  autologin-tty1 = true;
+  #};
 
   themes.base16 = {
     enable = true;
