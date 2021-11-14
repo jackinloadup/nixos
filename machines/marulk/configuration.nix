@@ -15,7 +15,7 @@ in {
       "lriutzel"
     ];
     sizeTarget = 1;
-    #home-assistant = true;
+    home-assistant = true;
     tui = true;
   };
 
