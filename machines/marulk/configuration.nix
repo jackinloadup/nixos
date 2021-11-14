@@ -15,6 +15,7 @@ in {
       "lriutzel"
     ];
     sizeTarget = 1;
+    quietBoot = true;
     home-assistant = true;
     tui = true;
   };
@@ -28,6 +29,8 @@ in {
 
   networking.hostName = "marulk";
   nix.maxJobs = lib.mkDefault 2;
+
+  networking.dhcpcd.wait = "ipv4";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
