@@ -41,7 +41,7 @@ in {
 
      # Mosquitto is only listening on the local IP, traffic from outside is not
      # allowed.
-     host = "10.16.1.11";
+     host = "mqtt.home.lucasr.com";
      port = 1883;
      users = {
        # No real authentication needed here, since the local network is
