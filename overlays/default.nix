@@ -6,6 +6,8 @@ let
   #cp = f: (super.callPackage f) {};
 in self: super: {
   # make all unstable packages available; 
+  unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+
   nmap-graphical = self.unstable.nmap-graphical;
   neovim-unwrapped = self.unstable.neovim-unwrapped;
   home-assistant = self.unstable.home-assistant.override {

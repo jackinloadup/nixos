@@ -1,4 +1,3 @@
-# to /etc/nixos/configuration.nix instead.
 { self, ... }: {
   imports = [ ];
 

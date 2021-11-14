@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, nixosConfig, ... }:
 
 let
   settings = import ../settings;
@@ -7,7 +7,7 @@ let
 in
 {
   programs.alacritty = {
-    enable = true;
+    enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     settings = {
       "live_config_reload" = true; # should work in next release
       font = {

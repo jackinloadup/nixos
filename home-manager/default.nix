@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, ... }:
+{ inputs, pkgs, config, lib, nixosConfig, ... }:
 
 with inputs;
 let
@@ -9,29 +9,28 @@ in
     ./sway.nix
     ./i3.nix
     ./alacritty.nix
-    ../common/neovim
+    ./neovim.nix
     base16.hmModule
   ];
 
   config = {
     nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays =
-      [ self.overlay-unstable self.overlay nur.overlay ];
+    nixpkgs.overlays = [ self.overlay nur.overlay ];
 
-    themes.base16 = {
+    themes.base16 = with settings.theme; {
       enable = true;
-      scheme = settings.theme.base16.scheme;
-      variant = settings.theme.base16.variant;
+      scheme = base16.scheme;
+      variant = base16.variant;
       defaultTemplateType = "default";
       # Add extra variables for inclusion in custom templates
       extraParams = {
-        fontName = settings.theme.font.mono.family;
-        fontSize = settings.theme.font.size;
+        fontName = font.mono.family;
+        fontSize = font.size;
       };
     };
 
     xdg = {
-      enable = true;
+      enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
       userDirs.enable = true;
 
       mimeApps = {
@@ -45,7 +44,7 @@ in
     };
 
     gtk = with settings.theme; {
-      enable = true;
+      enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
       font.name = "${font.normal.family} ${font.normal.style} ${toString font.size}";
       theme.name = gtk.name;
       theme.package = pkgs.${gtk.package};
@@ -61,7 +60,6 @@ in
     '';
 
     programs.zsh = {
-
       initExtra = ''
         # if tty1 then dont fork, instead transfer execution to sway
         # thus if sway crashes the resulting terminal will not be logged in
@@ -92,7 +90,7 @@ set keymap vi-insert
       '';
     };
 
-    programs.mpv.enable = true;
+    programs.mpv.enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     programs.mpv.config = {
       profile = "gpu-hq";
       force-window = true;
@@ -152,7 +150,7 @@ set keymap vi-insert
     };
 
     programs.firefox = {
-      enable = true;
+      enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
       package = pkgs.firefox-bin;
       #package = pkgs.wrapFirefox pkgs.firefox-esr {
       #  nixExtensions = [
@@ -220,17 +218,9 @@ set keymap vi-insert
     home.username = settings.user.username;
     home.homeDirectory = "/home/${settings.user.username}";
 
-    home.packages = with pkgs; [
+    home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 0 ) [
       #unstable.neovim
       #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-      pavucontrol # GUI volume source/sink manager
-      zathura # PDF / Document viewer
-      libreoffice # Office suite
-      fractal # matrix client
-      thunderbird-91 # Email client
-      #firefox # Web browser
-      tixati # bittorrent client
-      mumble # voice chat application
       imv # minimal image viewer
 
       libnotify # for notify-send
@@ -241,15 +231,6 @@ set keymap vi-insert
 
       nmap
 
-      signal-desktop
-
-      # Spotify opensource utils?
-      spotify-tui # spotifyd ui
-      spotifyd # music player no ui
-      # NonFree
-      spotify
-      zoom-us
-
       #playerctl??
       tealdeer # $tldr strace
 
@@ -259,15 +240,26 @@ set keymap vi-insert
 
       xdg-utils # for xdg-open
 
-
-
       bitwarden-cli
 
       python39Packages.youtube-dl # there is an alt youtube-dl-lite
 
-      tor-browser-bundle-bin
+      lftp
 
-      gnome.simple-scan
+      units
+
+    ] // lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
+      pavucontrol # GUI volume source/sink manager
+      zathura # PDF / Document viewer
+      libreoffice # Office suite
+      fractal # matrix client
+      thunderbird-91 # Email client
+      #firefox # Web browser
+      tixati # bittorrent client
+      mumble # voice chat application
+      signal-desktop
+
+      tor-browser-bundle-bin
 
       xfce.thunar
       #pantheon.elementary-files
@@ -275,13 +267,17 @@ set keymap vi-insert
       python39Packages.xdot # graphviz viewer
       graphviz
 
+      # Spotify opensource utils?
+      spotify-tui # spotifyd ui
+      spotifyd # music player no ui
+      # NonFree
+      spotify
+      zoom-us
+
+
       playerctl
 
-      lftp
-
       wireshark
-
-      units
 
       mindforger
 
@@ -290,7 +286,7 @@ set keymap vi-insert
       wineWowPackages.stable
     ];
 
-    services = {
+    services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
       playerctld.enable = true;
       # Display desktop notfications.
       dunst = {

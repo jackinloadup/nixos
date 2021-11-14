@@ -36,7 +36,9 @@
           ( import (./machines + "/${machineName}/modules.nix") { nixos-hardware=nixos-hardware; } )
           ++ [
             ({ ... }: {
-              imports = builtins.attrValues self.nixosModules ++ [
+              imports = builtins.attrValues self.nixosModules
+              ++ builtins.attrValues self.nixosUsers
+              ++ [
                 {
                   # Set the $NIX_PATH entry for nixpkgs. This is necessary in
                   # this setup with flakes, otherwise commands like `nix-shell
@@ -46,21 +48,14 @@
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
                   nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                  nixpkgs.overlays =
-                    [ self.overlay-unstable self.overlay nur.overlay ];
-
-                  # DON'T set useGlobalPackages! It's not necessary in newer
-                  # home-manager versions and does not work with configs using
-                  # nixpkgs.config`
-                  home-manager.useUserPackages = true;
+                  nixpkgs.overlays = [ self.overlay nur.overlay ];
                 }
                 secrets.nixosModules.default
                 baseCfg
-                home-manager.nixosModules.home-manager {
-                  home-manager.users.lriutzel = import ./home;
-                  home-manager.extraSpecialArgs = { inherit inputs; };
-                }
-
+                #home-manager.nixosModules.home-manager {
+                #  home-manager.users.lriutzel = import ./home;
+                #  home-manager.extraSpecialArgs = { inherit inputs; };
+                #}
               ];
 
               # Let 'nixos-version --json' know the Git revision of this flake.
@@ -74,16 +69,10 @@
       # Allow unstable packages.
       nixpkgs.config.allowUnfree = true;
 
-      # Create overlay to allow the use of unstable pkgs
-      overlay-unstable = self: super: {
-        unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
-      };
-
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
       overlay = final: prev: (import ./overlays inputs) final prev;
-
 
       # allow modules to use inputs in addition to their normal args
       _module.args.inputs = inputs;
@@ -95,7 +84,14 @@
         value = import (./modules + "/${x}");
       }) (builtins.attrNames (builtins.readDir  ./modules)));
 
-      # Each subdirectory in ./machins is a host. Add them all to
+      # Output all modules in ./users to flake. Modules should be in
+      # individual subdirectories and contain a default.nix file
+      nixosUsers = builtins.listToAttrs (map (x: {
+        name = x;
+        value = import (./users + "/${x}");
+      }) (builtins.attrNames (builtins.readDir  ./users)));
+
+      # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
       nixosConfigurations = builtins.listToAttrs (map (x: {

@@ -11,11 +11,11 @@ let
 in
 {
   imports = [
-    ../common/waybar
+    ./waybar.nix
     inputs.base16.hmModule
   ];
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
     #sway-contrib.grimshot
     wl-clipboard
     waybar
@@ -24,7 +24,7 @@ in
     gnome.adwaita-icon-theme
   ];
 
-  wayland.windowManager.sway = {
+  wayland.windowManager.sway = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
     enable = true;
     package = null; # don't override system-installed one
     wrapperFeatures.gtk = true;

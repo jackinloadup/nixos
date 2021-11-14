@@ -1,9 +1,14 @@
 { lib, pkgs, config, ... }:
 
 with lib;
-{
+let
+  users = config.machine.users;
+in {
   #users.defaultUserShell = pkgs.zsh; # haven't tried
-  users.users.lriutzel.shell = pkgs.zsh;
+
+  environment.systemPackages = with pkgs; [
+    starship
+  ];
 
   programs.zsh = {
     enable = true;
@@ -61,6 +66,12 @@ with lib;
       bindkey -s '^o' 'lfcd\n'
     '';
   };
+#} // (builtins.concatMap (name: {
+} // mkIf (builtins.elem "lriutzel" config.machine.users) {
+  #users.users.${name}.shell = pkgs.zsh;
+
+  #home-manager.users.${name}.programs = {
+  users.users.lriutzel.shell = pkgs.zsh;
 
   home-manager.users.lriutzel.programs = {
     zsh = {
@@ -74,6 +85,7 @@ with lib;
         size = 100000;
         save = size;
         path = "$HOME/.local/share/zsh/history";
+        #path = "${config.xdg.dataHome}/zsh/history"; # variable isn't available outside HM?
         ignorePatterns = [ "rm *" "pkill *" "lscd" ];
         expireDuplicatesFirst = true;
       };
@@ -91,7 +103,6 @@ with lib;
         }
       ];
     };
-
 
     starship = {
       enable = true;
@@ -126,3 +137,4 @@ with lib;
     };
   };
 }
+#}) [ "lriutzel" ])

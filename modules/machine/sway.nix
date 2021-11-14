@@ -21,5 +21,12 @@ with lib;
         j4-dmenu-desktop
       ];
     };
+
+    xdg = {
+      portal = {
+        enable = true;
+        gtkUsePortal = true;
+      };
+    };
   };
 }
