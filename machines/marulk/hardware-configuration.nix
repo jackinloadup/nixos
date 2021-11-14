@@ -11,10 +11,15 @@
   boot.loader = {
     systemd-boot.enable = false;
     grub = {
-       efiSupport = false;
-       device = "nodev";
-     };
-   };
+      efiSupport = false;
+      device = "nodev";
+    };
+  };
+
+  networking.dhcpcd = {
+    wait = "ipv4";
+    persistent = true;
+ };
 
   #fileSystems."/boot" = {
   #  device = "/dev/disk/by-label/boot";

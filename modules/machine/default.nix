@@ -114,6 +114,7 @@ in {
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
       nix-plugins # Collection of miscellaneous plugins for the nix expression language
       emulsion # mimimal linux image viewer built in rust
+      nmap-graphical
     ];
 
     powerManagement = {
@@ -131,7 +132,7 @@ in {
           macAddress = "random";
         };
       };
-      dhcpcd.wait = mkDefault "background";
+      dhcpcd.wait = "background";
 
       # The global useDHCP flag is deprecated, therefore explicitly set to false here.
       # Per-interface useDHCP will be mandatory in the future, so this generated config
