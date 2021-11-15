@@ -20,6 +20,8 @@ in {
     tui = true;
   };
 
+  systemd.services.mosquitto.after = [ "network-online.target" ];
+
   starbase = {
   };
 
