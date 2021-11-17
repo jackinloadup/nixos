@@ -1,4 +1,4 @@
-{ self, inputs, pkgs, ... }:
+{ self, inputs, pkgs, lib, ... }:
 
 with inputs;
 let
