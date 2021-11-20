@@ -34,12 +34,20 @@
     };
     borderWidth = 2;
     font = {
+      serif = {
+        family = "DejaVu Serif";
+        style = "Regular";
+      };
       normal = {
         family = "Lato";
         style = "Regular";
       };
       mono = {
         family = "DroidSansMono Nerd Font Mono";
+        style = "Regular";
+      };
+      emoji = {
+        family = "Noto Color Emoji";
         style = "Regular";
       };
       size = 12;

@@ -13,6 +13,8 @@ in {
     users = [
       "lriutzel"
     ];
+    tui = true;
+    sizeTarget = 2;
     autologin-tty1 = true;
     bluetooth = true;
     encryptedRoot = true;
@@ -23,7 +25,6 @@ in {
     simula = true;
     sound = true;
     steam = true;
-    starlight = false;
     sway = true;
   };
 

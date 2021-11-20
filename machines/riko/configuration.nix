@@ -11,6 +11,11 @@ in {
   ];
 
   machine = {
+    users = [
+      "lriutzel"
+    ];
+    tui = true;
+    sizeTarget = 2;
     autologin-tty1 = true;
     bluetooth = true;
     encryptedRoot = true;
@@ -26,6 +31,8 @@ in {
 
   networking.hostName = "riko";
   nix.maxJobs = lib.mkDefault 4;
+
+  fonts.fontconfig.dpi = 152;
 
   services.logind.lidSwitch = "suspend-then-hibernate";
   #services.logind.lidSwitch = "hibernate";

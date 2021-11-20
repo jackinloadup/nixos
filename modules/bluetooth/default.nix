@@ -3,14 +3,15 @@ with lib;
 {
   imports = [];
 
-  options.machine.bluetooth = mkEnableOption "Enable steam game platform";
+  options.machine.bluetooth = mkEnableOption "Enable bluetooth";
 
   config = mkIf config.machine.bluetooth {
     services.blueman.enable = true;
 
     hardware.bluetooth = {
       enable = true;
-      hsphfpd.enable = true; # High quality BT calls
+      # https://github.com/NixOS/nixpkgs/issues/114222 
+      #hsphfpd.enable = true; # High quality BT calls
     };
 
     services.pipewire = {
