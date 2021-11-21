@@ -18,7 +18,7 @@ in {
     autologin-tty1 = true;
     bluetooth = true;
     encryptedRoot = true;
-    home-assistant = true;
+    home-assistant = false;
     gaming = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
@@ -26,6 +26,7 @@ in {
     sound = true;
     steam = true;
     sway = true;
+    tui = true;
   };
 
   starbase = {
@@ -35,7 +36,7 @@ in {
   networking.hostName = "reg";
   nix.maxJobs = lib.mkDefault 16;
 
-  networking.firewall.allowedTCPPorts = [ 8000 ];
+  networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
   networking.firewall.allowedUDPPorts = [ 8000 ];
 
   # Rename pipewire sinks
