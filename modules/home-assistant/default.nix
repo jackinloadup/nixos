@@ -34,14 +34,14 @@ in {
     };
 
    # Enable mosquitto MQTT broker
-   services.mosquitto = {
+   services.mosquitto = with settings; {
      enable = true;
 
      checkPasswords = true;
 
      # Mosquitto is only listening on the local IP, traffic from outside is not
      # allowed.
-     host = "mqtt.home.lucasr.com";
+     host = "mqtt.${home.domain}";
      port = 1883;
      users = {
        # No real authentication needed here, since the local network is

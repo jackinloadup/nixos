@@ -10,6 +10,7 @@
   };
 
   home = {
+    domain = "home.lucasr.com";
     name = "Starbase";
     latitude = "36.629727";
     longitude = "-93.216178";
