@@ -26,7 +26,6 @@ in {
     sound = true;
     steam = true;
     sway = true;
-    tui = true;
   };
 
   starbase = {

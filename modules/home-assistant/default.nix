@@ -27,10 +27,10 @@ in {
     # Open port for mqtt
     networking.firewall = {
 
-      allowedTCPPorts = [ 1883 8123 ];
+      allowedTCPPorts = [ 1883 ]; # mosquitto
 
       # Expose home-assitant over wireguard
-      interfaces.wg0.allowedTCPPorts = [ 8123 ];
+      interfaces.wg0.allowedTCPPorts = [ 8123 ]; # Artifact of future wireguard ideas
     };
 
    # Enable mosquitto MQTT broker
@@ -53,9 +53,12 @@ in {
      };
    };
 
+  # TODO submit upstream?
+  systemd.services.mosquitto.after = [ "network-online.target" ];
 
     services.home-assistant = {
       enable = true;
+      openFirewall = true;
       #package = (pkgs.home-assistant.override {
       #  extraPackages = py: with py; [ psycopg2 ];
       #});
