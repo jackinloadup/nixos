@@ -23,7 +23,6 @@ in {
     quietBoot = true;
     sound = true;
     sway = true;
-    tui = true;
   };
 
   starbase = {
