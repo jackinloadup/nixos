@@ -65,6 +65,20 @@ in
           { index = 21; color = "0x${base06-hex}"; }
         ];
       };
+
+      hints = {
+        enabled = [
+          {
+            regex = "([0-9a-f]{12,128})|([[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3})";
+            action = "Copy";
+            post_processing = false;
+            binding = {
+              key = "U";
+              mods = "Control|Shift";
+            };
+          }
+        ];
+      };
     };
   };
 }
