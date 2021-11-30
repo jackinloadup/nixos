@@ -79,6 +79,24 @@ in {
       enableAutosuggestions = true;
       enableCompletion = true;
 
+      shellAliases = config.environment.shellAliases;
+
+      shellGlobalAliases = {
+        UUID = "$(uuidgen | tr -d \\n)";
+        G = "| grep";
+        L = "| less";
+        "@noerr" = "2> /dev/null";
+        "@noboth" = "&> /dev/null";
+        "@errtostd" = "2&>1";
+      };
+
+      dirHashes = {
+        docs  = "$HOME/Documents";
+        vids  = "$HOME/Videos";
+        dl    = "$HOME/Downloads";
+        p     = "$HOME/Projects";
+      };
+
       #zsh-autoenv.enable = false;
 
       history = rec {
