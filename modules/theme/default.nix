@@ -23,7 +23,6 @@ in {
       let
         cfg = config.machine.starlight;
         theme = config.lib.base16.theme;
-        toRGB = num: removePrefix "#" (elemAt (attrValues cfg.palette) num);
         toPx = pt: pt * 4 / 3;
         starlight-oomox-theme = with pkgs; stdenv.mkDerivation rec {
           name = "starlight-oomox-theme-v1.0";
