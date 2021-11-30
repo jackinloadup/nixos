@@ -14,7 +14,14 @@ in {
       # Quiet durring boot
       initrd.verbose = false;
       consoleLogLevel = 0;
-      kernelParams = [ "quiet" "udev.log_priority=3" ];
+      kernelParams = [
+        "quiet"
+        "vga=current"
+        "systemd.show_status=auto"
+        #"i915.fastboot=1"
+        "loglevel=3"
+        "udev.log_priority=3"
+      ];
     };
   };
 }
