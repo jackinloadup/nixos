@@ -9,6 +9,7 @@ in
     ./sway.nix
     ./i3.nix
     ./alacritty.nix
+    ./foot.nix
     ./neovim.nix
     ./zoom.nix
     base16.hmModule
@@ -42,6 +43,12 @@ in
           "text/html" = "firefox.desktop";
         };
       };
+    };
+
+    xsession.pointerCursor = {
+      package = pkgs.quintom-cursor-theme;
+      name = "Quintom_Ink";
+      size = 32;
     };
 
     gtk = with settings.theme; {
