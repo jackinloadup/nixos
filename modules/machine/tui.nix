@@ -21,7 +21,7 @@ in {
       tmux # terminal multiplexer
       #tmux-cssh
 
-    #  pulseaudio # for pactl and other things like it just not enabled
+      pulseaudio # for pactl and other things like it just not enabled
       #ncpamixer # couldn't get it to work
 
       #vlock # tty/vtty locker

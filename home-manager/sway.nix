@@ -282,9 +282,17 @@ in
           command = "inhibit_idle fullscreen";
           criteria.class = "Kodi";
         }
-        { # I don't think this works atm because zoom sucks at labeling it's window
-          command = "inhibit_idle fullscreen";
-          criteria.title = "^Zoom*";
+        { # Zoom audio choice window
+          command = "floating enable";
+          criteria.title = "Choose ONE of the audio conference options";
+        }
+        { # Zoom "you are connected to computer audio" window
+          command = "floating enable";
+          criteria.title = "zoom";
+        }
+        { # Zoom meeting window
+          command = "inhibit_idle open";
+          criteria.title = "Zoom Meeting";
         }
         {
           # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
