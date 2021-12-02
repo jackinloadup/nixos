@@ -29,6 +29,11 @@
 
   theme = {
     background_opacity = 0.95;
+    cursor = {
+      #package = pkgs.quintom-cursor-theme;
+      name = "Quintom_Ink";
+      size = 32;
+    };
     gtk = {
       name = "gruvbox-dark";
       package = "gruvbox-dark-gtk";

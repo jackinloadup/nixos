@@ -47,7 +47,7 @@ in
 
       fonts = fontConf;
 
-      terminal = "${pkgs.alacritty}/bin/alacritty";
+      terminal = "${pkgs.foot}/bin/footclient";
 
       workspaceAutoBackAndForth = true;
       window = {
@@ -142,7 +142,7 @@ in
       #  };
       #};
 
-      menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=alacritty --dmenu='bemenu -i -l 10'" ;
+      menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
 
       keybindings =
         let
@@ -363,8 +363,8 @@ in
     };
 
     extraConfig = ''
-      seat seat0 xcursor_theme ${theme.gtk.name}\n
-      default_border pixel 2\n
+      seat seat0 xcursor_theme ${theme.cursor.name} ${toString theme.cursor.size}
+      default_border pixel 2
       workspace 1
     '';
   };
