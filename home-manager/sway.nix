@@ -282,18 +282,6 @@ in
           command = "inhibit_idle fullscreen";
           criteria.class = "Kodi";
         }
-        { # Zoom audio choice window
-          command = "floating enable";
-          criteria.title = "Choose ONE of the audio conference options";
-        }
-        { # Zoom "you are connected to computer audio" window
-          command = "floating enable";
-          criteria.title = "zoom";
-        }
-        { # Zoom meeting window
-          command = "inhibit_idle open";
-          criteria.title = "Zoom Meeting";
-        }
         {
           # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
           command = "move to workspace 10";
