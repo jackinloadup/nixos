@@ -10,6 +10,7 @@ in
     ./i3.nix
     ./alacritty.nix
     ./neovim.nix
+    ./zoom.nix
     base16.hmModule
   ];
 
@@ -260,8 +261,6 @@ set keymap vi-insert
       spotifyd # music player no ui
       # NonFree
       spotify
-      zoom-us
-
 
       playerctl
 
