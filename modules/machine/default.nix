@@ -48,7 +48,7 @@ in {
   config = {
     nixpkgs.config.allowUnfree = if (cfg.sizeTarget > 0)  then true else false;
 
-    nix.package = pkgs.nixUnstable; # support flakes
+    nix.package = pkgs.nix_2_4; # support flakes
     nix.trustedUsers = [ "root" ];
     nix.autoOptimiseStore = mkIf (cfg.sizeTarget > 0) true;
     # 1) Enable extra-builtins-file option for nix
@@ -150,7 +150,7 @@ in {
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
-      nix-plugins # Collection of miscellaneous plugins for the nix expression language
+      #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       emulsion # mimimal linux image viewer built in rust
       nmap-graphical
 

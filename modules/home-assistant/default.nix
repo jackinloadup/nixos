@@ -33,28 +33,27 @@ in {
       interfaces.wg0.allowedTCPPorts = [ 8123 ]; # Artifact of future wireguard ideas
     };
 
-   # Enable mosquitto MQTT broker
-   services.mosquitto = with settings; {
-     enable = true;
+    # Enable mosquitto MQTT broker
+    services.mosquitto = with settings; {
+      enable = true;
 
-     checkPasswords = true;
+      listeners = [
+        {
+          port = 1883;
+          users = {
+            # No real authentication needed here, since the local network is
+            # trusted.
+            mosquitto = {
+              acl = [ "pattern readwrite #" ];
+              password = "mosquitto";
+            };
+          };
+        }
+      ];
+    };
 
-     # Mosquitto is only listening on the local IP, traffic from outside is not
-     # allowed.
-     host = "mqtt.${home.domain}";
-     port = 1883;
-     users = {
-       # No real authentication needed here, since the local network is
-       # trusted.
-       mosquitto = {
-         acl = [ "pattern readwrite #" ];
-         password = "mosquitto";
-       };
-     };
-   };
-
-  # TODO submit upstream?
-  systemd.services.mosquitto.after = [ "network-online.target" ];
+    # TODO submit upstream?
+    systemd.services.mosquitto.after = [ "network-online.target" ];
 
     services.home-assistant = {
       enable = true;
