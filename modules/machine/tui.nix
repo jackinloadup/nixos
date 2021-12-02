@@ -143,9 +143,6 @@ in {
       "ncdu" = "ncdu --color dark";
     };
 
-    programs.less.configFile = {
-    };
-
     programs.tmux = {
       enable = true;
       terminal = "tmux-256color";
