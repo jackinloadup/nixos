@@ -271,6 +271,9 @@ set keymap vi-insert
       wineApps.winbox
       winetricks
       wineWowPackages.stable
+
+      nethogs
+      ngrep
     ];
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
