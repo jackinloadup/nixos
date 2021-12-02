@@ -32,7 +32,7 @@ in {
   networking.hostName = "riko";
   nix.maxJobs = lib.mkDefault 4;
 
-  fonts.fontconfig.dpi = 152;
+  #fonts.fontconfig.dpi = 152;
 
   services.logind.lidSwitch = "suspend-then-hibernate";
   #services.logind.lidSwitch = "hibernate";
