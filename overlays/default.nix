@@ -18,6 +18,7 @@ in self: super: {
     winbox = super.callPackage ../packages/winbox.nix {};
     polyhub = super.callPackage ../packages/polyhub.nix {};
   };
+  taskwarrior = self.unstable.taskwarrior;
   ## Example package, used only for tests
   #hello-custom = super.callPackage ../packages/hello-custom { };
   #darktile = super.callPackage ../packages/darktile { };

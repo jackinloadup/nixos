@@ -224,10 +224,8 @@ set keymap vi-insert
       iotop
       inetutils
       usbutils # alt busybox cope toybox
-
       nmap
 
-      #playerctl??
       tealdeer # $tldr strace
 
       unzip # duh
@@ -245,42 +243,59 @@ set keymap vi-insert
       units
 
     ] // lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
-      pavucontrol # GUI volume source/sink manager
+
+      # GUI
       zathura # PDF / Document viewer
       libreoffice # Office suite
       fractal # matrix client
       thunderbird # Email client
-      #firefox # Web browser
       tixati # bittorrent client
       mumble # voice chat application
-      signal-desktop
+      signal-desktop # messaging client
+      chromium # web browser
+      xfce.thunar # File manager
+      #pantheon.elementary-files
 
       #tor-browser-bundle-bin
-
-      xfce.thunar
-      #pantheon.elementary-files
 
       python39Packages.xdot # graphviz viewer
       graphviz
 
+      ## Audio
+      pavucontrol # GUI volume source/sink manager
       # Spotify opensource utils?
       spotify-tui # spotifyd ui
       spotifyd # music player no ui
       # NonFree
       spotify
 
-      playerctl
 
+      ## Debugging
       wireshark
 
+      ## Task/notes
       mindforger
 
+      ## Wine Apps
       wineApps.winbox
       winetricks
       wineWowPackages.stable
 
+      # TUI
+      ## spreadsheet stuffs
+      sc-im
+      visidata
+
+      ## Tasks/notes
+      taskwarrior
+      taskwarrior-tui
+
+      ## networking
       nethogs
       ngrep
+
+      ## Audio
+      playerctl
     ];
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
