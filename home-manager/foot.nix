@@ -6,19 +6,25 @@ let
   font = theme.font;
 in
 {
+  #home.shellAliases = {
+  #  ssh = "TERM=xterm-265color ssh";
+  #};
+
   programs.foot = {
     enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     server.enable = true;
     settings = {
       main = {
-        font = "monospace:size=${toString settings.theme.font.size}";
+        term = "xterm-256color";
+
+        font = "monospace:pixelsize=${toString settings.theme.font.size}";
         dpi-aware = false;
       };
 
       colors = with config.lib.base16.theme; {
+        alpha = settings.theme.background_opacity;
         foreground = base05-hex;
         background = base00-hex;
-        alpha = settings.theme.background_opacity;
         regular0 = base00-hex;
         regular1 = base08-hex;
         regular2 = base0B-hex;
