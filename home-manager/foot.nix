@@ -12,7 +12,7 @@ in
 
   programs.foot = {
     enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
-    server.enable = true;
+    server.enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     settings = {
       main = {
         term = "xterm-256color";
@@ -41,6 +41,10 @@ in
         bright5 = base0E-hex;
         bright6 = base0C-hex;
         bright7 = base07-hex;
+      };
+      key-bindings = {
+        font-increase = "Control+plus Control+equal Control+KP_Add";
+        font-decrease = "Control+minus Control+KP_Subtract";
       };
     };
   };
