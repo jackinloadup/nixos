@@ -8,10 +8,13 @@ in {
     ./encryptedRoot.nix
     ./quietBoot.nix
     ./lowLevelXF86keys.nix
+    ./adb.nix
+    ./docker.nix
     ./sway.nix
     ./sound.nix
     ./tui.nix
     ./minimal.nix
+    ./virtualization.nix
   ];
 
 
