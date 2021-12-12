@@ -90,6 +90,24 @@ in {
 
       shellAliases = config.environment.shellAliases;
 
+      loginExtra = ''
+        bindkey '^R' history-incremental-pattern-search-backward
+        bindkey '^F' history-incremental-pattern-search-forward
+
+        # C-z to toggle current process (background/foreground)
+        fancy-ctrl-z () {
+          if [[ $#BUFFER -eq 0 ]]; then
+            BUFFER="fg"
+            zle accept-line
+          else
+            zle push-input
+            zle clear-screen
+          fi
+        }
+        zle -N fancy-ctrl-z
+        bindkey '^Z' fancy-ctrl-z
+      '';
+
       shellGlobalAliases = {
         UUID = "$(uuidgen | tr -d \\n)";
         G = "| grep";
