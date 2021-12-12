@@ -56,7 +56,7 @@
         family = "Noto Color Emoji";
         style = "Regular";
       };
-      size = 12;
+      size = 14;
     };
     base16 = {
       scheme = "gruvbox";
