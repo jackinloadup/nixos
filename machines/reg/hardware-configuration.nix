@@ -13,13 +13,38 @@
   fileSystems."/boot/EFI" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";
-    options = [ "defaults" "x-gvfs-hide" ];
+    options = [
+      "defaults"
+      "x-gvfs-hide"
+      "noatime"
+      "nodiratime"
+    ];
   };
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
-    options = [ "defaults" "x-gvfs-hide" ];
+    options = [
+      "defaults"
+      "x-gvfs-hide"
+      "noatime"
+      "nodiratime"
+      "discard"
+    ];
+  };
+
+  fileSystems."/mnt" = {
+    device = "/dev/disk/by-label/storage";
+    fsType = "ext4";
+    neededForBoot = false;
+    options = [
+      "defaults"
+      "noatime"
+      "nodiratime"
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=2s"
+      "x-systemd.mount-timeout=2s"
+    ];
   };
 
   #swapDevices = [
