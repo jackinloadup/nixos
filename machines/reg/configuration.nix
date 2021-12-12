@@ -85,6 +85,7 @@ in {
 
   hardware.opengl.extraPackages = with pkgs; [
     radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
+    radeon-profile
   ];
 
   # set logitec mouse to autosuspend after 60 seconds
