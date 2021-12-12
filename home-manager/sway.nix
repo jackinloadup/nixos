@@ -171,10 +171,10 @@ in
           "${mod}+Shift+${up}" = "move up";
           "${mod}+Shift+${right}" = "move right";
 
-          "${mod}+Shift+Left" = "move left";
-          "${mod}+Shift+Down" = "move down";
-          "${mod}+Shift+Up" = "move up";
-          "${mod}+Shift+Right" = "move right";
+          "${mod}+Shift+Left" = "move workspace to output left";
+          "${mod}+Shift+Up" = "move workspace to output up";
+          "${mod}+Shift+Down" = "move workspace to output down";
+          "${mod}+Shift+Right" = "move workspace to output right";
 
           "${mod}+Shift+space" = "floating toggle";
           #"${mod}+space" = "focus mode_toggle";
@@ -200,11 +200,6 @@ in
           "${mod}+Shift+8" = "move container to workspace number 8";
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
-
-          #"${mod}+Shift+bracketleft" = "move workspace to output left";
-          #"${mod}+Shift+equal" = "move workspace to output up";
-          #"${mod}+Shift+minus" = "move workspace to output down";
-          #"${mod}+Shift+bracketright" = "move workspace to output right";
 
           "${mod}+p" =
             "exec ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g- screenshot-$(date +%Y%m%d-%H%M).png";
