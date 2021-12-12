@@ -13,6 +13,8 @@ in {
     users = [
       "lriutzel"
     ];
+    adb = true;
+    docker = true;
     tui = true;
     sizeTarget = 2;
     autologin-tty1 = true;
@@ -27,6 +29,7 @@ in {
     sound = true;
     steam = true;
     sway = true;
+    virtualization = true;
   };
 
   starbase = {
