@@ -52,6 +52,7 @@ in {
       "set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
       "set encoding=utf-8 nobomb " BOM often causes trouble
       set expandtab " Expand tabs to spaces
+      set relativenumber " Relative line numbers
       "set fillchars+=vert:\
       "set foldcolumn=0 " Column to show folds
       "set foldenable " Enable folding
