@@ -8,24 +8,19 @@
   #boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.availableKernelModules = [ ];
   boot.initrd.kernelModules = [ ];
-  boot.loader = {
-    systemd-boot.enable = false;
-    grub = {
-      efiSupport = false;
-      device = "nodev";
-    };
-  };
+  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.dhcpcd = {
     wait = "ipv4";
     persistent = true;
  };
 
-  #fileSystems."/boot" = {
-  #  device = "/dev/disk/by-label/boot";
-  #  fsType = "vfat";
-  #  options = [ "defaults" "x-gvfs-hide" ];
-  #};
+  fileSystems."/boot/EFI" = {
+    device = "/dev/disk/by-label/efi";
+    fsType = "vfat";
+    options = [ "defaults" "x-gvfs-hide" ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -34,6 +29,6 @@
   };
 
   swapDevices = [
-    { device = "/var/swapfile"; size = 2048; } # this big for hibernation 34Gb~
+    { device = "/var/swapfile"; size = 2048; } # this big for hibernation 2Gb~
   ];
 }

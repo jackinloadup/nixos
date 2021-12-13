@@ -17,7 +17,6 @@
       "defaults"
       "x-gvfs-hide"
       "noatime"
-      "nodiratime"
     ];
   };
 
@@ -28,7 +27,6 @@
       "defaults"
       "x-gvfs-hide"
       "noatime"
-      "nodiratime"
       "discard"
     ];
   };
@@ -39,8 +37,7 @@
     neededForBoot = false;
     options = [
       "defaults"
-      "noatime"
-      "nodiratime"
+      "relatime"
       "x-systemd.idle-timeout=60"
       "x-systemd.device-timeout=2s"
       "x-systemd.mount-timeout=2s"
