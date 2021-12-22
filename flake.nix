@@ -47,7 +47,8 @@
                   # recommended) to remove the `nixos` channel for both users
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
-                  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                  #nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+                  nix.nixPath = let path = toString ./.; in [ "repl=${path}/repl.nix" "nixpkgs=${nixpkgs}" ];
                   nixpkgs.overlays = [ self.overlay nur.overlay ];
                 }
                 secrets.nixosModules.default
