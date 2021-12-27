@@ -115,12 +115,7 @@ in {
     programs.bash = {
       interactiveShellInit = ''
         source ${config.lib.base16.templateFile { name = "shell"; }}
-        eval "$(starship init bash)"
       '';
-      undistractMe = {
-        enable = true;
-        timeout = 10;
-      };
     };
 
     # Enable the OpenSSH daemon.

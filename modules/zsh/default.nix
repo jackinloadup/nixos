@@ -24,7 +24,6 @@ in {
     autosuggestions.enable = false; #for systemwide?
     interactiveShellInit = ''
       source ${config.lib.base16.templateFile { name = "shell"; }}
-      eval "$(starship init zsh)"
 
       bindkey '^R' history-incremental-pattern-search-backward
       bindkey '^F' history-incremental-pattern-search-forward
@@ -79,6 +78,15 @@ in {
       enableAutosuggestions = true;
       enableCompletion = true;
 
+      initExtra = ''
+        function set_win_title(){
+          echo -ne "\033]0; $(basename "$PWD") \007"
+        }
+        precmd_functions+=(set_win_title)
+
+        eval "$(starship init zsh)"
+      '' + config.programs.zsh.interactiveShellInit;
+
       shellAliases = config.environment.shellAliases;
 
       shellGlobalAliases = {
@@ -104,8 +112,13 @@ in {
         save = size;
         path = "$HOME/.local/share/zsh/history";
         #path = "${config.xdg.dataHome}/zsh/history"; # variable isn't available outside HM?
-        ignorePatterns = [ "rm *" "pkill *" "lscd" ];
+        ignorePatterns = [
+          "rm *"
+          "pkill *"
+          "lscd"
+        ];
         expireDuplicatesFirst = true;
+        ignoreSpace = true;
       };
 
       plugins = [
