@@ -39,6 +39,11 @@ in {
     home-manager.users.lriutzel = import ../../home-manager;
 
     programs.wireshark.enable = true;
+    # #TODO figure out how to enable only at user level
+    #programs.gnupg.agent = {
+    #  enable = true;
+    #  enableSSHSupport = true;
+    #};
 
     services.trezord.enable = if (cfg.sizeTarget > 1) then true else false; # Support Trezor
 

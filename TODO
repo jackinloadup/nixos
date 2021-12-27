@@ -1,12 +1,16 @@
 # completed
 spotify
 signal
+zsh + spaceship
+wireshark
+migrate laptop
+zsh: change window title based on location
 
 # partial
-build plan to migrate desktop and laptop
+build plan to migrate desktop
 steam compartment?
 kexec reboot
-zsh + spaceship
+option to enable docker.
 yubikey
 
 # proposed
@@ -38,16 +42,15 @@ explore quick shells for rust / secops / private + colors per shell in case of m
 ephemeral boot option
 nixops deploy to other computer
 
+zsh: set window titles based on what applications we run
+
 nvim: limit tree siter language support
 
-build plan to migrate desktop
 labled menu in sway for rando application browsing / searching
-wireshark
 kexec emergency - already exists but explore options
 mpd
-option to enable docker.
 profile-sync-daemon
-firefox wayland/drm
+firefox "wayland/drm" mode
 
 kms glsl shader boot experience like plymouth?
 

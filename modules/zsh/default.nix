@@ -4,6 +4,7 @@ with lib;
 let
   users = config.machine.users;
 in {
+  # might break current auto start sway script
   #users.defaultUserShell = pkgs.zsh; # haven't tried
 
   environment.systemPackages = with pkgs; [

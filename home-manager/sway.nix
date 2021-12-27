@@ -124,7 +124,7 @@ in
         };
       };
 
-      floating.criteria = [{ class = "^Steam$"; } { class = "^Wine$"; }];
+      floating.criteria = [{ class = "^Wine$"; }];
 
       #input = {
       #  "type:keyboard" =

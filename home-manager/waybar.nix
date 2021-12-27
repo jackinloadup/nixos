@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  settings = import ../../settings;
+  settings = import ../settings;
 in {
   xdg.configFile."waybar/style.css".text = ''
     ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
