@@ -9,6 +9,7 @@ in
     ./sway.nix
     ./i3.nix
     ./alacritty.nix
+    ./development.nix
     ./foot.nix
     ./neovim.nix
     ./zoom.nix
@@ -100,51 +101,6 @@ set keymap vi-insert
 
     programs.home-manager.enable = true;
 
-    programs.git = {
-      enable = true;
-      userName = settings.user.name;
-      userEmail = settings.user.email;
-
-      delta.enable = true;
-
-      aliases = {
-        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
-        lb = "!git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'";
-        tracked = "for-each-ref --format='%(refname:short) <- %(upstream:short)' refs/heads";
-        poke = "!git ls-remote origin | grep -w refs/heads/poke && git push origin :poke || git push origin master:poke";
-        board = "!f() { php $HOME/bin/gitboard $@; }; f";
-        co = "checkout";
-        ci = "commit";
-        cia = "commit --amend";
-        d = "diff";
-        ds = "diff --staged";
-        s = "status";
-        st = "status";
-        b = "branch";
-        br = "branch";
-        p = "pull --rebase";
-        pu = "push";
-        git = "!exec git";
-      };
-
-      ignores = [
-        "*~"
-        "*.pyc"
-        "*.swo"
-        "*.swp"
-        ".DS_Store"
-        ".settings.xml"
-      ];
-
-      extraConfig = {
-        init.defaultBranch = "master";
-        core.editor = "nvim";
-        #protocol.keybase.allow = "always";
-        #credential.helper = "store --file ~/.git-credentials";
-        #pull.rebase = "false";
-      };
-    };
-
     programs.firefox = {
       enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
       package = pkgs.firefox-bin;
@@ -214,7 +170,7 @@ set keymap vi-insert
     home.username = settings.user.username;
     home.homeDirectory = "/home/${settings.user.username}";
 
-    home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 0 ) [
+    home.packages = with pkgs; (if (nixosConfig.machine.sizeTarget > 0 ) then [
       #unstable.neovim
       #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
       imv # minimal image viewer
@@ -230,7 +186,7 @@ set keymap vi-insert
 
       unzip # duh
 
-      # darktile # alternative TTY to try out. GPU + go
+      # darktile # alternative PTY to try out. GPU + go
 
       xdg-utils # for xdg-open
 
@@ -242,7 +198,7 @@ set keymap vi-insert
 
       units
 
-    ] // lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
+    ] else []) ++ (if (nixosConfig.machine.sizeTarget > 1 ) then [
 
       # GUI
       zathura # PDF / Document viewer
@@ -296,7 +252,7 @@ set keymap vi-insert
 
       ## Audio
       playerctl
-    ];
+    ] else []);
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
       playerctld.enable = true;
@@ -366,14 +322,10 @@ set keymap vi-insert
       };
 
       # Add the network manager to the status bar.
-      network-manager-applet = {
-        enable = true;
-      };
+      network-manager-applet.enable = true;
 
       # Add the audio manager to the status bar.
-      pasystray = {
-        enable = true;
-      };
+      pasystray.enable = true;
 
       # Set a background image.
       #random-background = {
