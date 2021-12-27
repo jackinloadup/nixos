@@ -4,6 +4,7 @@ let
   cfg = config.machine;
   home-manager = inputs.home-manager;
   settings = import ./settings.nix;
+  ifGraphical = if (cfg.sizeTarget > 1) then true else false;
 in {
   imports = [
     home-manager.nixosModules.home-manager {
@@ -39,5 +40,17 @@ in {
 
     programs.wireshark.enable = true;
 
+    services.trezord.enable = if (cfg.sizeTarget > 1) then true else false; # Support Trezor
+
+    environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 1) [
+      unstable.mqttui # mqtt tui
+    ];
+
+    hardware.yubikey.enable = ifGraphical;
+    # #TODO figure out how to enable only at user level
+    #programs.gnupg.agent = {
+    #  enable = true;
+    #  enableSSHSupport = true;
+    #};
   };
 }

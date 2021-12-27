@@ -7,10 +7,10 @@ build plan to migrate desktop and laptop
 steam compartment?
 kexec reboot
 zsh + spaceship
+yubikey
 
 # proposed
 vm system like qemu or w/e
-yubikey
 gnupg
 
 # Requires secret storage

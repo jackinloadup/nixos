@@ -1,12 +1,17 @@
 { lib, pkgs, config, ... }:
 with lib;
 {
-  options.yubikey = mkEnableOption "Add resources to support using a Yubico Yubikey";
+  options.hardware.yubikey.enable = mkEnableOption "Add resources to support using a Yubico Yubikey";
 
-  config = mkIf config.yubikey {
+  config = mkIf config.hardware.yubikey.enable {
     environment.systemPackages = with pkgs; [
+      # cli
       yubikey-manager
       yubikey-personalization
+
+      # gui
+      yubikey-manager-qt
+      yubikey-personalization-gui
     ];
 
     services.udev.extraRules = ''
