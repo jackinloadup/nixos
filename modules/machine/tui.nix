@@ -24,7 +24,9 @@ in {
       #ncpamixer # couldn't get it to work
 
       #vlock # tty/vtty locker
+      # fasd # quick access to files and dir
 
+      exa # ls replacement
       jq # json parsing
       tree # file/directory viewer in tree format
       ripgrep # grep alternative
@@ -66,9 +68,11 @@ in {
       lsof
       ncdu # ncurses disk usage viewer
       file
+      fd # find alternative
 
       ## OS (nix/linux)
       nix-tree # A terminal curses application to browse a Nix store paths dependencies
+      vulnix # vulnerability scanner for nix
       # atop?
       htop # process, cpu, memory viewer
     ];
@@ -134,6 +138,7 @@ in {
     };
 
     environment.shellAliases = {
+      ".." = "cd ..";
       "ncdu" = "ncdu --color dark";
       "nixos-current-repl" = "source /etc/set-environment && nix repl $(echo $NIX_PATH | perl -pe 's|.*(/nix/store/.*-source/repl.nix).*|\\1|')";
     };

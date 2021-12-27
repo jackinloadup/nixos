@@ -6,14 +6,14 @@ let
 in
 {
   imports = [
-    ./sway.nix
-    ./i3.nix
     ./alacritty.nix
+    base16.hmModule
     ./development.nix
     ./foot.nix
+    ./i3.nix
     ./neovim.nix
+    ./sway.nix
     ./zoom.nix
-    base16.hmModule
   ];
 
   config = {
@@ -212,6 +212,8 @@ set keymap vi-insert
       chromium # web browser
       xfce.thunar # File manager
       #pantheon.elementary-files
+      speedcrunch # calculator 
+      nota # fancy cli calculator
 
       #tor-browser-bundle-bin
 
@@ -220,6 +222,8 @@ set keymap vi-insert
 
       ## Audio
       pavucontrol # GUI volume source/sink manager
+      ## Video
+      ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
       # Spotify opensource utils?
       spotify-tui # spotifyd ui
       spotifyd # music player no ui
