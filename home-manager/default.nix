@@ -62,6 +62,7 @@ in
     programs.bash.enable = true;
     programs.bash.initExtra = ''
       source ${config.lib.base16.templateFile { name = "shell"; }}
+      eval "$(starship init bash)"
     '';
 
     programs.readline = {
