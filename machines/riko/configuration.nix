@@ -10,6 +10,8 @@ in {
     base16.hmModule
   ];
 
+  hardware.yubikey.enable = true;
+
   machine = {
     users = [
       "lriutzel"
