@@ -17,8 +17,8 @@ in
       main = {
         term = "xterm-256color";
 
-        font = "monospace:pixelsize=${toString settings.theme.font.size}";
-        dpi-aware = false;
+        font = "monospace:size=${toString settings.theme.font.size}";
+        dpi-aware = true;
       };
 
       colors = with config.lib.base16.theme; {
