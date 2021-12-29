@@ -23,6 +23,7 @@ in {
     lowLevelXF86keys.enable = true;
     quietBoot = true;
     simula = true;
+    sdr = true;
     sound = true;
     steam = true;
     sway = true;
