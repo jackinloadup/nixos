@@ -23,6 +23,7 @@ in {
     encryptedRoot = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
+    sdr = true;
     sound = true;
     sway = true;
   };
