@@ -279,7 +279,7 @@ in
         }
         {
           # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
-          command = "move to workspace 10";
+          command = "move --no-auto-back-and-forth window to workspace 10";
           criteria.class = "Spotify";
         }
         #{
