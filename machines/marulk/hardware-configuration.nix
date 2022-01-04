@@ -5,16 +5,10 @@
   #boot.kernelParams = [ "msr.allow_writes=on" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  #boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
-  boot.initrd.availableKernelModules = [ ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "kvm-intel" ];
   boot.loader.efi.efiSysMountPoint = "/boot/EFI";
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.dhcpcd = {
-    wait = "ipv4";
-    persistent = true;
- };
 
   fileSystems."/boot/EFI" = {
     device = "/dev/disk/by-label/efi";

@@ -18,24 +18,51 @@ in {
     quietBoot = true;
     home-assistant = true;
     tui = true;
+    virtualization = true;
   };
 
   starbase = {
   };
+
+  nix.maxJobs = lib.mkDefault 2;
 
   #security.wrappers = {};
   #security.wrappers.fusemount = { source = "${pkgs.bash}/bin/bash";};
   #security.wrappers.fusemount3 = { source = "${pkgs.bash}/bin/bash";};
 
   networking.hostName = "marulk";
-  nix.maxJobs = lib.mkDefault 2;
+  networking.networkmanager.enable = lib.mkOverride 1000 false;
+  networking.bridges.br0.interfaces = ["enp1s0"];
+  networking.interfaces.br0 = {
+    useDHCP = true;
+  };
 
-  networking.dhcpcd.wait = "ipv4";
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  #networking.firewall.allowedUDPPorts = [ 5353 ];
+  networking.dhcpcd = {
+    #wait = "ipv4";
+    persistent = true;
+ };
 
+  #networking.nat = {
+  #  enable = true;
+  #  externalInterface = "enp1s0";
+  #  internalInterfaces = ["virbr0"];
+  #  internalIPs = [
+  #    "192.168.122.0/24"
+  #  ];
+  #  forwardPorts = [
+  #    {
+  #      destination = "192.168.122.182:1883";
+  #      proto = "tcp";
+  #      sourcePort = 1883;
+  #    }
+  #    {
+  #      destination = "192.168.122.182:8123";
+  #      proto = "tcp";
+  #      sourcePort = 8123;
+  #    }
+  #  ];
+  #};
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
