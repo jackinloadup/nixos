@@ -10,10 +10,8 @@ let
 in {
 
   imports = [
-    <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
-    <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
-    #nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix
-    #nixpkgs/nixos/modules/installer/cd-dvd/channel.nix
+    #<nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
+    #<nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
     ./hardware-configuration.nix
 
     #<nixpkgs/nixos/modules/installer/scan/not-detected.nix>

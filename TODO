@@ -16,6 +16,9 @@ yubikey
 # proposed
 vm system like qemu or w/e
 gnupg
+wfvm https://git.m-labs.hk/M-Labs/wfvm
+quickemu
+tpm remote attestation
 
 # Requires secret storage
 - autostart fractal - matrix client
@@ -30,6 +33,8 @@ gnupg
 - explore kernelshark debug tool
 - possible to customize bios with tool like AMI Firmware Update linux (like amibcp?)
 - uefi tools and isos to keep on me.
+- pkgs.netdata - Real-time performance monitoring tool
+
 
 # to autostart possibly
  - fractal
@@ -45,7 +50,9 @@ nixops deploy to other computer
 zsh: set window titles based on what applications we run
 
 nvim: limit tree siter language support
+ -- on low memory computers this can cause swap or OOM if no swap
 
+build plan to migrate desktop
 labled menu in sway for rando application browsing / searching
 kexec emergency - already exists but explore options
 mpd

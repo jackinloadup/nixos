@@ -169,7 +169,7 @@ set keymap vi-insert
     };
 
     home.username = settings.user.username;
-    home.homeDirectory = "/home/${settings.user.username}";
+    home.homeDirectory = lib.mkOverride 10 "/home/${settings.user.username}";
 
     home.packages = with pkgs; (if (nixosConfig.machine.sizeTarget > 0 ) then [
       #unstable.neovim
@@ -214,6 +214,8 @@ set keymap vi-insert
       #pantheon.elementary-files
       speedcrunch # calculator 
       nota # fancy cli calculator
+      #flameshot
+      gnome.vinagre
 
       #tor-browser-bundle-bin
 
@@ -233,6 +235,7 @@ set keymap vi-insert
 
       ## Debugging
       wireshark
+      gparted
 
       ## Task/notes
       mindforger

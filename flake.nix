@@ -53,10 +53,6 @@
                 }
                 secrets.nixosModules.default
                 baseCfg
-                #home-manager.nixosModules.home-manager {
-                #  home-manager.users.lriutzel = import ./home;
-                #  home-manager.extraSpecialArgs = { inherit inputs; };
-                #}
               ];
 
               # Let 'nixos-version --json' know the Git revision of this flake.
