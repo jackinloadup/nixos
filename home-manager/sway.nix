@@ -30,6 +30,11 @@ in
     #mako
     #dmenu
     gnome.adwaita-icon-theme
+
+    gksu # gui for root privilages # needed for zenmap
+    # enable  xhost si:localuser:root
+    # disable xhost -si:localuser:root
+    xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
   ];
 
   wayland.windowManager.sway = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
@@ -314,6 +319,14 @@ in
       #    { });
 
       startup = [
+        # following needed to launch root apps
+        # can be disabled with `xhost -si:localhost:root`
+        # ideally we would enable and disable as needed
+        # This doesn't work here so I'm just leaving it atm
+        # until I care to figure out how to declare this
+        # in a way I like
+        #{ command = "${pkgs.xorg.xhost}/bin/xhost si:localhost:root"; }
+
         #{ command = "${pkgs.mako}/bin/mako"; }
         #{ command = "${pkgs.nextcloud-client}/bin/nextcloud"; }
         #{ command = "${pkgs.keepassxc}/bin/keepassxc"; }
