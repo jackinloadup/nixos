@@ -5,6 +5,7 @@ let
   settings = import ../../settings;
 in {
   imports = [
+    ./chirp.nix
     ./encryptedRoot.nix
     ./quietBoot.nix
     ./lowLevelXF86keys.nix
