@@ -29,26 +29,8 @@ in {
       fsType = "ext4";
     };
 
-    boot = {
-      # Use GRUB2 as EFI boot loader.
-      loader.grub.useOSProber = true;
-
-      tmpOnTmpfs = true;
-    };
-
     # Define the hostname
     networking.hostName = cfg.hostname;
-
-    programs.dconf.enable = true;
-
-    # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
-    # is required.
-    services.gvfs = {
-      enable = true;
-      # Default package does not support all protocols. Use the full-featured
-      # gnome version
-      package = lib.mkForce pkgs.gnome3.gvfs;
-    };
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

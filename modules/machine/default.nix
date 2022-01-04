@@ -214,7 +214,12 @@ in {
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkIf (cfg.sizeTarget > 0) true;
 
+    programs.dconf.enable = mkIf (cfg.sizeTarget > 0) true;
+
     services.gvfs.enable = mkIf (cfg.sizeTarget > 1) true;
+    # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
+    # is required.
+    services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
 
     #*) highlight -O truecolor "$1";;
 
