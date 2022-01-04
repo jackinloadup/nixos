@@ -19,12 +19,13 @@ in {
     };
 
     # might only apply to libvirt
-    environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [ # if system is not minimal
+    environment.systemPackages = with pkgs; [ # if system is not minimal
       virt-top
-    ] // mkIf (cfg.sizeTarget > 1) [ # if system is full user
-      virt-manager
-    ];
+      usbutils # for lsusb
+    ] ++ (if cfg.sizeTarget > 0 then [ # if system is full user
+      virt-manager # includes virt-install which maybe we want in cli?
+    ] else []);
 
-    #users.users.lriutzel.extraGroups = [ "docker" ];
+    users.users.lriutzel.extraGroups = [ "libvirtd" ];
   };
 }
