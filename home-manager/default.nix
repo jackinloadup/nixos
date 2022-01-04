@@ -263,6 +263,16 @@ set keymap vi-insert
     ] else []);
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
+      gpg-agent = {
+        enable = true;
+        enableExtraSocket = false;
+        enableScDaemon = false;
+        enableSshSupport = true;
+        defaultCacheTtl = 30;
+        defaultCacheTtlSsh = 30;
+        maxCacheTtl = 3600; # 1 hour
+        maxCacheTtlSsh = 3600; # 1 hour
+      };
       playerctld.enable = true;
       # Display desktop notfications.
       dunst = {
