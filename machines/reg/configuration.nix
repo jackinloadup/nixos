@@ -14,6 +14,7 @@ in {
       "lriutzel"
     ];
     adb = true;
+    chirp = true;
     docker = true;
     tui = true;
     sizeTarget = 2;
