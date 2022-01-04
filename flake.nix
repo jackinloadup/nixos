@@ -63,7 +63,7 @@
           ];
         };
     in {
-      # Allow unstable packages.
+      # Allow unfree packages.
       nixpkgs.config.allowUnfree = true;
 
       # Expose overlay to flake outputs, to allow using it from other flakes.

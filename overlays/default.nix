@@ -6,7 +6,10 @@ let
   #cp = f: (super.callPackage f) {};
 in self: super: {
   # make all unstable packages available; 
-  unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+  unstable = import inputs.nixpkgs-unstable {
+    system = "x86_64-linux";
+    config.allowUnfree = true;
+  };
 
   nmap-graphical = self.unstable.nmap-graphical;
   neovim-unwrapped = self.unstable.neovim-unwrapped;
@@ -19,6 +22,7 @@ in self: super: {
     polyhub = super.callPackage ../packages/polyhub.nix {};
   };
   taskwarrior = self.unstable.taskwarrior;
+  zoom-us = self.unstable.zoom-us;
   ## Example package, used only for tests
   #hello-custom = super.callPackage ../packages/hello-custom { };
   #darktile = super.callPackage ../packages/darktile { };
