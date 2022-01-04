@@ -214,6 +214,8 @@ in {
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkIf (cfg.sizeTarget > 0) true;
 
+    services.gvfs.enable = mkIf (cfg.sizeTarget > 1) true;
+
     #*) highlight -O truecolor "$1";;
 
 

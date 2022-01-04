@@ -37,6 +37,7 @@ in {
     #  poppler_utils # for pdf2text
       bat # cat alternative
       viu # terminal image viewer
+      lesspipe
 
       ## compression tools
       unzip
@@ -59,6 +60,7 @@ in {
       jnettop
       dnstop
       mtr # traceroute and ping
+      bridge-utils
 
       ## io
       iotop

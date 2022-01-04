@@ -19,7 +19,7 @@ in {
   };
 
   # If user is enabled
-  config = mkIf (cfg.sizeTarget > 0 && builtins.elem "lriutzel" config.machine.users) {
+  config = mkIf (builtins.elem "lriutzel" config.machine.users) {
     nix.trustedUsers = [ "lriutzel" ];
 
     users.users.lriutzel = with settings; {
@@ -38,12 +38,7 @@ in {
     # nixpkgs.config`
     home-manager.users.lriutzel = import ../../home-manager;
 
-    programs.wireshark.enable = true;
-    # #TODO figure out how to enable only at user level
-    #programs.gnupg.agent = {
-    #  enable = true;
-    #  enableSSHSupport = true;
-    #};
+    programs.wireshark.enable = if (cfg.sizeTarget > 1) then true else false;
 
     services.trezord.enable = if (cfg.sizeTarget > 1) then true else false; # Support Trezor
 
