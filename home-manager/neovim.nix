@@ -24,7 +24,7 @@ in {
     plugins = with pkgs.vimPlugins; [
       # Syntax
       vim-nix
-      vim-go
+      #vim-go # ~800mb
       rust-vim
 
       # Language Server
