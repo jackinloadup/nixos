@@ -7,7 +7,7 @@ in {
   imports = [];
 
 
-  options.machine.simula = mkEnableOption "Enable steam game platform";
+  options.machine.simula = mkEnableOption "Enable Simula VR platform";
 
   config = mkIf cfg.simula {
     environment.systemPackages = with pkgs; [

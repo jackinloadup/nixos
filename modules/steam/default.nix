@@ -10,6 +10,10 @@ in {
   options.machine.steam = mkEnableOption "Enable steam game platform";
 
   config = mkIf cfg.steam {
+    environment.systemPackages = with pkgs; [
+      steam-run
+    ];
+
     programs.steam.enable = true;
     hardware.steam-hardware.enable = true;
   };
