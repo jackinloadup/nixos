@@ -35,6 +35,7 @@ in
     # enable  xhost si:localuser:root
     # disable xhost -si:localuser:root
     xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
+    foot
   ];
 
   wayland.windowManager.sway = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
