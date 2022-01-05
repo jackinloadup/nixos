@@ -7,11 +7,12 @@ in {
   imports = [];
 
 
-  options.machine.gaming = mkEnableOption "Enable steam game platform";
+  options.machine.gaming = mkEnableOption "Enable extra options only needed for gaming";
 
   config = mkIf cfg.gaming {
     environment.systemPackages = with pkgs; [
       monado
+      lighthouse-steamvr
       libgdiplus
       gnome.adwaita-icon-theme
 
