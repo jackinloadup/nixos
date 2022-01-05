@@ -11,11 +11,17 @@ in self: super: {
     config.allowUnfree = true;
   };
 
+  sway-17 = import inputs.nixpkgs-sway-17 {
+    system = "x86_64-linux";
+    config.allowUnfree = true;
+  };
+
   nmap-graphical = self.unstable.nmap-graphical;
   neovim-unwrapped = self.unstable.neovim-unwrapped;
   home-assistant = self.unstable.home-assistant.override {
     extraPackages = py: with py; [ psycopg2 librouteros ];
   };
+  sway = self.sway-17.sway;
   wrapWine = super.callPackage ../packages/wineWrap.nix {};
   wineApps = {
     winbox = super.callPackage ../packages/winbox.nix {};
