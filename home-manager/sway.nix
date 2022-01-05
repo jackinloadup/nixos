@@ -21,7 +21,7 @@ in
   ];
 
   programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
-  programs.zsh.initExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
+  programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
 
   home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
     #sway-contrib.grimshot

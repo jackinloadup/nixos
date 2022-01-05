@@ -156,16 +156,9 @@ set keymap vi-insert
     home.stateVersion = "21.05";
 
     home.sessionVariables = {
-      EDITOR = "vim";
-      MOZ_ENABLE_WAYLAND = 1;
-      XDG_CURRENT_DESKTOP = "sway";
-      XDG_SESSION_TYPE = "wayland";
-      NVIM_TUI_ENABLE_TRUE_COLOR = 1;
-      NVIM_TUI_ENABLE_CURSOR_SHAPE = 2; # blink cursor maybe? https://github.com/neovim/neovim/pull/5977
-
-      TERMINFO_DIRS="/home/lriutzel/.nix-profile/share/terminfo";
+      TERMINFO_DIRS="${config.home.homeDirectory}/.nix-profile/share/terminfo";
       WSLENV="TERMINFO_DIRS";
-      XAUTHORITY="/home/lriutzel/.Xauthority";
+      XAUTHORITY="${config.home.homeDirectory}/.Xauthority";
     };
 
     home.username = settings.user.username;

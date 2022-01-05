@@ -19,7 +19,30 @@ with lib;
 
         bemenu
         j4-dmenu-desktop
+
+        qt5.qtwayland # make conditional?
       ];
+      extraSessionCommands = ''
+        # SDL:
+        export SDL_VIDEODRIVER=wayland
+        # QT (needs qt5.qtwayland in systemPackages):
+        export QT_QPA_PLATFORM=wayland-egl
+        export QT_WAYLAND_FORCE_DPI=physical
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+        # Fix for some Java AWT applications (e.g. Android Studio),
+        # use this if they aren't displayed properly:
+        export _JAVA_AWT_WM_NONREPARENTING=1
+        export XDG_CURRENT_DESKTOP=sway
+        export XDG_SESSION_DESKTOP=sway
+        export XDG_SESSION_TYPE=wayland
+        export WLR_DRM_DEVICES=/dev/dri/card0
+      '';
+    };
+
+    # This is needed for applications launched outside of the sway pts???
+    environment.variables = {
+      XDG_SESSION_TYPE = "wayland";
+      XDG_CURRENT_DESKTOP = "sway";
     };
 
     xdg = {
