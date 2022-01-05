@@ -8,6 +8,12 @@ let
 in {
   home.file."${config.xdg.configHome}/nvim/syntax/rsc.vim".source = nvim-syntax-rsc-mikrotik;
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    NVIM_TUI_ENABLE_TRUE_COLOR = 1;
+    NVIM_TUI_ENABLE_CURSOR_SHAPE = 2; # blink cursor maybe? https://github.com/neovim/neovim/pull/5977
+  };
+
   programs.neovim = {
     enable = true;
     viAlias = true;
