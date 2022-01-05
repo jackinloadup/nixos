@@ -59,6 +59,7 @@ in {
       latencytop
       jnettop
       dnstop
+      dnsutils
       mtr # traceroute and ping
       bridge-utils
 
@@ -71,6 +72,10 @@ in {
       ncdu # ncurses disk usage viewer
       file
       fd # find alternative
+
+      ## Executables
+      binutils
+      patchelf
 
       ## OS (nix/linux)
       nix-tree # A terminal curses application to browse a Nix store paths dependencies

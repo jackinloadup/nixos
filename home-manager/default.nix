@@ -250,6 +250,7 @@ set keymap vi-insert
       ## networking
       nethogs
       ngrep
+      fast-cli
 
       ## Audio
       playerctl

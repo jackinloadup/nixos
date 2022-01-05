@@ -45,6 +45,7 @@ in {
       # Editor Features
       vim-surround
       indentLine # thin line at each indent level
+      vim-fugitive # A Git wrapper so awesome, it should be illegal
     ];
 
     extraConfig = ''
