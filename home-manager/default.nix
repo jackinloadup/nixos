@@ -303,6 +303,7 @@ set keymap vi-insert
             browser = "${pkgs.xdg-utils}/bin/xdg-open";
           };
 
+          # @TODO these shortcuts should be using super not ctrl as they are workspace level commands
           shortcuts = {
             close = "ctrl+space";
             close_all = "ctrl+shift+space";
@@ -314,14 +315,14 @@ set keymap vi-insert
             background ="#${base00-hex}";
             foreground ="#${base04-hex}";
             frame_color ="#${base03-hex}";
-            timeout = "30s";
+            timeout = "15s";
           };
 
           urgency_normal = with config.lib.base16.theme; {
             background ="#${base00-hex}";
             foreground ="#${base04-hex}";
             frame_color ="#${base0A-hex}";
-            timeout = "1m";
+            timeout = "30s";
           };
 
           urgency_critical = with config.lib.base16.theme; {
