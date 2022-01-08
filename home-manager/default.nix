@@ -165,7 +165,8 @@ set keymap vi-insert
     home.homeDirectory = lib.mkOverride 10 "/home/${settings.user.username}";
 
     home.packages = with pkgs; (if (nixosConfig.machine.sizeTarget > 0 ) then [
-      #unstable.neovim
+      nur.repos.ambroisie.comma # like nix-shell but more convinient
+      nix-index
       #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
       imv # minimal image viewer
 
