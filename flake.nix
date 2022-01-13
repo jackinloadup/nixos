@@ -56,17 +56,25 @@
                   # and root e.g. `nix-channel --remove nixos`. `nix-channel
                   # --list` should be empty for all users afterwards
                   #nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-                  nix.nixPath = let path = toString ./.; in [ "repl=${path}/repl.nix" "nixpkgs=${nixpkgs}" ];
-                  nixpkgs.overlays = [ self.overlay nur.overlay ];
+                  nix.nixPath = let path = toString ./.; in [
+                    "repl=${path}/repl.nix"
+                    "nixpkgs=${nixpkgs}"
+                  ];
+
+                  nixpkgs.overlays = [
+                    self.overlay
+                    nur.overlay
+                  ];
                 }
                 secrets.nixosModules.default
                 baseCfg
               ];
 
+              nix.registry.nixpkgs.flake = nixpkgs;
+
               # Let 'nixos-version --json' know the Git revision of this flake.
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
-              nix.registry.nixpkgs.flake = nixpkgs;
             })
           ];
         };
