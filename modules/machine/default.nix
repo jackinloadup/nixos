@@ -16,6 +16,7 @@ in {
     ./sound.nix
     ./tui.nix
     ./minimal.nix
+    ./nix.nix
     ./virtualization.nix
   ];
 
@@ -51,17 +52,8 @@ in {
   };
 
   config = {
+    # Allow unfree packages.
     nixpkgs.config.allowUnfree = if (cfg.sizeTarget > 0)  then true else false;
-
-    nix.package = pkgs.nix_2_4; # support flakes
-    nix.trustedUsers = [ "root" ];
-    nix.autoOptimiseStore = mkIf (cfg.sizeTarget > 0) true;
-    # 1) Enable extra-builtins-file option for nix
-    # 2) stuff to get flakes working
-    #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
-    nix.extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
 
     boot = {
       #plymouth.enable = true;
