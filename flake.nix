@@ -32,6 +32,19 @@
   outputs = { self, nixpkgs, nixos-hardware, nixpkgs-unstable, secrets, ... }@inputs:
     with inputs;
     let
+      defineModule = name: dir: {
+        name = name;
+        value = import (./. + ("/" + dir + "/" + name));
+      };
+
+      importModulesDir = dir: builtins.listToAttrs (
+        map (name: defineModule name dir) (builtins.attrNames (builtins.readDir  (builtins.toPath  ./. + "/${dir}")))
+      );
+
+      # Output all modules in ./users to flake. Modules should be in
+      # individual subdirectories and contain a default.nix file
+      nixosUsers = importModulesDir "users";
+
       # Function to create default (common) system config options
       defFlakeSystem = machineName: baseCfg:
         nixpkgs.lib.nixosSystem {
@@ -45,7 +58,7 @@
           ++ [
             ({ ... }: {
               imports = builtins.attrValues self.nixosModules
-              ++ builtins.attrValues self.nixosUsers
+              ++ builtins.attrValues nixosUsers
               ++ [
                 {
                   # Set the $NIX_PATH entry for nixpkgs. This is necessary in
@@ -92,17 +105,7 @@
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
-      nixosModules = builtins.listToAttrs (map (x: {
-        name = x;
-        value = import (./modules + "/${x}");
-      }) (builtins.attrNames (builtins.readDir  ./modules)));
-
-      # Output all modules in ./users to flake. Modules should be in
-      # individual subdirectories and contain a default.nix file
-      nixosUsers = builtins.listToAttrs (map (x: {
-        name = x;
-        value = import (./users + "/${x}");
-      }) (builtins.attrNames (builtins.readDir  ./users)));
+      nixosModules = importModulesDir "modules";
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
