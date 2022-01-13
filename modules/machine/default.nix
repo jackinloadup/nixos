@@ -5,12 +5,12 @@ let
   settings = import ../../settings;
 in {
   imports = [
+    ./adb.nix
     ./chirp.nix
     ./encryptedRoot.nix
     ./fonts.nix
     ./quietBoot.nix
     ./lowLevelXF86keys.nix
-    ./adb.nix
     ./docker.nix
     ./sway.nix
     ./sound.nix
@@ -170,15 +170,10 @@ in {
     # is required.
     services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
 
-    #*) highlight -O truecolor "$1";;
-
 
     # Enable network discovery
     #services.avahi.enable = true;
     #services.avahi.nssmdns = true;
-
-    # Set on each machine that builds
-    #nix.maxJobs = lib.mkDefault 8;
 
     # add config above here
   };
