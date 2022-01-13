@@ -100,9 +100,6 @@
       # it can use the sources pinned in flake.lock
       overlay = final: prev: (import ./overlays inputs) final prev;
 
-      # allow modules to use inputs in addition to their normal args
-      _module.args.inputs = inputs;
-
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = importModulesDir "modules";
@@ -117,7 +114,10 @@
             #(import (./machines + "/${x}/configuration.nix") { inherit self inputs pkgs; })
             (./machines + "/${x}/configuration.nix")
           ];
-        };
+
+          # allow modules to use inputs in addition to their normal args
+          _module.args.inputs = inputs;
+       };
       }) (builtins.attrNames (builtins.readDir ./machines)));
     };
     #} //
