@@ -2,23 +2,30 @@
   description = "My machines";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-sway-17.url = "github:nixos/nixpkgs?rev=0860d0db4f74770677011bf9c95a1d76b38ba512";
+    nixpkgs.url = github:nixos/nixpkgs/nixos-21.11;
+    nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
+    nixpkgs-sway-17.url = github:nixos/nixpkgs?rev=0860d0db4f74770677011bf9c95a1d76b38ba512;
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = github:numtide/flake-utils;
+    nixos-hardware.url = github:NixOS/nixos-hardware/master;
 
-    home-manager.url = "github:nix-community/home-manager/release-21.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Manage a user environment using Nix
+    home-manager = {
+      url = github:nix-community/home-manager/release-21.05;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # color library for theming
-    base16.url = "github:montchr/base16-nix";
-    base16.inputs.nixpkgs.follows = "nixpkgs";
+    base16 = {
+      url = github:montchr/base16-nix;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # NUR is a registry of Nix User Repositories
+    nur = {
+      url = github:nix-community/NUR;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 
