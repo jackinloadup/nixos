@@ -7,6 +7,7 @@ in {
     gdb
     hyperfine
     valgrind
+    gitui
   ];
 
   home.file.".gdbinit".text = ''
