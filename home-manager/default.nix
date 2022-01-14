@@ -248,6 +248,8 @@ set keymap vi-insert
       sc-im
       visidata
 
+      # TUI to GUI helpers
+      dragon-drop
 
       ## networking
       nethogs
