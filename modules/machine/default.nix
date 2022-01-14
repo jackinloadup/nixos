@@ -118,7 +118,7 @@ in {
 
     networking = {
       networkmanager = {
-        enable = mkIf (cfg.sizeTarget > 0) true;
+        enable = mkDefault true;
         wifi = {
           #enable = true;  # Enables wireless support via wpa_supplicant.
           powersave = true; # Enable wifi powersaving. Not exactly sure if this is working
