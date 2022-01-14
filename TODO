@@ -19,6 +19,9 @@ gnupg
 wfvm https://git.m-labs.hk/M-Labs/wfvm
 quickemu
 tpm remote attestation
+vim https://github.com/anordal/shellharden
+git pre-commit hooks https://github.com/cachix/pre-commit-hooks.nix
+connect to p2p NAT64 network https://p2p.nat64.dk
 
 # Requires secret storage
 - autostart fractal - matrix client
