@@ -26,6 +26,7 @@ in {
     quietBoot = true;
     sdr = true;
     sound = true;
+    steam = true;
     sway = true;
   };
 
