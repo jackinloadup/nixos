@@ -38,6 +38,8 @@ in
     foot
   ];
 
+  services.flameshot.enable = true;
+
   wayland.windowManager.sway = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
     enable = true;
     package = null; # don't override system-installed one
