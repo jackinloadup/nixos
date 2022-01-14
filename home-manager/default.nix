@@ -212,6 +212,9 @@ set keymap vi-insert
       #flameshot
       gnome.vinagre
 
+      exodus # Cryptowallet
+      electron-cash # BCH walle
+
       #tor-browser-bundle-bin
 
       python39Packages.xdot # graphviz viewer
