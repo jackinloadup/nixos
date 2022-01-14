@@ -2,8 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ self, inputs, pkgs, ... }:
+{ self, inputs, lib, pkgs, ... }:
 
+with lib;
 with inputs;
 let
   settings = import ../../settings;
@@ -39,7 +40,7 @@ in {
   };
 
   networking.hostName = "julia";
-  networking.networkmanager.enable = false;
+  networking.networkmanager.enable = mkForce false;
   boot.loader.grub.memtest86.enable = true;
 
   #boot = {
