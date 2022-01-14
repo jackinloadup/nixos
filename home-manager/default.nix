@@ -248,9 +248,6 @@ set keymap vi-insert
       sc-im
       visidata
 
-      ## Tasks/notes
-      taskwarrior
-      taskwarrior-tui
 
       ## networking
       nethogs
@@ -260,6 +257,17 @@ set keymap vi-insert
       ## Audio
       playerctl
     ] else []);
+
+    programs.taskwarrior = {
+      enable = true;
+      colorTheme = "dark-blue-256";
+      config = {
+        confirmation = false;
+        report.minimal.filter = "status:pending";
+        report.active.columns = [ "id" "start" "entry.age" "priority" "project" "due" "description" ];
+        report.active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
+      };
+    };
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
       gpg-agent = {
