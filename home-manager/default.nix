@@ -10,6 +10,7 @@ in
     base16.hmModule
     ./development.nix
     ./dunst.nix
+    ./firefox.nix
     ./foot.nix
     ./i3.nix
     ./neovim.nix
@@ -41,8 +42,6 @@ in
         enable = true;
         defaultApplications = {
           "application/pdf" = "org.pwmt.zathura.desktop";
-          "application/xhtml+xml" = "firefox.desktop";
-          "text/html" = "firefox.desktop";
         };
       };
     };
@@ -103,48 +102,6 @@ set keymap vi-insert
 
     programs.home-manager.enable = true;
 
-    programs.firefox = {
-      enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
-      package = pkgs.firefox-bin;
-      #package = pkgs.wrapFirefox pkgs.firefox-esr {
-      #  nixExtensions = [
-      #    (pkgs.fetchFirefoxAddon {
-      #      name = "ublock"; # Has to be unique!
-      #      url = "https://addons.mozilla.org/firefox/downloads/file/3679754/ublock_origin-1.31.0-an+fx.xpi";
-      #      sha256 = "1h768ljlh3pi23l27qp961v1hd0nbj2vasgy11bmcrlqp40zgvnr";
-      #    })
-      #  ];
-
-      #  extraPolicies = {
-      #    CaptivePortal = false;
-      #    DisableFirefoxStudies = true;
-      #    DisablePocket = true;
-      #    DisableTelemetry = true;
-      #    DisableFirefoxAccounts = true;
-      #    FirefoxHome = {
-      #      Pocket = false;
-      #      Snippets = false;
-      #    };
-      #     UserMessaging = {
-      #       ExtensionRecommendations = false;
-      #       SkipOnboarding = true;
-      #     };
-      #  };
-
-      #  extraPrefs = ''
-      #    // Show more ssl cert infos
-      #    lockPref("security.identityblock.show_extended_validation", true);
-      #  '';
-      #};
-      #package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-      #  #ffmpegSupport = true;
-      #  #pipewireSupport = true;
-      #  forceWayland = true;
-      #  #extraPolicies = {
-      #  #  ExtensionSettings = {};
-      #  #};
-      #};
-    };
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -224,8 +181,6 @@ set keymap vi-insert
 
       ## Audio
       pavucontrol # GUI volume source/sink manager
-      ## Video
-      ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
       # Spotify opensource utils?
       spotify-tui # spotifyd ui
       spotifyd # music player no ui
