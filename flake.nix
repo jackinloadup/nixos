@@ -1,5 +1,5 @@
 {
-  description = "My machines";
+  description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-21.11;
