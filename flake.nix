@@ -119,39 +119,28 @@
           _module.args.inputs = inputs;
        };
       }) (builtins.attrNames (builtins.readDir ./machines)));
-    };
-    #} //
+    } //
 
-    # All packages in the ./packages subfolder are also added to the flake.
     # flake-utils is used for this part to make each package available for each
     # system. This works as all packages are compatible with all architectures
     #(flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
-    #(system:
-    #  let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlay;
-    #  in rec {
-    #    # Custom packages added via the overlay are selectively added here, to
-    #    # allow using them from other flakes that import this one.
-    #    packages = flake-utils.lib.flattenTree {
-    #      wezterm-bin = pkgs.wezterm-bin;
-    #      wezterm-nightly = pkgs.wezterm-nightly;
-    #      hello-custom = pkgs.hello-custom;
-    #      filebrowser = pkgs.filebrowser;
-    #      darktile = pkgs.darktile;
-    #      zk = pkgs.zk;
-    #    };
+    (flake-utils.lib.eachSystem [ "i686-linux" "x86_64-linux" ])
+    (system:
+      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlay;
+      in rec {
+        # Custom packages added via the overlay are selectively added here, to
+        # allow using them from other flakes that import this one.
+        packages = flake-utils.lib.flattenTree {
+          winbox = pkgs.wineApps.winbox;
+        };
 
-    #    apps = {
-    #      # Allow custom packages to be run using `nix run`
-    #      hello-custom = flake-utils.lib.mkApp { drv = packages.hello-custom; };
-    #      wezterm-bin = flake-utils.lib.mkApp {
-    #        drv = packages.wezterm-bin;
-    #        exePath = "/bin/wezterm";
-    #      };
-    #    };
+        apps = {
+          winbox = flake-utils.lib.mkApp { drv = packages.winbox; };
+        };
 
-    #    # TODO we probably should set some default app and/or package
-    #    # defaultPackage = packages.hello;
-    #    # defaultApp = apps.hello;
-    #  });
+        # TODO we probably should set some default app and/or package
+        # defaultPackage = packages.hello;
+        # defaultApp = apps.hello;
+      });
 }
 

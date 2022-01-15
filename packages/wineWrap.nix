@@ -1,9 +1,13 @@
+# TODO disable mono and gecko install prompts on first run and/or properly link to nix packages
+
+# @NOTE dark theme could be maybe detected and switched at runtime based on gtk theme or similar?
 with builtins;
 { pkgs }:
 { 
   is64bits ? false
-  , wine ? if is64bits then pkgs.wineWowPackages.stable else pkgs.wine
+, wine ? if is64bits then pkgs.wineWowPackages.stable else pkgs.wine
 , wineFlags ? ""
+, useDarkTheme ? false
 , executable
 , chdir ? null
 , name
@@ -22,6 +26,8 @@ let
     wineWowPackages.stable
   ];
   WINENIX_PROFILES = "$HOME/WINENIX_PROFILES";
+  # define antes de definir $HOME senão ele vai gravar na nova $HOME a .wine-nix
+  WINE_NIX="$HOME/.wine${if is64bits then "64" else "32"}-nix";
   PATH = pkgs.lib.makeBinPath requiredPackages;
   NAME = name;
   HOME = if home == "" 
@@ -39,10 +45,18 @@ let
         tricksCmd = "${pkgs.winetricks}/bin/winetricks ${tricksStr}";
       in tricksCmd
     else "";
+  darkReg = pkgs.writeTextFile {
+    name = "wine-breeze-dark.reg";
+    text = builtins.readFile ./wine-breeze-dark.reg;
+  };
+  setupDarkTheme = if useDarkTheme then ''
+      ${wineBin} start regedit.exe ${darkReg}
+  '' else "";
+
   script = pkgs.writeShellScriptBin name ''
     export APP_NAME="${NAME}"
     export WINEARCH=${WINEARCH}
-    export WINE_NIX="$HOME/.wine-nix" # define antes de definir $HOME senão ele vai gravar na nova $HOME a .wine-nix
+    export WINE_NIX="${WINE_NIX}"
     export WINE_NIX_PROFILES="${WINENIX_PROFILES}"
     export PATH=$PATH:${PATH}
     export HOME="${HOME}"
@@ -58,6 +72,7 @@ let
       wineserver -w
       ${tricksHook}
       ${firstrunScript}
+      ${setupDarkTheme}
       rm "$WINEPREFIX/drive_c/users/$USER" -rf
       ln -s "$HOME" "$WINEPREFIX/drive_c/users/$USER"
     fi
