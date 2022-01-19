@@ -27,7 +27,8 @@ in {
     sdr = true;
     sound = true;
     steam = true;
-    sway = true;
+    displayManager = null;
+    windowManagers = [ "sway"  ];
   };
 
   starbase = {

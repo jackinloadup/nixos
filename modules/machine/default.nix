@@ -10,7 +10,11 @@ in {
     ./encryptedRoot.nix
     ./fonts.nix
     ./quietBoot.nix
+    ./gdm.nix
+    ./gnome.nix
+    ./i3.nix
     ./lowLevelXF86keys.nix
+    ./ly.nix
     ./docker.nix
     ./sway.nix
     ./sound.nix
@@ -48,6 +52,18 @@ in {
       default = null;
       example = "whodis"; # ?
       description = "Declare if there is a user who should be considered the default user. Enables things like autologin";
+    };
+    displayManager = mkOption {
+      type = with types; nullOr (enum [ ]);
+      default = [ ];
+      example = [ "gdm" "lightdm" "ly" ];
+      description = "Application which manages the physical user seat";
+    };
+    windowManagers = mkOption {
+      type = with types; nullOr (listOf (enum [ ]));
+      default = "sway";
+      example = "gnome";
+      description = "Available window manager environments. ex: Gnome KDE XFCE";
     };
   };
 
@@ -169,6 +185,8 @@ in {
     # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
     # is required.
     services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
+
+    services.xserver.desktopManager.xterm.enable = false;
 
 
     # Enable network discovery
