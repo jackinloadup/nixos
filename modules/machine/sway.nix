@@ -3,9 +3,11 @@ with lib;
 {
   imports = [ ];
 
-  options.machine.sway = mkEnableOption "Enable sway";
+  options.machine.windowManagers = mkOption {
+    type = with types; nullOr (listOf (enum [ "sway" ]));
+  };
 
-  config = mkIf config.machine.sway {
+  config = mkIf (builtins.elem "sway" config.machine.windowManagers) {
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
@@ -40,10 +42,11 @@ with lib;
     };
 
     # This is needed for applications launched outside of the sway pts???
-    environment.variables = {
-      XDG_SESSION_TYPE = "wayland";
-      XDG_CURRENT_DESKTOP = "sway";
-    };
+    #disabling to see if that get gdm working
+    #environment.variables = {
+    #  XDG_SESSION_TYPE = "wayland";
+    #  XDG_CURRENT_DESKTOP = "sway";
+    #};
 
     xdg = {
       portal = {
@@ -51,7 +54,7 @@ with lib;
         gtkUsePortal = true;
         extraPortals = with pkgs; [
           xdg-desktop-portal-wlr
-          xdg-desktop-portal-gtk
+       #   xdg-desktop-portal-gtk
         ];
       };
     };

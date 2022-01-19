@@ -29,7 +29,8 @@ in {
     sdr = true;
     sound = true;
     steam = true;
-    sway = true;
+    displayManager = "ly";
+    windowManagers = [ "sway" "gnome" "i3" ];
     virtualization = true;
   };
 
