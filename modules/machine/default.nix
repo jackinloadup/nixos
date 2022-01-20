@@ -22,6 +22,7 @@ in {
     ./minimal.nix
     ./nix.nix
     ./virtualization.nix
+    ./magic-key.nix
   ];
 
 
