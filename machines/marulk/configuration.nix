@@ -1,5 +1,6 @@
 { self, inputs, pkgs, lib, ... }:
 
+with lib;
 with inputs;
 let
   settings = import ../../settings;
@@ -31,7 +32,7 @@ in {
   #security.wrappers.fusemount3 = { source = "${pkgs.bash}/bin/bash";};
 
   networking.hostName = "marulk";
-  networking.networkmanager.enable = lib.mkOverride 1000 false;
+  networking.networkmanager.enable = mkForce false;
   networking.bridges.br0.interfaces = ["enp1s0"];
   networking.interfaces.br0 = {
     useDHCP = true;
