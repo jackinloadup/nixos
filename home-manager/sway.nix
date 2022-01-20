@@ -11,7 +11,7 @@ let
   sway_tty1 = ''
       # if tty1 then dont fork, instead transfer execution to sway
       # thus if sway crashes the resulting terminal will not be logged in
-      [[ "$(tty)" == /dev/tty1 ]] && exec sway
+      #[[ "$(tty)" == /dev/tty1 ]] && exec sway
     '';
 in
 {
@@ -20,8 +20,8 @@ in
     inputs.base16.hmModule
   ];
 
-  programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
-  programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
+  #programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
+  #programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
 
   home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
     #sway-contrib.grimshot
