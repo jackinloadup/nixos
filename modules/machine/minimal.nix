@@ -8,7 +8,7 @@ in {
   config = mkIf (cfg.sizeTarget < 1) {
     #environment.systemPackages = with pkgs; [
 
-    environment.noXlibs = true;
+    environment.noXlibs = mkDefault true;
 
     # Size reduction
 
@@ -23,21 +23,21 @@ in {
     #};
 
     ## Remove polkit. It depends on spidermonkey !
-    security.polkit.enable = false;
+    security.polkit.enable = mkDefault false;
 
-    programs.bash.enableCompletion = false;
+    programs.bash.enableCompletion = mkDefault false;
 
     ## Remove documentation
-    documentation.enable = false;
-    documentation.nixos.enable = false;
-    documentation.nixos.includeAllModules = false; # default is false just wanted to note
-    documentation.man.enable = false;
-    documentation.info.enable = false;
-    documentation.doc.enable = false;
+    documentation.enable = mkDefault false;
+    documentation.nixos.enable = mkDefault false;
+    documentation.nixos.includeAllModules = mkDefault false; # default is mkDefault false just wanted to note
+    documentation.man.enable = mkDefault false;
+    documentation.info.enable = mkDefault false;
+    documentation.doc.enable = mkDefault false;
 
     ## Disable udisks, sounds, …
-    services.udisks2.enable = false;
-    xdg.sounds.enable = false;
+    services.udisks2.enable = mkDefault false;
+    xdg.sounds.enable = mkDefault false;
 
   };
 }
