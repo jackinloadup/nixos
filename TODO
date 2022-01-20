@@ -22,6 +22,7 @@ tpm remote attestation
 vim https://github.com/anordal/shellharden
 git pre-commit hooks https://github.com/cachix/pre-commit-hooks.nix
 connect to p2p NAT64 network https://p2p.nat64.dk
+tui disk image writer
 
 # Requires secret storage
 - autostart fractal - matrix client
@@ -94,5 +95,4 @@ ddccontrol -r 0x10 -w 50 dev:/dev/i2c-6
 ddccontrol -r 0x15 -w 32 dev:/dev/i2c-5
 ### reader mode
 ddccontrol -r 0x15 -w 1 dev:/dev/i2c-5
-
 

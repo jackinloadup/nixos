@@ -211,6 +211,7 @@ set keymap vi-insert
       nota # fancy cli calculator
       #flameshot
       gnome.vinagre
+      gnome.gnome-disk-utility
 
       exodus # Cryptowallet
       electron-cash # BCH walle
