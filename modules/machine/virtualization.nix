@@ -18,6 +18,8 @@ in {
       };
     };
 
+    security.polkit.enable = lib.mkForce true;
+
     # might only apply to libvirt
     environment.systemPackages = with pkgs; [ # if system is not minimal
       virt-top
