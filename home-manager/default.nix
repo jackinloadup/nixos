@@ -200,6 +200,7 @@ set keymap vi-insert
       zathura # PDF / Document viewer
       libreoffice # Office suite
       fractal # matrix client
+      nheko   # matrix client
       thunderbird # Email client
       tixati # bittorrent client
       mumble # voice chat application
