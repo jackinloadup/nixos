@@ -5,6 +5,8 @@ zsh + spaceship
 wireshark
 migrate laptop
 zsh: change window title based on location
+nvim: limit tree siter language support
+ -- on low memory computers this can cause swap or OOM if no swap
 
 # partial
 build plan to migrate desktop
@@ -53,8 +55,6 @@ nixops deploy to other computer
 
 zsh: set window titles based on what applications we run
 
-nvim: limit tree siter language support
- -- on low memory computers this can cause swap or OOM if no swap
 
 build plan to migrate desktop
 labled menu in sway for rando application browsing / searching
