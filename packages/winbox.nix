@@ -38,6 +38,3 @@ in pkgs.symlinkJoin {
   name = "winbox";
   paths = [bin desktop];
 }
-# @TODO figure out how to add dark themes into wine
-# dark theme https://gist.github.com/Zeinok/ceaf6ff204792dde0ae31e0199d89398
-# plus wine-breeze-dark.reg
