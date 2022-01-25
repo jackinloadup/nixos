@@ -12,6 +12,7 @@ in {
     ./quietBoot.nix
     ./gdm.nix
     ./gnome.nix
+    ./greetd.nix
     ./i3.nix
     ./lowLevelXF86keys.nix
     ./ly.nix

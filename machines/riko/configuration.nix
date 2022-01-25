@@ -19,7 +19,7 @@ in {
     adb = true;
     tui = true;
     sizeTarget = 2;
-    autologin-tty1 = true;
+    autologin-tty1 = false;
     bluetooth = true;
     encryptedRoot = true;
     lowLevelXF86keys.enable = true;
@@ -27,7 +27,7 @@ in {
     sdr = true;
     sound = true;
     steam = true;
-    displayManager = null;
+    displayManager = "greetd";
     windowManagers = [ "sway"  ];
   };
 
