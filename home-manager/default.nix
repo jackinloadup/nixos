@@ -15,6 +15,7 @@ in
     ./i3.nix
     ./neovim.nix
     ./sway.nix
+    ./task-warrior
     ./zoom.nix
   ];
 
