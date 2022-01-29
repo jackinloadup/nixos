@@ -153,6 +153,7 @@ set keymap vi-insert
       units
 
     ] else []) ++ (if (nixosConfig.machine.sizeTarget > 1 ) then [
+      nixos-shell
 
       # GUI
       zathura # PDF / Document viewer
