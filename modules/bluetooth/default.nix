@@ -6,14 +6,13 @@ with lib;
   options.machine.bluetooth = mkEnableOption "Enable bluetooth";
 
   config = mkIf config.machine.bluetooth {
+    hardware.bluetooth.enable = true;
+
+    hardware.bluetooth.hsphfpd.enable = true; # High quality BT calls
+    # hsphfpd fails if this is enabled https://github.com/NixOS/nixpkgs/issues/114222
+    systemd.user.services.telephony_client.enable = false; # work around for above
+
     services.blueman.enable = true;
-
-    hardware.bluetooth = {
-      enable = true;
-      # https://github.com/NixOS/nixpkgs/issues/114222 
-      #hsphfpd.enable = true; # High quality BT calls
-    };
-
     services.pipewire = {
       # High quality BT calls
       media-session.config.bluez-monitor.rules = [
