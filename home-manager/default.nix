@@ -161,7 +161,8 @@ set keymap vi-insert
       nheko   # matrix client
       thunderbird # Email client
       tixati # bittorrent client
-      mumble # voice chat application
+      #mumble # voice chat application
+      nur.repos.arc.packages.mumble_1_4
       signal-desktop # messaging client
       chromium # web browser
       xfce.thunar # File manager
