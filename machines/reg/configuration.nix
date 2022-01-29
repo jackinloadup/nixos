@@ -20,6 +20,7 @@ in {
     sizeTarget = 2;
     autologin-tty1 = true;
     bluetooth = true;
+    botamusique = true;
     encryptedRoot = true;
     home-assistant = false;
     gaming = true;
