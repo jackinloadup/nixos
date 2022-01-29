@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/boot/EFI" = {
-    device = "/dev/disk/by-label/efi";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
     options = [ "defaults" "x-gvfs-hide" ];
   };
