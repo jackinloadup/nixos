@@ -14,10 +14,8 @@ with lib;
     # gnome has its own power management tool
     services.tlp.enable = mkForce false;
 
-    services.xserver.displayManager = {
-      job.logToJournal = true;
-      gnome.enable = true;
-    };
+    services.xserver.displayManager.job.logToJournal = true;
+    services.xserver.desktopManager.gnome.enable = true;
   };
 }
 
