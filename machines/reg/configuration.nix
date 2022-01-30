@@ -35,6 +35,8 @@ in {
     virtualization = true;
   };
 
+  environment.etc.issue.source = lib.mkForce ./issue-banner;
+
   gumdrop = {
     printerScanner = true;
     storageServer = true;
