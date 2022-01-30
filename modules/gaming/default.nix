@@ -18,6 +18,8 @@ in {
 
       # xorg stuff
       xorg.xhost # for `xhost si:localuser:root`
+
+      nur.repos.dukzcry.gamescope
     ];
     services.xserver = {
       modules = [ pkgs.xlibs.xf86inputjoystick ];

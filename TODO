@@ -14,6 +14,7 @@ steam compartment?
 kexec reboot
 option to enable docker.
 yubikey
+gamescope - SteamOS session compositing window manager - https://github.com/Plagman/gamescope
 
 # proposed
 vm system like qemu or w/e
