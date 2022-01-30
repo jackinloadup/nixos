@@ -10,6 +10,11 @@
   boot.loader.efi.efiSysMountPoint = "/boot/EFI";
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # We have a lot of ram. We can wait a bit before we think we need to swap.
+  # does this even matter if I don't have swap attached?
+  boot.kernel.sysctl."vm.swappiness" = 5;
+
+
   fileSystems."/boot/EFI" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";
