@@ -115,6 +115,11 @@ in {
         # Panic if hung task is found
         #"kernel.hung_task_panic=1"
       ];
+
+      # Imporved networking TESTING ATM
+      kernelModules = [ "tcp_bbr" ];
+      kernel.sysctl."net.ipv4.tcp_congestion_control" = "bbr";
+      kernel.sysctl."net.core.default_qdisc" = "fq";
     };
 #  } // (if cfg.sizeTarget > -1 then {
 
