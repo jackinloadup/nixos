@@ -18,7 +18,7 @@ in {
     docker = true;
     tui = true;
     sizeTarget = 2;
-    autologin-tty1 = true;
+    autologin-tty1 = false;
     bluetooth = true;
     botamusique = false;
     encryptedRoot = true;
@@ -30,7 +30,7 @@ in {
     sdr = true;
     sound = true;
     steam = true;
-    displayManager = "ly";
+    displayManager = "greetd";
     windowManagers = [ "sway" "gnome" "i3" ];
     virtualization = true;
   };
