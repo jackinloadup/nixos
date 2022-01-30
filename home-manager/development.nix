@@ -26,9 +26,10 @@ in {
     extraConfig = {
       init.defaultBranch = "master";
       core.editor = "nvim";
+      merge.conflictStyle = "diff3";
+      pull.rebase = "false";
       #protocol.keybase.allow = "always";
       #credential.helper = "store --file ~/.git-credentials";
-      #pull.rebase = "false";
     };
 
     aliases = {
