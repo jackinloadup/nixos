@@ -22,7 +22,7 @@ in {
     virtualization = true;
   };
 
-  starbase = {
+  gumdrop = {
   };
 
   nix.maxJobs = lib.mkDefault 2;

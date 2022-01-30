@@ -31,7 +31,7 @@ in {
     windowManagers = [ "sway"  ];
   };
 
-  starbase = {
+  gumdrop = {
     printerScanner = true;
   };
 
