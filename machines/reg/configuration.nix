@@ -35,7 +35,7 @@ in {
     virtualization = true;
   };
 
-  starbase = {
+  gumdrop = {
     printerScanner = true;
   };
 
