@@ -13,14 +13,14 @@ in {
     # Size reduction
 
     ## Limit the locales we use
-    #i18n = {
-    #  supportedLocales = [ "fr_FR.UTF-8/UTF-8" ];
-    #  defaultLocale = "fr_FR.UTF-8/UTF-8";
-    #  glibcLocales = pkgs.glibcLocales.override {
-    #    allLocales = false;
-    #    locales = [ "fr_FR.UTF-8/UTF-8" ];
-    #  };
-    #};
+    i18n = {
+      supportedLocales = [ "en_US.UTF-8/UTF-8" ];
+      defaultLocale = "en_US.UTF-8/UTF-8";
+      glibcLocales = pkgs.glibcLocales.override {
+        allLocales = false;
+        locales = [ "en_US.UTF-8/UTF-8" ];
+      };
+    };
 
     ## Remove polkit. It depends on spidermonkey !
     security.polkit.enable = mkDefault false;
