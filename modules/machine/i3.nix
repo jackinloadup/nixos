@@ -15,8 +15,6 @@ with lib;
     services.tlp.enable = mkForce false;
 
     services.xserver = {
-      enable = true;
-
       desktopManager = {
         xterm.enable = false;
       };
