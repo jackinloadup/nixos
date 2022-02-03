@@ -57,6 +57,7 @@ in {
       example = "whodis"; # ?
       description = "Declare if there is a user who should be considered the default user. Enables things like autologin";
     };
+    mutableUsers = mkEnableOption "Should kernel panic when the out-of-memory daemon is triggerd";
     displayManager = mkOption {
       type = with types; nullOr (enum [ ]);
       default = [ ];
@@ -74,6 +75,8 @@ in {
   config = {
     # Allow unfree packages.
     nixpkgs.config.allowUnfree = if (cfg.sizeTarget > 0)  then true else false;
+
+    users.mutableUsers = mkDefault cfg.mutableUsers; # Users may only be added via nix config
 
     machine.kernel = {
       rebootAfterPanic = mkDefault 10;
