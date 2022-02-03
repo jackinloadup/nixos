@@ -28,11 +28,13 @@ in {
     sound = true;
     steam = true;
     displayManager = "greetd";
-    windowManagers = [ "sway"  ];
+    windowManagers = [ "sway" "gnome" ];
+    virtualization = true;
   };
 
   gumdrop = {
     printerScanner = true;
+    storageServer = true;
   };
 
   networking.hostName = "riko";
