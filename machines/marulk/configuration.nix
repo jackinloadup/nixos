@@ -25,6 +25,12 @@ in {
   gumdrop = {
   };
 
+  machine.kernel = {
+    rebootAfterPanic = mkForce 10;
+    panicOnOOM = mkForce true;
+    panicOnHungTaskTimeout = mkForce 1;
+  };
+
   nix.maxJobs = lib.mkDefault 2;
 
   #security.wrappers = {};

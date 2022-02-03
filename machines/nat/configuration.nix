@@ -29,6 +29,11 @@ in {
   };
 
   nix.maxJobs = lib.mkDefault 2;
+  machine.kernel = {
+    rebootAfterPanic = mkForce 10;
+    panicOnOOM = mkForce true;
+    panicOnHungTaskTimeout = mkForce 1;
+  };
 
   #security.wrappers = {};
   #security.wrappers.fusemount = { source = "${pkgs.bash}/bin/bash";};
