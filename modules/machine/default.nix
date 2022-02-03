@@ -60,13 +60,13 @@ in {
     mutableUsers = mkEnableOption "Should kernel panic when the out-of-memory daemon is triggerd";
     displayManager = mkOption {
       type = with types; nullOr (enum [ ]);
-      default = [ ];
+      default = null;
       example = [ "gdm" "lightdm" "ly" ];
       description = "Application which manages the physical user seat";
     };
     windowManagers = mkOption {
       type = with types; nullOr (listOf (enum [ ]));
-      default = "sway";
+      default = null;
       example = "gnome";
       description = "Available window manager environments. ex: Gnome KDE XFCE";
     };
