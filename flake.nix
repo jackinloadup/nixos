@@ -11,7 +11,7 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      url = github:nix-community/home-manager/release-21.05;
+      url = github:nix-community/home-manager/release-21.11;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -140,4 +140,3 @@
         # defaultApp = apps.hello;
       });
 }
-
