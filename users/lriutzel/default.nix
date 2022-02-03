@@ -38,15 +38,25 @@ in {
     # nixpkgs.config`
     home-manager.users.lriutzel = import ../../home-manager;
 
-    programs.wireshark.enable = if (cfg.sizeTarget > 1) then true else false;
+    programs.wireshark.enable = ifGraphical;
 
-    services.trezord.enable = if (cfg.sizeTarget > 1) then true else false; # Support Trezor
+    services.trezord.enable = ifGraphical;
 
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 1) [
+      #nix-plugins # Collection of miscellaneous plugins for the nix expression language
+      emulsion # mimimal linux image viewer built in rust
+      nmap-graphical
+
+      #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
+
       unstable.mqttui # mqtt tui
+
+      unstable.helvum # pipewire patchbay
+      easyeffects
     ];
 
     hardware.yubikey.enable = ifGraphical;
+
     # #TODO figure out how to enable only at user level
     #programs.gnupg.agent = {
     #  enable = true;
