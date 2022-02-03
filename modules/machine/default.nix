@@ -14,7 +14,9 @@ in {
     ./gnome.nix
     ./greetd.nix
     ./i3.nix
+    ./kernel.nix
     ./lowLevelXF86keys.nix
+    ./locale.nix
     ./ly.nix
     ./docker.nix
     ./sway.nix
@@ -73,6 +75,14 @@ in {
     # Allow unfree packages.
     nixpkgs.config.allowUnfree = if (cfg.sizeTarget > 0)  then true else false;
 
+    machine.kernel = {
+      rebootAfterPanic = mkDefault 10;
+      panicOnOOM = mkDefault false;
+      panicOnFailedBoot = mkDefault true;
+      panicOnHungTask = mkDefault true;
+      panicOnHungTaskTimeout = mkDefault 120;
+    };
+
     boot = {
       #plymouth.enable = true;
       initrd = {
@@ -96,25 +106,6 @@ in {
         configurationLimit = mkDefault 5;
         consoleMode = mkDefault "auto";
       };
-
-      kernelParams = [
-        # If boot fails panic
-        "boot.panic_on_fail"
-
-        # reboot x seconds after panic. allow time for vmcore memory image to be saved
-        # time require is related to memory size and storage speed.
-        # 30 secs was recommended
-        "panic=10" # reboot 10 second after panic
-
-        # panic immediately if oom killer is activated
-        #"vm.panic_on_oom"
-
-        # how long a user or kernel thread can remain in D state before kernel panic
-        #"hung_task_timeout_secs=120"
-
-        # Panic if hung task is found
-        #"kernel.hung_task_panic=1"
-      ];
 
       # Imporved networking TESTING ATM
       kernelModules = [ "tcp_bbr" ];
@@ -166,22 +157,6 @@ in {
       opengl.driSupport = mkIf (cfg.sizeTarget > 0) true;
     };
 
-    # Set your time zone.
-    time.timeZone = mkDefault settings.home.timezone;
-
-    # Select and limit locales
-    i18n = with settings.user;
-    let
-      localeFull = "${locale}.${characterSet}";
-      localeExtended = "${localeFull}/${characterSet}";
-    in {
-      supportedLocales = [ localeExtended ];
-      defaultLocale = localeFull;
-      glibcLocales = pkgs.glibcLocales.override {
-        allLocales = false;
-        locales = [ localeExtended ];
-      };
-    };
 
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkIf (cfg.sizeTarget > 0) true;

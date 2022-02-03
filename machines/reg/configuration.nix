@@ -33,6 +33,8 @@ in {
     displayManager = "greetd";
     windowManagers = [ "sway" "gnome" "i3" ];
     virtualization = true;
+    locale = settings.user.locale;
+    characterSet = settings.user.characterSet;
   };
 
   environment.etc.issue.source = lib.mkForce ./issue-banner;
