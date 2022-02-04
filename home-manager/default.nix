@@ -43,6 +43,9 @@ in
         enable = true;
         defaultApplications = {
           "application/pdf" = "org.pwmt.zathura.desktop";
+
+          "message/rfc822" = "thunderbird.desktop";
+          "x-scheme-handler/mailto" = "thunderbird.desktop";
         };
       };
     };
@@ -268,6 +271,6 @@ set keymap vi-insert
       };
     };
 
-     ## add config above here
+    ## add config above here
   };
 }
