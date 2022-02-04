@@ -304,10 +304,6 @@ in
 
       output = {
         "*".bg = ''~/background.jpg fill'';
-        "DP-2" = {
-          transform = "270";
-          bg = ''~/background-virt.jpg fill'';
-        };
       };
       #  (if hostName == "sirius" then {
       #    "Unknown LCD QHD 1 110503_3" = {
