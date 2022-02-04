@@ -37,7 +37,7 @@ in {
       ];
 
       # Expose home-assitant over wireguard
-      interfaces.wg0.allowedTCPPorts = [ 8123 ]; # Artifact of future wireguard ideas
+      #interfaces.wg0.allowedTCPPorts = [ 8123 ]; # Artifact of future wireguard ideas
     };
 
     # Enable mosquitto MQTT broker
