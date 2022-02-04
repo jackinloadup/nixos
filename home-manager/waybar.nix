@@ -6,7 +6,7 @@ in {
   programs.waybar = {
     enable = true;
     systemd = {
-      enable = true;
+      enable = false;
       #target = "sway-session.target"; # not available in HM 21.11
     };
     settings = [
