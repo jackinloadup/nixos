@@ -164,6 +164,31 @@ in {
         set -ga terminal-overrides ',*256col*:Tc'
         source ${config.lib.base16.templateFile { name="tmux"; }}
       '';
+      #plugins = with pkgs.tmuxPlugins; [
+      #  {
+      #    plugin = pain-control;
+      #    extraConfig = "set -g @plugin 'tmux-plugins/tmux-pain-control'";
+      #  }
+      #  {
+      #    plugin = sensible;
+      #    extraConfig = "set -g @plugin 'tmux-plugins/tmux-sensible'";
+      #  }
+      #  {
+      #    plugin = sessionist;
+      #    extraConfig = "set -g @plugin 'tmux-plugins/tmux-sessionist'";
+      #  }
+      #  {
+      #    plugin = yank;
+      #    extraConfig = "set -g @plugin 'tmux-plugins/tmux-yank'";
+      #  }
+      #  {
+      #    plugin = tmux-colors-solarized;
+      #    extraConfig = ''
+      #      set -g @plugin 'seebi/tmux-colors-solarized'
+      #      set -g @colors-solarized 'dark'
+      #    '';
+      #  }
+      #];
     };
     environment.etc."lf/lfrc".text = ''
 set previewer /etc/lf/pv.sh

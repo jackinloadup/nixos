@@ -6,18 +6,17 @@ wireshark
 migrate laptop
 zsh: change window title based on location
 nvim: limit tree siter language support
- -- on low memory computers this can cause swap or OOM if no swap
+option to enable docker.
+vm system like qemu or w/e
 
 # partial
 build plan to migrate desktop
 steam compartment?
 kexec reboot
-option to enable docker.
 yubikey
 gamescope - SteamOS session compositing window manager - https://github.com/Plagman/gamescope
 
 # proposed
-vm system like qemu or w/e
 gnupg
 wfvm https://git.m-labs.hk/M-Labs/wfvm
 quickemu
@@ -48,6 +47,7 @@ tui disk image writer
  - irc client
  - signal
 
+TinyCoreLinux or similar as a alt boot?
 vm system like qemu or w/e
 different size builds eg: replace libreoffice for somethings smaller
 explore quick shells for rust / secops / private + colors per shell in case of multi-tasking?

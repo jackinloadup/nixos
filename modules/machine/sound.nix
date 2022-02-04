@@ -9,13 +9,8 @@ in {
 
   config = mkIf (cfg.sizeTarget > 0 && cfg.sound) {
     sound.enable = false; # Enables ALSA. Conflicts with pipewire?
-
-    security = {
-      rtkit.enable = true; # Allows pipewire to run "realtime"
-    };
-
-    # Disable pulseaudio
-    hardware.pulseaudio.enable = false;
+    security.rtkit.enable = true; # Allows pipewire to run "realtime"
+    hardware.pulseaudio.enable = false; # Disable pulseaudio
 
     # Enable pipewire https://nixos.wiki/wiki/PipeWire
     services.pipewire = {

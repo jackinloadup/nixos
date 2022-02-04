@@ -46,6 +46,7 @@ in {
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       emulsion # mimimal linux image viewer built in rust
       nmap-graphical
+      fzf
 
       #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
 
