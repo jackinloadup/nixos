@@ -28,35 +28,23 @@ in {
     storageServer = true;
   };
 
-  nix.maxJobs = lib.mkDefault 2;
   machine.kernel = {
     rebootAfterPanic = mkForce 10;
     panicOnOOM = mkForce true;
     panicOnHungTaskTimeout = mkForce 1;
   };
 
-  #security.wrappers = {};
-  #security.wrappers.fusemount = { source = "${pkgs.bash}/bin/bash";};
-  #security.wrappers.fusemount3 = { source = "${pkgs.bash}/bin/bash";};
+  nix.maxJobs = lib.mkDefault 2;
 
   networking.hostName = "nat";
   networking.networkmanager.enable = mkForce false;
-  networking.bridges.br0.interfaces = ["enp1s0"];
-  networking.interfaces.br0 = {
-    useDHCP = true;
-  };
-
+  #networking.bridges.br0.interfaces = ["enp1s0"];
+  #networking.interfaces.br0.useDHCP = true;
 
   networking.dhcpcd = {
     #wait = "ipv4";
     persistent = true;
   };
-
-  # Define a user account
-  users.extraUsers.kodi.isNormalUser = true;
-  services.cage.user = "kodi";
-  services.cage.program = "${pkgs.kodi-wayland}/bin/kodi-standalone";
-  services.cage.enable = true;
 
   #networking.nat = {
   #  enable = true;
