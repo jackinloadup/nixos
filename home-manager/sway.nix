@@ -26,7 +26,6 @@ in
   home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
     #sway-contrib.grimshot
     wl-clipboard
-    waybar
     #mako
     #dmenu
     gnome.adwaita-icon-theme
