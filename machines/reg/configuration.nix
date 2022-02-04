@@ -6,6 +6,10 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
+    ./rename-pipewire-sinks.nix
+    ./sway-monitor-setup.nix
+    ./change-logitec-suspend.nix
+    ./control-monitor-backlight.nix
     base16.hmModule
   ];
 
@@ -47,76 +51,19 @@ in {
   networking.hostName = "reg";
   nix.maxJobs = lib.mkDefault 16;
 
-  networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
-  networking.firewall.allowedUDPPorts = [ 8000 ];
-
-  # Rename pipewire sinks
-  services.pipewire = {
-    media-session.config.alsa-monitor.rules = [
-      {
-        matches = [{ "device.vendor.id" = "4130"; }];
-        actions = {
-          "update-props" = {
-            "device.description" =  "Motherboard";
-            "device.product.name" = "Motherboard";
-          };
-        };
-      }
-      {
-        matches = [{ "device.vendor.id" = "4098"; }];
-        actions = {
-          "update-props" = {
-            "device.description" =  "GPU";
-            "device.product.name" = "GPU";
-          };
-        };
-      }
-    ];
-  };
-
+  #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
+  #networking.firewall.allowedUDPPorts = [ 8000 ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
 
   # List services that you want to enable:
 
-  hardware.i2c.enable = true;
-  services.ddccontrol.enable = true;
-  # pkgs that might be desired
-  # ddccontrol-db
-  # i2c-tools
-  users.users = with settings.user; {
-    ${username} = {
-      extraGroups = [ "i2c" ];
-    };
-  };
-
-  home-manager.users.lriutzel.wayland.windowManager.sway.config = {
-    output = {
-      "DP-1" = {
-        pos = "1440 500";
-      };
-      "DP-2" = {
-        transform = "270";
-        pos = "0 0";
-        bg = ''~/background-virt.jpg fill'';
-      };
-    };
-
-    workspaceOutputAssign = [
-      { output = "DP-1"; workspace = "1"; }
-    ];
-  };
 
   hardware.opengl.extraPackages = with pkgs; [
     radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
     radeon-profile
   ];
-
-  # set logitec mouse to autosuspend after 60 seconds
-  services.udev.extraRules = ''
-ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTR{idProduct}=="c52b", TEST=="power/control", ATTR{power/control}:="auto", TEST=="power/autosuspend_delay_ms", ATTR{power/autosuspend_delay_ms}:="120000"
-  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
