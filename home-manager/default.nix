@@ -259,10 +259,10 @@ set keymap vi-insert
       #  imageDirectory = toString ./art;
       #};
 
-      kdeconnect = {
-        enable = true;
-        indicator = true;
-      };
+      #kdeconnect = {
+      #  enable = true;
+      #  indicator = true;
+      #};
 
       # Manage removeable media.
       udiskie = {
