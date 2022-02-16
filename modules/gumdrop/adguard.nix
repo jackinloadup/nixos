@@ -12,11 +12,11 @@ in {
       enable = true;
       openFirewall = true;
       extraArgs = [];
-      port = 3000; # Web gui
-      host = "0.0.0.0";
+      port = 80; # Web gui
+      host = "10.16.1.2";
     };
 
-    networking.firewall.allowedTCPPorts = [ 53 ];
+    networking.firewall.allowedTCPPorts = [ 53 80 ];
     networking.firewall.allowedUDPPorts = [ 53 ];
   };
 }
