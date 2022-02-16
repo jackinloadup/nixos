@@ -20,9 +20,11 @@ in {
     home-assistant = true;
     tui = true;
     virtualization = true;
+    windowManagers = [];
   };
 
   gumdrop = {
+    adguard = true;
   };
 
   machine.kernel = {
@@ -42,6 +44,9 @@ in {
   networking.bridges.br0.interfaces = ["enp1s0"];
   networking.interfaces.br0 = {
     useDHCP = true;
+    ipv4.addresses = [
+      { address = "10.16.1.2"; prefixLength = 8; }
+    ];
   };
 
 
