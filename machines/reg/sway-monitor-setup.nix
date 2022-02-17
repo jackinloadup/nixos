@@ -7,7 +7,7 @@
         pos = "0 630";
       };
       "DP-2" = {
-        transform = "270";
+        transform = "90";
         pos = "3840 0";
         bg = ''~/background-virt.jpg fill'';
       };
