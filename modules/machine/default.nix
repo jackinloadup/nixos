@@ -78,6 +78,8 @@ in {
 
     users.mutableUsers = mkDefault cfg.mutableUsers; # Users may only be added via nix config
 
+    time.timeZone = mkDefault settings.home.timezone;
+
     machine.kernel = {
       rebootAfterPanic = mkDefault 10;
       panicOnOOM = mkDefault false;
