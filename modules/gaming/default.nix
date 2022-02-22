@@ -20,6 +20,9 @@ in {
       xorg.xhost # for `xhost si:localuser:root`
 
       nur.repos.dukzcry.gamescope
+      retroarch
+      retroarchFull
+      cool-retro-term
     ];
     services.xserver = {
       modules = [ pkgs.xlibs.xf86inputjoystick ];
