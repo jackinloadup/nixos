@@ -6,7 +6,17 @@ with lib;
   options.machine.bluetooth = mkEnableOption "Enable bluetooth";
 
   config = mkIf config.machine.bluetooth {
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          FastConnectable = "true";
+          JustWorksRepairing = "always";
+          MultiProfile = "multiple";
+        };
+      };
+    };
 
     hardware.bluetooth.hsphfpd.enable = true; # High quality BT calls
     # hsphfpd fails if this is enabled https://github.com/NixOS/nixpkgs/issues/114222
