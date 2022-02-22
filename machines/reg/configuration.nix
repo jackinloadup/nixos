@@ -34,7 +34,7 @@ in {
     sdr = true;
     sound = true;
     steam = true;
-    displayManager = "greetd";
+    displayManager = "gdm";
     windowManagers = [ "sway" "gnome" "i3" ];
     virtualization = true;
     locale = settings.user.locale;
