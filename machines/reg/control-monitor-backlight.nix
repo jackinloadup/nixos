@@ -1,6 +1,8 @@
 { self, inputs, pkgs, lib, ... }:
 
-{
+let
+  settings = import ../../settings;
+in {
   hardware.i2c.enable = true;
   services.ddccontrol.enable = true;
   # pkgs that might be desired
