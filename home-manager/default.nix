@@ -185,6 +185,9 @@ set keymap vi-insert
       python39Packages.xdot # graphviz viewer
       graphviz
 
+      ## Video
+      handbrake
+
       ## Audio
       pavucontrol # GUI volume source/sink manager
       # Spotify opensource utils?
