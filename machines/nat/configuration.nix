@@ -11,6 +11,8 @@ in {
     #base16.hmModule
   ];
 
+  security.sudo.wheelNeedsPassword = false;
+
   machine = {
     users = [
     #  "lriutzel"
