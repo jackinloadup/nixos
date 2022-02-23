@@ -210,6 +210,7 @@ set keymap vi-insert
       wineWowPackages.stable
 
       # TUI
+      #jless # json viewer
       ## spreadsheet stuffs
       sc-im
       visidata
