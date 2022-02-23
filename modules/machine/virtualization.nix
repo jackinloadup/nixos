@@ -18,14 +18,18 @@ in {
       };
     };
 
-    security.polkit.enable = lib.mkForce true;
+    # TODO added nested flag
+    #boot.extraModprobeConfig = "options kvm_intel nested=1";
+
+    security.polkit.enable = lib.mkForce true; # needed for virt-manager?
 
     # might only apply to libvirt
-    environment.systemPackages = with pkgs; [ # if system is not minimal
+    environment.systemPackages = with pkgs; [ # if system is minimal
       virt-top
       usbutils # for lsusb
     ] ++ (if cfg.sizeTarget > 0 then [ # if system is full user
       virt-manager # includes virt-install which maybe we want in cli?
+      spice-gtk
     ] else []);
 
     users.users.lriutzel.extraGroups = [ "libvirtd" ];
