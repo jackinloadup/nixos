@@ -176,6 +176,7 @@ set keymap vi-insert
       #flameshot
       gnome.vinagre
       gnome.gnome-disk-utility
+      calibre # ebook tool,  assist with kindle
 
       exodus # Cryptowallet
       electron-cash # BCH walle
