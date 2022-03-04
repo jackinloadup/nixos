@@ -37,6 +37,8 @@ in {
     storageServer = true;
   };
 
+  powerManagement.cpuFreqGovernor = "powersave";
+
   networking.hostName = "riko";
   nix.maxJobs = lib.mkDefault 4;
 
