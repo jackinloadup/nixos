@@ -189,6 +189,8 @@ set keymap vi-insert
       ## Video
       handbrake
       obs-studio
+      obs-studio-plugins.wlrobs
+      obs-studio-plugins.obs-multi-rtmp
 
       ## Audio
       pavucontrol # GUI volume source/sink manager
