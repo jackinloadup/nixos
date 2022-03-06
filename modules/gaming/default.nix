@@ -16,6 +16,9 @@ in {
       libgdiplus
       gnome.adwaita-icon-theme
 
+      # SNES
+      snes9x-gtk
+
       # xorg stuff
       xorg.xhost # for `xhost si:localuser:root`
 
