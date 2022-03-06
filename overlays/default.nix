@@ -11,6 +11,7 @@ in self: super: {
     config.allowUnfree = true;
   };
 
+  nixos-shell = self.unstable.nixos-shell; # needed for 0.2.2
   nmap-graphical = self.unstable.nmap-graphical;
   neovim-unwrapped = self.unstable.neovim-unwrapped;
   home-assistant = self.unstable.home-assistant.override {
