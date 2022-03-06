@@ -56,6 +56,18 @@ nixops deploy to other computer
 
 zsh: set window titles based on what applications we run
 
+sway dimr - creates options for swaylock
+https://gitlab.com/cytopyge/dotfiles/-/raw/master/files/code/sway/dimr
+
+vault secrets nix
+https://github.com/serokell/vault-secrets
+
+direnv – unclutter your .profile
+https://direnv.net/
+
+CopyQ - Clipboard manager
+https://hluk.github.io/CopyQ/
+
 
 build plan to migrate desktop
 labled menu in sway for rando application browsing / searching
