@@ -188,6 +188,7 @@ set keymap vi-insert
 
       ## Video
       handbrake
+      obs-studio
 
       ## Audio
       pavucontrol # GUI volume source/sink manager
