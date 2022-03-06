@@ -4,10 +4,11 @@ let
   settings = import ../settings;
 in {
   home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
-    gdb
+    gdb # debugger
     hyperfine
     valgrind
-    gitui
+    gitui # git tui
+    rr # time traveling debugger
   ];
 
   home.file.".gdbinit".text = ''
