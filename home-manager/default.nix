@@ -201,6 +201,7 @@ set keymap vi-insert
       # NonFree
       spotify
 
+      cawbird # twitter client
 
       ## Debugging
       wireshark
