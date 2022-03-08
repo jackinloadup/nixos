@@ -188,6 +188,7 @@ set keymap vi-insert
 
       ## Video
       handbrake
+      lbry
       obs-studio
       obs-studio-plugins.wlrobs
       obs-studio-plugins.obs-multi-rtmp

@@ -18,6 +18,7 @@ in self: super: {
     extraPackages = py: with py; [ psycopg2 librouteros ];
   };
   sway = self.unstable.sway;
+  lbry = self.unstable.lbry;
   wrapWine = super.callPackage ../packages/wineWrap.nix {};
   wineApps = {
     winbox = super.callPackage ../packages/winbox.nix {};
@@ -55,4 +56,3 @@ in self: super: {
   #forgit =
   #  super.callPackage ../packages/forgit { inputs = inputs; };
 }
-
