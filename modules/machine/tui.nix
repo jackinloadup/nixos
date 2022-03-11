@@ -10,7 +10,7 @@ in {
   options.machine.tui = mkEnableOption "Hide boot log from tui/gui";
 
   config = mkIf cfg.tui {
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = (with pkgs; [
       pv # progress meter
 
       #vim # text editor
@@ -82,7 +82,9 @@ in {
       vulnix # vulnerability scanner for nix
       # atop?
       htop # process, cpu, memory viewer
-    ];
+    ]) ++ (with config.boot.kernelPackages; [
+      turbostat # Report processor frequency and idle statistics
+    ]);
 
     themes.base16 = with settings.theme; {
       enable = true;
