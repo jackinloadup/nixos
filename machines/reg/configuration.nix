@@ -22,11 +22,9 @@ in {
     docker = true;
     tui = true;
     sizeTarget = 2;
-    autologin-tty1 = false;
     bluetooth = true;
     botamusique = false;
     encryptedRoot = true;
-    home-assistant = false;
     gaming = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
