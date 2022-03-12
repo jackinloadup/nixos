@@ -52,26 +52,31 @@ in {
       # Debug
       ## hardware
       pciutils
-      powertop
+      powertop # debug power usage andbattery draw
+      lshw # list hardware
+
+      # Disk
+      parted # a partition manipulation program
 
       ## network
-      iftop
+      iftop # a partition manipulation program 
       latencytop
-      jnettop
-      dnstop
-      dnsutils
+      jnettop # View hosts/ports taking up the most network traffic
+      dnstop # displays various tables of DNS traffic on your network
+      dnsutils # provide dig nslookup nsupdate
       mtr # traceroute and ping
-      bridge-utils
+      bridge-utils # brctl
 
       ## io
-      iotop
+      iotop # simple top-like I/O monitor
       input-utils # lsinput
 
       ## files
-      lsof
+      lsof # list open files
       ncdu # ncurses disk usage viewer
-      file
+      file # determine file type
       fd # find alternative
+      btrfs-progs
 
       ## Executables
       binutils
@@ -84,6 +89,9 @@ in {
       htop # process, cpu, memory viewer
     ]) ++ (with config.boot.kernelPackages; [
       turbostat # Report processor frequency and idle statistics
+      perf # Linux tools to profile with performance counters
+      tmon # Monitoring and Testing Tool for Linux kernel thermal subsystem
+      usbip # allows to pass USB device from server to client over the network
     ]);
 
     themes.base16 = with settings.theme; {
