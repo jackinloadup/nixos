@@ -19,10 +19,6 @@ with lib;
         xterm.enable = false;
       };
 
-      displayManager = {
-          defaultSession = "none+i3";
-      };
-
       windowManager.i3 = {
         enable = true;
         extraPackages = with pkgs; [
