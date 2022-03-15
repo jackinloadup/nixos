@@ -274,11 +274,15 @@ in
       window.commands = [
         {
           command = "inhibit_idle fullscreen";
-          criteria.app_id = "firefox";
+          criteria.class = "firefox";
         }
         {
           command = "inhibit_idle fullscreen";
           criteria.app_id = "mpv";
+        }
+        {
+          command = "inhibit_idle fullscreen";
+          criteria.class = "LBRY";
         }
         {
           command = "inhibit_idle fullscreen";
