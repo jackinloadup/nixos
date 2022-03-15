@@ -34,6 +34,7 @@ in {
     steam = true;
     displayManager = "gdm";
     windowManagers = [ "sway" "gnome" "i3" ];
+    chromium = true;
     virtualization = true;
     locale = settings.user.locale;
     characterSet = settings.user.characterSet;
