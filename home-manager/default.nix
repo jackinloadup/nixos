@@ -161,6 +161,7 @@ set keymap vi-insert
       # GUI
       zathura # PDF / Document viewer
       libreoffice # Office suite
+      #freeoffice # office suite UNFREE
       fractal # matrix client
       nheko   # matrix client
       thunderbird # Email client
@@ -177,6 +178,7 @@ set keymap vi-insert
       gnome.vinagre
       gnome.gnome-disk-utility
       calibre # ebook tool,  assist with kindle
+      #obsidian # Markdown information archive
 
       exodus # Cryptowallet
       electron-cash # BCH walle
