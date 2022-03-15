@@ -121,6 +121,7 @@ set keymap vi-insert
       TERMINFO_DIRS="${config.home.homeDirectory}/.nix-profile/share/terminfo";
       WSLENV="TERMINFO_DIRS";
       XAUTHORITY="${config.home.homeDirectory}/.Xauthority";
+      NIXOS_CONFIG="${config.home.homeDirectory}/dotfiles/flake.nix";
     };
 
     home.username = settings.user.username;
