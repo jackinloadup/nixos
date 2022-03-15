@@ -63,5 +63,9 @@ in {
     #  enable = true;
     #  enableSSHSupport = true;
     #};
+    modules.browsers.firefox = {
+      enable = true;
+      profileName = "lriutzel";
+    };
   };
 }
