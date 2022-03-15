@@ -7,6 +7,7 @@ in {
   imports = [
     ./adb.nix
     ./chirp.nix
+    ./chromium.nix
     ./encryptedRoot.nix
     ./fonts.nix
     ./quietBoot.nix
