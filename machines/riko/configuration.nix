@@ -12,6 +12,8 @@ in {
 
   hardware.yubikey.enable = true;
 
+  # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
+
   machine = {
     users = [
       "lriutzel"
