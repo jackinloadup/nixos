@@ -36,6 +36,12 @@ in {
     panicOnHungTaskTimeout = mkForce 1;
   };
 
+  virtualisation = {
+    cores = 4;
+    memorySize = 2048;
+    graphics = true;
+  };
+
   nix.maxJobs = lib.mkDefault 2;
 
   networking.hostName = "nat";
