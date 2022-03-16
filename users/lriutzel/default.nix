@@ -40,7 +40,7 @@ in {
 
     programs.wireshark.enable = ifGraphical;
 
-    services.trezord.enable = ifGraphical;
+    services.trezord.enable = true;
 
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 1) [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
@@ -54,6 +54,7 @@ in {
 
       unstable.helvum # pipewire patchbay
       easyeffects
+      trezorctl
     ];
 
     hardware.yubikey.enable = ifGraphical;
