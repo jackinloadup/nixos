@@ -9,7 +9,7 @@
       "DP-2" = {
         transform = "90";
         pos = "3840 0";
-        bg = ''~/background-virt.jpg fill'';
+        bg = ''~/Pictures/background-virt.jpg fill'';
       };
     };
 
