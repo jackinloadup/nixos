@@ -307,7 +307,7 @@ in
       ];
 
       output = {
-        "*".bg = ''~/background.jpg fill'';
+        "*".bg = ''~/Pictures/background.jpg fill'';
       };
       #  (if hostName == "sirius" then {
       #    "Unknown LCD QHD 1 110503_3" = {
@@ -336,7 +336,7 @@ in
           command =
             #let lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"\$(${wallpaper}/bin/wallpaper get)\"'";
             let
-              lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/background.jpg\"'";
+              lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/Pictures/background.jpg\"'";
               timeouts = settings.timeouts;
             in
             ''${pkgs.swayidle}/bin/swayidle -w \
