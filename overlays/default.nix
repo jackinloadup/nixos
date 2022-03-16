@@ -19,6 +19,7 @@ in self: super: {
   };
   sway = self.unstable.sway;
   lbry = self.unstable.lbry;
+  obsidian = self.unstable.obsidian;
   wrapWine = super.callPackage ../packages/wineWrap.nix {};
   wineApps = {
     winbox = super.callPackage ../packages/winbox.nix {};
@@ -56,3 +57,4 @@ in self: super: {
   #forgit =
   #  super.callPackage ../packages/forgit { inputs = inputs; };
 }
+
