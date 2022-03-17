@@ -36,7 +36,8 @@ in {
     };
   };
 
-  services.xserver.enable = true;
 
   services.openssh.enable = true;
+  #services.xserver.enable = true;
+  virtualisation.graphics = true;
 }
