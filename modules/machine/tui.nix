@@ -54,6 +54,7 @@ in {
       pciutils
       powertop # debug power usage andbattery draw
       lshw # list hardware
+      dmidecode # Read DMI (SMBIOS)
 
       # Disk
       parted # a partition manipulation program
