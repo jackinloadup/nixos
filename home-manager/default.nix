@@ -162,6 +162,12 @@ set keymap vi-insert
       # GUI
       zathura # PDF / Document viewer
       libreoffice # Office suite
+
+      # Spelling
+      hunspell
+      hunspellDicts.en_US-large
+      hyphen
+
       #freeoffice # office suite UNFREE
       fractal # matrix client
       nheko   # matrix client
