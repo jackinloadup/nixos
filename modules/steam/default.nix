@@ -16,5 +16,9 @@ in {
 
     programs.steam.enable = true;
     hardware.steam-hardware.enable = true;
+    hardware = {
+      opengl.driSupport32Bit = true;
+      pulseaudio.support32Bit = true;
+    };
   };
 }
