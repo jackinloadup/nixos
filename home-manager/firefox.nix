@@ -155,6 +155,18 @@
           "media.eme.enabled" = true; # Enable DRM
           "media.gmp-widevinecdm.visible" = true; # Enable DRM
           "media.gmp-widevinecdm.enabled" = true; # Enable DRM
+
+          # Use screen share indicator that works better in Wayland
+          "privacy.webrtc.legacyGlobalIndicator" = false;
+
+          "privacy.resistFingerprinting" = true;
+          "spellchecker.dictionary" = "en-US";
+          "intl.locale.requested" = "en-US";
+          "intl.regional_prefs.use_os_locales" = true;
+          "browser.sessionstore.warnOnQuit" = true;
+          "browser.uiCustomization.state" = ''
+            {"placements":{"widget-overflow-fixed-list":["sponsorblocker_ajay_app-browser-action","_1c5e4c6f-5530-49a3-b216-31ce7d744db0_-browser-action","_b11bea1f-a888-4332-8d8a-cec2be7d24b9_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","customizableui-special-spring1","urlbar-container","customizableui-special-spring2","save-to-pocket-button","downloads-button","fxa-toolbar-menu-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","_b86e4813-687a-43e6-ab65-0bde4ab75758_-browser-action","ublock0_raymondhill_net-browser-action","jid1-kkzogwgsw3ao4q_jetpack-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["developer-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","_b86e4813-687a-43e6-ab65-0bde4ab75758_-browser-action","_b11bea1f-a888-4332-8d8a-cec2be7d24b9_-browser-action","sponsorblocker_ajay_app-browser-action","ublock0_raymondhill_net-browser-action","jid1-kkzogwgsw3ao4q_jetpack-browser-action","_1c5e4c6f-5530-49a3-b216-31ce7d744db0_-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list"],"currentVersion":17,"newElementCount":2}
+          '';
         };
       };
     };
