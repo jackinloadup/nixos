@@ -33,6 +33,8 @@ in {
       ];
     };
 
+    environment.etc."nixos/flake.nix".source = "/home/lriutzel/dotfiles/flake.nix";
+
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
