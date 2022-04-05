@@ -184,7 +184,7 @@ set keymap vi-insert
       exodus # Cryptowallet
       electron-cash # BCH walle
 
-      #tor-browser-bundle-bin
+      tor-browser-bundle-bin
 
       python39Packages.xdot # graphviz viewer
       graphviz
