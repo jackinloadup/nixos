@@ -284,6 +284,8 @@ set keymap vi-insert
       };
     };
 
+    home.file."${config.xdg.configHome}/htop/htoprc".source = ./htoprc;
+
     ## add config above here
   };
 }
