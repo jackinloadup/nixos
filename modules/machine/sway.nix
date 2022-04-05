@@ -8,6 +8,8 @@ with lib;
   };
 
   config = mkIf (builtins.elem "sway" config.machine.windowManagers) {
+    programs.xwayland.enable = true;
+
     programs.sway = {
       enable = true;
       wrapperFeatures.gtk = true;
@@ -24,6 +26,7 @@ with lib;
 
         qt5.qtwayland # make conditional?
       ];
+
       extraSessionCommands = ''
         # SDL:
         export SDL_VIDEODRIVER=wayland
