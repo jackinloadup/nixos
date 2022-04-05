@@ -223,6 +223,8 @@ set keymap vi-insert
       ## spreadsheet stuffs
       sc-im
       visidata
+      asciiquarium # Fun aquarium animation
+      cmatrix # Fun matrix animation
 
       # TUI to GUI helpers
       dragon-drop
