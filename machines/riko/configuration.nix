@@ -15,22 +15,20 @@ in {
   # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
 
   machine = {
-    users = [
-      "lriutzel"
-    ];
+    users = [ "lriutzel" ];
     adb = true;
+    chromium = true;
     tui = true;
     sizeTarget = 2;
-    autologin-tty1 = false;
     bluetooth = true;
     encryptedRoot = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
-    sdr = true;
+    sdr = false;
     sound = true;
     steam = true;
     displayManager = "greetd";
-    windowManagers = [ "sway" "gnome" ];
+    windowManagers = [ "sway" ];
     virtualization = true;
   };
 

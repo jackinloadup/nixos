@@ -23,6 +23,7 @@ in {
     ];
     adb = true;
     chirp = true;
+    chromium = true;
     docker = true;
     tui = true;
     sizeTarget = 2;
@@ -38,7 +39,6 @@ in {
     steam = true;
     displayManager = "gdm";
     windowManagers = [ "sway" "gnome" "i3" ];
-    chromium = true;
     virtualization = true;
     locale = settings.user.locale;
     characterSet = settings.user.characterSet;
