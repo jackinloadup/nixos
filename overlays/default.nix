@@ -17,7 +17,9 @@ in self: super: {
   home-assistant = self.unstable.home-assistant.override {
     extraPackages = py: with py; [ psycopg2 librouteros ];
   };
+  steam = self.unstable.steam;
   sway = self.unstable.sway;
+  xwayland = self.unstable.xwayland;
   lbry = self.unstable.lbry;
   obsidian = self.unstable.obsidian;
   wrapWine = super.callPackage ../packages/wineWrap.nix {};
