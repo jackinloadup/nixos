@@ -3,6 +3,12 @@ with lib;
 let
   cfg = config.machine;
   settings = import ../../settings;
+  printer = {
+    make = "Brother";
+    model = "MFC-9130CW"; 
+    address = "printer.home.lucasr.com";
+    location = "Office";
+  };
 in {
   imports = [];
 
@@ -15,15 +21,28 @@ in {
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
-    services.printing.drivers = with pkgs; [ brlaser cups-filters ];
+    services.printing.drivers = with pkgs; [ cups-filters ];
+
+    hardware.printers.ensurePrinters = with printer; [
+      {
+        name = "${make}_${model}";
+        deviceUri = "ipp://${address}:631/ipp";
+        location = location;
+        #model = "brother-BrGenML1-cups-en.ppd";
+        model = "everywhere";
+        ppdOptions = {
+          PageSize = "US Letter";
+        };
+      }
+    ];
 
     # Enable Sane to scan documents.
     hardware.sane.enable = true;
     hardware.sane.brscan4.enable = true;
-    hardware.sane.brscan4.netDevices = {
+    hardware.sane.brscan4.netDevices = with printer; {
       "Home" = {
         "ip" = "10.16.1.64";
-        "model" = "MFC-9130CW";
+        "model" = model;
       };
     };
 
