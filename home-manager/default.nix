@@ -50,10 +50,13 @@ in
       };
     };
 
-    xsession.pointerCursor = {
-      package = pkgs.quintom-cursor-theme;
-      name = "Quintom_Ink";
-      size = 32;
+    xsession = {
+      enable = true;
+      pointerCursor = {
+        package = pkgs.quintom-cursor-theme;
+        name = "Quintom_Ink";
+        size = 32;
+      };
     };
 
     gtk = with settings.theme; {
