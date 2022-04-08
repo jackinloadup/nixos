@@ -22,6 +22,11 @@ in self: super: {
   xwayland = self.unstable.xwayland;
   lbry = self.unstable.lbry;
   obsidian = self.unstable.obsidian;
+
+  # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
+  mfc9130cwlpr = (super.callPackage ../packages/mfc9130cw.nix {}).driver;
+  mfc9130cwcupswrapper = (super.callPackage ../packages/mfc9130cw.nix {}).cupswrapper;
+
   wrapWine = super.callPackage ../packages/wineWrap.nix {};
   wineApps = {
     winbox = super.callPackage ../packages/winbox.nix {};
