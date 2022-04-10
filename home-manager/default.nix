@@ -46,6 +46,8 @@ in
 
           "message/rfc822" = "thunderbird.desktop";
           "x-scheme-handler/mailto" = "thunderbird.desktop";
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "writer.desktop";
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "calc.desktop";
         };
       };
     };
