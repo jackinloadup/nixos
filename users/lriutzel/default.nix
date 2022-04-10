@@ -29,6 +29,7 @@ in {
         "wheel"
         "audio"
         "video"
+        "input"
         "networkmanager"
         "wireshark"
       ];

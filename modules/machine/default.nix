@@ -160,6 +160,7 @@ in {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).
       enableRedistributableFirmware = mkIf (cfg.sizeTarget > 0) config.nixpkgs.config.allowUnfree;
 
+      opengl.enable = mkIf (cfg.sizeTarget > 0) true;
       opengl.driSupport = mkIf (cfg.sizeTarget > 0) true;
     };
 

@@ -28,7 +28,7 @@ in {
     sound = true;
     steam = true;
     displayManager = "greetd";
-    windowManagers = [ "sway" ];
+    windowManagers = [ "sway" "i3" ];
     virtualization = true;
   };
 

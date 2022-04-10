@@ -6,6 +6,7 @@
       "kvm-intel"
     ];
   };
+  services.xserver.videoDrivers = [ "intel" ];
 
   # forgot what this was for
   nixpkgs.config.packageOverrides = pkgs: {
