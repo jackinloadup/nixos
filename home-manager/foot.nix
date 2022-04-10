@@ -11,8 +11,8 @@ in
   #};
 
   programs.foot = {
-    enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     server.enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
+    enable = nixosConfig.programs.sway.enable;
     settings = {
       main = {
         term = "xterm-256color";
