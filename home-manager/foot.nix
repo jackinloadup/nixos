@@ -11,7 +11,6 @@ in
   #};
 
   programs.foot = {
-    server.enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     enable = nixosConfig.programs.sway.enable;
     settings = {
       main = {
