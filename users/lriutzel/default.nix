@@ -32,6 +32,8 @@ in {
         "input"
         "networkmanager"
         "wireshark"
+        #dip netdev plugdev 
+        # cdrom floppy
       ];
     };
 

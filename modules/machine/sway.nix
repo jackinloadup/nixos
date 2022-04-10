@@ -16,7 +16,7 @@ with lib;
       extraPackages = with pkgs; [
         swaylock
         swayidle
-        alacritty # look into foot term for ram usage
+        alacritty
 
         wev
         wdisplays
@@ -43,13 +43,6 @@ with lib;
         export WLR_DRM_DEVICES=/dev/dri/card0
       '';
     };
-
-    # This is needed for applications launched outside of the sway pts???
-    #disabling to see if that get gdm working
-    #environment.variables = {
-    #  XDG_SESSION_TYPE = "wayland";
-    #  XDG_CURRENT_DESKTOP = "sway";
-    #};
 
     xdg = {
       portal = {

@@ -168,7 +168,7 @@ in {
     };
 
     programs.tmux = {
-      enable = true;
+      enable = true; # Enables system-wide configuration
       terminal = "tmux-256color";
       newSession = true;
       extraConfig = ''
