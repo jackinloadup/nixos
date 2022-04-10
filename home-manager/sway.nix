@@ -36,7 +36,8 @@ in
     xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
   ];
 
-  services.flameshot.enable = true;
+  # disabling for now due to i3. This could be started in commands but maybe systemd mod better?
+  #services.flameshot.enable = true;
 
   wayland.windowManager.sway = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
     enable = true;

@@ -11,13 +11,11 @@ with lib;
   config = mkIf (builtins.elem "i3" config.machine.windowManagers) {
     programs.dconf.enable = true;
 
-    # gnome has its own power management tool
-    services.tlp.enable = mkForce false;
-
     services.xserver = {
-      desktopManager = {
-        xterm.enable = false;
-      };
+      enable = true;
+      libinput.enable = true;
+      displayManager.startx.enable = true;
+      desktopManager.xterm.enable = false;
 
       windowManager.i3 = {
         enable = true;
@@ -26,8 +24,13 @@ with lib;
           i3status # gives you the default i3 status bar
           i3lock #default i3 screen locker
           i3blocks #if you are planning on using i3blocks over i3status
-          arandr
-          xorg.xrandr
+          arandr # gui for display management
+          feh # lightweight image viewer. Used for background in i3.
+          xorg.xrandr # tui for display management
+          xorg.xauth
+          xorg.xhost
+          xorg.xev
+          xorg.xinput
        ];
       };
     };
