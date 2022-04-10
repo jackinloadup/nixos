@@ -34,7 +34,6 @@ in
     # enable  xhost si:localuser:root
     # disable xhost -si:localuser:root
     xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
-    foot
   ];
 
   services.flameshot.enable = true;
@@ -329,6 +328,7 @@ in
         # in a way I like
         #{ command = "${pkgs.xorg.xhost}/bin/xhost si:localhost:root"; }
 
+        { command = "${pkgs.foot}/bin/foot --server"; }
         #{ command = "${pkgs.mako}/bin/mako"; }
         #{ command = "${pkgs.nextcloud-client}/bin/nextcloud"; }
         #{ command = "${pkgs.keepassxc}/bin/keepassxc"; }
