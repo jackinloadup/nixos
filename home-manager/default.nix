@@ -209,6 +209,7 @@ set keymap vi-insert
 
       ## Audio
       pavucontrol # GUI volume source/sink manager
+      pulsemixer # TUI volume source/sink manager
       # Spotify opensource utils?
       spotify-tui # spotifyd ui
       spotifyd # music player no ui
