@@ -1,7 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ nixosConfig, config, pkgs, lib, ... }:
 
+with lib;
 let
   settings = import ../settings;
+  host = nixosConfig.networking.hostName;
+  hasBattery = (if host == "riko" then true else false);
 in {
   programs.waybar = {
     enable = true;
@@ -23,12 +26,12 @@ in {
           "cpu"
           "memory"
           "temperature"
-          "battery"
+          (mkIf hasBattery "battery" )
           "clock"
           "tray"
         ];
         modules = {
-          battery = {
+          battery = mkIf hasBattery {
             format = "{capacity}% {icon}";
             format-alt = "{time} {icon}";
             format-charging = "{capacity}% ";
