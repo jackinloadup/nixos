@@ -6,6 +6,8 @@ let
   interactive = ''
     source ${config.lib.base16.templateFile { name = "shell"; }}
 
+    bindkey '^a' beginning-of-line 
+
     bindkey '^R' history-incremental-pattern-search-backward
     bindkey '^F' history-incremental-pattern-search-forward
 
