@@ -329,7 +329,7 @@ in
         # in a way I like
         #{ command = "${pkgs.xorg.xhost}/bin/xhost si:localhost:root"; }
 
-        { command = "${pkgs.foot}/bin/foot --server"; }
+        #{ command = "${pkgs.foot}/bin/foot --server"; }
         #{ command = "${pkgs.mako}/bin/mako"; }
         #{ command = "${pkgs.nextcloud-client}/bin/nextcloud"; }
         #{ command = "${pkgs.keepassxc}/bin/keepassxc"; }

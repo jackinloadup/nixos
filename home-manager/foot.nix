@@ -10,8 +10,14 @@ in
   #  ssh = "TERM=xterm-265color ssh";
   #};
 
+  systemd.user.services.foot = {
+    Unit.BindsTo = "sway-session.target";
+    Install.WantedBy = ["sway-session.target"];
+  };
+
   programs.foot = {
     enable = nixosConfig.programs.sway.enable;
+    server.enable = nixosConfig.programs.sway.enable;
     settings = {
       main = {
         term = "xterm-256color";
