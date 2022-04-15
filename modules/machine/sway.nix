@@ -48,10 +48,19 @@ with lib;
       portal = {
         enable = true;
         gtkUsePortal = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-wlr
-       #   xdg-desktop-portal-gtk
-        ];
+        wlr = {
+          enable = true;
+          #settings = {
+          #  screencast = {
+          #    output_name = "HDMI-A-1";
+          #    max_fps = 30;
+          #    exec_before = "disable_notifications.sh";
+          #    exec_after = "enable_notifications.sh";
+          #    chooser_type = "simple";
+          #    chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+          #  };
+          #};
+        };
       };
     };
   };
