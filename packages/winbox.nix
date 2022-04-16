@@ -2,30 +2,27 @@
 # isAllowedArch = source: builtins.any (x: source == x) [ "i686-linux" "x86_64-linux" ];
 {pkgs, system}:
 let
+  name = "winbox";
+  version = "3.35";
   is64bits = if system == "i686-linux" then false else true;
   source = builtins.fetchurl {
-    url = "https://download.mikrotik.com/winbox/3.32/winbox${if is64bits then "64" else ""}.exe";
+    url = "https://download.mikrotik.com/winbox/${version}/winbox${if is64bits then "64" else ""}.exe";
     sha256 = if is64bits
       then
-        "d67e92155f1558bf5946c009c9b05c8336ca5ffc16f0621d02d741456cfbc0bd"
+        "d24aa8491200aa45d1b91646b19c1401b9a2a721205078128226327589962f4a"
       else
-        "07322be03e3b272d9af2cde87d6bb6baa001b9e30413e8740a6af178b65d35a3";
-  };
-  source64 = builtins.fetchurl {
-    url = "https://download.mikrotik.com/winbox/3.32/winbox64.exe";
-    sha256 = "d67e92155f1558bf5946c009c9b05c8336ca5ffc16f0621d02d741456cfbc0bd";
+        "2e6cb5f45cfb7dcdda8b4ca5feb4264335ca8f1a7b62ac8e39967c0137946ca8";
   };
   bin = pkgs.wrapWine {
-    name = "winbox";
+    inherit is64bits name;
     #firstrunScript = ''
     #  wine ${source}
     #'';
     useDarkTheme = true;
-    is64bits = if system == "i686-linux" then false else true;
     executable = "${source}";
   };
   desktop = pkgs.makeDesktopItem {
-    name = "winbox";
+    inherit name;
     desktopName = "WinBox";
     type = "Application";
     exec = "${bin}/bin/winbox";
@@ -35,6 +32,6 @@ let
     };
   };
 in pkgs.symlinkJoin {
-  name = "winbox";
+  inherit name;
   paths = [bin desktop];
 }
