@@ -1,4 +1,4 @@
-# TODO disable mono and gecko install prompts on first run and/or properly link to nix packages
+# TODO install mono and gecko if needed instead of prompting at runtime
 
 # @NOTE dark theme could be maybe detected and switched at runtime based on gtk theme or similar?
 with builtins;
@@ -12,6 +12,8 @@ with builtins;
 , chdir ? null
 , name
 , tricks ? [ ]
+, useGecko ? false
+, useMono ? false
 , setupScript ? ""
 , firstrunScript ? ""
 , home ? ""
@@ -36,8 +38,18 @@ let
   WINEARCH = if is64bits 
     then "win64" 
     else "win32";
+  # Don't ask user at setup about installing gecko or mono if not needed
+  DLLOVERRIDES = if !useGecko || !useMono then
+    let
+      overridesRaw = pkgs.lib.lists.remove "" [
+        (if !useGecko then "mshtml" else "")
+        (if !useMono then "mscoree" else "")
+      ];
+      overrides = pkgs.lib.strings.concatStringsSep "," overridesRaw + "=";
+    in overrides
+    else "";
   setupHook = ''
-      ${wine}/bin/wineboot
+    WINEDLLOVERRIDES="${DLLOVERRIDES}" ${wine}/bin/wineboot
   '';
   tricksHook = if (length tricks) > 0 then
       let
