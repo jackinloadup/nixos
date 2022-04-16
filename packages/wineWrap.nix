@@ -27,9 +27,8 @@ let
     cabextract
     wineWowPackages.stable
   ];
-  WINENIX_PROFILES = "$HOME/WINENIX_PROFILES";
-  # define antes de definir $HOME senão ele vai gravar na nova $HOME a .wine-nix
-  WINE_NIX="$HOME/.wine${if is64bits then "64" else "32"}-nix";
+  WINENIX_PROFILES = "$XDG_DATA_HOME/wine-nix-profiles";
+  WINE_NIX="$XDG_CACHE_HOME/wine${if is64bits then "64" else "32"}-nix";
   PATH = pkgs.lib.makeBinPath requiredPackages;
   NAME = name;
   HOME = if home == "" 
