@@ -154,7 +154,7 @@ in {
       history = rec {
         size = 100000;
         save = size;
-        path = "$HOME/.local/share/zsh/history";
+        path = "$XDG_STATE_HOME/zsh/history";
         #path = "${config.xdg.dataHome}/zsh/history"; # variable isn't available outside HM?
         ignorePatterns = [
           "rm *"
