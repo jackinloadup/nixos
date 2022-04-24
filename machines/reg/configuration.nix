@@ -5,11 +5,13 @@ let
   settings = import ../../settings;
 in {
   imports = [
-    ./hardware-configuration.nix
-    ./rename-pipewire-sinks.nix
-    ./sway-monitor-setup.nix
+    (import "${inputs.impermanence}/nixos.nix")
     ./change-logitec-suspend.nix
     ./control-monitor-backlight.nix
+    ./hardware-configuration.nix
+    ./impermanence.nix
+    ./rename-pipewire-sinks.nix
+    ./sway-monitor-setup.nix
     base16.hmModule
   ];
 
