@@ -164,7 +164,7 @@ in
         };
       };
 
-      bars = with config.lib.base16.theme; lib.mkOptionDefault [{
+      bars = with config.lib.base16.theme; [{
         #command = "${pkgs.waybar}/bin/waybar";
         #position = "top";
         #fonts = fontConf;
@@ -204,4 +204,61 @@ in
     };
   };
 
+
+  programs.i3status = with config.lib.base16.theme; {
+    enable = true;
+
+    general = {
+      output_format = "i3bar";
+      colors = true;
+      color_good = "#${base08-hex}";
+      color_degraded = "#${base05-hex}";
+      color_bad = "#${base04-hex}";
+    };
+
+    modules = {
+      "disk /dev/mapper/os-decrypted" = {
+        position = 1;
+        settings.format = "root: %percentage_used (%free free)";
+        settings.low_threshold = "10";
+      };
+      "volume master" = {
+        position = 3;
+        settings.device = "pulse";
+      };
+      "wireless _first_" = {
+        position = 4;
+        enable = true;
+      };
+      #"ethernet _first_" = {
+      #  position = 5;
+      #  enable = hostName == "sirius";
+      #};
+      "battery all" = {
+        position = 6;
+        settings = {
+          format = "%status %percentage %remaining %emptytime";
+          format_down = "No battery";
+          status_chr = "⚡ CHR";
+          status_bat = "🔋 BAT";
+          status_unk = "? UNK";
+          status_full = "☻ FULL";
+          path = "/sys/class/power_supply/BAT%d/uevent";
+          low_threshold = 10;
+          last_full_capacity = true;
+          hide_seconds = true;
+          integer_battery_capacity = true;
+        };
+        enable = true;
+        #enable = hostName == "spica";
+      };
+      "tztime local" = {
+        position = 7;
+        settings.format = "%a %d %b %Y %H:%M";
+      };
+      ipv6.enable = false;
+      load.enable = false;
+      memory.enable = false;
+    };
+  };
 }
