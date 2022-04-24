@@ -11,8 +11,8 @@ in {
 
   config = mkIf cfg.gaming {
     environment.systemPackages = with pkgs; [
-      monado
-      lighthouse-steamvr
+      #monado
+      #lighthouse-steamvr
       libgdiplus
       gnome.adwaita-icon-theme
 
@@ -23,12 +23,12 @@ in {
       xorg.xhost # for `xhost si:localuser:root`
 
       nur.repos.dukzcry.gamescope
-      retroarch
-      retroarchFull
+      #retroarch
+      #retroarchFull
       cool-retro-term
     ];
     services.xserver = {
-      modules = [ pkgs.xlibs.xf86inputjoystick ];
+      modules = [ pkgs.xorg.xf86inputjoystick ];
     };
     qt5.enable = true;
     qt5.platformTheme = "gtk2";

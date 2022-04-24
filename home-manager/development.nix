@@ -8,7 +8,7 @@ in {
     hyperfine
     valgrind
     gitui # git tui
-    rr # time traveling debugger
+    #rr # time traveling debugger # failed on unstable
   ];
 
   home.file.".gdbinit".text = ''
@@ -74,7 +74,7 @@ in {
     enableFishIntegration = false;
     nix-direnv = {
       enable = true;
-      enableFlakes = true;
+      #enableFlakes = true;
     };
   };
 }

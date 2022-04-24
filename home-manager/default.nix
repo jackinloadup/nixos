@@ -185,7 +185,7 @@ set keymap vi-insert
       thunderbird # Email client
       tixati # bittorrent client
       #mumble # voice chat application
-      nur.repos.arc.packages.mumble_1_4
+      #nur.repos.arc.packages.mumble_1_4
       signal-desktop # messaging client
       chromium # web browser
       xfce.thunar # File manager
@@ -195,7 +195,7 @@ set keymap vi-insert
       #flameshot
       gnome.vinagre
       gnome.gnome-disk-utility
-      calibre # ebook tool,  assist with kindle
+      #calibre # ebook tool,  assist with kindle
       #obsidian # Markdown information archive
 
       exodus # Cryptowallet
@@ -245,7 +245,7 @@ set keymap vi-insert
       cmatrix # Fun matrix animation
 
       # TUI to GUI helpers
-      dragon-drop
+      #dragon-drop # in unstable its maybe xdragon
 
       ## networking
       nethogs
