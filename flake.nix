@@ -34,7 +34,7 @@
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nixpkgs-unstable, secrets, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, nixpkgs-unstable, secrets, impermanence, ... }@inputs:
     with inputs;
     let
       defineModule = name: dir: {

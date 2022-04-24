@@ -7,46 +7,69 @@
   boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.initrd.supportedFilesystems = [ "btrfs" ];
+  boot.supportedFilesystems = [ "btrfs" ];
   # We have a lot of ram. We can wait a bit before we think we need to swap.
   # does this even matter if I don't have swap attached?
   boot.kernel.sysctl."vm.swappiness" = 5;
 
+  services.btrfs.autoScrub.enable = true;
+  programs.fuse.userAllowOther = true;
 
-  fileSystems."/boot/EFI" = {
-    device = "/dev/disk/by-label/efi";
-    fsType = "vfat";
-    options = [
-      "defaults"
-      "x-gvfs-hide"
-      "noatime"
-    ];
-  };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-    options = [
-      "defaults"
-      "x-gvfs-hide"
-      "noatime"
-      "discard"
-    ];
-  };
+  fileSystems = let
+    btrfs = subvol: {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "btrfs";
+      options = [ "subvol=${subvol}" "compress=zstd" "autodefrag" "noatime" ];
+      neededForBoot = true;
+    };
+  in {
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [
+        "defaults"
+        "size=2G"
+        "mode=755"
+        "noatime"
+        "x-gvfs-hide"
+      ];
+    };
 
-  fileSystems."/mnt" = {
-    device = "/dev/disk/by-label/storage";
-    fsType = "ext4";
-    neededForBoot = false;
-    options = [
-      "defaults"
-      "relatime"
-      "x-systemd.idle-timeout=60"
-      "x-systemd.device-timeout=2s"
-      "x-systemd.mount-timeout=2s"
-    ];
+    "/boot" = {
+      device = "/dev/disk/by-label/efi";
+      fsType = "vfat";
+      options = [
+        "defaults"
+        "x-gvfs-hide"
+        "noatime"
+      ];
+    };
+
+    "/nix" = btrfs "nix";
+    "/persist/home" = btrfs "home";
+    "/persist/etc" = btrfs "etc";
+    "/persist/root" = btrfs "root";
+    "/persist/lib" = btrfs "persist";
+    "/var/log" = btrfs "log";
+
+    "/mnt" = {
+      device = "/dev/disk/by-label/storage";
+      fsType = "ext4";
+      neededForBoot = false;
+      options = [
+        "defaults"
+        "relatime"
+        "x-systemd.idle-timeout=60"
+        "x-systemd.device-timeout=2s"
+        "x-systemd.mount-timeout=2s"
+        # "compress-force=zstd:14"
+      ];
+    };
   };
 
   #swapDevices = [
