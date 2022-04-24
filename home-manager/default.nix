@@ -23,6 +23,12 @@ in
     nixpkgs.config.allowUnfree = true;
     nixpkgs.overlays = [ self.overlay nur.overlay ];
 
+    nix.package = pkgs.nix_2_4;
+    nix.extraOptions = ''
+      experimental-features = nix-command flakes
+      auto-optimise-store = true
+    '';
+
     themes.base16 = with settings.theme; {
       enable = true;
       scheme = base16.scheme;
