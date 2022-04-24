@@ -13,8 +13,8 @@ in {
     base16.hmModule
   ];
 
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "lriutzel";
+  #services.xserver.displayManager.autoLogin.enable = true;
+  #services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
 
   machine = {
@@ -37,8 +37,8 @@ in {
     sdr = true;
     sound = true;
     steam = true;
-    displayManager = "gdm";
-    windowManagers = [ "sway" "gnome" "i3" ];
+    displayManager = "greetd";
+    windowManagers = [ "sway" "i3" ];
     virtualization = true;
     locale = settings.user.locale;
     characterSet = settings.user.characterSet;
