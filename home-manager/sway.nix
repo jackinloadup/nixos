@@ -31,7 +31,7 @@ in
     #dmenu
     gnome.adwaita-icon-theme
 
-    gksu # gui for root privilages # needed for zenmap
+    #gksu # gui for root privilages # needed for zenmap # gone in unstable
     # enable  xhost si:localuser:root
     # disable xhost -si:localuser:root
     xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root

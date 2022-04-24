@@ -2,7 +2,8 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-21.11;
+    #nixpkgs.url = github:nixos/nixpkgs/nixos-21.11;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
     flake-utils.url = github:numtide/flake-utils;
@@ -10,7 +11,8 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      url = github:nix-community/home-manager/release-21.11;
+      #url = github:nix-community/home-manager/release-21.11;
+      url = github:nix-community/home-manager/master;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
