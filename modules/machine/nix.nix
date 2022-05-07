@@ -15,6 +15,9 @@ in {
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
+    nix.nixPath = let path = toString ../../.; in [
+      "repl=${path}/repl.nix"
+    ];
 
     # enable flakes
     # set the min free disk space. 

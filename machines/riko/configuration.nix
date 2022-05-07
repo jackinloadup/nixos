@@ -41,6 +41,13 @@ in {
 
   networking.hostName = "riko";
   nix.maxJobs = lib.mkDefault 4;
+  nix.nixPath = [
+    "nixpkgs=${nixpkgs}"
+  ];
+
+  nixpkgs.overlays = [
+    inputs.self.overlay
+  ];
 
   #fonts.fontconfig.dpi = 152;
 

@@ -55,6 +55,14 @@ in {
 
   networking.hostName = "reg";
   nix.maxJobs = lib.mkDefault 16;
+  nix.nixPath = [
+    "nixpkgs=${nixpkgs}"
+  ];
+
+  nixpkgs.overlays = [
+    inputs.nur.overlay
+    inputs.self.overlay
+  ];
 
   #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
   #networking.firewall.allowedUDPPorts = [ 8000 ];
