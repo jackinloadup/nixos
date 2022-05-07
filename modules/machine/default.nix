@@ -5,6 +5,7 @@ let
   settings = import ../../settings;
 in {
   imports = [
+    "${inputs.impermanence}/nixos.nix"
     ./adb.nix
     ./chirp.nix
     ./chromium.nix
@@ -15,6 +16,7 @@ in {
     ./gnome.nix
     ./greetd.nix
     ./i3.nix
+    ./impermanence.nix
     ./kernel.nix
     ./lowLevelXF86keys.nix
     ./locale.nix

@@ -6,6 +6,7 @@ let
 in
 {
   imports = [
+    (import "${inputs.impermanence}/home-manager.nix")
     ./alacritty.nix
     base16.hmModule
     ./development.nix
@@ -17,6 +18,7 @@ in
     ./sway.nix
     ./task-warrior
     ./zoom.nix
+    ./impermanence.nix
   ];
 
   config = {
