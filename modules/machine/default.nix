@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, ... }:
 with lib;
 let
   cfg = config.machine;
@@ -76,6 +76,9 @@ in {
   config = {
     # Allow unfree packages.
     nixpkgs.config.allowUnfree = if (cfg.sizeTarget > 0)  then true else false;
+
+    # Let 'nixos-version --json' know the Git revision of this flake.
+    system.configurationRevision = mkIf (inputs.self ? rev) inputs.self.rev;
 
     users.mutableUsers = mkDefault cfg.mutableUsers; # Users may only be added via nix config
 

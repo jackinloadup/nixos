@@ -34,6 +34,13 @@ in {
   };
 
   nix.maxJobs = lib.mkDefault 2;
+  nix.nixPath = [
+    "nixpkgs=${nixpkgs}"
+  ];
+
+  nixpkgs.overlays = [
+    inputs.self.overlay
+  ];
 
   #security.wrappers = {};
   #security.wrappers.fusemount = { source = "${pkgs.bash}/bin/bash";};
