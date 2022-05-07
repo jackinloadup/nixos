@@ -98,7 +98,7 @@
           "browser.newtabpage.activity-stream.section.highlights.includePocket" = false; # Disable pocket
 
           # Disable some not so useful functionality.
-          "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+          "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
           "extensions.htmlaboutaddons.discover.enabled" = false;
           "extensions.pocket.enabled" = false;
