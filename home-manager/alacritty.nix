@@ -10,6 +10,11 @@ in
     enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
     settings = {
       "live_config_reload" = true; # should work in next release
+
+      window = {
+        opacity = theme.background_opacity;
+      };
+
       font = {
         normal = {
           family = font.mono.family;
@@ -18,7 +23,6 @@ in
         size = font.size;
       };
 
-      background_opacity = theme.background_opacity;
       cursor = with config.lib.base16.theme; {
         style = "Underline";
         text = "0x${base00-hex}";
