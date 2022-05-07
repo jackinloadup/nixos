@@ -74,5 +74,9 @@ in {
       enable = true;
       profileName = "lriutzel";
     };
+
+    home-manager.users.lriutzel = {
+      git.extraConfig.safe.directory = "/home/lriutzel/dotfiles";
+    };
   };
 }
