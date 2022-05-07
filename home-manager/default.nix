@@ -54,8 +54,11 @@ in
 
           "message/rfc822" = "thunderbird.desktop";
           "x-scheme-handler/mailto" = "thunderbird.desktop";
+
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "writer.desktop";
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "calc.desktop";
+
+          "inode/directory" = "nemo.desktop";
         };
       };
     };
@@ -192,6 +195,7 @@ set keymap vi-insert
       chromium # web browser
       xfce.thunar # File manager
       #pantheon.elementary-files
+      cinnamon.nemo
       speedcrunch # calculator 
       nota # fancy cli calculator
       #flameshot
