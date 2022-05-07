@@ -180,6 +180,10 @@ in {
 
     services.xserver.desktopManager.xterm.enable = false;
 
+    services.journald.extraConfig = ''
+      SystemMaxUse=100M
+      MaxFileSec=7day
+    '';
 
     # Enable network discovery
     #services.avahi.enable = true;
