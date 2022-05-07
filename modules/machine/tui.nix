@@ -143,6 +143,7 @@ in {
     # Enable the OpenSSH daemon.
     services.openssh = {
       enable = true; #TODO limit to authorized keys only
+      permitRootLogin = "yes";
       startWhenNeeded = true;
     };
 
