@@ -5,11 +5,9 @@ let
   settings = import ../../settings;
 in {
   imports = [
-    (import "${inputs.impermanence}/nixos.nix")
     ./change-logitec-suspend.nix
     ./control-monitor-backlight.nix
     ./hardware-configuration.nix
-    ./impermanence.nix
     ./rename-pipewire-sinks.nix
     ./sway-monitor-setup.nix
     base16.hmModule
@@ -33,6 +31,7 @@ in {
     botamusique = false;
     encryptedRoot = true;
     gaming = true;
+    impermanence = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
     simula = true;
