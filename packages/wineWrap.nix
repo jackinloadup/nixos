@@ -2,7 +2,7 @@
 
 # @NOTE dark theme could be maybe detected and switched at runtime based on gtk theme or similar?
 with builtins;
-{ pkgs }:
+{ pkgs, lib }:
 { 
   is64bits ? false
 , wine ? if is64bits then pkgs.wineWowPackages.stable else pkgs.wine
@@ -19,6 +19,10 @@ with builtins;
 , home ? ""
 }:
 let
+  inherit (lib) makeBinPath;
+  inherit (lib.lists) remove;
+  inherit (lib.strings) concatStringsSep;
+
   wineBin = "${wine}/bin/wine${if is64bits then "64" else ""}";
   # only adds paths. doesn't actually install
   requiredPackages = with pkgs; [
@@ -29,40 +33,40 @@ let
   ];
   WINENIX_PROFILES = "$XDG_DATA_HOME/wine-nix-profiles";
   WINE_NIX="$XDG_CACHE_HOME/wine${if is64bits then "64" else "32"}-nix";
-  PATH = pkgs.lib.makeBinPath requiredPackages;
+  PATH = makeBinPath requiredPackages;
   NAME = name;
-  HOME = if home == "" 
+  HOME = if home == ""
     then "${WINENIX_PROFILES}/${name}" 
     else home;
   WINEARCH = if is64bits 
     then "win64" 
     else "win32";
   # Don't ask user at setup about installing gecko or mono if not needed
-  DLLOVERRIDES = if !useGecko || !useMono then
-    let
-      overridesRaw = pkgs.lib.lists.remove "" [
-        (if !useGecko then "mshtml" else "")
-        (if !useMono then "mscoree" else "")
-      ];
-      overrides = pkgs.lib.strings.concatStringsSep "," overridesRaw + "=";
-    in overrides
+  DLLOVERRIDES = if !useGecko || !useMono
+    then
+      let
+        overridesRaw = remove "" [
+          (if !useGecko then "mshtml" else "")
+          (if !useMono then "mscoree" else "")
+        ];
+      in concatStringsSep "," overridesRaw + "="
     else "";
   setupHook = ''
     WINEDLLOVERRIDES="${DLLOVERRIDES}" ${wine}/bin/wineboot
   '';
-  tricksHook = if (length tricks) > 0 then
+  tricksHook = if (length tricks) > 0
+    then
       let
         tricksStr = concatStringsSep " " tricks;
-        tricksCmd = "${pkgs.winetricks}/bin/winetricks ${tricksStr}";
-      in tricksCmd
+      in "${pkgs.winetricks}/bin/winetricks ${tricksStr}"
     else "";
   darkReg = pkgs.writeTextFile {
     name = "wine-breeze-dark.reg";
     text = builtins.readFile ./wine-breeze-dark.reg;
   };
-  setupDarkTheme = if useDarkTheme then ''
-      ${wineBin} start regedit.exe ${darkReg}
-  '' else "";
+  setupDarkTheme = if useDarkTheme 
+    then "${wineBin} start regedit.exe ${darkReg}"
+    else "";
 
   script = pkgs.writeShellScriptBin name ''
     export APP_NAME="${NAME}"
