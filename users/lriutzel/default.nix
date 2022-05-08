@@ -42,7 +42,12 @@ in {
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
-    home-manager.users.lriutzel = import ../../home-manager;
+    home-manager.users.lriutzel = {
+      imports = [
+        ../../home-manager
+      ];
+      programs.git.extraConfig.safe.directory = "/home/lriutzel/dotfiles";
+    };
 
     programs.wireshark.enable = ifGraphical;
 
@@ -75,8 +80,5 @@ in {
       profileName = "lriutzel";
     };
 
-    home-manager.users.lriutzel = {
-      git.extraConfig.safe.directory = "/home/lriutzel/dotfiles";
-    };
   };
 }
