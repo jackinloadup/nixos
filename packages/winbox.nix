@@ -8,10 +8,8 @@ let
   source = builtins.fetchurl {
     url = "https://download.mikrotik.com/winbox/${version}/winbox${if is64bits then "64" else ""}.exe";
     sha256 = if is64bits
-      then
-        "d24aa8491200aa45d1b91646b19c1401b9a2a721205078128226327589962f4a"
-      else
-        "2e6cb5f45cfb7dcdda8b4ca5feb4264335ca8f1a7b62ac8e39967c0137946ca8";
+      then "d24aa8491200aa45d1b91646b19c1401b9a2a721205078128226327589962f4a"
+      else "2e6cb5f45cfb7dcdda8b4ca5feb4264335ca8f1a7b62ac8e39967c0137946ca8";
   };
   bin = pkgs.wrapWine {
     inherit is64bits name;
