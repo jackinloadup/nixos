@@ -15,9 +15,9 @@ in
     ./foot.nix
     ./i3.nix
     ./neovim.nix
-    ./sway.nix
     ./task-warrior
     ./zoom.nix
+    ./sway/default.nix
     ./impermanence.nix
   ];
 

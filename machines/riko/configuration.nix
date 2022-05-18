@@ -32,6 +32,9 @@ in {
     virtualization = true;
   };
 
+  services.xserver.displayManager.autoLogin.user = "lriutzel";
+  services.xserver.displayManager.defaultSession = "sway";
+
   gumdrop = {
     printerScanner = true;
     storageServer = true;

@@ -50,8 +50,8 @@ in {
             user = "greeter";
           };
           initial_session = {
-            command = "sway";
-            user = "lriutzel";
+            command = config.services.xserver.displayManager.defaultSession;
+            user = config.services.xserver.displayManager.autoLogin.user;
           };
         };
       };
