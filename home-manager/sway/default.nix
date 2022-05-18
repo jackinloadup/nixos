@@ -1,6 +1,6 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 let
-  settings = import ../settings;
+  settings = import ../../settings;
   hostName = nixosConfig.networking.hostName;
   theme = settings.theme;
   #wallpaper = pkgs.callPackage ./wallpaper/wallpaper.nix { };
@@ -17,10 +17,10 @@ let
 in
 {
   imports = [
-    ./waybar.nix
+    ../waybar.nix
     inputs.base16.hmModule
   ];
-
+  
   #programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
   #programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
 
@@ -58,97 +58,14 @@ in
       terminal = "${pkgs.foot}/bin/footclient";
 
       workspaceAutoBackAndForth = true;
-      window = {
-        titlebar = true;
-        hideEdgeBorders = "smart";
-      };
 
-      bars = with config.lib.base16.theme; [{
-        command = "${pkgs.waybar}/bin/waybar";
-        position = "top";
-        #fonts = fontConf;
-        trayOutput = "*";
-        colors = {
-          background = "#${base00-hex}";
-          statusline = "#${base04-hex}";
-          separator = "#${base01-hex}";
-          focusedWorkspace = {
-            border = "#${base05-hex}";
-            background = "#${base0D-hex}";
-            text = "#${base00-hex}";
-          };
-          activeWorkspace = {
-            border = "#${base05-hex}";
-            background = "#${base03-hex}";
-            text = "#${base00-hex}";
-          };
-          inactiveWorkspace = {
-            border = "#${base03-hex}";
-            background = "#${base01-hex}";
-            text = "#${base05-hex}";
-          };
-          urgentWorkspace = {
-            border = "#${base08-hex}";
-            background = "#${base08-hex}";
-            text = "#${base00-hex}";
-          };
-          bindingMode = {
-            border = "#${base00-hex}";
-            background = "#${base0A-hex}";
-            text = "#${base00-hex}";
-          };
-        };
-      }];
-
-      colors = with config.lib.base16.theme; {
-        background = "#${base00-hex}";
-        focused = {
-          border = "#${base05-hex}";
-          background = "#${base0D-hex}";
-          text = "#${base00-hex}";
-          indicator = "#${base0B-hex}";
-          childBorder = "#${base0D-hex}";
-        };
-        focusedInactive = {
-          border = "#${base03-hex}";
-          background = "#${base01-hex}";
-          text = "#${base05-hex}";
-          indicator = "#${base03-hex}";
-          childBorder = "#${base01-hex}";
-        };
-        unfocused = {
-          border = "#${base03-hex}";
-          background = "#${base01-hex}";
-          text = "#${base05-hex}";
-          indicator = "#${base0B-hex}";
-          childBorder = "#${base01-hex}";
-        };
-        urgent = {
-          border = "#${base08-hex}";
-          background = "#${base08-hex}";
-          text = "#${base00-hex}";
-          indicator = "#${base08-hex}";
-          childBorder = "#${base08-hex}";
-        };
-      };
+      input = import ./input.nix;
+      output = import ./output.nix;
+      window = import ./window.nix;
+      bars = (import ./bars.nix { inherit config pkgs; } ).bars;
+      colors = (import ./colors.nix { inherit config pkgs; } ).colors;
 
       floating.criteria = [{ class = "^Wine$"; }];
-
-      #input = {
-      #  "type:keyboard" =
-      #    if hostName == "spica" then {
-      #      xkb_layout = "print-switch";
-      #    } else {
-      #      xkb_layout = "gb,apl,gr";
-      #      xkb_variant = "colemak,,";
-      #      xkb_options = "grp:ctrls_toggle,grp:menu_switch";
-      #      xkb_numlock = "enabled";
-      #    };
-      #  "type:touchpad" = {
-      #    click_method = "clickfinger";
-      #    tap = "enabled";
-      #  };
-      #};
 
       menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
 
@@ -272,55 +189,6 @@ in
         };
       };
 
-      window.commands = [
-        {
-          command = "inhibit_idle fullscreen";
-          criteria.class = "firefox";
-        }
-        {
-          command = "inhibit_idle fullscreen";
-          criteria.app_id = "mpv";
-        }
-        {
-          command = "inhibit_idle fullscreen";
-          criteria.class = "LBRY";
-        }
-        {
-          command = "inhibit_idle fullscreen";
-          criteria.class = "Kodi";
-        }
-        {
-          # spotify doesn't set its WM_CLASS until it has mapped, so the assign is not reliable
-          command = "move --no-auto-back-and-forth window to workspace 10";
-          criteria.class = "Spotify";
-        }
-        #{
-        #  command = "opacity ${builtins.toString theme.background_opacity}";
-        #  criteria.app_id = "firefox";
-        #}
-        #{
-        #  command = "move to scratchpad";
-        #  criteria = {
-        #    app_id = "org.keepassxc.KeePassXC";
-        #    title = "^Passwords.kdbx";
-        #  };
-        #}
-      ];
-
-      output = {
-        "*".bg = ''~/Pictures/background.jpg fill'';
-      };
-      #  (if hostName == "sirius" then {
-      #    "Unknown LCD QHD 1 110503_3" = {
-      #      pos = "1920 0";
-      #      mode = "2560x1440";
-      #    };
-      #    "Goldstar Company Ltd W2363D 0000000000".pos = "0 0";
-      #  } else if hostName == "aldebaran" then {
-      #    Virtual-1.mode = "--custom 1920x1080";
-      #  } else
-      #    { });
-
       startup = [
         # following needed to launch root apps
         # can be disabled with `xhost -si:localhost:root`
@@ -365,6 +233,8 @@ in
         #  { app_id = "Element"; }
         #];
       };
+
+
 
       #workspaceOutputAssign = lib.mkIf (hostName == "sirius") [
       #  { workspace = "1"; output = "Unknown LCD QHD 1 110503_3"; }
