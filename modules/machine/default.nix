@@ -6,6 +6,11 @@ let
 in {
   imports = [
     "${inputs.impermanence}/nixos.nix"
+    inputs.home-manager.nixosModules.home-manager {
+      home-manager.extraSpecialArgs = { inherit inputs; };
+      home-manager.useUserPackages = true;
+      home-manager.backupFileExtension = "hm-backup";
+    }
     ./adb.nix
     ./chirp.nix
     ./chromium.nix

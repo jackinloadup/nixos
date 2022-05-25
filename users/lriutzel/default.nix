@@ -2,16 +2,10 @@
 with lib;
 let
   cfg = config.machine;
-  home-manager = inputs.home-manager;
   settings = import ./settings.nix;
   ifGraphical = if (cfg.sizeTarget > 1) then true else false;
 in {
   imports = [
-    home-manager.nixosModules.home-manager {
-      home-manager.extraSpecialArgs = { inherit inputs; };
-      home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "hm-backup";
-    }
   ];
 
   # Make user available in user list
