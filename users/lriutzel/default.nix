@@ -56,7 +56,7 @@ in {
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 1) [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       emulsion # mimimal linux image viewer built in rust
-      nmap-graphical
+      #nmap-graphical # support removed due to its python2 dependency
       fzf
 
       #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities

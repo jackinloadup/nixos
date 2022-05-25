@@ -130,7 +130,6 @@ in {
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       emulsion # mimimal linux image viewer built in rust
-      nmap-graphical
 
       fuse3
     ];
