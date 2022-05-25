@@ -12,6 +12,7 @@ in {
   ];
 
   security.sudo.wheelNeedsPassword = false;
+  services.xserver.displayManager.autoLogin.user = "kodi";
 
   machine = {
     users = [
