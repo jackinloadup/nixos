@@ -8,42 +8,59 @@ in {
 
   imports = [
     ./hardware-configuration.nix
-    #base16.hmModule
+    base16.hmModule
   ];
 
   security.sudo.wheelNeedsPassword = false;
   services.xserver.displayManager.autoLogin.user = "kodi";
+  services.xserver.displayManager.defaultSession = "kodi";
+  services.xserver.desktopManager.kodi.enable = true;
 
   machine = {
     users = [
-    #  "lriutzel"
+      "lriutzel"
+      "kodi"
     ];
+    bluetooth = true;
     sizeTarget = 1;
     quietBoot = true;
-    home-assistant = false;
     tui = true;
     virtualization = false;
-    windowManagers = [ ];
-    displayManager = null;
+    displayManager = "gdm";
+    windowManagers = [ "i3" ];
+    kernel = {
+      rebootAfterPanic = mkForce 10;
+      panicOnOOM = mkForce true;
+      panicOnHungTaskTimeout = mkForce 1;
+    };
   };
 
   gumdrop = {
     storageServer = true;
   };
 
-  machine.kernel = {
-    rebootAfterPanic = mkForce 10;
-    panicOnOOM = mkForce true;
-    panicOnHungTaskTimeout = mkForce 1;
+  nixpkgs.config.retroarch = {
+    enableBsnes = true;
+    enableDolphin = true;
+    enableMGBA = true;
+    enableMAME = true;
   };
 
-  virtualisation = {
-    cores = 4;
-    memorySize = 2048;
-    graphics = true;
-  };
+  #nvirtualisation = {
+  #  cores = 4;
+  #  memorySize = 2048;
+  #  graphics = true;
+  #};
 
   nix.maxJobs = lib.mkDefault 2;
+  nix.nixPath = [
+    "nixpkgs=${nixpkgs}"
+  ];
+
+  nixpkgs.overlays = [
+    inputs.nur.overlay
+    inputs.self.overlay
+  ];
 
   networking.hostName = "nat";
   networking.networkmanager.enable = mkForce false;
@@ -54,6 +71,8 @@ in {
     #wait = "ipv4";
     persistent = true;
   };
+
+  networking.interfaces.enp1s0.useDHCP = true;
 
   #networking.nat = {
   #  enable = true;
