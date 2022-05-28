@@ -59,8 +59,8 @@
       nixosConfigurations = {
         reg = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "reg";
         riko = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "riko";
-        marulk = mkNixosSystem inputs.nixpkgs "x86_64-linux" "marulk";
-        nat = mkNixosSystem inputs.nixpkgs "x86_64-linux" "nat";
+        marulk = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "marulk";
+        nat = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "nat";
       };
     } //
 
