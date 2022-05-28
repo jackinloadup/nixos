@@ -14,6 +14,7 @@ in
     ./firefox.nix
     ./foot.nix
     ./i3.nix
+    ./mpv.nix
     ./neovim.nix
     ./task-warrior
     ./zoom.nix
@@ -108,17 +109,6 @@ set keymap vi-insert
       '';
     };
 
-    programs.mpv.enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
-    programs.mpv.config = {
-      profile = "gpu-hq";
-      force-window = true;
-      video-sync ="display-resample";
-      interpolation =true;
-      ytdl-format = "bestvideo+bestaudio"; #TODO adjust for laptop screen size
-      hwdec = "auto-safe"; # battery
-      #cache-default = 4000000;
-      #tscale = "oversample";
-    };
 
     programs.home-manager.enable = true;
 
