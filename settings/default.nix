@@ -5,6 +5,7 @@
     email = "lriutzel@gmail.com";
     username = "lriutzel";
     historySize = 2000; # used for zsh history atm
+    langCode = "en";
     locale = "en_US";
     characterSet = "UTF-8";
   };
