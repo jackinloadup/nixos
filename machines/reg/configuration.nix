@@ -63,6 +63,10 @@ in {
     inputs.self.overlay
   ];
 
+  networking.bridges.br0.interfaces = ["eno1"];
+  networking.interfaces.br0.useDHCP = true;
+  virtualisation.libvirtd.allowedBridges = [ "br0" ];
+
   #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
   #networking.firewall.allowedUDPPorts = [ 8000 ];
 

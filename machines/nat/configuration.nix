@@ -13,7 +13,7 @@ in {
 
   security.sudo.wheelNeedsPassword = false;
   services.xserver.displayManager.autoLogin.user = "kodi";
-  services.xserver.displayManager.defaultSession = "kodi";
+  services.xserver.displayManager.defaultSession = mkDefault "kodi";
   services.xserver.desktopManager.kodi.enable = true;
 
   machine = {
@@ -46,11 +46,27 @@ in {
     enableMAME = true;
   };
 
-  #nvirtualisation = {
-  #  cores = 4;
-  #  memorySize = 2048;
-  #  graphics = true;
-  #};
+  virtualisation.vmVariant = {
+    services.xserver.displayManager.defaultSession = mkForce "none+i3";
+    virtualisation = {
+
+      # https://github.com/NixOS/nixpkgs/issues/59219
+      cores = 4;
+      graphics = true;
+      memorySize = 2048;
+      qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
+      qemu.options = [
+        #"-device virtio-gpu-pci"
+        #"-device virtio-gpu-gl-pci"
+        "-device virtio-vga-gl"
+        "-display gtk,gl=on"
+        "-vga none"
+      ];
+    };
+    networking.interfaces = mkForce {
+      eth0.useDHCP = true;
+    };
+  };
 
   nix.maxJobs = lib.mkDefault 2;
   nix.nixPath = [
