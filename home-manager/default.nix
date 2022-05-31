@@ -17,9 +17,9 @@ in
     ./mpv.nix
     ./neovim.nix
     ./task-warrior
-    ./zoom.nix
     ./sway/default.nix
     ./impermanence.nix
+    #./zoom.nix
   ];
 
   config = {
