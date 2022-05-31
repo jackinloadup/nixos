@@ -24,7 +24,13 @@
     btrfs = subvol: {
       device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = [ "subvol=${subvol}" "compress=zstd" "autodefrag" "noatime" ];
+      options = [
+        "subvol=${subvol}"
+        "compress=zstd"
+        "autodefrag"
+        "noatime"
+        "x-gvfs-hide"
+      ];
       neededForBoot = true;
     };
   in {

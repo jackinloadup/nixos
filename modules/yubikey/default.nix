@@ -27,6 +27,7 @@ ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0010|0110|0111|0114|0116|0401|0403|0
 LABEL="yubico_end"
     '';
 
+    # smartcard daemon
     services.pcscd.enable = true;
   };
 }
