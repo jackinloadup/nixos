@@ -26,7 +26,7 @@ in {
   gumdrop = {
     adguard = true;
   };
-  
+
   virtualisation.libvirtd.onShutdown = "shutdown";
 
   machine.kernel = {
