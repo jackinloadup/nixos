@@ -60,6 +60,7 @@ in
         settings = {
           "browser.startup.blankWindow" = true;
           "browser.startup.page" = 3; # Startup - Open previous windows and tabs
+          "browser.disableResetPrompt" = true;
           "reader.color_scheme" = "dark";
           "reader.font_size" = 7;
           "reader.content_width" = 3;
