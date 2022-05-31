@@ -137,6 +137,7 @@ in {
       emulsion # mimimal linux image viewer built in rust
 
       fuse3
+      libva-utils
     ];
 
     powerManagement = {

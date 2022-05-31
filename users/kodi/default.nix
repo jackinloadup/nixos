@@ -15,10 +15,11 @@ in {
 
   # If user is enabled
   config = mkIf (builtins.elem "kodi" config.machine.users) {
-    nix.trustedUsers = [ "kodi" ];
+#    nix.trustedUsers = [ "kodi" ];
 
     users.users.kodi = with settings; {
       isNormalUser = true;
+      password = "kodi";
       extraGroups = [
         # Needed to access /dev/ttyACM0, which is used by libcec
         # for Pulse-Eight USB CEC Adapter
@@ -41,7 +42,7 @@ in {
     # nixpkgs.config`
     home-manager.users.kodi = {
       imports = [
-        #../../home-manager
+        ../../home-manager/i3.nix
         ./sway.nix
       ];
       home.stateVersion = "21.05";

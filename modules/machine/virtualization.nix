@@ -15,6 +15,9 @@ in {
       qemu = {
         ovmf.enable = true;
         swtpm.enable = true;
+        verbatimConfig = ''
+          remember_owner = 0
+        '';
       };
     };
 
@@ -28,6 +31,7 @@ in {
       virt-top
       usbutils # for lsusb
     ] ++ (if cfg.sizeTarget > 0 then [ # if system is full user
+      qemu
       virt-manager # includes virt-install which maybe we want in cli?
       spice-gtk
     ] else []);
