@@ -26,7 +26,7 @@ in
     nixpkgs.config.allowUnfree = true;
     nixpkgs.overlays = [ self.overlay nur.overlay ];
 
-    nix.package = pkgs.nix_2_4;
+    nix.package = pkgs.nix;
     nix.extraOptions = ''
       experimental-features = nix-command flakes
       auto-optimise-store = true
@@ -66,12 +66,15 @@ in
 
     xsession = {
       enable = true;
-      pointerCursor = {
+    };
+
+    home.pointerCursor = {
         package = pkgs.quintom-cursor-theme;
         name = "Quintom_Ink";
         size = 32;
+        gtk.enable = true;
+        x11.enable = true;
       };
-    };
 
     gtk = with settings.theme; {
       enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;

@@ -2,7 +2,7 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-21.11;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-22.05;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
     flake-utils.url = github:numtide/flake-utils;
@@ -13,7 +13,7 @@
       #url = github:nix-community/home-manager/release-21.11;
       #inputs.nixpkgs.follows = "nixpkgs";
       url = github:nix-community/home-manager;
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # color library for theming
@@ -57,10 +57,10 @@
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
       nixosConfigurations = {
-        reg = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "reg";
-        riko = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "riko";
-        marulk = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "marulk";
-        nat = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "nat";
+        reg = mkNixosSystem inputs.nixpkgs "x86_64-linux" "reg";
+        riko = mkNixosSystem inputs.nixpkgs "x86_64-linux" "riko";
+        marulk = mkNixosSystem inputs.nixpkgs "x86_64-linux" "marulk";
+        nat = mkNixosSystem inputs.nixpkgs "x86_64-linux" "nat";
       };
     } //
 
