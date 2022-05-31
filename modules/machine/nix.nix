@@ -5,7 +5,6 @@ let
   cfg = config.machine;
 in {
   config = {
-    nix.package = pkgs.nix_2_4; # support flakes
     nix.trustedUsers = [ "root" ];
     nix.autoOptimiseStore = mkIf (cfg.sizeTarget > 0) true;
     # Enable extra-builtins-file option for nix
