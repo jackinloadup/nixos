@@ -3,7 +3,7 @@
     accel_profile = "adaptive";
     dwt = "enabled";
     middle_emulation = "enabled";
-    natural_scroll = "enabled";
+    natural_scroll = "disabled";
     tap = "enabled";
   };
   "type:mouse" = {
