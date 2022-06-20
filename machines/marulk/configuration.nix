@@ -41,7 +41,7 @@ in {
   ];
 
   nixpkgs.overlays = [
-    inputs.self.overlay
+    inputs.self.overlays.default
   ];
 
   #security.wrappers = {};

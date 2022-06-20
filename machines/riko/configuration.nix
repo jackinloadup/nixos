@@ -49,9 +49,8 @@ in {
   ];
 
   nixpkgs.overlays = [
-    inputs.self.overlay
+    inputs.self.overlays.default
   ];
-
   #fonts.fontconfig.dpi = 152;
 
   services.logind.lidSwitch = "suspend-then-hibernate";

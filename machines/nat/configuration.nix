@@ -75,7 +75,7 @@ in {
 
   nixpkgs.overlays = [
     inputs.nur.overlay
-    inputs.self.overlay
+    inputs.self.overlays.default
   ];
 
   networking.hostName = "nat";
