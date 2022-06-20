@@ -15,6 +15,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    alacritty
   ];
 
   xsession.windowManager.i3 = let
@@ -25,7 +26,7 @@ in
       terminal = "alacritty";
       menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
   in {
-    enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
+    enable = if (nixosConfig.machine.sizeTarget > 0 ) then true else false;
     config = {
 
       terminal = terminal;
