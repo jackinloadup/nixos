@@ -33,8 +33,11 @@ in {
         "x-systemd.automount" # lazy mounting
         "x-systemd.idle-timeout=600" # disconnects after 10 minutes (i.e. 600 seconds)
         "x-systemd.after=freenas-lookup.service" # Don't try to connect until network is online. duh
-        #"nfsvers=4.2" # not sure if needed but we can specify the specific version
+        #"nfsvers=4.2" # likely not needed. Client already negotiates version starting from newest
       ];
     };
+
+    # This service isn't needed for NFSv4. Needed pre v4
+    services.rpcbind.enable = mkForce false;
   };
 }
