@@ -51,7 +51,7 @@
       # Expose overlay to flake outputs, to allow using it from other flakes.
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
-      overlay = final: prev: (import ./overlays inputs) final prev;
+      overlays.default = final: prev: (import ./overlays inputs) final prev;
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
@@ -69,7 +69,7 @@
     #(flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
     (flake-utils.lib.eachSystem [ "x86_64-linux" ])
     (system:
-      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlay;
+      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         # Custom packages added via the overlay are selectively added here, to
         # allow using them from other flakes that import this one.

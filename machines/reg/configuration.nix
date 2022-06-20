@@ -60,7 +60,7 @@ in {
 
   nixpkgs.overlays = [
     inputs.nur.overlay
-    inputs.self.overlay
+    inputs.self.overlays.default
   ];
 
   networking.bridges.br0.interfaces = ["eno1"];

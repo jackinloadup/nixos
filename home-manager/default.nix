@@ -24,7 +24,10 @@ in
 
   config = {
     nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays = [ self.overlay nur.overlay ];
+    nixpkgs.overlays = [
+      self.overlays.default
+      nur.overlay
+    ];
 
     nix.package = pkgs.nix;
     nix.extraOptions = ''
