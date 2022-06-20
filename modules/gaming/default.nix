@@ -22,7 +22,7 @@ in {
       # xorg stuff
       xorg.xhost # for `xhost si:localuser:root`
 
-      nur.repos.dukzcry.gamescope
+      #nur.repos.dukzcry.gamescope
       #retroarch
       #retroarchFull
       cool-retro-term
