@@ -138,7 +138,7 @@ in
 
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+r" = "restart";
-        "${mod}+Shift+v" = ''mode "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout"'';
+        "${mod}+Shift+v" = ''mode "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout  [f]irmware"'';
 
         "${mod}+r" = "mode resize";
 
@@ -164,11 +164,12 @@ in
       modes = let
         terminal = swayConfig.terminal;
       in {
-        "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout" = {
+        "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout  [f]irmware" = {
           s = "exec ${terminal} -e ./kexec-systemd.sh";
           r = "exec reboot";
           p = "exec poweroff";
           l = "exit";
+          f = "exec systemctl reboot --firmware-setup";
           Return = "mode default";
           Escape = "mode default";
         };
