@@ -55,7 +55,7 @@ in
 
       fonts = fontConf;
 
-      terminal = "${pkgs.foot}/bin/footclient";
+      terminal = "${pkgs.foot}/bin/footclient -E";
 
       workspaceAutoBackAndForth = true;
 
