@@ -1,5 +1,7 @@
 { self, ... }: {
-  imports = [ ];
+  imports = [
+    ../../profiles/intel.nix
+  ];
 
   # Required for throttled when running on the 5.9 kernel.
   #boot.kernelParams = [ "msr.allow_writes=on" ];
