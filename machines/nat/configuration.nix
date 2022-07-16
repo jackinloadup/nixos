@@ -36,7 +36,10 @@ in {
   };
 
   gumdrop = {
-    storageServer = true;
+    storageServer.enable = true;
+    storageServer.requiredForBoot = true;
+    storageServer.media = true;
+    storageServer.roms = true;
   };
 
   nixpkgs.config.retroarch = {
