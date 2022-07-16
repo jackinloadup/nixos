@@ -3,6 +3,7 @@
 with inputs;
 let
   settings = import ../settings;
+  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
 in
 {
   imports = [
@@ -48,7 +49,7 @@ in
     };
 
     xdg = {
-      enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
+      enable = true;
       userDirs.enable = true;
 
       mimeApps = {
@@ -135,46 +136,30 @@ set keymap vi-insert
       WSLENV="TERMINFO_DIRS";
       XAUTHORITY="${config.home.homeDirectory}/.Xauthority";
       NIXOS_CONFIG="${config.home.homeDirectory}/dotfiles/flake.nix";
+      NIX_PATH="nixos-config=/home/lriutzel/dotfiles/flake.nix:$NIX_PATH";
     };
 
     home.username = settings.user.username;
     home.homeDirectory = lib.mkOverride 10 "/home/${settings.user.username}";
 
     home.packages = with pkgs; (if (nixosConfig.machine.sizeTarget > 0 ) then [
-      nur.repos.ambroisie.comma # like nix-shell but more convinient
-      nix-index
-      #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-      imv # minimal image viewer
-
-      libnotify # for notify-send
-
       iotop
       inetutils
-      usbutils # alt busybox cope toybox
-      nmap
-
-      tealdeer # $tldr strace
-
+      usbutils # an alternative could be busybox cope toybox
       unzip # duh
-
-      # darktile # alternative PTY to try out. GPU + go
-
-      xdg-utils # for xdg-open
-
-      bitwarden-cli
-
-      python39Packages.youtube-dl # there is an alt youtube-dl-lite
-
       lftp
 
       units
-
     ] else []) ++ (if (nixosConfig.machine.sizeTarget > 1 ) then [
-      nixos-shell
+      #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
       # GUI
+      # ---------------------------------------
       zathura # PDF / Document viewer
       libreoffice # Office suite
+      libnotify # for notify-send
+      imv # minimal image viewer
+      # darktile # alternative PTY to try out. GPU + go
 
       # Spelling
       hunspell
@@ -208,6 +193,7 @@ set keymap vi-insert
 
       python39Packages.xdot # graphviz viewer
       graphviz
+      blender
 
       ## Video
       handbrake
@@ -236,16 +222,24 @@ set keymap vi-insert
 
       ## Wine Apps
       wineApps.winbox
-      winetricks
-      wineWowPackages.stable
+      #winetricks
+      #wineWowPackages.stable
 
       # TUI
+      # ----------------
       jless # json viewer
+      tealdeer # $tldr strace
+      #bitwarden-cli
+      python39Packages.youtube-dl # there is an alt youtube-dl-lite
+      xdg-utils # for xdg-open
+      #nur.repos.ambroisie.comma # like nix-shell but more convinient
+      nix-index
+      nmap
+      nixos-shell
+
       ## spreadsheet stuffs
       sc-im
       visidata
-      asciiquarium # Fun aquarium animation
-      cmatrix # Fun matrix animation
 
       # TUI to GUI helpers
       #dragon-drop # in unstable its maybe xdragon
@@ -257,8 +251,11 @@ set keymap vi-insert
 
       ## Audio
       playerctl
-    ] else []);
 
+      # Fun
+      asciiquarium # Fun aquarium animation
+      cmatrix # Fun matrix animation
+    ] else []);
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
       gpg-agent = {
