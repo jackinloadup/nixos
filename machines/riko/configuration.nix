@@ -18,6 +18,7 @@ in {
     users = [ "lriutzel" ];
     adb = true;
     chromium = true;
+    docker = true;
     tui = true;
     sizeTarget = 2;
     bluetooth = true;
