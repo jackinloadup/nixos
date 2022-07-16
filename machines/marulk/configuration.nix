@@ -1,5 +1,5 @@
 { self, inputs, pkgs, lib, ... }:
-
+# Machine runs DNS and home-assistant vm
 with lib;
 with inputs;
 let
@@ -26,6 +26,10 @@ in {
   gumdrop = {
     adguard = true;
   };
+
+  # Ensures that adguardhome doesn't stop until libvirtd has
+  # This is simply to keep DNS running as long as possible.
+  systemd.services.libvirtd.after = ["adguardhome.service"];
 
   virtualisation.libvirtd.onShutdown = "shutdown";
 
