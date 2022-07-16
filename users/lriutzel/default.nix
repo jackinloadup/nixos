@@ -46,9 +46,9 @@ in {
 
     programs.wireshark.enable = ifGraphical;
 
-    services.trezord.enable = true;
+    services.trezord.enable = ifGraphical;
 
-    environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 1) [
+    environment.systemPackages = with pkgs; mkIf ifGraphical [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       emulsion # mimimal linux image viewer built in rust
       #nmap-graphical # support removed due to its python2 dependency
@@ -71,7 +71,7 @@ in {
     #  enableSSHSupport = true;
     #};
     modules.browsers.firefox = {
-      enable = true;
+      enable = ifGraphical;
       profileName = "lriutzel";
     };
 
