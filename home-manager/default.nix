@@ -71,6 +71,7 @@ in
       enable = true;
     };
 
+    home.keyboard = null; # only works with x11 i believe
     home.pointerCursor = {
         package = pkgs.quintom-cursor-theme;
         name = "Quintom_Ink";
