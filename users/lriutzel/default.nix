@@ -61,6 +61,15 @@ in {
       unstable.helvum # pipewire patchbay
       easyeffects
       trezorctl
+      trezor_agent
+      trezor-suite
+
+      mediaelch
+      # markdown tools
+      mdcat # tui viewer
+      mdp # markdown presentation
+      mdr # tui viewer
+      # mdv # tui viewer not in nixpkgs yet
     ];
 
     hardware.yubikey.enable = ifGraphical;
