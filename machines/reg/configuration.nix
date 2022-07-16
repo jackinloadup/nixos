@@ -49,7 +49,9 @@ in {
 
   gumdrop = {
     printerScanner = true;
-    storageServer = true;
+    storageServer.enable = true;
+    storageServer.media = true;
+    storageServer.roms = true;
   };
 
   networking.hostName = "reg";
