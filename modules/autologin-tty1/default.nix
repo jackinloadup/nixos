@@ -3,13 +3,21 @@
 # @TODO start something like agetty@tty1.service after autovt@tty1 stops
 with lib;
 let
+  cfg = config.machine.autologin-tty1;
   settings = import ../../settings;
 in {
   imports = [];
 
-  options.machine.autologin-tty1 = mkEnableOption "Enable auto login on tty1";
+  options.machine.autologin-tty1 = {
+    enable = mkEnableOption "Enable auto login on tty1";
+    user = mkOption {
+      type = types.str;
+      example = "johndoe";
+      description = "User to log into";
+    };
+  };
 
-  config = mkIf config.machine.autologin-tty1 {
+  config = mkIf cfg.enable {
     systemd.targets = {
       "autologin-tty1" = {
         requires = [ "multi-user.target" ];
@@ -29,7 +37,7 @@ in {
           ExecStart =  builtins.concatStringsSep " " ([
             "@${pkgs.utillinux}/sbin/agetty"
             "agetty --login-program ${pkgs.shadow}/bin/login"
-            "--autologin ${settings.user.username} --noclear %I $TERM"
+            "--autologin ${cfg.user} --noclear %I $TERM"
           ]);
           Restart = "no";
           Type = "idle";
