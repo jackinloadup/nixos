@@ -16,9 +16,9 @@ in
     ./i3.nix
     ./mpv.nix
     ./neovim.nix
-    ./task-warrior
     ./sway/default.nix
     ./impermanence.nix
+    #./task-warrior
     #./zoom.nix
   ];
 
@@ -259,16 +259,6 @@ set keymap vi-insert
       playerctl
     ] else []);
 
-    programs.taskwarrior = {
-      enable = true;
-      colorTheme = "dark-blue-256";
-      config = {
-        confirmation = false;
-        report.minimal.filter = "status:pending";
-        report.active.columns = [ "id" "start" "entry.age" "priority" "project" "due" "description" ];
-        report.active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
-      };
-    };
 
     services = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
       gpg-agent = {
