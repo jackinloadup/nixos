@@ -31,6 +31,7 @@ with lib;
           xorg.xhost
           xorg.xev
           xorg.xinput
+          xorg.xf86inputjoystick
        ];
       };
     };

@@ -40,5 +40,9 @@ in {
 
     # if undistract me is enabled go ahead and use sound
     programs.bash.undistractMe.playSound = true;
+    environment.systemPackages = (with pkgs; [
+      pulseaudio
+      pamixer
+    ]);
   };
 }

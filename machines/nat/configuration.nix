@@ -1,5 +1,5 @@
 { self, inputs, pkgs, lib, ... }:
-
+# machine runs kodi
 with lib;
 with inputs;
 let
@@ -12,9 +12,10 @@ in {
   ];
 
   security.sudo.wheelNeedsPassword = false;
-  services.xserver.displayManager.autoLogin.user = "kodi";
-  services.xserver.displayManager.defaultSession = mkDefault "kodi";
+  #services.xserver.displayManager.autoLogin.user = "kodi";
+  #services.xserver.displayManager.defaultSession = mkDefault "kodi";
   services.xserver.desktopManager.kodi.enable = true;
+  services.getty.autologinUser = "kodi";
 
   machine = {
     users = [
@@ -25,13 +26,16 @@ in {
     sizeTarget = 1;
     quietBoot = true;
     tui = true;
+    sound = true;
     virtualization = false;
-    displayManager = "gdm";
+    #displayManager = "gdm";
     windowManagers = [ "i3" ];
     kernel = {
       rebootAfterPanic = mkForce 10;
       panicOnOOM = mkForce true;
-      panicOnHungTaskTimeout = mkForce 1;
+      #panicOnFailedBoot = mkForce true;
+      panicOnHungTask = mkForce true;
+      panicOnHungTaskTimeout = mkForce 5;
     };
   };
 
@@ -42,14 +46,31 @@ in {
     storageServer.roms = true;
   };
 
-  nixpkgs.config.retroarch = {
-    enableBsnes = true;
-    enableDolphin = true;
-    enableMGBA = true;
-    enableMAME = true;
+  nix.maxJobs = lib.mkDefault 2;
+  nix.nixPath = [
+    "nixpkgs=${nixpkgs}"
+  ];
+
+  nixpkgs = {
+    overlays = [
+      inputs.nur.overlay
+      inputs.self.overlays.default
+    ];
+
+    config.retroarch = {
+      enableBsnes = true;
+      enableDolphin = true;
+      enableMGBA = true;
+      enableMAME = true;
+    };
+  };
+
+  boot.plymouth = {
+    enable = true;
   };
 
   virtualisation.vmVariant = {
+    networking.hostName = mkForce "natvm";
     services.xserver.displayManager.defaultSession = mkForce "none+i3";
     virtualisation = {
 
@@ -71,48 +92,24 @@ in {
     };
   };
 
-  nix.maxJobs = lib.mkDefault 2;
-  nix.nixPath = [
-    "nixpkgs=${nixpkgs}"
-  ];
+  hardware.bluetooth.settings.General.Alias = "Entertainment";
+  networking = {
+    hostName = "nat";
+    networkmanager.enable = mkForce false;
 
-  nixpkgs.overlays = [
-    inputs.nur.overlay
-    inputs.self.overlays.default
-  ];
+    dhcpcd = {
+      #wait = "ipv4"; # don't wait. That would take longer
+      persistent = true;
+    };
 
-  networking.hostName = "nat";
-  networking.networkmanager.enable = mkForce false;
-  #networking.bridges.br0.interfaces = ["enp1s0"];
-  #networking.interfaces.br0.useDHCP = true;
-
-  networking.dhcpcd = {
-    #wait = "ipv4";
-    persistent = true;
+    interfaces.enp1s0.useDHCP = true;
+    firewall = {
+      # for the Kodi web interface
+      allowedTCPPorts = [ 8080 ];
+      allowedUDPPorts = [ 8080 ];
+    };
   };
 
-  networking.interfaces.enp1s0.useDHCP = true;
-
-  #networking.nat = {
-  #  enable = true;
-  #  externalInterface = "enp1s0";
-  #  internalInterfaces = ["virbr0"];
-  #  internalIPs = [
-  #    "192.168.122.0/24"
-  #  ];
-  #  forwardPorts = [
-  #    {
-  #      destination = "192.168.122.182:1883";
-  #      proto = "tcp";
-  #      sourcePort = 1883;
-  #    }
-  #    {
-  #      destination = "192.168.122.182:8123";
-  #      proto = "tcp";
-  #      sourcePort = 8123;
-  #    }
-  #  ];
-  #};
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
