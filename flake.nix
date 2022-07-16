@@ -10,9 +10,8 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      #url = github:nix-community/home-manager/release-21.11;
-      #inputs.nixpkgs.follows = "nixpkgs";
-      url = github:nix-community/home-manager;
+      url = github:nix-community/home-manager/release-22.05;
+      #url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
