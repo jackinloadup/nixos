@@ -21,11 +21,10 @@ in {
     withRuby = false;
     withPython3 = false;
 
-    extraPackages = with pkgs; [
-      #unstable.tree-sitter
-      rnix-lsp
-      gcc
-    ];
+    # not needed if we are not compiling tree-sitter grammers
+    #extraPackages = with pkgs; [
+    #  gcc
+    #];
 
     plugins = with pkgs.vimPlugins; [
       # Syntax
@@ -40,7 +39,33 @@ in {
       gruvbox-community
       vim-gitgutter # git status in the gutter
       vim-airline # like starship for status line
-      nvim-treesitter
+      (nvim-treesitter.withPlugins (
+        # The following plugins come from here
+        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/parsing/tree-sitter/update.nix
+        plugins: with plugins; [
+          # from tree-sitter github org
+          tree-sitter-html
+          tree-sitter-css
+          tree-sitter-bash
+          tree-sitter-javascript
+          tree-sitter-typescript
+          tree-sitter-json
+          tree-sitter-python
+          tree-sitter-toml
+          tree-sitter-rust
+          tree-sitter-php
+
+          # other repos
+          tree-sitter-nix
+          tree-sitter-make
+          tree-sitter-markdown
+          tree-sitter-lua
+          tree-sitter-vim
+          tree-sitter-yaml
+          tree-sitter-dockerfile
+          tree-sitter-scss
+        ]
+      ))
 
       # Editor Features
       vim-surround
@@ -62,11 +87,13 @@ in {
       set relativenumber " Relative line numbers
       "set fillchars+=vert:\
       "set foldcolumn=0 " Column to show folds
-      "set foldenable " Enable folding
+      set foldenable " Enable folding
       "set foldlevel=5 " Open all folds by default
       "set foldmethod=syntax " Syntax are used to specify folds
-      "set foldminlines=0 " Allow folding single lines
-      "set foldnestmax=5 " Set max fold nesting level
+      set foldminlines=0 " Allow folding single lines
+      set foldnestmax=2 " Set max fold nesting level
+      set foldmethod=expr
+      set foldexpr=nvim_treesitter#foldexpr()
       "set formatoptions=
       "set formatoptions+=c " Format comments
       "set formatoptions+=r " Continue comments by default
@@ -139,19 +166,21 @@ in {
 
       lua <<EOF
 require'nvim-treesitter.configs'.setup {
-      ensure_installed = {
-      'bash', 'html', 'javascript', 'json', 'lua', 'python', 'toml', 'yaml', 'rust', 'vim', 'css', 'scss', 'nix', 'php'
-      }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ensure_installed = { 'bash', 'html', 'javascript', 'json', 'lua', 'python', 'toml', 'yaml', 'rust', 'vim', 'css', 'scss', 'nix', 'php' },
   -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  -- disable = { "c", "rust" },  -- list of language that will be disabled
   highlight = {
     enable = true,              -- false will disable the whole extension
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  indent = {
+    enable = true
+  }
 }
 EOF
 
