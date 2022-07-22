@@ -14,6 +14,10 @@ let
       #[[ "$(tty)" == /dev/tty1 ]] && exec sway
     '';
   swayConfig = config.wayland.windowManager.sway.config;
+  footTERM = if config.programs.foot.settings ? main.term
+    then
+      config.programs.foot.settings.main.term
+    else "foot";
 in
 {
   imports = [
@@ -55,7 +59,7 @@ in
 
       fonts = fontConf;
 
-      terminal = "${pkgs.foot}/bin/footclient -E";
+      terminal = "TERM=${footTERM} ${pkgs.foot}/bin/footclient --client-environment";
 
       workspaceAutoBackAndForth = true;
 
