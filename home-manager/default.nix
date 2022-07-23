@@ -16,7 +16,7 @@ in
     ./foot.nix
     ./i3.nix
     ./mpv.nix
-    ./neovim.nix
+    ./neovim/default.nix
     ./sway/default.nix
     ./impermanence.nix
     #./task-warrior
