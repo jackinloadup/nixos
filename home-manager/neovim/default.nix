@@ -46,15 +46,6 @@ in {
 
       nvim-dap # Debug Adapter Protocol client
 
-
-      nvim-cmp # Completion framework
-
-      # Completion Sources
-      cmp-nvim-lsp # LSP completion source for nvim-cmp
-      cmp-vsnip # Snippet completion source for nvim-cmp
-      cmp-path
-      cmp-buffer
-
       # Snippet engine
       # vim-vsnip # I don't use this yet
 
@@ -77,6 +68,15 @@ in {
 
       # Language Server
       (import ./nvim-lspconfig.nix { pkgs = pkgs; }) # Collection of common configurations for the Nvim LSP client
+
+      (import ./nvim-cmp.nix { pkgs = pkgs; }) # Completion framework
+      # Completion Sources
+      cmp-nvim-lsp # LSP completion source for nvim-cmp
+      cmp-vsnip # Snippet completion source for nvim-cmp
+      cmp-path
+      cmp-buffer
+
+      (import ./telescope-nvim.nix { pkgs = pkgs; }) # Find, Filter, Preview, Pick
     ];
 
     extraConfig = ''
@@ -88,6 +88,7 @@ in {
       ${builtins.readFile ./user-interface.vim}
 
 
+      let mapleader = ";"
       "set diffopt=filler " Add vertical spaces to keep right and left aligned
       "set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
       "set encoding=utf-8 nobomb " BOM often causes trouble
