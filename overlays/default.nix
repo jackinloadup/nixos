@@ -45,15 +45,16 @@ in self: super: {
   #filebrowser = super.callPackage ../packages/filebrowser { };
   #zk = super.callPackage ../packages/zk { };
 
-  ## Vim plugins, added inside existing pkgs.vimPlugins
-  #vimPlugins = super.vimPlugins // {
-  #  indent-blankline-nvim-lua =
-  #    super.callPackage ../packages/indent-blankline-nvim-lua {
-  #      inputs = inputs;
-  #    };
-  #  zk-nvim = super.callPackage ../packages/zk-nvim { inputs = inputs; };
-  #  nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
-  #};
+  # Vim plugins, added inside existing pkgs.vimPlugins
+  vimPlugins = super.vimPlugins // {
+    lsp_lines-nvim = super.callPackage ../packages/lsp_lines-nvim.nix { pkgs = super; };
+    #indent-blankline-nvim-lua =
+    #  super.callPackage ../packages/indent-blankline-nvim-lua {
+    #    inputs = inputs;
+    #  };
+    #zk-nvim = super.callPackage ../packages/zk-nvim { inputs = inputs; };
+    #nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
+  };
 
   ## ZSH plugins
   #zsh-abbrev-alias =
