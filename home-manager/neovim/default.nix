@@ -15,8 +15,12 @@ in {
   };
 
   home.packages = with pkgs; [
-    rust-analyzer
     graphviz
+
+    # Language Servers
+    rnix-lsp # Nix
+    rust-analyzer # Rust
+    sumneko-lua-language-server # Lua
   ];
 
   programs.neovim = {
@@ -38,15 +42,10 @@ in {
       vim-nix
       #vim-go # ~800mb
       #rust-vim
-      plenary-nvim
-      nvim-dap
+      plenary-nvim # All the lua functions I don't want to write twice
 
-      # Rust
-      rust-tools-nvim # To enable more of the features of rust-analyzer, such as inlay hints and more!
+      nvim-dap # Debug Adapter Protocol client
 
-      # Language Server
-      nvim-lspconfig # Collection of common configurations for the Nvim LSP client
-      lsp_lines-nvim # Renders diagnostics using virtual lines on top of the real line of code
 
       nvim-cmp # Completion framework
 
@@ -57,7 +56,7 @@ in {
       cmp-buffer
 
       # Snippet engine
-      vim-vsnip
+      # vim-vsnip # I don't use this yet
 
       # UI
       gruvbox-community # theme
@@ -69,33 +68,15 @@ in {
       indentLine # thin line at each indent level
       vim-fugitive # A Git wrapper so awesome, it should be illegal
 
-      (nvim-treesitter.withPlugins (
-        # The following plugins come from here
-        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/parsing/tree-sitter/update.nix
-        plugins: with plugins; [
-          # from tree-sitter github org
-          tree-sitter-html
-          tree-sitter-css
-          tree-sitter-bash
-          tree-sitter-javascript
-          tree-sitter-typescript
-          tree-sitter-json
-          tree-sitter-python
-          tree-sitter-toml
-          tree-sitter-rust
-          tree-sitter-php
+      (import ./nvim-dap-ui.nix { pkgs = pkgs; })
+      (import ./nvim-treesitter.nix { pkgs = pkgs; })
+      (import ./lsp_lines.nix { pkgs = pkgs; }) # Renders diagnostics using virtual lines on top of the real line of code
 
-          # other repos
-          tree-sitter-nix
-          tree-sitter-make
-          tree-sitter-markdown
-          tree-sitter-lua
-          tree-sitter-vim
-          tree-sitter-yaml
-          tree-sitter-dockerfile
-          tree-sitter-scss
-        ]
-      ))
+      # Rust
+      (import ./rust-tools-nvim.nix { pkgs = pkgs; }) # Enable more of the features of rust-analyzer, such as inlay hints and more!
+
+      # Language Server
+      (import ./nvim-lspconfig.nix { pkgs = pkgs; }) # Collection of common configurations for the Nvim LSP client
     ];
 
     extraConfig = ''
@@ -143,39 +124,6 @@ in {
 
 
       lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  -- https://github.com/nvim-treesitter/nvim-treesitter
-
-  -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  -- ensure_installed = { 'bash', 'html', 'javascript', 'json', 'lua', 'python', 'toml', 'yaml', 'rust', 'vim', 'css', 'scss', 'nix', 'php' },
-  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing for "all"
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-  indent = {
-    enable = true
-  }
-}
-
-      require('rust-tools').setup({})
-
-      -- require("lsp_lines").setup()
-      -- -- Disable virtual_text since it's redundant due to lsp_lines.
-      -- vim.diagnostic.config({
-      --   virtual_text = false,
-      -- })
 EOF
 
       source ${config.xdg.configHome}/nvim/syntax/rsc.vim
