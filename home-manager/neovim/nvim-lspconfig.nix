@@ -2,7 +2,7 @@
   plugin = pkgs.vimPlugins.nvim-lspconfig;
   type = "lua";
   config = ''
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
     -- Mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -50,7 +50,7 @@
 
     require('lspconfig').sumneko_lua.setup {
       on_attach = lsp_on_attach,
-      capabilities = capabilities
+      capabilities = capabilities,
       settings = {
         Lua = {
           runtime = {

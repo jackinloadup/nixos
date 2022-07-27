@@ -46,19 +46,17 @@ in {
 
       nvim-dap # Debug Adapter Protocol client
 
-      # Snippet engine
-      # vim-vsnip # I don't use this yet
-
       # UI
       gruvbox-community # theme
       vim-gitgutter # git status in the gutter
       vim-airline # like starship for status line
 
       # Editor Features
-      vim-surround
       indentLine # thin line at each indent level
       vim-fugitive # A Git wrapper so awesome, it should be illegal
+      #vim-surround  # need to configure and don't use yet
 
+      (import ./lspkind-nvim.nix { pkgs = pkgs; }) # vscode-like pictograms to neovim built-in lsp
       (import ./nvim-dap-ui.nix { pkgs = pkgs; })
       (import ./nvim-treesitter.nix { pkgs = pkgs; })
       (import ./lsp_lines.nix { pkgs = pkgs; }) # Renders diagnostics using virtual lines on top of the real line of code
@@ -72,11 +70,13 @@ in {
       (import ./nvim-cmp.nix { pkgs = pkgs; }) # Completion framework
       # Completion Sources
       cmp-nvim-lsp # LSP completion source for nvim-cmp
-      cmp-vsnip # Snippet completion source for nvim-cmp
+      cmp-nvim-lua # lua API source
+      cmp_luasnip # Snippet Engine completion source
       cmp-path
       cmp-buffer
 
       (import ./telescope-nvim.nix { pkgs = pkgs; }) # Find, Filter, Preview, Pick
+      (import ./luasnip.nix { pkgs = pkgs; }) # Snippet engine
     ];
 
     extraConfig = ''
