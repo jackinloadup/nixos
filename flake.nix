@@ -63,10 +63,22 @@
       };
     } //
 
-    # flake-utils is used for this part to make each package available for each
-    # system. This works as all packages are compatible with all architectures
-    #(flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
-    (flake-utils.lib.eachSystem [ "x86_64-linux" ])
+    (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
+    (system:
+      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+      in rec {
+        # Custom packages added via the overlay are selectively added here, to
+        # allow using them from other flakes that import this one.
+        devShells = flake-utils.lib.flattenTree {
+          rust = import ./shells/rust.nix { pkgs = pkgs; };
+        };
+
+        # TODO we probably should set some default app and/or package
+        # defaultPackage = packages.hello;
+        # defaultApp = apps.hello;
+      }) //
+
+    (flake-utils.lib.eachSystem [ "x86_64-linux" "i686-linux" ])
     (system:
       let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
