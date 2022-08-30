@@ -185,6 +185,7 @@ set keymap vi-insert
       gnome.gnome-disk-utility
       #calibre # ebook tool,  assist with kindle
       #obsidian # Markdown information archive
+      unar # An archive unpacker program GUI & TUI
 
       exodus # Cryptowallet
       electron-cash # BCH walle
