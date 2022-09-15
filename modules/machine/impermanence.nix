@@ -28,6 +28,7 @@ with lib;
           "/var/lib/libvirt"
           "/var/lib/ipfs"
           "/var/lib/fwup"
+          "/var/lib/iwd"
           #"/var/lib/syncthing"
           #"/var/lib/postgresql"
           { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
