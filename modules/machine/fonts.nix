@@ -1,12 +1,14 @@
 { lib, pkgs, config, ... }:
 with lib;
 let
-  cfg = config.machine;
   settings = import ../../settings;
+  ifTui = if (config.machine.sizeTarget > 0) then true else false;
+  ifGraphical = if (config.machine.sizeTarget > 1) then true else false;
 in {
-  config = {
-    fonts = mkIf (cfg.sizeTarget > 0) {
-      fontconfig = with settings.theme.font; {
+  config = with settings.theme.font; {
+    console.font = mkIf ifTui console;
+    fonts = mkIf ifGraphical {
+      fontconfig = {
         enable = true;
         antialias = true;
         defaultFonts = {
@@ -42,7 +44,7 @@ in {
         '';
       };
       fonts = with pkgs; [
-        # Nerdfonts is kinda heavy. We are cutting it fown but still looks like it might be 4-10mb
+        # Nerdfonts is kinda heavy. We are cutting it down but still looks like it might be 4-10mb
         (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
         lato
         noto-fonts-emoji

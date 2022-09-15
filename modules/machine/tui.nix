@@ -95,7 +95,6 @@ in {
 
     console = {
       earlySetup = mkDefault true;
-      font = "Lat2-Terminus16";
       keyMap = "us";
       colors = with config.lib.base16.theme; [
         base00-hex # 0 bg
