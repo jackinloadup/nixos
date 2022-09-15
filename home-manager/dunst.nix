@@ -3,7 +3,9 @@
 let
   settings = import ../settings;
 in {
-  imports = [];
+  imports = [
+    ./base16.nix
+  ];
 
   config = {
     # Display desktop notfications.

@@ -5,7 +5,7 @@ let
   settings = import ../../settings;
 in {
   imports = [
-    inputs.base16.hmModule
+    ./base16.nix
     ./tmux.nix
   ];
   options.machine.tui = mkEnableOption "Hide boot log from tui/gui";
@@ -92,20 +92,6 @@ in {
       tmon # Monitoring and Testing Tool for Linux kernel thermal subsystem
       usbip # allows to pass USB device from server to client over the network
     ]);
-
-    themes.base16 = with settings.theme; {
-      enable = true;
-      scheme = base16.scheme;
-      variant = base16.variant;
-      defaultTemplateType = "default";
-      # Add extra variables for inclusion in custom templates
-      # not sure the "extraParams" are being used. No custom templates afaik
-      extraParams = {
-        fontName = font.mono.family;
-        fontSize = font.size;
-      };
-    };
-
 
     console = {
       earlySetup = mkDefault true;

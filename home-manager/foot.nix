@@ -6,6 +6,10 @@ let
   font = theme.font;
 in
 {
+  imports = [
+    ./base16.nix
+  ];
+
   #home.shellAliases = {
   #  ssh = "TERM=xterm-265color ssh";
   #};

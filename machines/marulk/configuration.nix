@@ -8,7 +8,6 @@ in {
 
   imports = [
     ./hardware-configuration.nix
-    #base16.hmModule
   ];
 
   machine = {

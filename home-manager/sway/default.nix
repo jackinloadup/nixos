@@ -22,9 +22,8 @@ in
 {
   imports = [
     ../waybar.nix
-    inputs.base16.hmModule
   ];
-  
+
   #programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
   #programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
 

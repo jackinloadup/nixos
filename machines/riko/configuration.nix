@@ -7,7 +7,6 @@ in {
 
   imports = [
     ./hardware-configuration.nix
-    base16.hmModule
   ];
 
   hardware.yubikey.enable = true;
