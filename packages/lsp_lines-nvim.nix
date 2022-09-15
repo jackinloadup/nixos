@@ -9,7 +9,7 @@ in buildVimPluginFrom2Nix {
   meta.homepage = "https://git.sr.ht/~whynothugo/lsp_lines.nvim";
   src = fetchgit {
       url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim";
-      rev = "3b57922d2d79762e6baedaf9d66d8ba71f822816";
-      sha256 = "1vHMs2Nej/uTancRbo5SNuovE+hxw9fR20pVVfH9UIs=";
+      rev = "dbfd8e96ec2696e1ceedcd23fd70e842256e3dea";
+      sha256 = "c+MrWKK7ZIcj2XrPruiQLQ1sr3SJWQfzAR+JM5g+kLE=";
   };
 }
