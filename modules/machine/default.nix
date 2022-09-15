@@ -3,6 +3,8 @@ with lib;
 let
   cfg = config.machine;
   settings = import ../../settings;
+  ifTui = if (config.machine.sizeTarget > 0) then true else false;
+  ifGraphical = if (config.machine.sizeTarget > 1) then true else false;
 in {
   imports = [
     "${inputs.impermanence}/nixos.nix"
@@ -102,7 +104,7 @@ in {
     boot = {
       #plymouth.enable = true;
       initrd = {
-        availableKernelModules = mkIf (cfg.sizeTarget > 0) [
+        availableKernelModules = mkIf ifTui [
           "xhci_pci"
           "nvme"
           "usb_storage"
@@ -118,7 +120,7 @@ in {
 
       loader.systemd-boot = {
         enable = mkDefault true;
-        #memtest86.enable = true; # show memtest
+        memtest86.enable = mkDefault ifTui; # show memtest
         configurationLimit = mkDefault 5;
         consoleMode = mkDefault "auto";
       };
@@ -132,7 +134,7 @@ in {
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
-    environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
+    environment.systemPackages = with pkgs; mkIf ifTui [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
 
       fuse3
@@ -140,9 +142,9 @@ in {
     ];
 
     powerManagement = {
-      enable = mkIf (cfg.sizeTarget > 0) true;
+      enable = mkDefault ifTui;
       cpuFreqGovernor = mkDefault "ondemand";
-      powertop.enable = mkIf (cfg.sizeTarget > 0) true; # if debug?
+      powertop.enable = mkDefault ifTui; # if debug?
     };
 
     networking = {
@@ -169,17 +171,16 @@ in {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).
       enableRedistributableFirmware = mkDefault config.nixpkgs.config.allowUnfree;
 
-      opengl.enable = mkIf (cfg.sizeTarget > 0) true;
-      opengl.driSupport = mkIf (cfg.sizeTarget > 0) true;
+      opengl.enable = mkDefault ifGraphical;
+      opengl.driSupport = mkDefault ifGraphical;
     };
 
-
     ## Enable updating firmware via the command line.
-    services.fwupd.enable = mkIf (cfg.sizeTarget > 0) true;
+    services.fwupd.enable = mkDefault ifTui;
 
-    programs.dconf.enable = mkIf (cfg.sizeTarget > 0) true;
+    programs.dconf.enable = mkDefault ifGraphical;
 
-    services.gvfs.enable = mkIf (cfg.sizeTarget > 1) true;
+    services.gvfs.enable = mkDefault ifGraphical;
     # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
     # is required.
     services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
