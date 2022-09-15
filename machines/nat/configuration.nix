@@ -9,6 +9,7 @@ in {
 
   imports = [
     ./hardware-configuration.nix
+    ./auto-pair-ps3-remote.nix
   ];
 
   security.sudo.wheelNeedsPassword = false;
