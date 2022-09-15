@@ -10,6 +10,7 @@ in {
   config = mkIf config.machine.virtualization {
     boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
+    virtualisation.spiceUSBRedirection.enable = true;
     virtualisation.libvirtd = {
       enable = true;
       qemu = {
