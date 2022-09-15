@@ -1,4 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
+
+# look into for the future in rust projects
+# https://github.com/mdevlamynck/nix-flake-templates/blob/master/bevy/flake.nix
 with pkgs; mkShell rec {
     name = "rust";
     nativeBuildInputs = [
@@ -11,6 +14,7 @@ with pkgs; mkShell rec {
       zlib.out
       rustup
       rustfmt
+      cargo-outdated
       xorriso
       grub2
       qemu
@@ -21,13 +25,17 @@ with pkgs; mkShell rec {
       # added for bevy
       udev alsaLib
       xlibsWrapper xorg.libXcursor xorg.libXrandr xorg.libXi # To use x11 feature
-      libxkbcommon wayland # To use wayland feature
+      libGL libxkbcommon wayland # To use wayland feature
+
+      bcc # added for nhealth, not needed if moved to native rust solution which now exits "aya"
+
+      heaptrack # memory debugging
     ];
     LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
     RUSTC_VERSION = lib.readFile ./rust-toolchain;
     # https://github.com/rust-lang/rust-bindgen#environment-variables
     LIBCLANG_PATH= lib.makeLibraryPath [ llvmPackages_latest.libclang.lib ];
-    HISTFILE=toString ./.history;
+    #HISTFILE=toString ./.history;
     shellHook = ''
       export PATH=$PATH:~/.cargo/bin
       export PATH=$PATH:~/.rustup/toolchains/$RUSTC_VERSION-x86_64-unknown-linux-gnu/bin/
