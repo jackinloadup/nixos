@@ -22,6 +22,7 @@ in self: super: {
   xwayland = self.unstable.xwayland;
   lbry = self.unstable.lbry;
   obsidian = self.unstable.obsidian;
+  polkit = self.unstable.polkit; # 121 removes spidermonkey
 
   # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
   mfc9130cwlpr = (super.callPackage ../packages/mfc9130cw.nix {}).driver;
@@ -65,4 +66,3 @@ in self: super: {
   #forgit =
   #  super.callPackage ../packages/forgit { inputs = inputs; };
 }
-

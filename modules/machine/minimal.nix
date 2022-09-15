@@ -3,12 +3,14 @@ with lib;
 let
   cfg = config.machine;
 in {
-  #options.machine.mi = mkEnableOption "Hide boot log from tui/gui";
+  options.machine.minimal = mkEnableOption "Disable stuff not needed on minimal systems";
 
-  config = mkIf (cfg.sizeTarget < 1) {
+  config = mkIf cfg.minimal {
+    networking.networkmanager.plugins = mkDefault [];
+
     #environment.systemPackages = with pkgs; [
 
-    environment.noXlibs = mkDefault true;
+    #environment.noXlibs = mkDefault true;
 
     # Size reduction
 

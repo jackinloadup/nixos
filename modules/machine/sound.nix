@@ -7,7 +7,7 @@ in {
 
   options.machine.sound = mkEnableOption "Enable sound through pipewire";
 
-  config = mkIf (cfg.sizeTarget > 0 && cfg.sound) {
+  config = mkIf cfg.sound {
     sound.enable = false; # Enables ALSA. Conflicts with pipewire?
     security.rtkit.enable = true; # Allows pipewire to run "realtime"
     hardware.pulseaudio.enable = false; # Disable pulseaudio
@@ -15,8 +15,7 @@ in {
     # Enable pipewire https://nixos.wiki/wiki/PipeWire
     services.pipewire = {
       enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
+      alsa.enable = false;
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;
@@ -42,7 +41,8 @@ in {
     programs.bash.undistractMe.playSound = true;
     environment.systemPackages = (with pkgs; [
       pulseaudio
-      pamixer
+      #pamixer # TUI volume source/sink manager
+      pulsemixer # TUI volume source/sink manager
     ]);
   };
 }

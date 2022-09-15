@@ -51,6 +51,9 @@
       # Flake inputs are passed to the overlay so that the packages defined in
       # it can use the sources pinned in flake.lock
       overlays.default = final: prev: (import ./overlays inputs) final prev;
+      overlays.kodi-wayland = final: prev: (import ./overlays/kodi-wayland.nix inputs) final prev;
+      overlays.plymouth-no-gtk = final: prev: (import ./overlays/plymouth-no-gtk.nix inputs) final prev;
+      overlays.pipewire-minimal = final: prev: (import ./overlays/pipewire-minimal.nix inputs) final prev;
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
