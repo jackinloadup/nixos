@@ -25,6 +25,6 @@
   };
 
   swapDevices = [
-    { device = "/var/swapfile"; size = 2048; } # this big for hibernation 2Gb~
+    { device = "/var/swapfile"; size = 1024; } # we could use more hard drive space
   ];
 }
