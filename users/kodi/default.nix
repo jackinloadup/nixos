@@ -1,5 +1,5 @@
-
 { inputs, lib, pkgs, config, ... }:
+
 with lib;
 let
   cfg = config.machine;
@@ -29,47 +29,24 @@ in {
       ];
     };
 
+    #programs.xwayland.enable = true;
+
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
     home-manager.users.kodi = {
       imports = [
-        ../../home-manager/i3.nix
+        ../../home-manager/nix.nix
         ./sway.nix
+        #./i3.nix
       ];
-      home.stateVersion = "21.05";
+      home.stateVersion = config.system.stateVersion;
 
       xdg.enable = lib.mkForce true; # needed for environment variables used in utils
 
-      programs.bash = {
-        enable = true;
-        profileExtra = ''
-          if shopt -q login_shell; then
-              [[ -f ~/.bashrc ]] && source ~/.bashrc
-              [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]] && exec startx
-          else
-              exit 1 # Somehow this is a non-bash or non-login shell.
-          fi
-        '';
-      };
-
       programs.kodi = {
         enable = true;
-        package = pkgs.kodi-wayland.withPackages (exts: [
-          exts.youtube
-          exts.netflix
-          exts.joystick
-          exts.controller-topology-project
-          exts.libretro
-          exts.libretro-snes9x
-          exts.libretro-genplus
-          exts.inputstreamhelper
-          exts.inputstream-rtmp
-          exts.inputstream-adaptive
-          exts.inputstream-ffmpegdirect
-          exts.iagl
-          exts.keymap
-        ]);
+        package = pkgs.kodi-wayland;
         addonSettings = {
           "service.xbmc.versioncheck".versioncheck_enable = "false";
         };
@@ -83,9 +60,6 @@ in {
         #};
       };
 
-      xsession.windowManager.i3.config.startup = [
-        { command = "kodi"; }
-      ];
     };
 
     # https://github.com/nixcon/nixcon-video-infra/blob/13b5fc1e4cd12c1ce99defc60ee59e6cd3631880/nixpkgs/pkgs/misc/emulators/retroarch/kodi-advanced-launchers.nix
@@ -99,9 +73,9 @@ in {
 
     environment.systemPackages = with pkgs; [
       libcec
-      kodi-retroarch-advanced-launchers
-      retroarchFull
-      sixpair
+      #kodi-retroarch-advanced-launchers
+      #retroarchFull
+      #sixpair # usb pair playstation controllers
     ];
 
   };
