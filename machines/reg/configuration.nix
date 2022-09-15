@@ -10,7 +10,6 @@ in {
     ./hardware-configuration.nix
     ./rename-pipewire-sinks.nix
     ./sway-monitor-setup.nix
-    base16.hmModule
   ];
 
   #services.xserver.displayManager.autoLogin.enable = true;
