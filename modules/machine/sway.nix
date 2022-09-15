@@ -16,7 +16,6 @@ with lib;
       extraPackages = with pkgs; [
         swaylock
         swayidle
-        alacritty
 
         wev
         wdisplays
@@ -24,7 +23,8 @@ with lib;
         bemenu
         j4-dmenu-desktop
 
-        qt5.qtwayland # make conditional?
+        # nheko, mindforger
+        #qt5.qtwayland # make conditional?
       ];
 
       extraSessionCommands = ''

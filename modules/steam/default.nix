@@ -20,5 +20,6 @@ in {
       opengl.driSupport32Bit = true;
       pulseaudio.support32Bit = true;
     };
+    services.pipewire.alsa.support32Bit = config.services.pipewire.alsa.enable;
   };
 }

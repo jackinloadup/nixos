@@ -13,6 +13,7 @@ in {
   ];
 
   security.sudo.wheelNeedsPassword = false;
+  services.fwupd.enable = mkForce false;
   services.getty.autologinUser = "kodi";
 
   machine = {
@@ -23,7 +24,8 @@ in {
     bluetooth = true;
     sizeTarget = 1;
     quietBoot = true;
-    tui = true;
+    minimal = true;
+    tui = false;
     sound = true;
     virtualization = false;
     #displayManager = "gdm";
@@ -53,6 +55,9 @@ in {
     overlays = [
       inputs.nur.overlay
       inputs.self.overlays.default
+      inputs.self.overlays.kodi-wayland
+      inputs.self.overlays.plymouth-no-gtk
+      inputs.self.overlays.pipewire-minimal
     ];
 
     config.retroarch = {

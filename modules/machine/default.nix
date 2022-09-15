@@ -82,7 +82,7 @@ in {
 
   config = {
     # Allow unfree packages.
-    nixpkgs.config.allowUnfree = if (cfg.sizeTarget > 0)  then true else false;
+    nixpkgs.config.allowUnfree = true;
 
     # Let 'nixos-version --json' know the Git revision of this flake.
     system.configurationRevision = mkIf (inputs.self ? rev) inputs.self.rev;
@@ -134,7 +134,6 @@ in {
     # $ nix search wget
     environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
-      emulsion # mimimal linux image viewer built in rust
 
       fuse3
       libva-utils
@@ -168,7 +167,7 @@ in {
 
     hardware = {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).
-      enableRedistributableFirmware = mkIf (cfg.sizeTarget > 0) config.nixpkgs.config.allowUnfree;
+      enableRedistributableFirmware = mkDefault config.nixpkgs.config.allowUnfree;
 
       opengl.enable = mkIf (cfg.sizeTarget > 0) true;
       opengl.driSupport = mkIf (cfg.sizeTarget > 0) true;
