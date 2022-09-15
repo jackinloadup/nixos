@@ -57,6 +57,7 @@
         family = "Noto Color Emoji";
         style = "Regular";
       };
+      console = "Lat2-Terminus16";
       size = 10;
     };
     base16 = {
