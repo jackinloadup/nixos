@@ -13,9 +13,6 @@ in {
   ];
 
   security.sudo.wheelNeedsPassword = false;
-  #services.xserver.displayManager.autoLogin.user = "kodi";
-  #services.xserver.displayManager.defaultSession = mkDefault "kodi";
-  services.xserver.desktopManager.kodi.enable = false;
   services.getty.autologinUser = "kodi";
 
   machine = {
