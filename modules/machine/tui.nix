@@ -1,4 +1,5 @@
 { lib, pkgs, config, inputs, ... }:
+
 with lib;
 let
   cfg = config.machine;
@@ -8,7 +9,8 @@ in {
     ./base16.nix
     ./tmux.nix
   ];
-  options.machine.tui = mkEnableOption "Hide boot log from tui/gui";
+
+  options.machine.tui = mkEnableOption "Extensive tui tools";
 
   config = mkIf cfg.tui {
     environment.systemPackages = (with pkgs; [
@@ -85,7 +87,6 @@ in {
       nix-tree # A terminal curses application to browse a Nix store paths dependencies
       vulnix # vulnerability scanner for nix
       # atop?
-      htop # process, cpu, memory viewer
     ]) ++ (with config.boot.kernelPackages; [
       turbostat # Report processor frequency and idle statistics
       perf # Linux tools to profile with performance counters
@@ -117,13 +118,26 @@ in {
     };
 
     #programs.autojump.enable = true;
-    programs.bash = {
-      interactiveShellInit = ''
-        source ${config.lib.base16.templateFile { name = "shell"; }}
-      '';
-    };
+    programs = {
+      bash = {
+        interactiveShellInit = ''
+          source ${config.lib.base16.templateFile { name = "shell"; }}
+        '';
+      };
 
+      htop = {
+        enable = true;
+        settings = {
+          hide_kernel_threads = true;
+          hide_userland_threads = true;
+        };
+      };
 
+      less = {
+        enable = true;
+        #configFile = {
+        #};
+      };
     };
 
     environment.sessionVariables = {
@@ -136,13 +150,8 @@ in {
       "nixos-current-repl" = "source /etc/set-environment && nix repl $(echo $NIX_PATH | perl -pe 's|.*(/nix/store/.*-source/repl.nix).*|\\1|')";
     };
 
-    programs.less = {
-      enable = true;
-      #configFile = {
-      #};
-    };
-
-    environment.etc."lf/lfrc".text = ''
+    environment.etc = {
+      "lf/lfrc".text = ''
 set previewer /etc/lf/pv.sh
 map i $LESSOPEN='| /etc/lf/pv.sh %s' less -R $f
 cmd open ''${{
@@ -153,8 +162,9 @@ cmd open ''${{
     esac
 }}
       '';
-    environment.etc."lf/pv.sh".mode = "0755";
-    environment.etc."lf/pv.sh".text = ''
+      "lf/pv.sh" = {
+        mode = "0755";
+        text = ''
 #!/bin/sh
 
 case "$1" in
@@ -169,5 +179,7 @@ case "$1" in
     *) bat --force-colorization --style=numbers --theme gruvbox-dark "$1";;
 esac
 '';
+      };
+    };
   };
 }
