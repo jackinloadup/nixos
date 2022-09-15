@@ -25,7 +25,7 @@ in {
     chromium = true;
     docker = true;
     tui = true;
-    sizeTarget = 2;
+    sizeTarget = 3;
     bluetooth = true;
     botamusique = false;
     encryptedRoot = true;
