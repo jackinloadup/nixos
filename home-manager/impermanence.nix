@@ -32,6 +32,7 @@ with lib;
         ".local/share/syncthing"
         ".local/share/wine-nix-profiles"
         ".local/state/pipewire"
+        ".local/state/zsh"
         ".config/Signal"
         #".config/@trezor"
         ".config/spotify"
@@ -63,7 +64,6 @@ with lib;
         ".lftp/rc"
         ".bash_history"
         ".steam/registry.vdf"
-        ".local/state/zsh/history"
         #".screenrc"
       ];
       allowOther = true;
