@@ -192,6 +192,18 @@ in {
       MaxFileSec=7day
     '';
 
+    # Enable the OpenSSH daemon.
+    services.openssh = {
+      enable = true; #TODO limit to authorized keys only
+      permitRootLogin = "yes";
+      startWhenNeeded = true;
+    };
+
+    services.sshguard = {
+      enable = true;
+      detection_time = 3600;
+    };
+
     # Enable network discovery
     #services.avahi.enable = true;
     #services.avahi.nssmdns = true;

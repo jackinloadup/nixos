@@ -138,16 +138,7 @@ in {
       '';
     };
 
-    # Enable the OpenSSH daemon.
-    services.openssh = {
-      enable = true; #TODO limit to authorized keys only
-      permitRootLogin = "yes";
-      startWhenNeeded = true;
-    };
 
-    services.sshguard = {
-      enable = true;
-      detection_time = 3600;
     };
 
     environment.sessionVariables = {
