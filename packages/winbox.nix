@@ -3,13 +3,13 @@
 {pkgs, system}:
 let
   name = "winbox";
-  version = "3.35";
+  version = "3.37";
   is64bits = if system == "i686-linux" then false else true;
   source = builtins.fetchurl {
     url = "https://download.mikrotik.com/winbox/${version}/winbox${if is64bits then "64" else ""}.exe";
     sha256 = if is64bits
-      then "d24aa8491200aa45d1b91646b19c1401b9a2a721205078128226327589962f4a"
-      else "2e6cb5f45cfb7dcdda8b4ca5feb4264335ca8f1a7b62ac8e39967c0137946ca8";
+      then "abe696e45809f26b0320926a0014d3088dcc5ac43d553a2b7a4e25f54a047439"
+      else "94336289cf2e1de339b75d6a799a7855eabbe55bc1b9b4dd2bbd94c316188afe";
   };
   bin = pkgs.wrapWine {
     inherit is64bits name;
