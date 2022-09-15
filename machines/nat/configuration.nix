@@ -4,6 +4,7 @@ with lib;
 with inputs;
 let
   settings = import ../../settings;
+  kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {
 
   imports = [
@@ -13,7 +14,7 @@ in {
   security.sudo.wheelNeedsPassword = false;
   #services.xserver.displayManager.autoLogin.user = "kodi";
   #services.xserver.displayManager.defaultSession = mkDefault "kodi";
-  services.xserver.desktopManager.kodi.enable = true;
+  services.xserver.desktopManager.kodi.enable = false;
   services.getty.autologinUser = "kodi";
 
   machine = {
@@ -28,7 +29,7 @@ in {
     sound = true;
     virtualization = false;
     #displayManager = "gdm";
-    windowManagers = [ "i3" ];
+    windowManagers = [ ];
     kernel = {
       rebootAfterPanic = mkForce 10;
       panicOnOOM = mkForce true;
@@ -68,9 +69,11 @@ in {
     enable = true;
   };
 
+  boot.loader.grub.splashImage = kodiSplash;
+
   virtualisation.vmVariant = {
     networking.hostName = mkForce "natvm";
-    services.xserver.displayManager.defaultSession = mkForce "none+i3";
+    #services.xserver.displayManager.defaultSession = mkForce "none+i3";
     virtualisation = {
 
       # https://github.com/NixOS/nixpkgs/issues/59219
