@@ -45,6 +45,9 @@ in {
     characterSet = settings.user.characterSet;
   };
 
+  # Causes kernel build
+  boot.crashDump.enable = true;
+
   environment.etc.issue.source = lib.mkForce ./issue-banner;
 
   gumdrop = {
