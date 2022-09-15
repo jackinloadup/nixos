@@ -18,6 +18,7 @@ let
     then
       config.programs.foot.settings.main.term
     else "foot";
+  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
 in
 {
   imports = [
@@ -27,7 +28,7 @@ in
   #programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
   #programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
 
-  home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
+  home.packages = with pkgs; lib.mkIf ifGraphical [
     #sway-contrib.grimshot
     wl-clipboard
     #mako

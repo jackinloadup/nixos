@@ -2,14 +2,15 @@
 
 let
   settings = import ../settings;
+  isGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
 in {
   imports = [
     ./base16.nix
   ];
 
-  config = {
+  config = lib.mkIf isGraphical {
     # Display desktop notfications.
-    services.dunst = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
+    services.dunst = {
       enable = true;
 
       #iconTheme = {
