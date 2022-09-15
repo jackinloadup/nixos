@@ -92,7 +92,7 @@ in {
     };
   };
 
-  hardware.bluetooth.settings.General.Alias = "Entertainment";
+  hardware.bluetooth.settings.General.Name = "Entertainment";
   networking = {
     hostName = "nat";
     networkmanager.enable = mkForce false;
