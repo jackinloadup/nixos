@@ -11,6 +11,8 @@ in self: super: {
     config.allowUnfree = true;
   };
 
+  exodus = self.unstable.exodus;
+  blender = self.unstable.blender;
   nixos-shell = self.unstable.nixos-shell; # needed for 0.2.2
   nmap-graphical = self.unstable.nmap-graphical;
   neovim-unwrapped = self.unstable.neovim-unwrapped;
@@ -18,8 +20,7 @@ in self: super: {
     extraPackages = py: with py; [ psycopg2 librouteros ];
   };
   steam = self.unstable.steam;
-  sway = self.unstable.sway;
-  xwayland = self.unstable.xwayland;
+  spotify = self.unstable.spotify;
   lbry = self.unstable.lbry;
   obsidian = self.unstable.obsidian;
   polkit = self.unstable.polkit; # 121 removes spidermonkey
