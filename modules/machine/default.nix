@@ -41,10 +41,10 @@ in {
     #useSystemdBoot = mkEnableOption "Use systemd-boot instead of grub";
     #hasBattery = mkEnableOption "Does this machines have a battery?";
     sizeTarget = mkOption {
-      type = types.ints.between 0 2;
+      type = types.ints.between 0 3;
       default = 2;
       example = 0;
-      description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Lite 2=Normal";
+      description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Tui 2=Graphical 3=Full";
     };
     debugTools = mkOption {
       type = with types; listOf enum [ "hardware" "network" "os" "fs" "tui" "gui" ];
