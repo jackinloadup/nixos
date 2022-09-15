@@ -1,11 +1,9 @@
-# TODO install mono and gecko if needed instead of prompting at runtime
-
-# @NOTE dark theme could be maybe detected and switched at runtime based on gtk theme or similar?
+# @TODO dark theme could be maybe detected and switched at runtime based on gtk theme or similar?
 with builtins;
 { pkgs, lib }:
 { 
-  is64bits ? false
-, wine ? if is64bits then pkgs.wineWowPackages.stable else pkgs.wine
+  is64bits ? if system == "i686-linux" then false else true
+, winePackage ? "minimal" # could also be base, full, stableFull
 , wineFlags ? ""
 , useDarkTheme ? false
 , executable
@@ -23,22 +21,30 @@ let
   inherit (lib.lists) remove;
   inherit (lib.strings) concatStringsSep;
 
-  wineBin = "${wine}/bin/wine${if is64bits then "64" else ""}";
+  pkgGroup = if is64bits
+    then "wine64Packages"
+    else "winePackages";
+
+  pkg = pkgs.${pkgGroup}.${winePackage};
+
+  bin = if is64bits
+    then "${pkg}/bin/wine64"
+    else "${pkg}/bin/wine";
+
   # only adds paths. doesn't actually install
   requiredPackages = with pkgs; [
-    wine
+    pkg
     winetricks
     cabextract
-    wineWowPackages.stable
   ];
   WINENIX_PROFILES = "$XDG_DATA_HOME/wine-nix-profiles";
   WINE_NIX="$XDG_CACHE_HOME/wine${if is64bits then "64" else "32"}-nix";
   PATH = makeBinPath requiredPackages;
   NAME = name;
   HOME = if home == ""
-    then "${WINENIX_PROFILES}/${name}" 
+    then "${WINENIX_PROFILES}/${name}"
     else home;
-  WINEARCH = if is64bits 
+  WINEARCH = if is64bits
     then "win64" 
     else "win32";
   # Don't ask user at setup about installing gecko or mono if not needed
@@ -52,7 +58,7 @@ let
       in concatStringsSep "," overridesRaw + "="
     else "";
   setupHook = ''
-    WINEDLLOVERRIDES="${DLLOVERRIDES}" ${wine}/bin/wineboot
+    WINEDLLOVERRIDES="${DLLOVERRIDES}" ${pkg}/bin/wineboot
   '';
   tricksHook = if (length tricks) > 0
     then
@@ -65,7 +71,7 @@ let
     text = builtins.readFile ./wine-breeze-dark.reg;
   };
   setupDarkTheme = if useDarkTheme 
-    then "${wineBin} start regedit.exe ${darkReg}"
+    then "${bin} start regedit.exe ${darkReg}"
     else "";
 
   script = pkgs.writeShellScriptBin name ''
@@ -83,7 +89,7 @@ let
     if [ ! -d "$WINEPREFIX" ] # if the prefix does not exist
     then
       ${setupHook}
-      # ${wineBin} cmd /c dir > /dev/null 2> /dev/null # initialize prefix
+      # ${bin} cmd /c dir > /dev/null 2> /dev/null # initialize prefix
       wineserver -w
       ${tricksHook}
       ${firstrunScript}
@@ -100,7 +106,7 @@ let
       exit 0
     fi
 
-    ${wineBin} ${wineFlags} "$EXECUTABLE" "$@"
+    ${bin} ${wineFlags} "$EXECUTABLE" "$@"
     wineserver -w
   '';
 in script
