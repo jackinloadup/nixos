@@ -97,7 +97,12 @@ in {
     };
   };
 
-  hardware.bluetooth.settings.General.Name = "Entertainment";
+  hardware = {
+    bluetooth.settings.General.Name = "Entertainment";
+    opengl.enable = mkForce true;
+    opengl.driSupport = mkForce true;
+  };
+
   networking = {
     hostName = "nat";
     networkmanager.enable = mkForce false;
