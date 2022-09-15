@@ -16,8 +16,9 @@
   # does this even matter if I don't have swap attached?
   boot.kernel.sysctl."vm.swappiness" = 5;
 
-  services.btrfs.autoScrub.enable = true;
   programs.fuse.userAllowOther = true;
+  services.btrfs.autoScrub.enable = true;
+  services.btrfs.autoScrub.fileSystems = [ "/dev/disk/by-label/nixos" ];
 
 
   fileSystems = let
