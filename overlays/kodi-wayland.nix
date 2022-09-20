@@ -20,7 +20,7 @@ in self: super: {
     #  sha256 = "sha256-XDtmY3KthiD91kvueQRSamBcdM7fBpRntmZX6KRsCzE=";
     #};
     patches = old.patches ++ [
-      ./kodi-wayland.patch
+      ../patches/kodi-workaround-blank-screen.patch
     ];
   });
 }
