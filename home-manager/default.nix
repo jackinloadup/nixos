@@ -1,6 +1,7 @@
 { inputs, pkgs, config, lib, nixosConfig, ... }:
 
 with inputs;
+with lib;
 let
   settings = import ../settings;
   ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
