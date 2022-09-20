@@ -14,7 +14,16 @@ in {
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
-  services.getty.autologinUser = "kodi";
+  services.getty = {
+    autologinUser = "kodi";
+    extraArgs = [
+      "--noissue"
+      "--noclear"
+      "--nohints"
+      "--nohostname"
+      "--skip-login"
+    ];
+  };
 
   machine = {
     users = [
