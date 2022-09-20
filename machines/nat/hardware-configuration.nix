@@ -1,4 +1,7 @@
-{ self, ... }: {
+{ self, lib, ... }:
+
+with lib;
+{
   imports = [
     ../../profiles/intel.nix
   ];
@@ -9,7 +12,7 @@
   boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "kvm-intel" ];
-  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+  boot.loader.efi.efiSysMountPoint = mkDefault "/boot/EFI";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.extraModprobeConfig = "options snd-hda-intel enable_msi=1";
 

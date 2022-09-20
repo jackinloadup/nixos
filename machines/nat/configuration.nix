@@ -83,27 +83,37 @@ in {
 
   boot.loader.grub.splashImage = kodiSplash;
 
-  virtualisation.vmVariant = {
-    networking.hostName = mkForce "natvm";
-    #services.xserver.displayManager.defaultSession = mkForce "none+i3";
-    virtualisation = {
+  virtualisation = rec {
+    vmVariant = {
+      networking.hostName = mkForce "natvm";
+      #services.xserver.displayManager.defaultSession = mkForce "none+i3"a;
+      boot.loader.efi.efiSysMountPoint = mkForce "/boot";
+      boot.initrd.kernelModules = [ ];
 
-      # https://github.com/NixOS/nixpkgs/issues/59219
-      cores = 4;
-      graphics = true;
-      memorySize = 2048;
-      qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
-      qemu.options = [
-        #"-device virtio-gpu-pci"
-        #"-device virtio-gpu-gl-pci"
-        "-device virtio-vga-gl"
-        "-display gtk,gl=on"
-        "-vga none"
-      ];
+      virtualisation = {
+        #useEFIBoot = true;
+        #useBootLoader = true;
+
+        # https://github.com/NixOS/nixpkgs/issues/59219
+        cores = 4;
+        graphics = true;
+        memorySize = 2048;
+        qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
+        qemu.options = [
+          #"-device virtio-gpu-pci"
+          #"-device virtio-gpu-gl-pci"
+          "-device virtio-vga-gl"
+          "-display gtk,gl=on"
+          "-vga none"
+        ];
+      };
+
+      networking.interfaces = mkForce {
+        eth0.useDHCP = true;
+      };
     };
-    networking.interfaces = mkForce {
-      eth0.useDHCP = true;
-    };
+
+    vmVariantWithBootLoader = vmVariant;
   };
 
   hardware = {
