@@ -7,20 +7,32 @@ let
   inherit (lib) filterAttrs mapAttrs' nameValuePair mapAttrs mapAttrsToList
     forEach
     ;
+  inherit (lib.strings) removeSuffix;
+
   rootPath = ../.;
-  defineModule = name: dir: {
-    name = name;
-    value = import (rootPath + ("/" + dir + "/" + name));
+  buildPath = dir: name: (rootPath + "/${dir}/${name}");
+  importOverlaySet = name: path: {
+    name = removeSuffix ".nix" name;
+    value = importOverlay path inputs;
   };
+  importModuleSet = name: path: {
+    name = name;
+    value = import path;
+  };
+  importOverlay = path: args: (final: prev: (import path args) final prev);
+  filesInDir = dir: attrNames (readDir  (toPath  rootPath + "/${dir}"));
 in
 
 rec {
 
-  importModulesDir = dir: listToAttrs (
-    map (name: defineModule name dir) (attrNames (readDir  (toPath  rootPath + "/${dir}")))
+  importDirOfOverlays = dir: listToAttrs (
+    map (name: importOverlaySet name (buildPath dir name)) (filesInDir dir)
   );
-  nixosModules = importModulesDir "modules";
-  nixosUsers = importModulesDir "users";
+  importDirOfModules = dir: listToAttrs (
+    map (name: importModuleSet name (buildPath dir name)) (filesInDir dir)
+  );
+  nixosModules = importDirOfModules "modules";
+  nixosUsers = importDirOfModules "users";
   mkNixosSystem = pkgs: system: hostname:
     pkgs.lib.nixosSystem {
       system = system;
