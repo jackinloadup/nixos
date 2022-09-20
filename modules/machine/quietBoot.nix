@@ -21,6 +21,7 @@ in {
         #"i915.fastboot=1"
         "loglevel=3"
         "udev.log_priority=3"
+        "vt.global_cursor_default=0" # disable the frame buffer console cursor
       ];
     };
   };
