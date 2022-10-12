@@ -44,6 +44,7 @@ in {
     in {
       imports = [
         ../../home-manager/nix.nix
+        ../../home-manager/zsh.nix
       ]
       ++ lib.optionals ifTui [
         ../../home-manager/tui.nix
