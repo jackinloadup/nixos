@@ -20,6 +20,7 @@ in {
     nix.trustedUsers = [ "lriutzel" ];
 
     users.users.lriutzel = with settings; {
+      shell = pkgs.zsh;
       isNormalUser = true;
       extraGroups = [
         "wheel"
