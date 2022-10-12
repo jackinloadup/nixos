@@ -52,7 +52,7 @@ in {
       vim-airline # like starship for status line
 
       # Editor Features
-      indentLine # thin line at each indent level
+      (import ./indentline.nix { pkgs = pkgs; }) # vscode-like pictograms to neovim built-in lsp
       vim-fugitive # A Git wrapper so awesome, it should be illegal
       #vim-surround  # need to configure and don't use yet
 
