@@ -86,7 +86,6 @@ in {
     enable = true;
   };
 
-  boot.loader.grub.splashImage = kodiSplash;
 
   virtualisation = rec {
     vmVariant = {
