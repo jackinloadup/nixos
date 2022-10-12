@@ -29,35 +29,14 @@ in {
       ];
     };
 
-    #programs.xwayland.enable = true;
-
-    # DON'T set useGlobalPackages! It's not necessary in newer
-    # home-manager versions and does not work with configs using
-    # nixpkgs.config`
     home-manager.users.kodi = {
       imports = [
         ../../home-manager/default.nix
         ../../home-manager/nix.nix
+        ./kodi.nix
         ./sway.nix
         #./i3.nix
       ];
-
-      programs.kodi = {
-        enable = true;
-        package = pkgs.kodi-wayland;
-        addonSettings = {
-          "service.xbmc.versioncheck".versioncheck_enable = "false";
-        };
-        #settings = {
-        #  cache = {
-        #    buffermode = 1; # buffer all filesystems
-        #    #memorysize = ; # 
-        #    readfactor = 4.0; # determines the max readrate in terms of readfactor * avg bitrate of a video file
-        #  };
-        #  seeksteps = "15, 30, 30, 60, 60, 300";
-        #};
-      };
-
     };
 
     # https://github.com/nixcon/nixcon-video-infra/blob/13b5fc1e4cd12c1ce99defc60ee59e6cd3631880/nixpkgs/pkgs/misc/emulators/retroarch/kodi-advanced-launchers.nix
