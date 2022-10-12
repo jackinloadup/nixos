@@ -44,6 +44,7 @@ in {
     in {
       imports = [
         ../../home-manager/nix.nix
+        ../../home-manager/default.nix
         ../../home-manager/zsh.nix
       ]
       ++ lib.optionals ifTui [
@@ -51,9 +52,9 @@ in {
       ]
       ++ lib.optionals ifGraphical [
         ../../home-manager/alacritty.nix
-        ../../home-manager/default.nix
         ../../home-manager/dunst.nix
         ../../home-manager/firefox.nix
+        ../../home-manager/graphical.nix
         ../../home-manager/gpg.nix
         ../../home-manager/foot.nix
         ../../home-manager/i3.nix
@@ -61,17 +62,13 @@ in {
         ../../home-manager/mpv.nix
         ../../home-manager/neovim/default.nix
         ../../home-manager/sway/default.nix
+        ../../home-manager/xorg.nix
         #./task-warrior
         #./zoom.nix
       ]
       ++ lib.optionals ifFull [
         ../../home-manager/development.nix
       ];
-
-      # You can update Home Manager without changing this value. See
-      # the Home Manager release notes for a list of state version
-      # changes in each release.
-      home.stateVersion = config.system.stateVersion;
 
       home.username = settings.username;
       home.homeDirectory = lib.mkOverride 10 homeDir;
