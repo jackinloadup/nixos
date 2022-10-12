@@ -65,11 +65,11 @@ let
   '';
 in {
   # might break current auto start sway script
-  users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
+  #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
 
-  environment.systemPackages = with pkgs; [
-    starship
-  ];
+  #environment.systemPackages = with pkgs; [
+  #  starship
+  #];
 
   programs.zsh = {
     enable = true;
@@ -106,110 +106,4 @@ in {
 
     interactiveShellInit = interactive;
   };
-#} // (builtins.concatMap (name: {
-} // mkIf (builtins.elem "lriutzel" config.machine.users) {
-  #users.users.${name}.shell = pkgs.zsh;
-
-  #home-manager.users.${name}.programs = {
-  users.users.lriutzel.shell = pkgs.zsh;
-
-  home-manager.users.lriutzel.programs = {
-    zsh = {
-      enable = true;
-      enableAutosuggestions = true;
-      enableCompletion = true;
-
-      initExtra = ''
-        function set_win_title(){
-          echo -ne "\033]0; $(basename "$PWD") \007"
-        }
-        precmd_functions+=(set_win_title)
-
-        eval "$(starship init zsh)"
-      '' + interactive;
-
-      shellAliases = config.environment.shellAliases;
-
-      loginExtra = ''
-      '';
-
-      shellGlobalAliases = {
-        UUID = "$(uuidgen | tr -d \\n)";
-        G = "| grep";
-        L = "| less";
-        "@noerr" = "2> /dev/null";
-        "@noboth" = "&> /dev/null";
-        "@errtostd" = "2&>1";
-      };
-
-      dirHashes = {
-        docs  = "$HOME/Documents";
-        vids  = "$HOME/Videos";
-        dl    = "$HOME/Downloads";
-        p     = "$HOME/Projects";
-      };
-
-      #zsh-autoenv.enable = false;
-
-      history = rec {
-        size = 100000;
-        save = size;
-        path = "$XDG_STATE_HOME/zsh/history";
-        #path = "${config.xdg.dataHome}/zsh/history"; # variable isn't available outside HM?
-        ignorePatterns = [
-          "rm *"
-          "pkill *"
-          "lscd"
-        ];
-        expireDuplicatesFirst = true;
-        ignoreSpace = true;
-      };
-
-      plugins = [
-        {
-          name = "zsh-nix-shell";
-          file = "nix-shell.plugin.zsh";
-          src = pkgs.fetchFromGitHub {
-            owner = "chisui";
-            repo = "zsh-nix-shell";
-            rev = "v0.4.0";
-            sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
-          };
-        }
-      ];
-    };
-
-    starship = {
-      enable = true;
-      package = pkgs.unstable.starship;
-      enableBashIntegration = true;
-      enableZshIntegration = true;
-      settings = {
-        format = concatStrings [
-          "$time"
-          "$username"
-          "$hostname"
-          "$character"
-        ];
-        right_format = concatStrings [
-          "$all"
-        ];
-        scan_timeout = 10;
-        add_newline = false;
-        line_break = {
-          disabled = true;
-        };
-        time = {
-          disabled = false;
-          time_format = "%l:%M%p";
-          utc_time_offset = "-5";
-          format = "$time($style) ";
-        };
-        username = {
-          disabled = false;
-        };
-      };
-    };
-  };
 }
-#}) [ "lriutzel" ])
