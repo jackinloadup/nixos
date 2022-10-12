@@ -1,5 +1,6 @@
 { inputs, pkgs, config, lib, nixosConfig, ... }:
 
+with lib;
 with inputs;
 let
   settings = import ../settings;
@@ -22,8 +23,9 @@ in {
         enable = true;
         initExtra = ''
           source ${config.lib.base16.templateFile { name = "shell"; }}
+          '' + optionals ifTui ''
           eval "$(starship init bash)"
-        '';
+          '';
       };
 
       htop.enable = true;
