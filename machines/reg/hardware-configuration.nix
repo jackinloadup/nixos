@@ -16,6 +16,10 @@
   # does this even matter if I don't have swap attached?
   boot.kernel.sysctl."vm.swappiness" = 5;
 
+  # More tmp space is needed to build kernel
+  # original 16G (50%), known needed 20G, new 24G
+  boot.tmpOnTmpfsSize = "75%";
+
   programs.fuse.userAllowOther = true;
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [ "/dev/disk/by-label/nixos" ];
