@@ -36,6 +36,7 @@ in {
     # nixpkgs.config`
     home-manager.users.kodi = {
       imports = [
+        ../../home-manager/default.nix
         ../../home-manager/nix.nix
         ./sway.nix
         #./i3.nix
