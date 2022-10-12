@@ -41,9 +41,6 @@ in {
         ./sway.nix
         #./i3.nix
       ];
-      home.stateVersion = config.system.stateVersion;
-
-      xdg.enable = lib.mkForce true; # needed for environment variables used in utils
 
       programs.kodi = {
         enable = true;
