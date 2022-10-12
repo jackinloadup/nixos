@@ -131,7 +131,7 @@ in {
     networkmanager.enable = mkForce false;
 
     dhcpcd = {
-      #wait = "ipv4"; # don't wait. That would take longer
+      wait = mkForce "ipv4"; # don't wait. That would take longer
       persistent = true;
     };
 
