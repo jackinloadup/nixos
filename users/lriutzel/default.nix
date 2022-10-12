@@ -48,10 +48,10 @@ in {
         ../../home-manager/default.nix
         ../../home-manager/zsh.nix
       ]
-      ++ lib.optionals ifTui [
+      ++ optionals ifTui [
         ../../home-manager/tui.nix
       ]
-      ++ lib.optionals ifGraphical [
+      ++ optionals ifGraphical [
         ../../home-manager/alacritty.nix
         ../../home-manager/dunst.nix
         ../../home-manager/firefox.nix
@@ -67,12 +67,12 @@ in {
         #./task-warrior
         #./zoom.nix
       ]
-      ++ lib.optionals ifFull [
         ../../home-manager/development.nix
+      ++ optionals ifFull [
       ];
 
       home.username = settings.username;
-      home.homeDirectory = lib.mkOverride 10 homeDir;
+      home.homeDirectory = mkOverride 10 homeDir;
 
       home.sessionVariables = {
         NIXOS_CONFIG="$HOME/dotfiles/flake.nix";
@@ -82,7 +82,7 @@ in {
       programs.git.extraConfig.safe.directory = "${homeDir}/dotfiles";
 
       home.packages = with pkgs; []
-      ++ lib.optionals ifGraphical [ # TUI tools but loading if graphical
+      ++ optionals ifGraphical [ # TUI tools but loading if graphical
         fzf
         unstable.mqttui # mqtt tui
 
@@ -92,7 +92,7 @@ in {
         mdr # tui viewer
         # mdv # tui viewer not in nixpkgs yet
       ]
-      ++ lib.optionals ifGraphical [
+      ++ optionals ifGraphical [
         emulsion # mimimal linux image viewer built in rust
         imv # minimal image viewer
         #tor-browser-bundle-bin
@@ -117,7 +117,7 @@ in {
         ## Task/notes
         mindforger
       ]
-      ++ lib.optionals ifFull [
+      ++ optionals ifFull [
         unstable.helvum # pipewire patchbay
         easyeffects # Audio effects
 
