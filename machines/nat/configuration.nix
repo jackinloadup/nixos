@@ -77,6 +77,11 @@ in {
     };
   };
 
+  boot.kernelPatches = [
+    { name = "sony-bd-remote-buttons";
+      patch = ../../patches/linux-sony-bd-remote.patch;
+    }
+  ];
   boot.plymouth = {
     enable = true;
   };
