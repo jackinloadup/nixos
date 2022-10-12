@@ -183,7 +183,8 @@ in {
     services.gvfs.enable = mkDefault ifGraphical;
     # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
     # is required.
-    services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
+    #services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
+    services.gvfs.package = lib.mkDefault pkgs.gvfs;
 
     services.xserver.desktopManager.xterm.enable = false;
 
