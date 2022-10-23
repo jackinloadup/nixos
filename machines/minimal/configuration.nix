@@ -17,13 +17,14 @@ in {
     adb = false;
     tui = false;
     sizeTarget = 0;
-    autologin-tty1 = false;
     bluetooth = false;
     encryptedRoot = false;
     lowLevelXF86keys.enable = false;
     quietBoot = false;
     sdr = false;
     sound = false;
+    windowManagers = [];
+    minimal = true;
   };
 
   networking.hostName = "minimal";
@@ -46,6 +47,47 @@ in {
       umount = mkSetuidRoot "${lib.getBin pkgs.util-linux}/bin/umount";
     };
 
+    environment.noXlibs = mkDefault true;
+    environment.defaultPackages = mkForce [];
+
+    boot.enableContainers = false;
+    xdg.mime.enable = false;
+    xdg.icons.enable = false;
+    xdg.menus.enable = false;
+    xdg.sounds.enable = false;
+    xdg.autostart.enable = false;
+    powerManagement.cpuFreqGovernor = mkForce null;
+
+    hardware.enableAllFirmware = mkForce false;
+    hardware.enableRedistributableFirmware = mkForce false;
+    i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" ];
+    programs.command-not-found.enable = mkDefault false;
+
+
+
+    services.timesyncd.enable = false; # systemdMinimal doesn't have timesyncd
+    nix.enable = false;
+    system.disableInstallerTools = true;
+    systemd = {
+      # if using just systemdMinimal mods will need to be done to work.
+      # following command builds result
+      # sudo nix build --override-input nixpkgs ~/Projects/nixpkgs ./dotfiles#nixosConfigurations.minimal.config.system.build.toplevel                                                                                                ~ took 15s 
+      package = pkgs.systemdMinimal;
+      #package = pkgs.systemdMinimal.override {
+      #  withCoredump = true;
+      #  withCompression = true;
+      #  withLogind = true;
+      #};
+      services = {
+        nix-daemon.enable = false;
+        mount-pstore.enable = false;
+        sysctl.enable = false;
+        journald.enable = false;
+        user-sessions.enable = false;
+        shutdownRamfs.enable = false;
+      };
+      sockets.nix-daemon.enable = false;
+    };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
