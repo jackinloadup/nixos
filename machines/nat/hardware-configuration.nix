@@ -12,11 +12,11 @@ with lib;
   boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "kvm-intel" ];
-  boot.loader.efi.efiSysMountPoint = mkDefault "/boot/EFI";
+  #boot.loader.efi.efiSysMountPoint = mkDefault "/boot/EFI";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.extraModprobeConfig = "options snd-hda-intel enable_msi=1";
 
-  fileSystems."/boot/EFI" = {
+  fileSystems."/boot" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";
     options = [ "defaults" "x-gvfs-hide" ];

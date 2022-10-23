@@ -10,10 +10,10 @@
   boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+  #boot.loader.efi.efiSysMountPoint = "/boot/EFI";
   boot.loader.efi.canTouchEfiVariables = true;
 
-  fileSystems."/boot/EFI" = {
+  fileSystems."/boot" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";
     options = [
