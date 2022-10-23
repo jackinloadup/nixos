@@ -156,7 +156,7 @@ in {
           macAddress = "random";
         };
       };
-      dhcpcd.wait = "background";
+      dhcpcd.wait = mkDefault "background";
 
       # The global useDHCP flag is deprecated, therefore explicitly set to false here.
       # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -169,6 +169,7 @@ in {
 
     hardware = {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).
+      enableAllFirmware = mkDefault config.nixpkgs.config.allowUnfree;
       enableRedistributableFirmware = mkDefault config.nixpkgs.config.allowUnfree;
 
       opengl.enable = mkDefault ifGraphical;
