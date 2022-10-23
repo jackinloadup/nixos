@@ -163,7 +163,9 @@ in
           # Use screen share indicator that works better in Wayland
           "privacy.webrtc.legacyGlobalIndicator" = false;
 
-          "privacy.resistFingerprinting" = true;
+          # causing issues to to it eliminating timezones. can't make exceptions
+          # per site. will explore a profile per task in the future.
+          #"privacy.resistFingerprinting" = true;
           "spellchecker.dictionary" = "en-US";
           "intl.locale.requested" = "en-US";
           "intl.regional_prefs.use_os_locales" = true;
