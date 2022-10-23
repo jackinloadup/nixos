@@ -58,6 +58,7 @@
         riko = mkNixosSystem inputs.nixpkgs "x86_64-linux" "riko";
         marulk = mkNixosSystem inputs.nixpkgs "x86_64-linux" "marulk";
         nat = mkNixosSystem inputs.nixpkgs "x86_64-linux" "nat";
+        minimal = mkNixosSystem inputs.nixpkgs "x86_64-linux" "minimal";
       };
     } //
 
