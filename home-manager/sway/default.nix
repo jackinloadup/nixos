@@ -100,7 +100,7 @@ in
         "${mod}+Shift+Down" = "move workspace to output down";
         "${mod}+Shift+Right" = "move workspace to output right";
 
-        "${mod}+Shift+space" = "floating toggle";
+        "${mod}+Shift+space" = "floating toggle, sticky toggle";
         #"${mod}+space" = "focus mode_toggle";
 
         "${mod}+1" = "workspace number 1";
