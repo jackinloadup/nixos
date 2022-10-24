@@ -54,7 +54,7 @@ in
 
       fonts = fontConf;
 
-      terminal = "TERM=${footTERM} ${pkgs.foot}/bin/footclient --client-environment";
+      terminal = "TERM=${footTERM} ${getBin pkgs.foot}/bin/footclient --client-environment";
 
       workspaceAutoBackAndForth = true;
 
@@ -66,7 +66,7 @@ in
 
       floating.criteria = [{ class = "^Wine$"; }];
 
-      menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
+      menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
 
       keybindings = let
         inherit (swayConfig) left down up right menu terminal modifier;
@@ -148,8 +148,8 @@ in
         "${mod}+Shift+minus" = "move container to scratchpad";
         "${mod}+minus" = "scratchpad show";
       } // (if hostName == "spica" then { # smart. use hostname then append based on that
-        "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
-        "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
+        "XF86MonBrightnessUp" = "exec ${getExe pkgs.light} -A 10";
+        "XF86MonBrightnessDown" = "exec ${getExe pkgs.light} -U 10";
       } else { });
 
       modes = let
@@ -202,10 +202,10 @@ in
         {
           command =
             let
-              lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/Pictures/background.jpg\"'";
+              lockCmd = "'${getExe pkgs.swaylock} -f -i \"$(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/background.jpg\"'";
               timeouts = settings.timeouts;
             in
-            ''${pkgs.swayidle}/bin/swayidle -w \
+            ''${getExe pkgs.swayidle} -w \
               timeout ${toString timeouts.screenLock} ${lockCmd} \
               timeout ${toString timeouts.displayOff} 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
