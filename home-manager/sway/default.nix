@@ -17,6 +17,8 @@ let
   ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
   mode_system = "System:  [r]eboot  [p]oweroff  [l]ock  [f]irmware [e]xit";
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
+
+  lockSwayIdle = ''exec ${getBin pkgs.procps}/bin/pkill -SIGUSR1 swayidle'';
 in
 {
   imports = [
@@ -139,7 +141,7 @@ in
 
         "${mod}+r" = "mode resize";
 
-        "${mod}+Shift+Delete" = ''exec ${pkgs.swaylock}/bin/swaylock -i "~/background.jpg"'';
+        "${mod}+Shift+Delete" = lockSwayIdle;
         #"${mod}+k" = "exec ${pkgs.mako}/bin/makoctl dismiss";
         #"${mod}+Shift+k" = "exec ${pkgs.mako}/bin/makoctl dismiss -a";
 
@@ -159,6 +161,7 @@ in
           #s = "exec ${terminal} -e ./kexec-systemd.sh";
           r = "exec reboot";
           p = "exec poweroff";
+          l = lockSwayIdle;
           e = "exit";
           f = "exec systemctl reboot --firmware-setup";
           Return = "mode default";
