@@ -1,0 +1,29 @@
+diff --git a/xbmc/input/XBMC_keyboard.h b/xbmc/input/XBMC_keyboard.h
+index 09f2af76d6..aecf7a2127 100644
+--- a/xbmc/input/XBMC_keyboard.h
++++ b/xbmc/input/XBMC_keyboard.h
+@@ -35,7 +35,7 @@
+  */
+ typedef struct XBMC_keysym
+ {
+-  unsigned char scancode; /* hardware specific scancode */
++  unsigned short scancode; /* hardware specific scancode */
+   XBMCKey sym; /* SDL virtual keysym */
+   XBMCMod mod; /* current key modifiers */
+   uint16_t unicode; /* translated character */
+diff --git a/xbmc/platform/linux/input/LibInputKeyboard.cpp b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+index 657588adce..04ad26c98f 100644
+--- a/xbmc/platform/linux/input/LibInputKeyboard.cpp
++++ b/xbmc/platform/linux/input/LibInputKeyboard.cpp
+@@ -278,9 +278,9 @@ void CLibInputKeyboard::ProcessKey(libinput_event_keyboard *e)
+   }
+ 
+   uint32_t scancode = libinput_event_keyboard_get_key(e);
+-  if (scancode > std::numeric_limits<unsigned char>::max())
++  if (scancode > std::numeric_limits<unsigned short>::max())
+   {
+-    // Kodi scancodes are limited to unsigned char, pretend the scancode is unknown on overflow
++    // Kodi scancodes are limited to unsigned short, pretend the scancode is unknown on overflow
+     scancode = 0;
+   }
+ 
