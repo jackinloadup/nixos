@@ -17,7 +17,7 @@
 
     # color library for theming
     base16 = {
-      url = github:montchr/base16-nix;
+      url = github:alukardbf/base16-nix;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
