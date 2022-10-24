@@ -116,6 +116,8 @@ in {
 
         ## Task/notes
         mindforger
+        # Media Management
+        mediaelch
       ]
       ++ optionals ifFull [
         unstable.helvum # pipewire patchbay
@@ -129,7 +131,6 @@ in {
         #electron-cash # BCH walle
 
         # Media Management
-        mediaelch
         #filebot
         mkvtoolnix
 
