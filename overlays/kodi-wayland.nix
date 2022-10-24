@@ -1,7 +1,5 @@
 inputs:
 let
-  # Pass flake inputs to overlay so we can use the sources pinned in flake.lock
-  # instead of having to keep sha256 hashes in each package for src
   inherit inputs;
   #cp = f: (super.callPackage f) {};
 in self: super: {
@@ -12,13 +10,6 @@ in self: super: {
     sambaSupport = false;
   })
   .overrideAttrs(old: {
-    #version = "v20.0a2";
-    #src = super.fetchFromGitHub {
-    #  owner  = "xbmc";
-    #  repo   = "xbmc";
-    #  rev    = "v20.0a2-Nexus";
-    #  sha256 = "sha256-XDtmY3KthiD91kvueQRSamBcdM7fBpRntmZX6KRsCzE=";
-    #};
     patches = old.patches ++ [
       ../patches/kodi-workaround-blank-screen.patch
     ];

@@ -1,18 +1,14 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
+
+with lib;
 let
   settings = import ../../settings;
   hostName = nixosConfig.networking.hostName;
   theme = settings.theme;
-  #wallpaper = pkgs.callPackage ./wallpaper/wallpaper.nix { };
   fontConf = {
     names = [ theme.font.mono.family ];
     size = builtins.mul theme.font.size 1.0; # typecast to float
   };
-  sway_tty1 = ''
-      # if tty1 then dont fork, instead transfer execution to sway
-      # thus if sway crashes the resulting terminal will not be logged in
-      #[[ "$(tty)" == /dev/tty1 ]] && exec sway
-    '';
   swayConfig = config.wayland.windowManager.sway.config;
   footTERM = if config.programs.foot.settings ? main.term
     then
@@ -25,10 +21,7 @@ in
     ../waybar.nix
   ];
 
-  #programs.bash.initExtra = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
-  #programs.zsh.loginExtra  = if (nixosConfig.machine.sizeTarget > 1 ) then sway_tty1 else "";
-
-  home.packages = with pkgs; lib.mkIf ifGraphical [
+  home.packages = with pkgs; mkIf ifGraphical [
     #sway-contrib.grimshot
     wl-clipboard
     #mako
@@ -44,7 +37,7 @@ in
   # disabling for now due to i3. This could be started in commands but maybe systemd mod better?
   #services.flameshot.enable = true;
 
-  wayland.windowManager.sway = lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) {
+  wayland.windowManager.sway = mkIf ifGraphical {
     enable = true;
     package = null; # don't override system-installed one
     wrapperFeatures.gtk = true;
@@ -146,16 +139,10 @@ in
 
         "${mod}+r" = "mode resize";
 
-        #"${mod}+L" = ''exec ${pkgs.swaylock}/bin/swaylock -i "$(${wallpaper}/bin/wallpaper get)"'';
         "${mod}+Shift+Delete" = ''exec ${pkgs.swaylock}/bin/swaylock -i "~/background.jpg"'';
         #"${mod}+k" = "exec ${pkgs.mako}/bin/makoctl dismiss";
         #"${mod}+Shift+k" = "exec ${pkgs.mako}/bin/makoctl dismiss -a";
 
-        #"XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-        #"XF86AudioRaiseVolume" =
-        #  "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-        #"XF86AudioLowerVolume" =
-        #  "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
         #"${mod}+z" = "exec ${pkgs.zathura}/bin/zathura";
 
         "${mod}+Shift+minus" = "move container to scratchpad";
@@ -209,7 +196,6 @@ in
         #{ command = "${pkgs.keepassxc}/bin/keepassxc"; }
         {
           command =
-            #let lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"\$(${wallpaper}/bin/wallpaper get)\"'";
             let
               lockCmd = "'${pkgs.swaylock}/bin/swaylock -f -i \"~/Pictures/background.jpg\"'";
               timeouts = settings.timeouts;
@@ -241,7 +227,7 @@ in
 
 
 
-      #workspaceOutputAssign = lib.mkIf (hostName == "sirius") [
+      #workspaceOutputAssign = mkIf (hostName == "sirius") [
       #  { workspace = "1"; output = "Unknown LCD QHD 1 110503_3"; }
       #  { workspace = "2"; output = "Unknown LCD QHD 1 110503_3"; }
       #  { workspace = "8"; output = "Goldstar Company Ltd W2363D 0000000000"; }

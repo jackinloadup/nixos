@@ -8,12 +8,6 @@ in {
   config = mkIf cfg.minimal {
     networking.networkmanager.plugins = mkDefault [];
 
-    #environment.systemPackages = with pkgs; [
-
-    #environment.noXlibs = mkDefault true;
-
-    # Size reduction
-
     ## Remove polkit. It depends on spidermonkey !
     security.polkit.enable = mkDefault false;
 
