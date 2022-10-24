@@ -76,6 +76,7 @@ in {
 
   nixpkgs.overlays = [
     inputs.self.overlays.default
+    inputs.self.overlays.kodi-wayland
   ];
   #fonts.fontconfig.dpi = 152;
 
