@@ -16,9 +16,9 @@ in {
     boot.kernelParams = [ "console=tty1" ];
 
     environment.etc."greetd/environments".text = ''
-      ${lib.optionalString config.programs.sway.enable "systemd-cat -t sway sway"}
-      ${lib.optionalString config.services.xserver.windowManager.i3.enable "systemd-cat -t i3 startx ~/.xsession"}
-      ${lib.optionalString config.services.xserver.desktopManager.gnome.enable "systemd-cat -t gnome gnome-session"}
+      ${lib.optionalString config.programs.sway.enable "${getBin pkgs.systemd}/bin/systemd-cat -t sway ${getExe pkgs.sway}"}
+      ${lib.optionalString config.services.xserver.windowManager.i3.enable "${getBin pkgs.systemd}/bin/systemd-cat -t i3 ${getBin pkgs.xorg.xinit}/bin/startx ~/.xsession"}
+      ${lib.optionalString config.services.xserver.desktopManager.gnome.enable "${getBin pkgs.systemd}/bin/systemd-cat -t gnome gnome-session"}
     '';
 
     users.users.greeter.group = "greeter";
@@ -28,7 +28,7 @@ in {
       let
         theme = "${pkgs.ayu-theme-gtk}/share/themes/Ayu-Dark/gtk-3.0/gtk.css";
         greetdSwayCfg = pkgs.writeText "sway-config" ''
-          exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -s ${theme} -l; ${pkgs.sway}/bin/swaymsg exit"
+          exec "${getBin pkgs.greetd.gtkgreet}/bin/gtkgreet -s ${theme} -l; ${getBin pkgs.sway}/bin/swaymsg exit"
 
           bindsym Mod4+shift+e exec ${pkgs.sway}/bin/swaynag \
           -t warning \
@@ -36,7 +36,7 @@ in {
           -b 'Poweroff' 'systemctl poweroff' \
           -b 'Reboot' 'systemctl reboot'
 
-          exec ${pkgs.systemd}/bin/systemctl --user import-environment
+          exec ${getBin pkgs.systemd}/bin/systemctl --user import-environment
           include /etc/sway/config.d/*
         '';
       in
@@ -45,7 +45,7 @@ in {
         vt = 2; # use tty2 to stay away from systemd startup logs
         settings = {
           default_session = {
-            command = "${pkgs.sway}/bin/sway --config ${greetdSwayCfg}";
+            command = "${getExe pkgs.sway} --config ${greetdSwayCfg}";
             #command = "${lib.makeBinPath [pkgs.greetd.tuigreet] }/tuigreet -i --sessions ${sessions} --time ";
             user = "greeter";
           };
