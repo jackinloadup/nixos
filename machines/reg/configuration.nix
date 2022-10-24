@@ -65,6 +65,7 @@ in {
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.self.overlays.default
+    inputs.self.overlays.kodi-wayland
   ];
 
   networking.bridges.br0.interfaces = ["eno1"];
