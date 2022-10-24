@@ -15,7 +15,7 @@ with lib;
       "/persist/etc" = {
         hideMounts = true;
         directories = [
-        ] ++ optionals config.networking.networkManager.enable [
+        ] ++ optionals config.networking.networkmanager.enable [
           "/etc/NetworkManager/system-connections"
         ];
       };
