@@ -13,7 +13,8 @@ in self: super: {
   blender = self.unstable.blender;
   nixos-shell = self.unstable.nixos-shell; # needed for 0.2.2
   nmap-graphical = self.unstable.nmap-graphical;
-  neovim-unwrapped = self.unstable.neovim-unwrapped;
+  neovimUtils = self.unstable.neovimUtils;
+  neovim-unwrapped = self.unstable.neovim-unwrapped; # used in home-manager programs.neovim
   home-assistant = self.unstable.home-assistant.override {
     extraPackages = py: with py; [ psycopg2 librouteros ];
   };
