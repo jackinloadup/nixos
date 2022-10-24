@@ -10,6 +10,9 @@ in {
   options.machine.docker = mkEnableOption "Enable docker";
 
   config = mkIf cfg.docker {
+    networking.hosts = {
+      "172.17.0.1" = [ "host.docker.internal" ];
+    };
     virtualisation.docker = {
       enable = true;
       autoPrune.enable = true;
