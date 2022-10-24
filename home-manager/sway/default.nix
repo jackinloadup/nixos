@@ -15,6 +15,8 @@ let
       config.programs.foot.settings.main.term
     else "foot";
   ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
+  mode_system = "System:  [r]eboot  [p]oweroff  [l]ock  [f]irmware [e]xit";
+  mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
 in
 {
   imports = [
@@ -121,9 +123,6 @@ in
         "${mod}+Shift+9" = "move container to workspace number 9";
         "${mod}+Shift+0" = "move container to workspace number 10";
 
-        "${mod}+p" =
-          "exec ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g- screenshot-$(date +%Y%m%d-%H%M).png";
-
         "${mod}+g" = "split h";
         "${mod}+v" = "split v";
         "${mod}+f" = "fullscreen toggle";
@@ -135,7 +134,8 @@ in
 
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+r" = "restart";
-        "${mod}+Shift+v" = ''mode "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout  [f]irmware"'';
+        "${mod}+Shift+v" = ''mode "${mode_system}"'';
+        "${mod}+Print" = ''mode "${mode_record}"'';
 
         "${mod}+r" = "mode resize";
 
@@ -155,11 +155,11 @@ in
       modes = let
         terminal = swayConfig.terminal;
       in {
-        "system:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout  [f]irmware" = {
-          s = "exec ${terminal} -e ./kexec-systemd.sh";
+        "${mode_system}" = {
+          #s = "exec ${terminal} -e ./kexec-systemd.sh";
           r = "exec reboot";
           p = "exec poweroff";
-          l = "exit";
+          e = "exit";
           f = "exec systemctl reboot --firmware-setup";
           Return = "mode default";
           Escape = "mode default";
@@ -178,6 +178,11 @@ in
           k = Up;
           l = Right;
           Return = Escape;
+        };
+
+        "${mode_record}" = {
+          "p" = ''exec ${getExe pkgs.slurp} | ${getExe pkgs.grim} -g- $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
+          "f" = ''${getExe pkgs.grim} $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
         };
       };
 
@@ -234,6 +239,11 @@ in
       #  { workspace = "10"; output = "Goldstar Company Ltd W2363D 0000000000"; }
       #];
     };
+    # available in next home-manager
+    #extraConfigEarly = ''
+    #  set $mode_system "System:  [s]oft reboot [r]eboot  [p]oweroff  [l]ogout  [f]irmware"
+    #  set $mode_record "Capture: [p]icture or [enter] to leave mode this mode"
+    #'';
 
     extraConfig = ''
       seat seat0 xcursor_theme ${theme.cursor.name} ${toString theme.cursor.size}
