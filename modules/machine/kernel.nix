@@ -14,6 +14,7 @@ in {
     }; 
     panicOnOOM = mkEnableOption "Should kernel panic when the out-of-memory daemon is triggerd";
     panicOnFailedBoot = mkEnableOption "Should kernel panic when the boot fails";
+    panicOnWarn = mkEnableOption "Should kernel panic on warn messages";
     panicOnHungTask = mkEnableOption "Should kernel panic when a hung task is found";
     panicOnHungTaskTimeout = mkOption {
       type = with types; nullOr int;
@@ -28,6 +29,7 @@ in {
       # time require is related to memory size and storage speed.
       # 30 secs was recommended
       ++ optional (cfg.rebootAfterPanic ? true ) "panic=${toString cfg.rebootAfterPanic}" # reboot x seconds after panic
+      ++ optional cfg.panicOnWarn "panic_on_warn" # panic on warn messages
       ++ optional cfg.panicOnFailedBoot "book.panic_on_fail" # If boot fails panic
       ++ optional cfg.panicOnOOM "vm.panic_on_oom" # panic immediately if oom killer is activated
       ++ optional cfg.panicOnHungTask "kernel.hung_task_panic=1" # Panic if hung task is found
