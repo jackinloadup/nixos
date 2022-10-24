@@ -1,5 +1,6 @@
-{ self, ... }: { imports = [ ];
-#
+{ self, ... }: {
+  imports = [ ];
+
 #  # Required for throttled when running on the 5.9 kernel.
 #  #boot.kernelParams = [ "msr.allow_writes=on" ];
 #  boot.kernelModules = [ ];
@@ -12,8 +13,7 @@
 #  # We have a lot of ram. We can wait a bit before we think we need to swap.
 #  # does this even matter if I don't have swap attached?
 #  boot.kernel.sysctl."vm.swappiness" = 5;
-#
-#
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";
@@ -34,7 +34,7 @@
       "discard"
     ];
   };
-#
+
 #  fileSystems."/mnt" = {
 #    device = "/dev/disk/by-label/storage";
 #    fsType = "ext4";

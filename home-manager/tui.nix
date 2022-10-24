@@ -1,7 +1,6 @@
-{ inputs, pkgs, config, lib, nixosConfig, ... }:
+{ pkgs, config, lib, nixosConfig, ... }:
 
 with lib;
-with inputs;
 let
   settings = import ../settings;
   ifTui = if (nixosConfig.machine.sizeTarget > 0) then true else false;

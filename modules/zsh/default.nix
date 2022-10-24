@@ -2,6 +2,7 @@
 
 with lib;
 let
+  ifTui = if (config.machine.sizeTarget > 0) then true else false;
   users = config.machine.users;
   interactive = ''
     source ${config.lib.base16.templateFile { name = "shell"; }}
@@ -63,7 +64,7 @@ let
     zle -N fancy-ctrl-z
     bindkey '^Z' fancy-ctrl-z
   '';
-in {
+in mkIf ifTui {
   # might break current auto start sway script
   #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
 
