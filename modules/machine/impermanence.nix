@@ -15,6 +15,7 @@ with lib;
       "/persist/etc" = {
         hideMounts = true;
         directories = [
+        ] ++ optionals config.networking.networkManager.enable [
           "/etc/NetworkManager/system-connections"
         ];
       };
@@ -22,16 +23,28 @@ with lib;
         hideMounts = true;
         directories = [
           #"/var/log"
-          "/var/lib/bluetooth"
-          "/var/lib/systemd/coredump"
-          "/var/lib/docker"
-          "/var/lib/libvirt"
-          "/var/lib/ipfs"
-          "/var/lib/fwup"
-          "/var/lib/iwd"
-          #"/var/lib/syncthing"
           #"/var/lib/postgresql"
+        #] ++ optionals config.systemd.package.withCoredump [ # requires wip
+        # patch
+          "/var/lib/systemd/coredump"
+        ] ++ optionals config.hardware.bluetooth.enable [ # requires wip
+          "/var/lib/bluetooth"
+        ] ++ optionals config.virtualisation.docker.enable [
+          "/var/lib/docker"
+        ] ++ optionals config.virtualisation.libvirtd.enable [
+          "/var/lib/libvirt"
+        ] ++ optionals config.services.blueman.enable [
+          "/var/lib/blueman"
+        ] ++ optionals config.services.colord.enable [
           { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
+        ] ++ optionals config.services.ipfs.enable [
+          "/var/lib/ipfs"
+        ] ++ optionals config.services.fwupd.enable [
+          "/var/lib/fwup"
+        ] ++ optionals config.networking.wireless.iwd.enable [
+          "/var/lib/iwd"
+        ] ++ optionals config.services.syncthing.enable [
+          "/var/lib/syncthing"
         ];
         files = [
           "/etc/machine-id"
