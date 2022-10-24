@@ -6,6 +6,11 @@
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
     flake-utils.url = github:numtide/flake-utils;
+    flake-utils-plus = {
+      url = github:gytis-ivaskevicius/flake-utils-plus;
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
 
     # Manage a user environment using Nix
@@ -13,12 +18,14 @@
       url = github:nix-community/home-manager/release-22.05;
       #url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
     };
 
     # color library for theming
     base16 = {
       url = github:alukardbf/base16-nix;
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils-plus.follows = "flake-utils-plus";
     };
 
     # NUR is a registry of Nix User Repositories
