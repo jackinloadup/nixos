@@ -42,13 +42,20 @@
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nixpkgs-unstable, secrets, impermanence, ... }@inputs:
+  outputs = { self, ... }@inputs:
     with inputs;
     let
-      supportedSystems = [
+      inherit (flake-utils.lib) eachSystem flattenTree mkApp;
+
+      supportedX86Systems = [
+        "i686-linux"
         "x86_64-linux"
+      ];
+
+      supportedSystems = supportedX86Systems ++ [
         "aarch64-linux"
       ];
+
       #forAllSystems = nixlib.genAttrs supportedSystems;
 
       defaultPkgs = nixpkgs;
@@ -69,27 +76,27 @@
       };
     } //
 
-    (flake-utils.lib.eachSystem [ "aarch64-linux" "i686-linux" "x86_64-linux" ])
+    (eachSystem supportedSystems)
     (system:
       let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
-        devShells = flake-utils.lib.flattenTree {
+        devShells = flattenTree {
           rust = import ./shells/rust.nix { pkgs = pkgs; };
         };
       }) //
 
-    (flake-utils.lib.eachSystem [ "x86_64-linux" "i686-linux" ])
+    (eachSystem supportedX86Systems)
     (system:
       let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         # Custom packages added via the overlay are selectively added here, to
         # allow using them from other flakes that import this one.
-        packages = flake-utils.lib.flattenTree {
+        packages = flattenTree {
           winbox = pkgs.wineApps.winbox;
         };
 
         apps = {
-          winbox = flake-utils.lib.mkApp { drv = packages.winbox; };
+          winbox = mkApp { drv = packages.winbox; };
         };
       });
 }
