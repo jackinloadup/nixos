@@ -34,6 +34,7 @@ in {
       sessionVariables = {
         #WAYLAND_DISPLAY = "wayland-1";
         XDG_RUNTIME_DIR = "/run/user/$(id -u)";
+        WLR_DRM_DEVICES = "/dev/dri/card0";
       };
       profileExtra = ''
         if shopt -q login_shell; then
