@@ -38,8 +38,9 @@ in {
     theme.package = pkgs.${gtk.package};
   };
 
-  home.packages = with pkgs; []
-    ++ lib.optionals ifGraphical [
+  home.packages = with pkgs; [
+    drm_info # Small cli utility to dump info about DRM devices
+  ] ++ lib.optionals ifGraphical [
     #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
     # GUI
