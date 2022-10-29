@@ -76,6 +76,7 @@ in {
       #bitwarden-cli
       python39Packages.youtube-dl # there is an alt youtube-dl-lite
       xdg-utils # for xdg-open
+      xdg-user-dirs # command to get the path to Downloads/Pictures/ect
       #nur.repos.ambroisie.comma # like nix-shell but more convinient
       nix-index
       nmap
