@@ -70,6 +70,7 @@ in {
       ]
       ++ optionals ifGraphical [
         ../../home-manager/alacritty.nix
+        ../../home-manager/development.nix
         ../../home-manager/graphical.nix
         ../../home-manager/gpg.nix
         ../../home-manager/i3.nix
@@ -79,7 +80,6 @@ in {
         ../../home-manager/xorg.nix
         #./task-warrior
       ]
-        ../../home-manager/development.nix
       ++ optionals ifFull [
       ];
 
@@ -111,8 +111,9 @@ in {
       ++ optionals ifGraphical [
         emulsion # mimimal linux image viewer built in rust
         imv # minimal image viewer
-        #tor-browser-bundle-bin
+        tor-browser-bundle-bin
         zathura # PDF / Document viewer
+        # zeal # documentation browser
 
         python39Packages.xdot # graphviz viewer
         graphviz
@@ -145,7 +146,7 @@ in {
         # crypto
         trezorctl
         trezor_agent
-        trezor-suite
+        #trezor-suite # wasn't building
         #exodus # Cryptowallet
         #electron-cash # BCH walle
 
