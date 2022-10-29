@@ -46,26 +46,26 @@ in {
       imports = [
         ../../home-manager/nix.nix
         ../../home-manager/default.nix
+        ../../home-manager/dunst.nix
+        ../../home-manager/firefox.nix
+        ../../home-manager/foot.nix
+        ../../home-manager/mpv.nix
         ../../home-manager/zsh.nix
+        ./mobomo.nix
       ]
       ++ optionals ifTui [
         ../../home-manager/tui.nix
       ]
       ++ optionals ifGraphical [
         ../../home-manager/alacritty.nix
-        ../../home-manager/dunst.nix
-        ../../home-manager/firefox.nix
         ../../home-manager/graphical.nix
         ../../home-manager/gpg.nix
-        ../../home-manager/foot.nix
         ../../home-manager/i3.nix
         ../../home-manager/impermanence.nix
-        ../../home-manager/mpv.nix
         ../../home-manager/neovim/default.nix
         ../../home-manager/sway/default.nix
         ../../home-manager/xorg.nix
         #./task-warrior
-        #./zoom.nix
       ]
         ../../home-manager/development.nix
       ++ optionals ifFull [
@@ -80,6 +80,9 @@ in {
       };
 
       programs.git.extraConfig.safe.directory = "${homeDir}/dotfiles";
+
+      programs.mpv.enable = ifGraphical;
+      programs.firefox.enable = ifGraphical;
 
       home.packages = with pkgs; []
       ++ optionals ifGraphical [ # TUI tools but loading if graphical
@@ -171,10 +174,10 @@ in {
 
     hardware.yubikey.enable = ifGraphical;
 
-    modules.browsers.firefox = {
-      enable = ifGraphical;
-      profileName = "lriutzel";
-    };
+    #modules.browsers.firefox = {
+    #  enable = ifGraphical;
+    #  profileName = "lriutzel";
+    #};
 
     # user 1002 can only use tun0
 #    networking.firewall.extraCommands = "
