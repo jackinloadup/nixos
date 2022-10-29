@@ -11,7 +11,6 @@ in self: super: {
 
   exodus = self.unstable.exodus;
   blender = self.unstable.blender;
-  nixos-shell = self.unstable.nixos-shell; # needed for 0.2.2
   nmap-graphical = self.unstable.nmap-graphical;
   neovimUtils = self.unstable.neovimUtils;
   neovim-unwrapped = self.unstable.neovim-unwrapped; # used in home-manager programs.neovim
