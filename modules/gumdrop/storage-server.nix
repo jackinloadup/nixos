@@ -8,7 +8,6 @@ in {
 
   options.gumdrop.storageServer = {
     enable = mkEnableOption "Setup connection to storage server";
-    requiredForBoot = mkEnableOption "Require storage server connection to boot";
     idleTimeout = mkOption {
       type = types.int;
       default = 600;
@@ -33,26 +32,11 @@ in {
             "x-systemd.automount" # lazy mounting
             "x-systemd.idle-timeout=${toString cfg.idleTimeout}" # disconnects after 10 minutes (i.e. 600 seconds)
             #"nfsvers=4.2" # likely not needed. Client already negotiates version starting from newest
-          ]
-          # Don't try to connect until network is online. duh
-          ++ optional cfg.requiredForBoot "x-systemd.after=freenas-lookup.service";
+          ];
         };
       }
     else {};
   in mkIf cfg.enable {
-    systemd.services = mkIf cfg.requiredForBoot {
-      "freenas-lookup" = {
-        enable = true;
-        restartIfChanged = false;
-        description = "Wait until freenas dns returns";
-        after = [ "nss-lookup.target" ];
-        #wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          ExecStart =  "/bin/sh -c 'while ! ${pkgs.host}/bin/host freenas.home.lucasr.com; do sleep 1; done'";
-          Type = "oneshot";
-        };
-      };
-    };
     # https://nixos.wiki/wiki/NFS
     fileSystems = mkMerge [
       ( mount { name = "media"; } )
