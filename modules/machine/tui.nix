@@ -38,6 +38,7 @@ in {
       bat # cat alternative
       viu # terminal image viewer
       lesspipe
+      reptyr # Reparent a running program to a new terminal
 
       ## compression tools
       unzip
@@ -85,6 +86,7 @@ in {
 
       ## OS (nix/linux)
       nix-tree # A terminal curses application to browse a Nix store paths dependencies
+      nix-diff
       vulnix # vulnerability scanner for nix
       # atop?
     ]) ++ (with config.boot.kernelPackages; [
@@ -97,6 +99,9 @@ in {
     console = {
       earlySetup = mkDefault true;
       keyMap = "us";
+      # might be set in machine/fonts.nix
+      #font = "ter-132n";
+      #packages = with pkgs; [ terminus_font ];
       colors = with config.lib.base16.theme; [
         base00-hex # 0 bg
         base08-hex # 1 red
@@ -116,6 +121,17 @@ in {
         base07-hex # 15 fg 2
       ];
     };
+
+    # haven't tested placing for reference
+    #services.kmscon = {
+    #  enable = true;
+    #  hwRender = true;
+    #  extraConfig =
+    #  ''
+    #    font-name=MesloLGS NF
+    #    font-size=14
+    #  '';
+    #};
 
     #programs.autojump.enable = true;
     programs = {
