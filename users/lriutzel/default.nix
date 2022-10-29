@@ -38,7 +38,17 @@ in {
     };
 
 
+    programs.wireshark.enable = ifFull;
+
+    services.trezord.enable = ifGraphical;
+
     environment.etc."nixos/flake.nix".source = "/home/${username}/dotfiles/flake.nix";
+    environment.systemPackages = with pkgs; mkIf ifGraphical [
+      #nix-plugins # Collection of miscellaneous plugins for the nix expression language
+      nmapsi4 # QT frontend for nmap
+    ];
+
+
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
@@ -85,6 +95,7 @@ in {
 
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
+      services.gpg-agent.enable = ifGraphical;
 
       home.packages = with pkgs; []
       ++ optionals ifGraphical [ # TUI tools but loading if graphical
@@ -121,8 +132,11 @@ in {
 
         ## Task/notes
         mindforger
+
         # Media Management
         mediaelch
+
+        kodi-wayland
       ]
       ++ optionals ifFull [
         unstable.helvum # pipewire patchbay
@@ -141,7 +155,6 @@ in {
 
         #freeoffice # office suite UNFREE
         tixati # bittorrent client
-        #nur.repos.arc.packages.mumble_1_4
         blender # 3D render
         cawbird # twitter client
         speedcrunch # gui calculator
@@ -159,20 +172,9 @@ in {
 
         ## Wine Apps
         wineApps.winbox
-
-        kodi-wayland
+        #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
       ];
     };
-
-    programs.wireshark.enable = ifFull;
-
-    services.trezord.enable = ifGraphical;
-
-    environment.systemPackages = with pkgs; mkIf ifGraphical [
-      #nix-plugins # Collection of miscellaneous plugins for the nix expression language
-      #nmap-graphical # support removed due to its python2 dependency
-      #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
-    ];
 
     hardware.yubikey.enable = ifGraphical;
 

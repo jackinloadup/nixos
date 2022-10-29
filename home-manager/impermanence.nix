@@ -19,7 +19,6 @@ in {
         "Projects"
         #"VirtualBox VMs"
         "dotfiles"
-        ".gnupg"
         ".ssh"
         ".cargo"
         ".rustup"
