@@ -1,13 +1,15 @@
 { inputs, pkgs, config, lib, nixosConfig, ... }:
 
-with lib;
-{
+let
+  inherit (lib) mkIf;
+  username = config.home.username;
+in {
   imports = [
     (import "${inputs.impermanence}/home-manager.nix")
   ];
 
   config = mkIf nixosConfig.machine.impermanence {
-    home.persistence."/persist/home/lriutzel" = {
+    home.persistence."/persist/home/${username}" = {
       directories = [
         "Downloads"
         "Music"

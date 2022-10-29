@@ -1,25 +1,27 @@
 { inputs, lib, pkgs, config, ... }:
+
 with lib;
 let
   cfg = config.machine;
-  settings = import ./settings.nix;
   ifTui = if (cfg.sizeTarget > 0) then true else false;
   ifGraphical = if (cfg.sizeTarget > 1) then true else false;
   ifFull = if (cfg.sizeTarget > 2) then true else false;
+  settings = import ./settings.nix;
+  username = settings.username;
 in {
   imports = [
   ];
 
   # Make user available in user list
   options.machine.users = mkOption {
-    type = with types; listOf (enum [ "lriutzel" ]);
+    type = with types; listOf (enum [ username ]);
   };
 
   # If user is enabled
-  config = mkIf (builtins.elem "lriutzel" config.machine.users) {
-    nix.trustedUsers = [ "lriutzel" ];
+  config = mkIf (builtins.elem username config.machine.users) {
+    nix.trustedUsers = [ username ];
 
-    users.users.lriutzel = with settings; {
+    users.users."${username}" = with settings; {
       shell = pkgs.zsh;
       isNormalUser = true;
       extraGroups = [
@@ -35,12 +37,12 @@ in {
       ];
     };
 
-    environment.etc."nixos/flake.nix".source = "/home/lriutzel/dotfiles/flake.nix";
 
+    environment.etc."nixos/flake.nix".source = "/home/${username}/dotfiles/flake.nix";
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
-    home-manager.users.lriutzel = let
+    home-manager.users."${username}" = let
       homeDir = "/home/${settings.username}";
     in {
       imports = [
@@ -75,8 +77,8 @@ in {
       home.homeDirectory = mkOverride 10 homeDir;
 
       home.sessionVariables = {
-        NIXOS_CONFIG="$HOME/dotfiles/flake.nix";
-        NIX_PATH="nixos-config=/home/lriutzel/dotfiles/flake.nix:$NIX_PATH";
+        NIXOS_CONFIG="${homeDir}/dotfiles/flake.nix";
+        NIX_PATH="nixos-config=${homeDir}/dotfiles/flake.nix:$NIX_PATH";
       };
 
       programs.git.extraConfig.safe.directory = "${homeDir}/dotfiles";
