@@ -50,7 +50,6 @@ in {
 
   gumdrop = {
     storageServer.enable = true;
-    storageServer.requiredForBoot = true;
     storageServer.media = true;
     storageServer.roms = true;
   };
