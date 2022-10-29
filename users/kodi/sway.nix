@@ -26,9 +26,9 @@ in {
       # i think is the same but exported??
       # Runs after profileExtra
       initExtra = ''
-        WAYLAND_DISPLAY=wayland-1
+        export WAYLAND_DISPLAY=wayland-1
         # SWAYSOCK needs to be set after sway is started
-        SWAYSOCK="$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock"
+        export SWAYSOCK="$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock"
       '';
       # Runs before profileExtra
       sessionVariables = {
