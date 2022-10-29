@@ -47,7 +47,7 @@ in self: super: {
   #zk = super.callPackage ../packages/zk { };
 
   # Vim plugins, added inside existing pkgs.vimPlugins
-  vimPlugins = super.vimPlugins // {
+  vimPlugins = self.unstable.vimPlugins // {
     lsp_lines-nvim = super.callPackage ../packages/lsp_lines-nvim.nix { pkgs = super; };
     #indent-blankline-nvim-lua =
     #  super.callPackage ../packages/indent-blankline-nvim-lua {
