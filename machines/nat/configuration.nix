@@ -44,7 +44,7 @@ in {
       panicOnOOM = mkForce true;
       #panicOnFailedBoot = mkForce true;
       panicOnHungTask = mkForce true;
-      panicOnHungTaskTimeout = mkForce 5;
+      panicOnHungTaskTimeout = mkForce 1;
     };
   };
 
