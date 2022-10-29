@@ -8,11 +8,9 @@ in {
     ./base16.nix
   ];
 
-  config = lib.mkIf isGraphical {
+  config = lib.mkIf config.services.dunst.enable {
     # Display desktop notfications.
     services.dunst = {
-      enable = true;
-
       #iconTheme = {
       #  package = pkgs.gnome.adwaita-icon-theme;
       #  name = "Adwaita";
