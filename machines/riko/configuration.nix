@@ -47,6 +47,7 @@ in {
   networking.hostName = "riko";
 
   # Playing with iwd 
+  environment.systemPackages = with pkgs; [ iwgtk ];
   networking.networkmanager.wifi.backend = "iwd";
   networking.wireless.iwd.enable = true;
   networking.wireless.iwd.settings = {
