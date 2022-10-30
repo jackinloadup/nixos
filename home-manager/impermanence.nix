@@ -1,7 +1,7 @@
 { inputs, pkgs, config, lib, nixosConfig, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf optionals;
   username = config.home.username;
 in {
   imports = [
@@ -66,7 +66,11 @@ in {
         #".cache/fontconfig"
         #".cache/vulnix"
         #".cache/vulnix"
-      ];
+      ]
+      ++ optionals config.programs.gpg.enable [ ".gnupg" ]
+      ++ optionals config.programs.firefox.enable [ ".mozilla" ]
+      ++ optionals config.programs.zoom-us.enable [ ".zoom" ];
+
       files = [
         ".lftp/rc"
         ".bash_history"

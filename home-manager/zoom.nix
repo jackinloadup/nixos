@@ -9,13 +9,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.persistence."/persist/home/${config.home.username}" = {
-      directories = [
-        ".zoom"
-      ];
-      allowOther = true;
-    };
-
     home.packages = with pkgs; [
       zoom-us
       pulseaudio # zoom uses pactl

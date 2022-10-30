@@ -4,14 +4,6 @@ let
 in
 {
   config = lib.mkIf config.programs.firefox.enable {
-    home.persistence."/persist/home/${config.home.username}" = {
-      directories = [
-        ".mozilla"
-        #".cache/mozilla"
-      ];
-      allowOther = true;
-    };
-
     home.packages = with pkgs; [
       ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
     ];

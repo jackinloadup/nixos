@@ -5,13 +5,6 @@ let
   settings = import ../settings;
 in {
   config = mkIf config.services.gpg-agent.enable {
-    home.persistence."/persist/home/${config.home.username}" = {
-      directories = [
-        ".gnupg"
-      ];
-      allowOther = true;
-    };
-
     programs.gpg = {
       enable = true;
       # .local/share/gnupg
