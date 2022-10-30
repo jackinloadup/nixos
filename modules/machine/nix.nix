@@ -17,6 +17,7 @@ in {
     nix.nixPath = let path = toString ../../.; in [
       "repl=${path}/repl.nix"
     ];
+    nix.binaryCaches = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
 
     # enable flakes
     # set the min free disk space. 

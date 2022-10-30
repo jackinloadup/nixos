@@ -99,4 +99,7 @@
           winbox = mkApp { drv = packages.winbox; };
         };
       });
+  nixConfig = {
+    substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
+  };
 }
