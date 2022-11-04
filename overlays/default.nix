@@ -22,6 +22,7 @@ in self: super: {
   lbry = self.unstable.lbry;
   obsidian = self.unstable.obsidian;
   polkit = self.unstable.polkit; # 121 removes spidermonkey
+  tor-browser-bundle-bin = self.unstable.tor-browser-bundle-bin;
 
   # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
   mfc9130cwlpr = (super.callPackage ../packages/mfc9130cw.nix {}).driver;
