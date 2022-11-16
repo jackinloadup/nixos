@@ -42,10 +42,6 @@ in {
     inputs.self.overlays.default
   ];
 
-  #security.wrappers = {};
-  #security.wrappers.fusemount = { source = "${pkgs.bash}/bin/bash";};
-  #security.wrappers.fusemount3 = { source = "${pkgs.bash}/bin/bash";};
-
   networking.hostName = "marulk";
   networking.networkmanager.enable = mkForce false;
   networking.bridges.br0.interfaces = ["enp1s0"];
