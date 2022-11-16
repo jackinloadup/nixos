@@ -1,6 +1,7 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 
 let
+  inherit (lib) mkIf;
   settings = import ../settings;
   theme = settings.theme;
   fontsConfig = {
@@ -14,10 +15,8 @@ in
     ./base16.nix
   ];
 
-  config = {
-    home.packages = with pkgs; [
-      alacritty
-    ];
+  config = mkIf (builtins.elem "i3" nixosConfig.machine.windowManagers) {
+    programs.alacritty.enable = true;
 
     xsession.windowManager.i3 = let
         left = "h"; # vim directions ftw
@@ -27,7 +26,7 @@ in
         terminal = "alacritty";
         menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
     in {
-      enable = if (nixosConfig.machine.sizeTarget > 0 ) then true else false;
+      enable = true;
       config = {
 
         terminal = terminal;

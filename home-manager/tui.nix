@@ -3,8 +3,6 @@
 with lib;
 let
   settings = import ../settings;
-  ifTui = if (nixosConfig.machine.sizeTarget > 0) then true else false;
-  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
 in {
   imports = [
     ./base16.nix
@@ -22,7 +20,6 @@ in {
         enable = true;
         initExtra = ''
           source ${config.lib.base16.templateFile { name = "shell"; }}
-          '' + optionals ifTui ''
           eval "$(starship init bash)"
           '';
       };
@@ -55,10 +52,7 @@ in {
 
     home.file."${config.xdg.configHome}/htop/htoprc".source = ./htoprc;
 
-    home.packages = with pkgs; []
-      ++ lib.optionals ifTui [
-    ]
-    ++ lib.optionals ifGraphical [
+    home.packages = with pkgs; [
       # Debug / system info
       iotop
       inetutils
@@ -79,7 +73,6 @@ in {
       xdg-user-dirs # command to get the path to Downloads/Pictures/ect
       #nur.repos.ambroisie.comma # like nix-shell but more convinient
       nix-index
-      nmap
       nixos-shell
 
       ## spreadsheet stuffs
@@ -91,7 +84,8 @@ in {
       ## networking
       nethogs
       ngrep
-      fast-cli
+      fast-cli # bandwidth test through fast.com
+      nmap
 
       ## Audio
       playerctl # TUI
