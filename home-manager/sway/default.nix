@@ -15,7 +15,6 @@ let
       config.programs.foot.settings.main.term
     else "foot";
   termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
-  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
   mode_system = "System:  [r]eboot  [p]oweroff  [l]ock  [f]irmware [e]xit";
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
 
@@ -25,14 +24,15 @@ in
   imports = [
     ../waybar.nix
   ];
-  config = {
+
+  config = mkIf (builtins.elem "sway" nixosConfig.machine.windowManagers) {
     #swayEnabled = nixosConfig.programs.sway.enable;
 
-    programs.foot.enable = ifGraphical;
-    programs.foot.server.enable = ifGraphical;
-    services.dunst.enable = ifGraphical;
+    programs.foot.enable = true;
+    programs.foot.server.enable = true;
+    services.dunst.enable = true;
 
-    home.packages = with pkgs; mkIf ifGraphical [
+    home.packages = with pkgs; [
       #sway-contrib.grimshot
       wl-clipboard
       #mako
@@ -48,7 +48,7 @@ in
     # disabling for now due to i3. This could be started in commands but maybe systemd mod better?
     #services.flameshot.enable = true;
 
-    wayland.windowManager.sway = mkIf ifGraphical {
+    wayland.windowManager.sway = {
       enable = true;
       package = null; # don't override system-installed one
       wrapperFeatures.gtk = true;

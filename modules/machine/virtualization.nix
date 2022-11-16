@@ -2,6 +2,8 @@
 with lib;
 let
   cfg = config.machine;
+  ifTui = if (cfg.sizeTarget > 0) then true else false;
+  ifGraphical = if (cfg.sizeTarget > 1) then true else false;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
@@ -33,11 +35,12 @@ in {
     environment.systemPackages = with pkgs; [ # if system is minimal
       virt-top
       usbutils # for lsusb
-    ] ++ (if cfg.sizeTarget > 0 then [ # if system is full user
+    ] ++ optionals ifTui [
       qemu
+    ] ++ optionals ifGraphical [
       virt-manager # includes virt-install which maybe we want in cli?
       spice-gtk
-    ] else []);
+    ];
 
     users.users = addExtraGroups normalUsers [ "libvirtd" ];
   };

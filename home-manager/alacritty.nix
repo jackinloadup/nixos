@@ -12,7 +12,6 @@ in
 
   config = {
     programs.alacritty = {
-      enable = if (nixosConfig.machine.sizeTarget > 1 ) then true else false;
       settings = {
         "live_config_reload" = true; # should work in next release
 
