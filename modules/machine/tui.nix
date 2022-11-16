@@ -72,6 +72,7 @@ in {
       ## io
       iotop # simple top-like I/O monitor
       input-utils # lsinput
+      nmon # performance stats monitor
 
       ## files
       lsof # list open files
