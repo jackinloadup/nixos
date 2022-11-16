@@ -16,7 +16,7 @@ in {
   options.gumdrop.printerScanner = mkEnableOption "Setup using the printer and scanner";
 
   config = mkIf config.gumdrop.printerScanner {
-    environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
+    environment.systemPackages = with pkgs; [
       gnome.simple-scan
     ];
 
