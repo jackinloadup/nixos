@@ -11,9 +11,6 @@ in self: super: {
 
   exodus = self.unstable.exodus;
   blender = self.unstable.blender;
-  nmap-graphical = self.unstable.nmap-graphical;
-  neovimUtils = self.unstable.neovimUtils;
-  neovim-unwrapped = self.unstable.neovim-unwrapped; # used in home-manager programs.neovim
   home-assistant = self.unstable.home-assistant.override {
     extraPackages = py: with py; [ psycopg2 librouteros ];
   };
@@ -35,34 +32,11 @@ in self: super: {
   };
   taskwarrior = self.unstable.taskwarrior;
   zoom-us = self.unstable.zoom-us;
-  ## Example package, used only for tests
-  #hello-custom = super.callPackage ../packages/hello-custom { };
-  #darktile = super.callPackage ../packages/darktile { };
 
-  ## Custom packages. Will be made available on all machines and used where
-  ## needed.
-  #wezterm-bin = super.callPackage ../packages/wezterm-bin { };
-  #wezterm-nightly = super.callPackage ../packages/wezterm-nightly { };
-  #filebrowser = super.callPackage ../packages/filebrowser { };
-  #zk = super.callPackage ../packages/zk { };
-
+  neovimUtils = self.unstable.neovimUtils;
+  neovim-unwrapped = self.unstable.neovim-unwrapped; # used in home-manager programs.neovim
   # Vim plugins, added inside existing pkgs.vimPlugins
   vimPlugins = self.unstable.vimPlugins // {
     lsp_lines-nvim = super.callPackage ../packages/lsp_lines-nvim.nix { pkgs = super; };
-    #indent-blankline-nvim-lua =
-    #  super.callPackage ../packages/indent-blankline-nvim-lua {
-    #    inputs = inputs;
-    #  };
-    #zk-nvim = super.callPackage ../packages/zk-nvim { inputs = inputs; };
-    #nvim-fzf = super.callPackage ../packages/nvim-fzf { inputs = inputs; };
   };
-
-  ## ZSH plugins
-  #zsh-abbrev-alias =
-  #  super.callPackage ../packages/zsh-abbrev-alias { inputs = inputs; };
-  #zsh-colored-man-pages =
-  #  super.callPackage ../packages/zsh-colored-man-pages { inputs = inputs; };
-
-  #forgit =
-  #  super.callPackage ../packages/forgit { inputs = inputs; };
 }
