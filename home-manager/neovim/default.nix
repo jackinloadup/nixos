@@ -11,7 +11,6 @@ in {
   home.sessionVariables = {
     EDITOR = "nvim";
     NVIM_TUI_ENABLE_TRUE_COLOR = 1;
-    NVIM_TUI_ENABLE_CURSOR_SHAPE = 2; # blink cursor maybe? https://github.com/neovim/neovim/pull/5977
   };
 
   home.packages = with pkgs; [
