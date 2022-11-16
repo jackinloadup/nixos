@@ -2,6 +2,8 @@
 with lib;
 let
   cfg = config.machine;
+  normalUsers = attrNames config.home-manager.users;
+  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
   imports = [ ];
 
@@ -37,6 +39,6 @@ in {
       spice-gtk
     ] else []);
 
-    users.users.lriutzel.extraGroups = [ "libvirtd" ];
+    users.users = addExtraGroups normalUsers [ "libvirtd" ];
   };
 }

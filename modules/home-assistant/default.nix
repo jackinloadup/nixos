@@ -21,9 +21,7 @@ in {
     #  }];
     #};
 
-    # Needed for some integrations
-    # - Not sure which ones but used for chirp which does radio stuff
-    # - So maybe it's used for some radio devices
+    # Allow communication with zigbee
     users.users.lriutzel.extraGroups = [ "dialout" ];
 
     # Open port for mqtt
