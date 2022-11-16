@@ -2,7 +2,8 @@
 with lib;
 let
   cfg = config.machine;
-  settings = import ../../settings;
+  normalUsers = attrNames config.home-manager.users;
+  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
   printer = {
     make = "Brother";
     model = "MFC-9130CW"; 
@@ -48,10 +49,6 @@ in {
       };
     };
 
-    users.users = with settings.user; {
-      ${username} = {
-        extraGroups = [ "scanner" "lp" ];
-      };
-    };
+    users.users = addExtraGroups normalUsers [ "scanner" "lp" ];
   };
 }

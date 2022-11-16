@@ -4,6 +4,8 @@ let
   cfg = config.machine;
   ifTui = if (config.machine.sizeTarget > 0) then true else false;
   ifGraphical = if (config.machine.sizeTarget > 1) then true else false;
+  normalUsers = attrNames config.home-manager.users;
+  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
   imports = [ ];
 
@@ -23,7 +25,7 @@ in {
     ] // mkIf ifGraphical [ # if system is full user
     ];
 
-    users.users.lriutzel.extraGroups = [ "docker" ];
+    users.users = addExtraGroups normalUsers [ "docker" ];
 
     #systemd.services."docker-network-paperless" = {
     #  serviceConfig.Type = "oneshot";

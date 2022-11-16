@@ -2,7 +2,8 @@
 with lib;
 let
   cfg = config.machine;
-  settings = import ../../settings;
+  normalUsers = attrNames config.home-manager.users;
+  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
   imports = [];
 
@@ -12,7 +13,7 @@ in {
   config = mkIf cfg.sdr {
     hardware.rtl-sdr.enable = true;
 
-    users.users.lriutzel.extraGroups = [ "plugdev" ];
+    users.users = addExtraGroups normalUsers [ "plugdev" ];
 
     environment.systemPackages = with pkgs; [
       cubicsdr

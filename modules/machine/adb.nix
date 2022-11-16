@@ -1,6 +1,9 @@
 { lib, pkgs, config, ... }:
 with lib;
-{
+let
+  normalUsers = attrNames config.home-manager.users;
+  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
+in {
   imports = [ ];
 
   options.machine.adb = mkEnableOption "Enable ADB";
@@ -8,6 +11,6 @@ with lib;
   config = mkIf config.machine.adb {
     programs.adb.enable = true;
 
-    users.users.lriutzel.extraGroups = ["adbusers"];
+    users.users = addExtraGroups normalUsers ["adbusers"];
   };
 }
