@@ -25,11 +25,6 @@ in {
   gumdrop = {
     adguard = true;
   };
-
-  # Ensures that adguardhome doesn't stop until libvirtd has
-  # This is simply to keep DNS running as long as possible.
-  systemd.services.libvirtd.after = ["adguardhome.service"];
-
   virtualisation.libvirtd.onShutdown = "shutdown";
 
   machine.kernel = {
@@ -57,6 +52,7 @@ in {
   networking.interfaces.br0 = {
     useDHCP = true;
     ipv4.addresses = [
+      # Capture IP for Adguard
       { address = "10.16.1.2"; prefixLength = 8; }
     ];
   };
