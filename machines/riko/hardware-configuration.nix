@@ -1,11 +1,12 @@
 # to /etc/nixos/configuration.nix instead.
-{ self, nixos-hardware, ... }: {
+{ self, pkgs, nixos-hardware, ... }: {
   imports = [
     ../../profiles/intel.nix
   ];
 
   # Required for throttled when running on the 5.9 kernel.
   #boot.kernelParams = [ "msr.allow_writes=on" ];
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
