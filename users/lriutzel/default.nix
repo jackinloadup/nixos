@@ -65,6 +65,7 @@ in {
         ../../home-manager/music.nix
         ../../home-manager/zsh.nix
         ./mobomo.nix
+        inputs.secrets.homemanagerModules.lriutzel
       ]
       ++ optionals ifTui [
         ../../home-manager/tui.nix
@@ -78,6 +79,7 @@ in {
         ../../home-manager/impermanence.nix
         ../../home-manager/neovim/default.nix
         ../../home-manager/sway/default.nix
+        ../../home-manager/syncthing.nix
         ../../home-manager/xorg.nix
         #./task-warrior
       ]
@@ -97,6 +99,7 @@ in {
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
       services.gpg-agent.enable = ifGraphical;
+      services.syncthing.enable = ifGraphical;
 
       home.packages = with pkgs; []
       ++ optionals ifGraphical [ # TUI tools but loading if graphical

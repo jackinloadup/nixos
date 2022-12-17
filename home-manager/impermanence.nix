@@ -33,7 +33,6 @@ in {
         ".local/share/Mumble"
         ".local/share/nvim"
         ".local/share/Steam"
-        ".local/share/syncthing"
         ".local/share/wine-nix-profiles"
         ".local/state/pipewire"
         ".local/state/wireplumber"
@@ -66,6 +65,10 @@ in {
         #".cache/fontconfig"
         #".cache/vulnix"
         #".cache/vulnix"
+      ]
+      ++ optionals config.services.syncthing.enable [ 
+        ".local/share/syncthing"
+        ".config/syncthing"
       ]
       ++ optionals config.programs.gpg.enable [ ".gnupg" ]
       ++ optionals config.programs.firefox.enable [ ".mozilla" ]
