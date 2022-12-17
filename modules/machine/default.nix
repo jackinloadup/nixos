@@ -31,6 +31,7 @@ in {
     ./docker.nix
     ./sway.nix
     ./sound.nix
+    ./ssh.nix
     ./tui.nix
     ./minimal.nix
     ./nix.nix
@@ -193,18 +194,6 @@ in {
       SystemMaxUse=100M
       MaxFileSec=7day
     '';
-
-    # Enable the OpenSSH daemon.
-    services.openssh = {
-      enable = true; #TODO limit to authorized keys only
-      permitRootLogin = "yes";
-      startWhenNeeded = true;
-    };
-
-    services.sshguard = {
-      enable = true;
-      detection_time = 3600;
-    };
 
     # Enable network discovery
     #services.avahi.enable = true;
