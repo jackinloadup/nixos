@@ -3,6 +3,7 @@ with lib;
 let
   cfg = config.gumdrop.storageServer;
   settings = import ../../settings;
+  address = "truenas.home.lucasr.com";
 in {
   imports = [];
 
@@ -23,7 +24,7 @@ in {
     mount = { name, mount ? "gumdrop/${name}", remoteMount ? "storage/${name}" } : if cfg.${name}
       then {
         "/mnt/${mount}" = {
-          device = "freenas.home.lucasr.com:/mnt/${remoteMount}";
+          device = "${address}:/mnt/${remoteMount}";
           fsType = "nfs";
           options = [
             "noauto" # lazy mounting
