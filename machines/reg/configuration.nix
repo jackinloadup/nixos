@@ -57,7 +57,7 @@ in {
   };
 
   networking.hostName = "reg";
-  nix.maxJobs = lib.mkDefault 16;
+  nix.settings.max-jobs = lib.mkDefault 16;
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
   ];
@@ -74,7 +74,7 @@ in {
 
   #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
   #networking.firewall.allowedUDPPorts = [ 8000 ];
-
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
 

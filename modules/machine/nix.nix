@@ -5,8 +5,12 @@ let
   cfg = config.machine;
 in {
   config = {
-    nix.trustedUsers = [ "root" ];
-    nix.autoOptimiseStore = mkIf (cfg.sizeTarget > 0) true;
+    nix.settings = {
+      trusted-users = [ "root" ];
+      auto-optimise-store = mkIf (cfg.sizeTarget > 0) true;
+      substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
+    };
+
     # Enable extra-builtins-file option for nix
     #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
     nix.gc = {
@@ -17,7 +21,6 @@ in {
     nix.nixPath = let path = toString ../../.; in [
       "repl=${path}/repl.nix"
     ];
-    nix.binaryCaches = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
 
     # enable flakes
     # set the min free disk space. 

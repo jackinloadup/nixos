@@ -2,7 +2,7 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-22.05;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
     flake-utils.url = github:numtide/flake-utils;
@@ -15,7 +15,7 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      url = github:nix-community/home-manager/release-22.05;
+      url = github:nix-community/home-manager/release-22.11;
       #url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
@@ -35,10 +35,8 @@
     };
 
     # Modules to help you handle persistent state on systems with ephemeral root storage.
-    impermanence = {
-      url = github:nix-community/impermanence;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    impermanence.url = github:nix-community/impermanence;
+
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 

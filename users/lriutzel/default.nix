@@ -19,7 +19,7 @@ in {
 
   # If user is enabled
   config = mkIf (builtins.elem username config.machine.users) {
-    nix.trustedUsers = [ username ];
+    nix.settings.trusted-users = [ username ];
 
     users.users."${username}" = with settings; {
       shell = pkgs.zsh;
