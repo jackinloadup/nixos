@@ -62,6 +62,7 @@ in {
         ../../home-manager/firefox.nix
         ../../home-manager/foot.nix
         ../../home-manager/mpv.nix
+        ../../home-manager/music.nix
         ../../home-manager/zsh.nix
         ./mobomo.nix
       ]
