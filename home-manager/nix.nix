@@ -8,7 +8,7 @@
       inputs.nur.overlay
     ];
 
-    nix.package = pkgs.nix;
+    #nix.package = pkgs.nix;
     nix.extraOptions = ''
       experimental-features = nix-command flakes
       auto-optimise-store = true

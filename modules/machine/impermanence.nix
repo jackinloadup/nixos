@@ -37,7 +37,7 @@ with lib;
           "/var/lib/blueman"
         ] ++ optionals config.services.colord.enable [
           { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
-        ] ++ optionals config.services.ipfs.enable [
+        ] ++ optionals config.services.kubo.enable [ # ipfs
           "/var/lib/ipfs"
         ] ++ optionals config.services.fwupd.enable [
           "/var/lib/fwup"
