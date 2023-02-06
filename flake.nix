@@ -37,6 +37,13 @@
     # Modules to help you handle persistent state on systems with ephemeral root storage.
     impermanence.url = github:nix-community/impermanence;
 
+    # Takes the NixOS module system and makes it work for disk partitioning as well
+    disko = {
+      #url = github:nix-community/disko;
+      url = "/home/lriutzel/Projects/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 
