@@ -41,13 +41,14 @@ with lib;
         export XDG_SESSION_DESKTOP=sway
         export XDG_SESSION_TYPE=wayland
         export WLR_DRM_DEVICES=/dev/dri/card0
+
+        export GTK_USE_PORTAL=1
       '';
     };
 
     xdg = {
       portal = {
         enable = true;
-        gtkUsePortal = true;
         extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
         wlr = {
           enable = true;
