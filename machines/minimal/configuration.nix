@@ -28,7 +28,7 @@ in {
   };
 
   networking.hostName = "minimal";
-  nix.maxJobs = lib.mkDefault 2;
+  nix.settings.max-jobs = lib.mkDefault 2;
 
   networking.networkmanager.enable = mkForce false;
   #security.wrappers.fusermount = mkForce null;

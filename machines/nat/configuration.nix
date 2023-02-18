@@ -3,6 +3,7 @@
 with lib;
 with inputs;
 let
+  inherit (lib) mkDefault;
   settings = import ../../settings;
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {
@@ -54,10 +55,10 @@ in {
     storageServer.roms = true;
   };
 
-  nix.maxJobs = lib.mkDefault 2;
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
   ];
+  nix.settings.max-jobs = mkDefault 2;
 
   nixpkgs = {
     overlays = [
