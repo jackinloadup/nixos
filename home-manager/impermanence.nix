@@ -37,6 +37,7 @@ in {
         ".local/state/pipewire"
         ".local/state/wireplumber"
         ".local/state/zsh"
+        ".local/state/bash"
         ".config/libreoffice"
         ".config/Signal"
         #".config/@trezor"
