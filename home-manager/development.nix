@@ -7,7 +7,6 @@ in {
     gdb # debugger
     hyperfine
     valgrind
-    gitui # git tui
     #rr # time traveling debugger # failed on unstable
   ];
 
@@ -16,6 +15,9 @@ in {
     set history save on
     set print pretty on
   '';
+
+  # git tui
+  programs.gitui.enable = true;
 
   programs.git = {
     enable = true;
