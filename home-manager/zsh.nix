@@ -105,6 +105,18 @@ in {
           username = {
             disabled = false;
           };
+          aws = { 
+            format = "on [$symbol($profile )(\($region\) )]($style)";
+            style = "bold blue";
+            symbol = "🅰 ";
+            region_aliases = {
+              us-east-1 = "va";
+              us-west-1 = "utah";
+            };
+            profile_aliases = {
+              CompanyGroupFrobozzOnCallAccess = "Frobozz";
+            };
+          };
         };
       };
     };
