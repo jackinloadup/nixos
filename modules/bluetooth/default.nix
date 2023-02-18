@@ -28,7 +28,7 @@ in {
 IdleTimeout=1
 '';
 
-    hardware.bluetooth.hsphfpd.enable = ifGraphical; # High quality BT calls
+    hardware.bluetooth.hsphfpd.enable = false; # Handled in Wireplumer
     # hsphfpd fails if this is enabled https://github.com/NixOS/nixpkgs/issues/114222
     systemd.user.services.telephony_client.enable = false; # work around for above
 
