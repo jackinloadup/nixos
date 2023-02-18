@@ -8,7 +8,6 @@
   boot.extraModulePackages = [ ];
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.supportedFilesystems = [ "btrfs" ];
