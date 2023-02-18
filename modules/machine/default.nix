@@ -68,7 +68,6 @@ in {
       example = "whodis"; # ?
       description = "Declare if there is a user who should be considered the default user. Enables things like autologin";
     };
-    mutableUsers = mkEnableOption "Should kernel panic when the out-of-memory daemon is triggerd";
     displayManager = mkOption {
       type = with types; nullOr (enum [ ]);
       default = null;
@@ -90,7 +89,7 @@ in {
     # Let 'nixos-version --json' know the Git revision of this flake.
     system.configurationRevision = mkIf (inputs.self ? rev) inputs.self.rev;
 
-    users.mutableUsers = mkDefault cfg.mutableUsers; # Users may only be added via nix config
+    users.mutableUsers = mkDefault false; # Users may only be added via nix config
 
     time.timeZone = mkDefault settings.home.timezone;
 
@@ -204,6 +203,7 @@ in {
     environment.etc."issue.d/ip.issue".text = "\\4\n";
     networking.dhcpcd.runHook = "${pkgs.utillinux}/bin/agetty --reload";
 
+    # explore multi level compression
     zramSwap = {
       enable = true;
       algorithm = "zstd";
