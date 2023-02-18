@@ -1,20 +1,24 @@
 { lib, pkgs, config, ... }:
 
-with lib;
 let
-  cfg = config.machine;
+  inherit (lib) mkIf;
+  inherit (builtins) hasAttr;
+
+  sizeTarget = if (hasAttr "machine" config)
+    then config.machine.sizeTarget
+    else 0;
 in {
   config = {
     nix.settings = {
       trusted-users = [ "root" ];
-      auto-optimise-store = mkIf (cfg.sizeTarget > 0) true;
+      auto-optimise-store = mkIf (sizeTarget > 0) true;
       substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
     };
 
     # Enable extra-builtins-file option for nix
     #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
     nix.gc = {
-      automatic = mkIf (cfg.sizeTarget > 0) true;
+      automatic = mkIf (sizeTarget > 0) true;
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
