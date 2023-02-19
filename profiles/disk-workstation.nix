@@ -1,4 +1,22 @@
-{inputs, ...}: {
+{ lib, inputs, pkgs, config, ...}: 
+
+let
+  inherit (lib) mkIf;
+  inherit (builtins) hasAttr;
+  ## TODOS
+  ## figure out how to make this by name/label it's an issue of pre/post disk
+  ## formatting nixos does't really care about disk
+  ##
+  ## disko-create should have an ability to override disks by name:
+  ##   $ disko-create --disk=sd=/dev/sdb
+  ##
+  hostname = config.networking.hostName;
+  device = "/dev/sda"; # TODO change per host
+  zfsPoolName = "zroot_${ hostname }";
+  rootPartionName = "nixos_${ hostname }";
+  impermanence = ((hasAttr "machine" config) && config.machine.impermanence);
+  tmpfsRoot = false;
+in {
 
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
@@ -6,93 +24,123 @@
   ];
 
   config = {
-    disko.devices.nodev = {
-      "/" = {
-        fsType = "tmpfs";
-        mountOptions = [
-          "defaults"
-          "size=2G"
-          "mode=755"
-          "noatime"
-        ];
-      };
-    };
-    disko.devices.disk = {
-      nvme = {
-        type = "disk";
-        device = "/dev/nvme0n1";
-        content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              type = "partition";
-              name = "ESP";
-              start = "1MiB";
-              end = "512MiB";
-              bootable = true;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                options = [
-                  "defaults"
-                ];
-              };
-            }
-            {
-              type = "partition";
-              name = "zfs";
-              start = "512MiB";
-              end = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
-              };
-            }
+    environment.systemPackages = [
+      (pkgs.writeScriptBin "disko-create" (config.system.build.formatScript))
+      (pkgs.writeScriptBin "disko-mount" (config.system.build.mountScript))
+      (pkgs.writeScriptBin "disko" (config.system.build.mountScript))
+    ];
+
+    boot.initrd.supportedFilesystems = [ "zfs" ];
+    boot.supportedFilesystems = [ "zfs" ];
+
+    services.zfs.autoScrub.enable = true;
+    boot.zfs.forceImportRoot = true;
+
+    disko.devices = {
+      nodev = {
+        "/" = mkIf tmpfsRoot {
+          fsType = "tmpfs";
+          mountOptions = [
+            "defaults"
+            "size=2G"
+            "mode=755"
+            "noatime"
           ];
         };
       };
-      zpool = {
-        zroot = {
-          type = "zpool";
-          mode = "mirror";
-          rootFsOptions = {
-            compression = "lz4";
-            "com.sun:auto-snapshot" = "false";
+      disk = {
+        boot = { # The device we are planning to boot from
+          inherit device;
+          type = "disk";
+          content = {
+            type = "table";
+            format = "gpt";
+            partitions = [
+              {
+                type = "partition";
+                name = "ESP";
+                start = "1MiB";
+                end = "512MiB";
+                bootable = true;
+                content = {
+                  type = "filesystem";
+                  format = "vfat";
+                  mountpoint = "/boot";
+                  mountOptions = [
+                    "defaults"
+                  ];
+                };
+              }
+              {
+                type = "partition";
+                name = rootPartionName;
+                start = "512MiB";
+                end = "100%";
+                content = {
+                  type = "zfs";
+                  pool = "${zfsPoolName}";
+                };
+              }
+            ];
           };
-          mountpoint = "/persist";
+        };
+      };
+      zpool = {
+        "${zfsPoolName}" = {
+          type = "zpool";
+          mode = "";
+          options = {
+            ashift = "12";
+            autotrim = "on";
+          };
+          postCreateHook = ''
+            zfs set keylocation="prompt" $name;
+          '';
+          rootFsOptions = {
+            #compression = "lz4";
+            compression = "zstd";
+            #"com.sun:auto-snapshot" = "false";
 
-          datasets = {
-            nix = {
+            encryption = "on";
+            acltype = "posixacl";
+            # insert via secrets
+            keylocation = "file:///tmp/disk.key";
+            keyformat = "passphrase";
+
+            mountpoint = "none";
+            canmount = "off";
+            xattr = "sa";
+            dnodesize = "auto";
+            normalization = "formD";
+            relatime = "on";
+          };
+          #mountpoint = "/persist";
+
+          datasets = let
+            unmountable = {
               zfs_type = "filesystem";
-              mountpoint = "/nix";
+              mountpoint = null;
+              options.canmount = "off";
             };
-            persist-etc = {
+            filesystem = mountpoint: {
               zfs_type = "filesystem";
-              mountpoint = "/persist/etc";
+              inherit mountpoint;
+            #  options."com.sun:auto-snapshot" = "true";
             };
-            persist-lib = {
-              zfs_type = "filesystem";
-              mountpoint = "/persist/lib";
+          in {
+            "local" = unmountable;
+            "safe" = unmountable;
+            "local/nix" = filesystem "/nix" // {options.mountpoint = "legacy";};
+          #} // mkIf impermanence {
+            "local/etc" = filesystem "/persist/etc";
+            "local/lib" = filesystem "/persist/lib";
+            "local/log" = filesystem "/persist/log";
+            "safe/home" = filesystem "/persist/home";
+          #} // mkIf (!tmpfsRoot) {
+            "local/root" = filesystem "/" // {
+              postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
+              options.mountpoint = "legacy";
             };
-            persist-home = {
-              zfs_type = "filesystem";
-              mountpoint = "/persist/home";
-            };
-            persist-root = {
-              zfs_type = "filesystem";
-              mountpoint = "/persist/root";
-            };
-            persist-log = {
-              zfs_type = "filesystem";
-              mountpoint = "/var/log";
-            };
-            # home
-            # etc
-            # root
-            # persist
-            # log
 
             #zfs_fs = {
             #  zfs_type = "filesystem";
