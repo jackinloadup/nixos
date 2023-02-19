@@ -55,9 +55,8 @@
   };
 
   outputs = { self, ... }@inputs:
-    with inputs;
     let
-      inherit (flake-utils.lib) eachSystem flattenTree mkApp;
+      inherit (inputs.flake-utils.lib) eachSystem flattenTree mkApp;
 
       supportedX86Systems = [
         "i686-linux"
@@ -70,8 +69,8 @@
 
       #forAllSystems = nixlib.genAttrs supportedSystems;
 
-      defaultPkgs = nixpkgs;
       inherit ( import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; }) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
+      defaultPkgs = inputs.nixpkgs;
     in {
       # Expose overlay to flake outputs, to allow using it from other flakes.
       overlays = importDirOfOverlays "overlays";
@@ -80,21 +79,21 @@
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
       nixosConfigurations = {
-        reg = mkNixosSystem inputs.nixpkgs "x86_64-linux" "reg";
-        riko = mkNixosSystem inputs.nixpkgs "x86_64-linux" "riko";
+        reg = mkNixosSystem defaultPkgs "x86_64-linux" "reg";
+        riko = mkNixosSystem defaultPkgs "x86_64-linux" "riko";
 
-        marulk = mkNixosSystem inputs.nixpkgs "x86_64-linux" "marulk";
-        lyza = mkNixosSystem inputs.nixpkgs "x86_64-linux" "lyza";
-        nat = mkNixosSystem inputs.nixpkgs "x86_64-linux" "nat";
+        marulk = mkNixosSystem defaultPkgs "x86_64-linux" "marulk";
+        lyza = mkNixosSystem defaultPkgs "x86_64-linux" "lyza";
+        nat = mkNixosSystem defaultPkgs "x86_64-linux" "nat";
 
-        minimal = mkNixosSystem inputs.nixpkgs "x86_64-linux" "minimal";
+        minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
       };
 
     } //
 
     (eachSystem supportedSystems)
     (system:
-      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+    let pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         devShells = flattenTree {
           rust = import ./shells/rust.nix { pkgs = pkgs; };
@@ -103,8 +102,7 @@
 
     (eachSystem supportedX86Systems)
     (system:
-    let 
-      pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+    let pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         # Custom packages added via the overlay are selectively added here, to
         # allow using them from other flakes that import this one.
@@ -115,9 +113,12 @@
         apps = {
           winbox = mkApp { drv = packages.winbox; };
         };
-      }) // ({
-        packages.x86_64-linux.sd-image = mkNixosSystemGenerator inputs.nixpkgs "x86_64-linux" "lyza";
+      }) //
+
+    ({
+        packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
       });
+
   nixConfig = {
     substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
   };
