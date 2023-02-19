@@ -28,19 +28,32 @@ in {
 
     extraConfig = {
       init.defaultBranch = "master";
+      color.ui = true;
       core.editor = "nvim";
       merge.conflictStyle = "diff3";
-      pull.rebase = "false";
+      merge.guitool = "nvimdiff";
+      merge.tool = "vimdiff";
+      mergetool.prompt = true;
+      mergetool.vimdiff.cmd = "nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
+
+      pull.ff = "only";
+      pull.rebase = "true";
+      push.default = "current";
+      #push.autoSetupRemote = "current"; #broke `git push origin HEAD`
+      branch.autoSetupRebase = "remote";
       #protocol.keybase.allow = "always";
       #credential.helper = "store --file ~/.git-credentials";
     };
 
     aliases = {
+      # list commits in a tree
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+      # list branches and their last commit time
       lb = "!git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'";
+      # list all branches and their tracked remote
       tracked = "for-each-ref --format='%(refname:short) <- %(upstream:short)' refs/heads";
+      # poke was used with gitea. Unsure what other uses this has
       poke = "!git ls-remote origin | grep -w refs/heads/poke && git push origin :poke || git push origin master:poke";
-      board = "!f() { php $HOME/bin/gitboard $@; }; f";
       co = "checkout";
       ci = "commit";
       cia = "commit --amend";
@@ -52,10 +65,12 @@ in {
       br = "branch";
       p = "pull --rebase";
       pu = "push";
-      git = "!exec git";
+      git = "!exec git"; # accidentally run `git git ...`? This has your back
+      root = "rev-parse --show-toplevel"; # show path of the root of repo
     };
 
     ignores = [
+      # OS Specific
       "*~"
       ".#*"
       "*.pyc"
@@ -64,7 +79,13 @@ in {
       ".DS_Store"
       ".settings.xml"
       ".gdb_history"
-      ".direnv/"
+      ".direnv"
+
+      # Archives
+      "*.tar"
+      "*.tar.gz"
+      "*.7z"
+      "*.zip"
     ];
   };
 
