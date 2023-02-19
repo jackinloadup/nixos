@@ -1,6 +1,7 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf mkDefault mkEnableOption;
   cfg = config.machine;
 in {
   options.machine.minimal = mkEnableOption "Disable stuff not needed on minimal systems";

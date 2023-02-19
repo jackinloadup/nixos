@@ -1,9 +1,10 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf mkEnableOption genAttrs optionals attrNames;
   cfg = config.machine;
-  ifTui = if (cfg.sizeTarget > 0) then true else false;
-  ifGraphical = if (cfg.sizeTarget > 1) then true else false;
+  ifTui = cfg.sizeTarget > 0;
+  ifGraphical = cfg.sizeTarget > 1;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {

@@ -1,8 +1,7 @@
 { self, inputs, pkgs, lib, ... }:
 # Machine runs DNS and home-assistant vm
-with lib;
-with inputs;
 let
+  inherit (lib) mkForce mkDefault;
   settings = import ../../settings;
 in {
 
@@ -33,7 +32,7 @@ in {
     panicOnHungTaskTimeout = mkForce 1;
   };
 
-  nix.settings.max-jobs = lib.mkDefault 2;
+  nix.settings.max-jobs = mkDefault 2;
   nix.nixPath = [
     "nixpkgs=${nixpkgs}"
   ];

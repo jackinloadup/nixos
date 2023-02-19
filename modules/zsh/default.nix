@@ -1,8 +1,8 @@
 { lib, pkgs, config, ... }:
 
-with lib;
 let
-  ifTui = if (config.machine.sizeTarget > 0) then true else false;
+  inherit (lib) mkIf;
+  ifTui = config.machine.sizeTarget > 0;
   users = config.machine.users;
   interactive = ''
     source ${config.lib.base16.templateFile { name = "shell"; }}

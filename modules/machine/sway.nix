@@ -1,13 +1,16 @@
 { lib, pkgs, config, ... }:
-with lib;
-{
+
+let
+  inherit (lib) mkIf mkOption types;
+  inherit (builtins) elem;
+in {
   imports = [ ];
 
   options.machine.windowManagers = mkOption {
     type = with types; nullOr (listOf (enum [ "sway" ]));
   };
 
-  config = mkIf (builtins.elem "sway" config.machine.windowManagers) {
+  config = mkIf (elem "sway" config.machine.windowManagers) {
     programs.xwayland.enable = true;
 
     programs.sway = {

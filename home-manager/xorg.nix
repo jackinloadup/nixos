@@ -1,8 +1,8 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 
-with lib;
 let
-  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
+  inherit (lib) mkIf mkDefault;
+  ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
   config = mkIf ifGraphical {
     home.keyboard = null; # only works with x11 i believe

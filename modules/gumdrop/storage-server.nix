@@ -1,6 +1,7 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf mkEnableOption mkOption mkMerge mkForce types;
   cfg = config.gumdrop.storageServer;
   settings = import ../../settings;
   address = "truenas.home.lucasr.com";

@@ -1,7 +1,8 @@
 { nixosConfig, config, pkgs, lib, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf;
+  inherit (builtins) readFile;
   settings = import ../settings;
   host = nixosConfig.networking.hostName;
   hasBattery = (if host == "riko" then true else false);
@@ -95,7 +96,7 @@ in {
      ];
 
       style = ''
-        ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
+        ${readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
 
         window#waybar {
           background: #${config.lib.base16.theme.base00-hex};

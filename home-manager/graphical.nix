@@ -1,9 +1,9 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 
-with lib;
 let
+  inherit (lib) mkDefault;
   settings = import ../settings;
-  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
+  ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
   xdg = {
     userDirs.enable = mkDefault ifGraphical;

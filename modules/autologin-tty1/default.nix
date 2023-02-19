@@ -1,8 +1,10 @@
 { lib, pkgs, config, ... }:
 
 # @TODO start something like agetty@tty1.service after autovt@tty1 stops
-with lib;
 let
+  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (builtins) concatStringsSep;
+
   cfg = config.machine.autologin-tty1;
   settings = import ../../settings;
 in {
@@ -34,7 +36,7 @@ in {
         after = [ "suppress-kernel-logging.service" ];
         wantedBy = [ "autologin-tty1.target" ];
         serviceConfig = {
-          ExecStart =  builtins.concatStringsSep " " ([
+          ExecStart =  concatStringsSep " " ([
             "@${pkgs.utillinux}/sbin/agetty"
             "agetty --login-program ${pkgs.shadow}/bin/login"
             "--autologin ${cfg.user} --noclear %I $TERM"

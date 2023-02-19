@@ -1,6 +1,7 @@
 { lib, pkgs, config, ...}: 
-with lib;
+
 let
+  inherit (lib) mkIf mkOption mkEnableOption types optional;
   cfg = config.machine.kernel;
 in {
   imports = [];

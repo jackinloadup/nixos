@@ -1,6 +1,5 @@
 { self, inputs, pkgs, lib, config, ... }:
 
-with lib;
 let
   swayConfig = config.wayland.windowManager.sway.config;
   kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";

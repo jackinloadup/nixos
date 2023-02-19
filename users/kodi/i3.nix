@@ -1,6 +1,5 @@
 { self, inputs, pkgs, lib, ... }:
 
-with lib;
 let
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {

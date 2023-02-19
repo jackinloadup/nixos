@@ -1,14 +1,16 @@
 { lib, pkgs, config, ... }:
 
-with lib;
-{
+let
+  inherit (lib) mkIf mkOption mkDefault mkForce types;
+  inherit (builtins) elem;
+in {
   imports = [ ];
 
   options.machine.windowManagers = mkOption {
     type = with types; nullOr (listOf (enum [ "gnome" ]));
   };
 
-  config = mkIf (builtins.elem "gnome" config.machine.windowManagers) {
+  config = mkIf (elem "gnome" config.machine.windowManagers) {
     programs.dconf.enable = true;
 
     # gnome has its own power management tool

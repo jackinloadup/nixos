@@ -1,9 +1,12 @@
 { pkgs, lib, nixosConfig, ... }:
 
 let
+  inherit (lib) mkIf;
   settings = import ../settings;
+  sizeTarget = nixosConfig.machine.sizeTarget;
+  ifGraphical = sizeTarget > 1;
 in {
-  home.packages = with pkgs; lib.mkIf (nixosConfig.machine.sizeTarget > 1 ) [
+  home.packages = with pkgs; mkIf ifGraphical [
     gdb # debugger
     hyperfine
     valgrind

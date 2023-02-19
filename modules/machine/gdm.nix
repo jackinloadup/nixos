@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 
-with lib;
-{
+let
+  inherit (lib) mkIf mkOption mkForce types;
+in {
   imports = [ ];
 
   options.machine.displayManager = mkOption {

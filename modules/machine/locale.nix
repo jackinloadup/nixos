@@ -1,6 +1,7 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
+  inherit (lib) mkOption types;
   cfg = config.machine;
   settings = import ../../settings;
 in {

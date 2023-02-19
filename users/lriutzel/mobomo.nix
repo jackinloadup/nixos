@@ -2,8 +2,8 @@
 
 let
   cfg = nixosConfig.machine;
-  ifTui = if (cfg.sizeTarget > 0) then true else false;
-  ifGraphical = if (cfg.sizeTarget > 1) then true else false;
+  ifTui = cfg.sizeTarget > 0;
+  ifGraphical = cfg.sizeTarget > 1;
 in {
   imports = [
     ../../home-manager/zoom.nix

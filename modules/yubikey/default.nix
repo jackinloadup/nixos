@@ -1,6 +1,8 @@
 { lib, pkgs, config, ... }:
-with lib;
-{
+
+let
+  inherit (lib) mkIf mkEnableOption types;
+in {
   options.hardware.yubikey.enable = mkEnableOption "Add resources to support using a Yubico Yubikey";
 
   config = mkIf config.hardware.yubikey.enable {

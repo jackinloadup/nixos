@@ -1,12 +1,12 @@
 { lib, pkgs, config, inputs, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf mkEnableOption types fetchFromGitHub;
   settings = import ../../settings;
 in {
   options.machine.starlight = mkEnableOption "Enable startlight base16 theme";
 
-  config = lib.mkIf config.machine.starlight {
+  config = mkIf config.machine.starlight {
     themes.base16 = {
       enable = true;
       scheme = settings.theme.base16.scheme;

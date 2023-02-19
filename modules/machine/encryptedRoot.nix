@@ -1,6 +1,7 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.machine;
 in {
   options.machine.encryptedRoot = mkEnableOption "Enable luks handling for /root is encyption";

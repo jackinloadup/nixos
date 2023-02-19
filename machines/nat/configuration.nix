@@ -1,9 +1,7 @@
 { self, inputs, pkgs, lib, ... }:
 # machine runs kodi
-with lib;
-with inputs;
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {
