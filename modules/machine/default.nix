@@ -1,10 +1,11 @@
 { lib, pkgs, config, inputs, ... }:
-with lib;
 let
+  inherit (lib) mkOption mkEnableOption mkDefault mkIf;
+  inherit (lib.types) listOf enum nullOr str ints;
   cfg = config.machine;
   settings = import ../../settings;
-  ifTui = if (config.machine.sizeTarget > 0) then true else false;
-  ifGraphical = if (config.machine.sizeTarget > 1) then true else false;
+  ifTui = config.machine.sizeTarget > 0;
+  ifGraphical = config.machine.sizeTarget > 1;
 in {
   imports = [
     "${inputs.impermanence}/nixos.nix"
@@ -39,43 +40,44 @@ in {
     ./magic-key.nix
   ];
 
+  ## TODO disable user mutab
 
   options.machine = {
     #useSystemdBoot = mkEnableOption "Use systemd-boot instead of grub";
     #hasBattery = mkEnableOption "Does this machines have a battery?";
     sizeTarget = mkOption {
-      type = types.ints.between 0 3;
+      type = ints.between 0 3;
       default = 2;
       example = 0;
       description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Tui 2=Graphical 3=Full";
     };
     debugTools = mkOption {
-      type = with types; listOf enum [ "hardware" "network" "os" "fs" "tui" "gui" ];
+      type = listOf enum [ "hardware" "network" "os" "fs" "tui" "gui" ];
       default = [];
       example = [ "hardware" "network" "os" "fs" "tui" "gui"];
       description = "The category of debug tools to be install";
     };
     includeDocs = mkEnableOption "Should documentation be installed?";
     users = mkOption {
-      type = with types; listOf (enum [ ]);
+      type =  listOf (enum [ ]);
       default = [ ];
       example = [ "john" "jane" "liljohn" ];
       description = "What users will be loaded onto the machine";
     };
     defaultUser = mkOption {
-      type = types.nullOr types.str;
+      type = nullOr str;
       default = null;
       example = "whodis"; # ?
       description = "Declare if there is a user who should be considered the default user. Enables things like autologin";
     };
     displayManager = mkOption {
-      type = with types; nullOr (enum [ ]);
+      type = nullOr (enum [ ]);
       default = null;
       example = [ "gdm" "lightdm" "ly" ];
       description = "Application which manages the physical user seat";
     };
     windowManagers = mkOption {
-      type = with types; nullOr (listOf (enum [ ]));
+      type = nullOr (listOf (enum [ ]));
       default = null;
       example = "gnome";
       description = "Available window manager environments. ex: Gnome KDE XFCE";
@@ -185,7 +187,7 @@ in {
     # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
     # is required.
     #services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
-    services.gvfs.package = lib.mkDefault pkgs.gvfs;
+    services.gvfs.package = mkDefault pkgs.gvfs;
 
     services.xserver.desktopManager.xterm.enable = false;
 

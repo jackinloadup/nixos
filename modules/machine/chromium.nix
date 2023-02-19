@@ -3,9 +3,9 @@
 # If extraOpts can be expressed in home-manager that
 # would be more ideal or at least an alterate if using
 # nix seporate from nixos
-
-with lib;
-{
+let
+  inherit (lib) mkIf mkEnableOption;
+in {
   imports = [ ];
 
   options.machine.chromium = mkEnableOption "Enable extra options only needed for gaming";

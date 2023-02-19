@@ -1,8 +1,8 @@
 { self, inputs, pkgs, lib, ... }:
 
-with lib;
 with inputs;
 let
+  inherit (lib) mkIf mkDefault mkForce mkSetuidRoot;
   settings = import ../../settings;
 in {
 

@@ -1,8 +1,8 @@
 { lib, pkgs, config, ... }:
 
 # @TODO start something like agetty@tty1.service after autovt@tty1 stops
-with lib;
 let
+  inherit (lib) mkIf mkEnableOption;
   settings = import ../../settings;
 in {
   imports = [];

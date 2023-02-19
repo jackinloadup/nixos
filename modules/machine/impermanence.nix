@@ -4,8 +4,9 @@
 # would be more ideal or at least an alterate if using
 # nix seporate from nixos
 
-with lib;
-{
+let
+  inherit (lib) mkIf mkEnableOption optionals;
+in {
   imports = [ ];
 
   options.machine.impermanence = mkEnableOption "Enable impermanence";
@@ -55,4 +56,3 @@ with lib;
   };
 
 }
-

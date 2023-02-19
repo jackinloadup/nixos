@@ -5,9 +5,10 @@ let
     toPath listToAttrs
     ;
   inherit (lib) filterAttrs mapAttrs' nameValuePair mapAttrs mapAttrsToList
-    forEach
+    forEach mkForce
     ;
   inherit (lib.strings) removeSuffix;
+  inherit (inputs) nixos-generators;
 
   rootPath = ../.;
   buildPath = dir: name: (rootPath + "/${dir}/${name}");
@@ -21,6 +22,8 @@ let
   };
   importOverlay = path: args: (final: prev: (import path args) final prev);
   filesInDir = dir: attrNames (readDir  (toPath  rootPath + "/${dir}"));
+
+  specialArgs = { inherit inputs; };
 in
 
 rec {
@@ -35,15 +38,14 @@ rec {
   nixosUsers = importDirOfModules "users";
   mkNixosSystem = pkgs: system: hostname:
     pkgs.lib.nixosSystem {
-      system = system;
+      inherit system specialArgs;
       modules = 
-        ( import (rootPath + "/machines/${hostname}/modules.nix") { nixos-hardware = inputs.nixos-hardware; })
+        ( import (rootPath + "/machines/${hostname}/modules.nix") { inherit inputs; })
         ++ attrValues nixosModules
         ++ attrValues nixosUsers
         ++ [
           inputs.secrets.nixosModules.default
           ( rootPath + "/machines/${hostname}/configuration.nix")
         ];
-      specialArgs = { inherit inputs; };
     };
 }

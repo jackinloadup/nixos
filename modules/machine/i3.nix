@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 
-with lib;
-{
+let
+  inherit (lib) mkIf mkOption types;
+in {
   imports = [ ];
 
   options.machine.windowManagers = mkOption {

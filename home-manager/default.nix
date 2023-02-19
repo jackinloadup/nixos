@@ -1,9 +1,9 @@
 { inputs, pkgs, config, lib, nixosConfig, ... }:
 
-with lib;
 let
+  inherit (lib) mkDefault;
   settings = import ../settings;
-  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
+  ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
   imports = [ ];
 

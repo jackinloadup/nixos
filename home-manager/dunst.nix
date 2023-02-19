@@ -2,7 +2,7 @@
 
 let
   settings = import ../settings;
-  isGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
+  isGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
   imports = [
     ./base16.nix

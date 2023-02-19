@@ -1,10 +1,11 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 
-with lib;
 let
+  inherit (lib) concatStrings mkDefault optionals;
   settings = import ../settings;
-  ifTui = if (nixosConfig.machine.sizeTarget > 0) then true else false;
-  ifGraphical = if (nixosConfig.machine.sizeTarget > 1) then true else false;
+  sizeTarget = nixosConfig.machine.sizeTarget;
+  ifTui = sizeTarget > 0;
+  ifGraphical = sizeTarget > 1;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
 in {
   imports = [];

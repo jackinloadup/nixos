@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf mkOption types getBin getExe;
   desktops = config.services.xserver.displayManager.sessionData.desktops;
   sessions = "${desktops}/share/wayland-sessions:${desktops}/share/xsessions";
 in {

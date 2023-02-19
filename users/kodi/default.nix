@@ -1,7 +1,8 @@
 { inputs, lib, pkgs, config, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf mkOption types;
+  inherit (builtins) elem;
   cfg = config.machine;
   home-manager = inputs.home-manager;
 in {
@@ -14,8 +15,8 @@ in {
   };
 
   # If user is enabled
-  config = mkIf (builtins.elem "kodi" config.machine.users) {
-    users.users.kodi = with settings; {
+  config = mkIf (elem "kodi" config.machine.users) {
+    users.users.kodi = {
       isNormalUser = true;
       password = "kodi";
       extraGroups = [

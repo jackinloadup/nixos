@@ -1,6 +1,7 @@
 { options, res, config, lib, pkgs, inputs, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf mkOption mkEnableOption mkMerge types readFile configDir dotFilesDir;
   cfg = config.modules.browsers.firefox;
   # use a custom build of firefox
   # TODO: add anti tracking policies at build time

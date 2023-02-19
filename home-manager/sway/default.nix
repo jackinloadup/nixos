@@ -1,13 +1,15 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf getBin getExe;
+  inherit (builtins) elem mul;
+
   settings = import ../../settings;
   hostName = nixosConfig.networking.hostName;
   theme = settings.theme;
   fontConf = {
     names = [ theme.font.mono.family ];
-    size = builtins.mul theme.font.size 1.0; # typecast to float
+    size = mul theme.font.size 1.0; # typecast to float
   };
   swayConfig = config.wayland.windowManager.sway.config;
   footTERM = if config.programs.foot.settings ? main.term
@@ -25,7 +27,7 @@ in
     ../waybar.nix
   ];
 
-  config = mkIf (builtins.elem "sway" nixosConfig.machine.windowManagers) {
+  config = mkIf (elem "sway" nixosConfig.machine.windowManagers) {
     #swayEnabled = nixosConfig.programs.sway.enable;
 
     programs.foot.enable = true;

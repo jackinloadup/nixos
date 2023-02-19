@@ -1,7 +1,7 @@
 { lib, pkgs, config, inputs, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf mkDefault mkEnableOption types;
   cfg = config.machine;
   settings = import ../../settings;
 in {

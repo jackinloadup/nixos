@@ -1,6 +1,7 @@
 { lib, pkgs, config, inputs, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf;
   cfg = config.machine;
   settings = import ../../settings;
 in {

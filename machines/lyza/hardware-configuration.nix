@@ -1,6 +1,5 @@
 { self, lib, ... }:
 
-with lib;
 {
   imports = [
     ../../profiles/intel.nix

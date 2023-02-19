@@ -1,11 +1,13 @@
 { inputs, lib, pkgs, config, ... }:
 
-with lib;
 let
+  inherit (lib) mkOption mkIf mkOverride optionals;
+  inherit (lib.types) listOf enum;
+
   cfg = config.machine;
-  ifTui = if (cfg.sizeTarget > 0) then true else false;
-  ifGraphical = if (cfg.sizeTarget > 1) then true else false;
-  ifFull = if (cfg.sizeTarget > 2) then true else false;
+  ifTui = cfg.sizeTarget > 0;
+  ifGraphical = cfg.sizeTarget > 1;
+  ifFull = cfg.sizeTarget > 2;
   settings = import ./settings.nix;
   username = settings.username;
 in {
@@ -14,7 +16,7 @@ in {
 
   # Make user available in user list
   options.machine.users = mkOption {
-    type = with types; listOf (enum [ username ]);
+    type = listOf (enum [ username ]);
   };
 
   # If user is enabled

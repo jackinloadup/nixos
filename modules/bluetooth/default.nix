@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
-  ifGraphical = if (config.machine.sizeTarget > 1) then true else false;
+  inherit (lib) mkIf mkEnableOption;
+  ifGraphical = config.machine.sizeTarget > 1;
 in {
   imports = [];
 

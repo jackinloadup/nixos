@@ -1,9 +1,10 @@
 { lib, pkgs, config, ... }:
-with lib;
+
 let
+  inherit (lib) mkIf;
   settings = import ../../settings;
-  ifTui = if (config.machine.sizeTarget > 0) then true else false;
-  ifGraphical = if (config.machine.sizeTarget > 1) then true else false;
+  ifTui = config.machine.sizeTarget > 0;
+  ifGraphical = config.machine.sizeTarget > 1;
 in {
   config = with settings.theme.font; {
     console.font = mkIf ifTui console;

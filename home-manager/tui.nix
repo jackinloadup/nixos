@@ -1,6 +1,5 @@
 { pkgs, config, lib, nixosConfig, ... }:
 
-with lib;
 let
   settings = import ../settings;
 in {

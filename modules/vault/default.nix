@@ -1,6 +1,8 @@
 { lib, pkgs, config, ... }:
-with lib;
-{
+
+let
+  inherit (lib) mkIf mkEnableOption;
+in {
   imports = [];
 
   options.machine.vault = mkEnableOption "Enable bluetooth";
