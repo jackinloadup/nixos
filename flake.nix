@@ -5,13 +5,23 @@
     nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
 
+    # Nix User Repository: User contributed nix packages
+    nur.url = github:nix-community/NUR;
+
+    # Pure Nix flake utility functions
     flake-utils.url = github:numtide/flake-utils;
+
+    # Use Nix flakes without any fluff
     flake-utils-plus = {
       url = github:gytis-ivaskevicius/flake-utils-plus;
       inputs.flake-utils.follows = "flake-utils";
     };
 
+    # A collection of NixOS modules covering hardware quirks
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
+
+    # Modules to help you handle persistent state on systems with ephemeral root storage
+    impermanence.url = github:nix-community/impermanence;
 
     # Manage a user environment using Nix
     home-manager = {
@@ -28,14 +38,11 @@
       inputs.flake-utils-plus.follows = "flake-utils-plus";
     };
 
-    # NUR is a registry of Nix User Repositories
-    nur = {
-      url = github:nix-community/NUR;
+    # Take NixOS configuration, and generate outputs for different target formats
+    nixos-generators = {
+      url = github:nix-community/nixos-generators;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Modules to help you handle persistent state on systems with ephemeral root storage.
-    impermanence.url = github:nix-community/impermanence;
 
     # Takes the NixOS module system and makes it work for disk partitioning as well
     disko = {
@@ -64,7 +71,7 @@
       #forAllSystems = nixlib.genAttrs supportedSystems;
 
       defaultPkgs = nixpkgs;
-      inherit ( import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; }) importDirOfOverlays mkNixosSystem;
+      inherit ( import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; }) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
     in {
       # Expose overlay to flake outputs, to allow using it from other flakes.
       overlays = importDirOfOverlays "overlays";
@@ -75,10 +82,14 @@
       nixosConfigurations = {
         reg = mkNixosSystem inputs.nixpkgs "x86_64-linux" "reg";
         riko = mkNixosSystem inputs.nixpkgs "x86_64-linux" "riko";
+
         marulk = mkNixosSystem inputs.nixpkgs "x86_64-linux" "marulk";
+        lyza = mkNixosSystem inputs.nixpkgs "x86_64-linux" "lyza";
         nat = mkNixosSystem inputs.nixpkgs "x86_64-linux" "nat";
+
         minimal = mkNixosSystem inputs.nixpkgs "x86_64-linux" "minimal";
       };
+
     } //
 
     (eachSystem supportedSystems)
@@ -92,7 +103,8 @@
 
     (eachSystem supportedX86Systems)
     (system:
-      let pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
+    let 
+      pkgs = nixpkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         # Custom packages added via the overlay are selectively added here, to
         # allow using them from other flakes that import this one.
@@ -103,6 +115,8 @@
         apps = {
           winbox = mkApp { drv = packages.winbox; };
         };
+      }) // ({
+        packages.x86_64-linux.sd-image = mkNixosSystemGenerator inputs.nixpkgs "x86_64-linux" "lyza";
       });
   nixConfig = {
     substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
