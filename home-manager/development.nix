@@ -95,12 +95,20 @@ in {
   services.lorri.enable = true;
   programs.direnv = {
     enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = false;
-    enableFishIntegration = false;
-    nix-direnv = {
-      enable = true;
-      #enableFlakes = true;
+    nix-direnv.enable = true;
+    stdlib = ""; # custom functions ect
+    config = {
+      global = {
+        warn_timeout = "30s";
+        strict_env = true;
+      };
+      whitelist = {
+        prefix = [
+          # Doesn't feel right to whitelist anything in my projects. I'll have
+          # to review each one to make sure there isn't execution I dislike.
+          #"$HOME/Projects/rust"
+        ];
+      };
     };
   };
 }
