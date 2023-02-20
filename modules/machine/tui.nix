@@ -18,6 +18,7 @@ in {
 
       #vim # text editor
       neovim # text editor
+      fswatch # file change monitor
 
       git # source code manager
 
