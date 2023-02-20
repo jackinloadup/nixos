@@ -23,6 +23,11 @@ in {
       "/persist/lib" = {
         hideMounts = true;
         directories = [
+          # The /var/lib/nixos directory contains the uid and gid map for
+          # entities without a static id. Not persisting them means your user
+          # and group ids could change between reboots
+          # https://github.com/nix-community/impermanence/pull/114
+          "/var/lib/nixos"
           #"/var/log"
           #"/var/lib/postgresql"
         #] ++ optionals config.systemd.package.withCoredump [ # requires wip
