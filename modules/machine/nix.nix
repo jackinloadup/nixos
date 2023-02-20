@@ -7,10 +7,15 @@ let
   sizeTarget = if (hasAttr "machine" config)
     then config.machine.sizeTarget
     else 0;
+
   ifTui = sizeTarget > 0;
 in {
   config = {
     nix.settings = {
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
+      ];
       trusted-users = [ "root" ];
       auto-optimise-store = ifTui;
       substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
