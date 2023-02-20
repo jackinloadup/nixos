@@ -1,4 +1,6 @@
-{ self, ... }: {
+{ ... }:
+
+{
   imports = [ ];
 
 #  # Required for throttled when running on the 5.9 kernel.
