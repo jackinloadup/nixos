@@ -6,18 +6,14 @@
   ];
 
   config = {
+    # TODO should this be behind a flag limiting the script to the installer?
+    environment.systemPackages = [
+      (pkgs.writeScriptBin "disko-create" (config.system.build.formatScript))
+      (pkgs.writeScriptBin "disko-mount" (config.system.build.mountScript))
+      (pkgs.writeScriptBin "disko" (config.system.build.mountScript))
+    ];
+
     disko.devices = {
-      nodev = {
-        "/" = {
-          fsType = "tmpfs";
-          mountOptions = [
-            "defaults"
-            "size=2G"
-            "mode=755"
-            "noatime"
-          ];
-        };
-      };
       disk = {
         sd = {
           type = "disk";
@@ -31,6 +27,7 @@
                 name = "ESP";
                 start = "1MiB";
                 end = "512MiB";
+                fs-type = "fat32";
                 bootable = true;
                 content = {
                   type = "filesystem";
@@ -47,7 +44,7 @@
                 start = "512MiB";
                 end = "100%";
                 part-type = "primary";
-                bootable = true;
+                #bootable = true;
                 content = {
                   type = "filesystem";
                   format = "ext4";
