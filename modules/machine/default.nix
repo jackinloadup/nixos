@@ -106,6 +106,7 @@ in {
     boot = {
       #plymouth.enable = true;
       initrd = {
+        systemd.enable = true;
         availableKernelModules = mkIf ifTui [
           "xhci_pci"
           "nvme"
