@@ -1,10 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   boot = {
-    kernelModules = [
-      "kvm-intel"
-    ];
+    initrd.kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" ];
+    extraModprobeConfig = "options snd-hda-intel enable_msi=1";
   };
   services.xserver.videoDrivers = [ "intel" ];
 

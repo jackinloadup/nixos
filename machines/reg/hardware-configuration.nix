@@ -4,13 +4,10 @@
   imports = [ ];
 
   config = {
-    # Required for throttled when running on the 5.9 kernel.
-    #boot.kernelParams = [ "msr.allow_writes=on" ];
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     boot.kernelModules = [ "kvm-amd" ];
-    boot.extraModulePackages = [ ];
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod" ];
-    boot.initrd.kernelModules = [ ];
+    boot.initrd.kernelModules = [ "kvm-amd" ];
     boot.loader.efi.canTouchEfiVariables = true;
 
     boot.initrd.supportedFilesystems = [ "btrfs" ];

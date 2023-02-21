@@ -6,13 +6,8 @@
   ];
 
   config = {
-    # Required for throttled when running on the 5.9 kernel.
-    #boot.kernelParams = [ "msr.allow_writes=on" ];
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    boot.kernelModules = [ ];
-    boot.extraModulePackages = [ ];
     boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
-    boot.initrd.kernelModules = [ ];
     boot.loader.efi.canTouchEfiVariables = true;
 
     fileSystems."/boot" = {
