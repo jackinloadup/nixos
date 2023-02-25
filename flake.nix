@@ -122,6 +122,7 @@
       });
 
   nixConfig = {
-    substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
+    extra-substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
+    #extra-trusted-public-keys
   };
 }
