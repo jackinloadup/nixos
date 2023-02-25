@@ -71,8 +71,11 @@
 
       #forAllSystems = nixlib.genAttrs supportedSystems;
 
-      inherit ( import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; }) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
       defaultPkgs = inputs.nixpkgs;
+
+      selfLib = import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; };
+
+      inherit (selfLib) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
     in {
       # Expose overlay to flake outputs, to allow using it from other flakes.
       overlays = importDirOfOverlays "overlays";
