@@ -11,6 +11,7 @@ in {
     hyperfine
     valgrind
     #rr # time traveling debugger # failed on unstable
+    #allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
   ];
 
   home.file.".gdbinit".text = ''
