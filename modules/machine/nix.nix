@@ -9,6 +9,10 @@ let
     else 0;
 
   ifTui = sizeTarget > 0;
+
+  MBtoBytes = (mb: mb * 1024 *1024);
+  minimumFreeSpace = MBtoBytes 100; # 100MB
+  maximumFreeSpace = MBtoBytes 1024; # 1GB
 in {
   config = {
     nix.settings = {
@@ -43,8 +47,8 @@ in {
       experimental-features = nix-command flakes
       auto-optimise-store = true
 
-      min-free = ${toString (100 * 1024 * 1024)}
-      max-free = ${toString (1024 * 1024 * 1024)}
+      min-free = ${toString minimumFreeSpace}
+      max-free = ${toString maximumFreeSpace}
     '';
   };
 }
