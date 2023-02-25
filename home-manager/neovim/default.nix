@@ -88,6 +88,7 @@ in {
 
 
       let mapleader = ";"
+      set clipboard+=unnamedplus
       "set diffopt=filler " Add vertical spaces to keep right and left aligned
       "set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
       "set encoding=utf-8 nobomb " BOM often causes trouble
