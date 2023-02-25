@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
+    # explore prebuilt unfree packages
+    #nixpkgs-unfree.url = github:numtide/nixos-unfree;
 
     # Nix User Repository: User contributed nix packages
     nur.url = github:nix-community/NUR;
