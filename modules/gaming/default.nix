@@ -5,8 +5,9 @@ let
   cfg = config.machine;
   settings = import ../../settings;
 in {
-  imports = [];
-
+  imports = [
+    ./openrct2.nix
+  ];
 
   options.machine.gaming = mkEnableOption "Enable extra options only needed for gaming";
 
@@ -28,13 +29,14 @@ in {
       #retroarchFull
       cool-retro-term
     ];
+
     services.xserver = {
       modules = [ pkgs.xorg.xf86inputjoystick ];
     };
+
     qt5.enable = true;
     qt5.platformTheme = "gtk2";
     qt5.style = "gtk2";
-
 
     # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
     #services.pipewire = {
