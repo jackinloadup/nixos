@@ -45,7 +45,7 @@ in {
   };
 
   # Causes kernel build
-  boot.crashDump.enable = true;
+  boot.crashDump.enable = false;
 
   environment.etc.issue.source = lib.mkForce ./issue-banner;
 
@@ -77,9 +77,6 @@ in {
   
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-
-  # List services that you want to enable:
-
 
   hardware.opengl.extraPackages = with pkgs; [
     radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
