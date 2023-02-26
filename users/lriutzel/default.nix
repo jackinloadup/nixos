@@ -12,6 +12,7 @@ let
   username = settings.username;
 in {
   imports = [
+    inputs.nix-ld.nixosModules.nix-ld
   ];
 
   # Make user available in user list
@@ -21,6 +22,12 @@ in {
 
   # If user is enabled
   config = mkIf (builtins.elem username config.machine.users) {
+    programs.nix-ld.enable = true;
+    environment.variables = {
+        NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (config.systemd.packages ++ config.environment.systemPackages);
+        NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
+    };
+
     nix.settings.trusted-users = [ username ];
 
     users.users."${username}" = with settings; {
@@ -146,7 +153,7 @@ in {
         kodi-wayland
       ]
       ++ optionals ifFull [
-        unstable.helvum # pipewire patchbay
+        #helvum # pipewire patchbay # failing to build
         easyeffects # Audio effects
 
         # crypto

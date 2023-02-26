@@ -99,7 +99,8 @@ in {
       ## networking
       nethogs
       ngrep
-      fast-cli # bandwidth test through fast.com
+      ## fast adds chromium
+      #fast-cli # bandwidth test through fast.com
       nmap
 
       ## Audio
