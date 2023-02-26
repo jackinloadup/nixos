@@ -107,10 +107,8 @@ in {
       "set ofu=syntaxcomplete#Complete " Set omni-completion method
       "set report=0 " Show all changes
       "set ruler " Show the cursor position
-      "set scrolloff=3 " Start scrolling three lines before horizontal border of window
       "set shiftwidth=2 " The # of spaces for indenting
       "set shortmess=atI " Don't show the intro message when starting vim
-      "set sidescrolloff=3 " Start scrolling three columns before vertical border of window
       "set softtabstop=2 " Tab key results in 2 spaces
       "set suffixes=.bak,~,.swp,.swo,.o,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.brf,.cb,.dmg,.exe,.ind,.idx,.ilg,.inx,.out,.toc,.pyc,.pyd,.dll
       "set switchbuf=""

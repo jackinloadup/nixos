@@ -22,6 +22,10 @@ set wrapscan " Searches wrap around end of file
 set relativenumber " Relative line numbers
 set number " Enable line numbers
 
+" Scrolling
+set sidescrolloff=3 " Start scrolling three columns before vertical border of window
+set scrolloff=3 " Start scrolling three lines before horizontal border of window
+
 " Buffer
 syntax on
 set cursorline " Highlight current line
