@@ -22,7 +22,7 @@
     # A collection of NixOS modules covering hardware quirks
     nixos-hardware.url = github:NixOS/nixos-hardware/master;
 
-    # Modules to help you handle persistent state on systems with ephemeral root storage
+    # Modules to help handle persistent state on systems with ephemeral root storage
     impermanence.url = github:nix-community/impermanence;
 
     # Manage a user environment using Nix
@@ -50,6 +50,20 @@
     disko = {
       #url = github:nix-community/disko;
       url = "/home/lriutzel/Projects/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Run unpatched dynamic binaries on NixOS
+    nix-ld = {
+      url = github:Mic92/nix-ld;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Fuse filesystem that returns symlinks to executables based on the PATH of
+    # the requesting process. This is useful to execute shebangs on NixOS that
+    # assume hard coded locations in locations like /bin or /usr/bin etc.
+    envfs = {
+      url = github:Mic92/envfs;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -101,7 +115,7 @@
     let pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
       in rec {
         devShells = flattenTree {
-          rust = import ./shells/rust.nix { pkgs = pkgs; };
+          rust = import ./shells/rust.nix { inherit pkgs; };
         };
       }) //
 

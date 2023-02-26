@@ -103,9 +103,14 @@ in {
       panicOnHungTaskTimeout = mkDefault 120;
     };
 
+    #systemd.network.wait-online.anyInterface = true;
+
     boot = {
+      # can't add plymouth here due to the nixos implimentation not yet
+      # supporting zfs/luks encryption unlock
       #plymouth.enable = true;
       initrd = {
+        # It's possible for systemd to add or remove store paths and bins
         systemd.enable = true;
         availableKernelModules = mkIf ifTui [
           "xhci_pci"
@@ -128,7 +133,7 @@ in {
         consoleMode = mkDefault "auto";
       };
 
-      # Imporved networking TESTING ATM
+      # Imporved networking
       kernelModules = [ "tcp_bbr" ];
       kernel.sysctl."net.ipv4.tcp_congestion_control" = "bbr";
       kernel.sysctl."net.core.default_qdisc" = "fq";

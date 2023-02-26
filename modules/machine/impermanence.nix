@@ -3,7 +3,6 @@
 # If extraOpts can be expressed in home-manager that
 # would be more ideal or at least an alterate if using
 # nix seporate from nixos
-
 let
   inherit (lib) mkIf mkEnableOption optionals;
 in {
@@ -12,6 +11,8 @@ in {
   options.machine.impermanence = mkEnableOption "Enable impermanence";
 
   config = mkIf config.machine.impermanence {
+    programs.fuse.userAllowOther = true;
+
     environment.persistence = {
       "/persist/etc" = {
         hideMounts = true;
@@ -61,3 +62,4 @@ in {
   };
 
 }
+
