@@ -94,7 +94,6 @@ in {
       "set encoding=utf-8 nobomb " BOM often causes trouble
       "set fillchars+=vert:\
       "set gdefault " By default add g flag to search/replace. Add g to toggle
-      "set hidden " When a buffer is brought to foreground, remember undo history and marks
       "set lispwords+=defroutes " Compojure
       "set lispwords+=defpartial,defpage " Noir core
       "set lispwords+=defaction,deffilter,defview,defsection " Ciste core
