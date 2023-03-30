@@ -58,6 +58,21 @@ in {
       tracked = "for-each-ref --format='%(refname:short) <- %(upstream:short)' refs/heads";
       # poke was used with gitea. Unsure what other uses this has
       poke = "!git ls-remote origin | grep -w refs/heads/poke && git push origin :poke || git push origin master:poke";
+
+      tagsbydate = "for-each-ref --sort=-taggerdate --format='%(refname:short)' refs/tags";
+      #previoustag = "!sh -c 'git tagsbydate --count 2 | cut -f2 | sed -n 2p'";
+      previoustag = "git describe --tags --abbrev=0";
+      #lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --";
+      markdownlog = "log --color --pretty=format:'* %s `%Cred%h%Creset` - %C(bold blue)[%an](mailto:%ae)%Creset' --abbrev-commit --dense --no-merges --reverse";
+      # Can't get sed to work. Have to pipe through to remove empty <details>
+      # tags
+      #ghlog2 = "!git log --color --pretty=format:'%s `%Cred%h%Creset` - %C(bold blue)[%an](mailto:%ae)%Creset<details>%b</details>' --abbrev-commit --dense --no-merges --reverse $@ | sed \"s/<[^\/][^<>]*> *<\/[^<>]*>//g\" #";
+      #ghlog = "!f() { git log --color --pretty=format:'%s `%Cred%h%Creset` - %C(bold blue)[%an](mailto:%ae)%Creset<details>%b</details>' --abbrev-commit --dense --no-merges --reverse $@ | sed 's/<[^\/][^<>]*> *<\/[^<>]*>//g' #; }; f #";
+      releasenotes = "!sh -c 'git markdownlog ...`git previoustag`'";
+      done = "push origin HEAD";
+      wip = "!f() { git add . && git commit -m 'Work in progress'; }; f";
+      diff-words = "diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'";
+
       co = "checkout";
       ci = "commit";
       cia = "commit --amend";
@@ -70,7 +85,9 @@ in {
       p = "pull --rebase";
       pu = "push";
       git = "!exec git"; # accidentally run `git git ...`? This has your back
+      debug = "!GIT_TRACE=1 git"; # clever way to debug git stuff ex: git debug ghlog
       root = "rev-parse --show-toplevel"; # show path of the root of repo
+      cdroot = "!cd `git root`"; # show path of the root of repo
     };
 
     ignores = [
