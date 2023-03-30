@@ -50,6 +50,8 @@ in {
           "/var/lib/fwup"
         ] ++ optionals config.networking.wireless.iwd.enable [
           "/var/lib/iwd"
+        ] ++ optionals config.services.hydra.enable [
+          "/var/lib/hydra"
         ] ++ optionals config.services.syncthing.enable [
           "/var/lib/syncthing"
         ];
