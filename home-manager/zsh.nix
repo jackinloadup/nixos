@@ -65,6 +65,11 @@ in {
 
         plugins = [
           {
+            name = "zsh-z";
+            file = "share/zsh-z/zsh-z.plugin.zsh";
+            src = pkgs.zsh-z;
+          }
+          {
             name = "zsh-nix-shell";
             file = "nix-shell.plugin.zsh";
             src = pkgs.fetchFromGitHub {
