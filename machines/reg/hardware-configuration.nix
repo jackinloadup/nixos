@@ -24,6 +24,11 @@
     services.btrfs.autoScrub.enable = true;
     services.btrfs.autoScrub.fileSystems = [ "/dev/disk/by-label/nixos" ];
 
+    hardware.opengl.extraPackages = with pkgs; [
+      radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
+      radeon-profile
+    ];
+
 
     fileSystems = let
       btrfs = subvol: {

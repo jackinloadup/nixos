@@ -77,11 +77,6 @@ in {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
 
-  hardware.opengl.extraPackages = with pkgs; [
-    radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
-    radeon-profile
-  ];
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
