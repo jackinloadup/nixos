@@ -58,9 +58,6 @@ in {
 
   networking.hostName = "reg";
   nix.settings.max-jobs = lib.mkDefault 16;
-  nix.nixPath = [
-    "nixpkgs=${nixpkgs}"
-  ];
 
   nixpkgs.overlays = [
     inputs.nur.overlay
