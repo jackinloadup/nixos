@@ -84,7 +84,7 @@ in {
 
       starship = {
         enable = mkDefault ifTui;
-        package = pkgs.unstable.starship;
+        package = pkgs.starship;
         enableBashIntegration = true;
         enableZshIntegration = true;
         settings = {
