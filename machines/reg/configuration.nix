@@ -16,6 +16,8 @@ in {
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
 
+  services.hydra.enable = true;
+
   machine = {
     users = [
       "lriutzel"
