@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, inputs, ... }:
 
 let
   inherit (lib) mkIf;
@@ -36,6 +36,19 @@ in {
       "repl=${path}/repl.nix"
       "nixpkgs=${inputs.nixpkgs}" # used in nix-shell -p <pkg>
     ];
+
+    # Flake registries are a convenience feature that allows you to refer to
+    # flakes using symbolic identifiers such as nixpkgs for example:
+    #   `nix shell nixpkgs#hello-world`
+    nix.registry = lib.mapAttrs ( id: flake: {
+        inherit flake;
+        from = {
+          inherit id;
+          type = "indirect";
+        };
+      })
+      (inputs  # Expose all flakes
+      // { pkgs = inputs.nixpkgs; }); # alias for convenience
 
     # enable flakes
     # set the min free disk space. 
