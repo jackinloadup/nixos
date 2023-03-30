@@ -79,6 +79,16 @@ in {
               sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
             };
           }
+          {
+            name = "nix-zsh-completions";
+            file = "nix-zsh-completions.plugin.zsh";
+            src = pkgs.fetchFromGitHub {
+              owner = "spwhitt";
+              repo = "nix-zsh-completions";
+              rev = "0.4.4";
+              sha256 = "Djs1oOnzeVAUMrZObNLZ8/5zD7DjW3YK42SWpD2FPNk=";
+            };
+          }
         ];
       };
 
