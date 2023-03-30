@@ -21,6 +21,14 @@ let
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
 
   lockSwayIdle = ''exec ${getBin pkgs.procps}/bin/pkill -SIGUSR1 swayidle'';
+  lockScriptSrc = ''
+#!/usr/bin/env bash
+
+${getExe pkgs.swaylock} -f -i $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/background.jpg
+'';
+  lockCmd = (pkgs.writeScript "lock" lockScriptSrc).overrideAttrs(old: {
+    buildCommand = "${old.buildCommand}\n patchShebangs $out";
+  });
 in
 {
   imports = [
@@ -145,7 +153,7 @@ in
 
           "${mod}+Shift+c" = "reload";
           "${mod}+Shift+r" = "restart";
-          "${mod}+Shift+v" = ''mode "${mode_system}"'';
+          "${mod}+Shift+v" = "exec ${getExe pkgs.nwg-bar} -x";
           "${mod}+Print" = ''mode "${mode_record}"'';
 
           "${mod}+r" = "mode resize";
@@ -214,14 +222,13 @@ in
           {
             command =
               let
-                lockCmd = "'${getExe pkgs.swaylock} -f -i \"$(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/background.jpg\"'";
                 timeouts = settings.timeouts;
               in
               ''${getExe pkgs.swayidle} -w \
-                timeout ${toString timeouts.screenLock} ${lockCmd} \
+                timeout ${toString timeouts.screenLock} '${lockCmd}' \
                 timeout ${toString timeouts.displayOff} 'swaymsg "output * dpms off"' \
                 resume 'swaymsg "output * dpms on"' \
-                before-sleep ${lockCmd}
+                before-sleep '${lockCmd}'
              '';
           }
           #{ command = "${config.programs.firefox.package}/bin/firefox"; }
@@ -263,5 +270,29 @@ in
         workspace 1
       '';
     };
+
+    home.file."${config.xdg.configHome}/nwg-bar/bar.json".text = ''[
+ {
+   "label": "Lock",
+   "exec": "${lockCmd}",
+   "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-lock-screen.svg"
+ },
+ {
+   "label": "Logout",
+   "exec": "swaymsg exit",
+   "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-log-out.svg"
+ },
+ {
+   "label": "Reboot",
+   "exec": "systemctl reboot",
+   "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-reboot.svg"
+ },
+ {
+   "label": "Shutdown",
+   "exec": "systemctl -i poweroff",
+   "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-shutdown.svg"
+ }
+]
+    '';
   };
 }
