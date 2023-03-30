@@ -71,9 +71,6 @@ in {
   };
 
   nix.settings.max-jobs = lib.mkDefault 4;
-  nix.nixPath = [
-    "nixpkgs=${nixpkgs}"
-  ];
 
   nixpkgs.overlays = [
     inputs.self.overlays.default

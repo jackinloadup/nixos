@@ -34,6 +34,7 @@ in {
     };
     nix.nixPath = let path = toString ../../.; in [
       "repl=${path}/repl.nix"
+      "nixpkgs=${inputs.nixpkgs}" # used in nix-shell -p <pkg>
     ];
 
     # enable flakes
