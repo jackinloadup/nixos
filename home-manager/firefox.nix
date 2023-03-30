@@ -25,6 +25,21 @@ in
       ] (name: "firefox.desktop");
     };
 
+    wayland.windowManager.sway.config.floating.criteria = [
+      {
+        app_id = "firefox";
+        title = "Firefox - Sharing Indicator";
+      }
+      {
+        app_id = "firefox";
+        title = "Firefox — Sharing Indicator";
+      }
+      {
+        app_id = "firefox";
+        title = "Picture-in-Picture";
+      }
+    ];
+
     programs.firefox = {
       package = pkgs.firefox-bin;
       #package = pkgs.wrapFirefox pkgs.firefox-esr {
