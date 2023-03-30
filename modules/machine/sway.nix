@@ -52,7 +52,7 @@ in {
     xdg = {
       portal = {
         enable = true;
-        extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+        extraPortals = with pkgs; mkIf (!config.services.xserver.desktopManager.gnome.enable) [ xdg-desktop-portal-gtk ];
         wlr = {
           enable = true;
           #settings = {
