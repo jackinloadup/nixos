@@ -53,7 +53,6 @@ in {
         #".config/kdeconnect"
         #".config/gnome-initial-setup-done"
         #".cache/nix"
-        #".cache/chromium"
         #".cache/fractal"
         #".cache/vulnix"
         #".cache/wine"
@@ -71,6 +70,7 @@ in {
         ".local/share/syncthing"
         ".config/syncthing"
       ]
+      ++ optionals nixosConfig.programs.chromium.enable [ ".cache/chromium" ]
       ++ optionals config.programs.gpg.enable [ ".gnupg" ]
       ++ optionals config.programs.firefox.enable [ ".mozilla" ]
       ++ optionals config.programs.zoom-us.enable [ ".zoom" ];
