@@ -32,7 +32,10 @@ in {
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
+    # It seems like nixPath doesn't need to expose this if system is non
+    # interactive. This seems to duplicate or extend nix.registry
     nix.nixPath = let path = toString ../../.; in [
+      "dotfiles=${path}"
       "repl=${path}/repl.nix"
       "nixpkgs=${inputs.nixpkgs}" # used in nix-shell -p <pkg>
     ];
