@@ -20,6 +20,10 @@ in {
         ] ++ optionals config.networking.networkmanager.enable [
           "/etc/NetworkManager/system-connections"
         ];
+        files = [
+          "/etc/machine-id"
+          { file = "/etc/nix/id_rsa"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+        ];
       };
       "/persist/lib" = {
         hideMounts = true;
@@ -50,14 +54,12 @@ in {
           "/var/lib/fwup"
         ] ++ optionals config.networking.wireless.iwd.enable [
           "/var/lib/iwd"
+        ] ++ optionals config.services.postgresql.enable [
+          "/var/lib/postgresql"
         ] ++ optionals config.services.hydra.enable [
           "/var/lib/hydra"
         ] ++ optionals config.services.syncthing.enable [
           "/var/lib/syncthing"
-        ];
-        files = [
-          "/etc/machine-id"
-          { file = "/etc/nix/id_rsa"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
         ];
       };
     };
