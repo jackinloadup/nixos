@@ -43,3 +43,7 @@ endif
 "set splitbelow " New window goes below
 "set splitright " New windows goes right
 "set winminheight=0 " Allow splits to be reduced to a single line
+
+" Wildmenu
+set wildmenu
+set wildmode=longest:full,full
