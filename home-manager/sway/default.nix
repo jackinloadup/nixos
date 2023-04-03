@@ -17,7 +17,6 @@ let
       config.programs.foot.settings.main.term
     else "foot";
   termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
-  mode_system = "System:  [r]eboot  [p]oweroff  [l]ock  [f]irmware [e]xit";
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
 
   lockSwayIdle = ''exec ${getBin pkgs.procps}/bin/pkill -SIGUSR1 swayidle'';
@@ -174,17 +173,6 @@ in
         modes = let
           terminal = swayConfig.terminal;
         in {
-          "${mode_system}" = {
-            #s = "exec ${terminal} -e ./kexec-systemd.sh";
-            r = "exec reboot";
-            p = "exec poweroff";
-            l = lockSwayIdle;
-            e = "exit";
-            f = "exec systemctl reboot --firmware-setup";
-            Return = "mode default";
-            Escape = "mode default";
-          };
-
           resize = let
             Left = "resize shrink width 10 px or 10 ppt";
             Right = "resize grow width 10 px or 10 ppt";
