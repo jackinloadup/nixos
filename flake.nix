@@ -72,7 +72,12 @@
 
   outputs = { self, ... }@inputs:
     let
+      inherit (inputs.nixpkgs.lib) mapAttrs;
       inherit (inputs.flake-utils.lib) eachSystem flattenTree mkApp;
+      defaultPkgs = inputs.nixpkgs;
+
+      selfLib = import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; };
+      inherit (selfLib) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
 
       supportedX86Systems = [
         "i686-linux"
@@ -85,11 +90,8 @@
 
       #forAllSystems = nixlib.genAttrs supportedSystems;
 
-      defaultPkgs = inputs.nixpkgs;
 
-      selfLib = import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; };
-
-      inherit (selfLib) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
+      getCfg = _: cfg: cfg.config.system.build.toplevel;
     in {
       # Expose overlay to flake outputs, to allow using it from other flakes.
       overlays = importDirOfOverlays "overlays";
@@ -107,6 +109,8 @@
 
         minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
       };
+
+      hydraJobs = mapAttrs getCfg self.nixosConfiguratons;
 
     } //
 
