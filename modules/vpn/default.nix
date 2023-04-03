@@ -6,7 +6,7 @@ in {
   options.machine.vpn.enable = mkEnableOption "Enable VPN";
   options.machine.vpn.isLighthouse = mkEnableOption "Node is a lighthouse";
 
-  config = mkIf config.machine.vpn {
+  config = mkIf config.machine.vpn.enable {
     services.nebula.networks = {
 
     };
