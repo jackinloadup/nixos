@@ -6,7 +6,6 @@ let
   #cp = f: (super.callPackage f) {};
 in self: super: {
   pipewire = (super.pipewire.override {
-    withMediaSession = false;
     libcameraSupport = false;
     gstreamerSupport = false;
     ffmpegSupport = true;
