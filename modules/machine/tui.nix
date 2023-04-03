@@ -165,7 +165,7 @@ in {
     environment.shellAliases = {
       ".." = "cd ..";
       "ncdu" = "ncdu --color dark";
-      "nixos-current-repl" = "source /etc/set-environment && nix repl $(echo $NIX_PATH | perl -pe 's|.*(/nix/store/.*-source/repl.nix).*|\\1|')";
+      "nixos-current-repl" = "nix repl '<repl>'";
     };
 
     environment.etc = {
