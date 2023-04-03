@@ -4,8 +4,17 @@ let
   inherit (lib) mkIf;
 in {
   config = mkIf config.services.hydra.enable {
-    nix.settings.sandbox = true;
-    nix.nrBuildUsers = config.nix.settings.max-jobs;
+    nix = {
+      settings.sandbox = true;
+      nrBuildUsers = config.nix.settings.max-jobs;
+      buildMachines = [
+        { hostName = "localhost";
+          system = "x86_64-linux";
+          supportedFeatures = ["kvm" "nixos-test" "big-parallel" "benchmark"];
+          maxJobs = 8;
+        }
+      ];
+    };
 
     services.postgresql.enable = true;
 
