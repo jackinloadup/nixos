@@ -27,6 +27,7 @@ in {
       #nur.repos.dukzcry.gamescope
       #retroarch
       #retroarchFull
+      prismlauncher # minecraft
       cool-retro-term
     ];
 
