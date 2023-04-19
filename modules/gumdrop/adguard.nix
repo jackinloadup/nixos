@@ -13,7 +13,7 @@ in {
       enable = true;
       # opens port
       openFirewall = true;
-      extraArgs = [];
+      extraArgs = [ "--no-etc-hosts" ];
       port = 80; # Web gui
       host = "10.16.1.2";
     };
