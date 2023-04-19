@@ -1,4 +1,5 @@
 { lib, pkgs, config, ... }:
+# look into using hail to deploy from hydra
 
 let
   inherit (lib) mkIf;
@@ -16,7 +17,18 @@ in {
       ];
     };
 
-    services.postgresql.enable = true;
+    services.postgresql = {
+      enable = true;
+      ensureDatabases = ["hydra"];
+      ensureUsers = [
+        {
+          name = "hydra";
+          ensurePermissions."DATABASE \"hydra\"" = "ALL PRIVILEGES";
+        }
+      ];
+    };
+
+    services.postgresqlBackup.databases = [ "hydra" ];
 
     services.hydra = {
       hydraURL = "http://localhost:3000"; # externally visible URL
