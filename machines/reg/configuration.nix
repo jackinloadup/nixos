@@ -17,6 +17,7 @@ in {
   services.xserver.displayManager.defaultSession = "sway";
 
   services.hydra.enable = true;
+  services.nextcloud.enable = true;
 
   machine = {
     users = [

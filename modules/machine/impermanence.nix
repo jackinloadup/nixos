@@ -56,6 +56,8 @@ in {
           "/var/lib/iwd"
         ] ++ optionals config.services.postgresql.enable [
           "/var/lib/postgresql"
+        ] ++ optionals config.services.pgadmin.enable [
+          "/var/lib/private/pgadmin"
         ] ++ optionals config.services.hydra.enable [
           "/var/lib/hydra"
         ] ++ optionals config.services.syncthing.enable [
