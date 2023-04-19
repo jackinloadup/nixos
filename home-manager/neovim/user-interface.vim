@@ -44,6 +44,42 @@ endif
 "set splitright " New windows goes right
 "set winminheight=0 " Allow splits to be reduced to a single line
 
-" Wildmenu
+" Wildmenu - commandline completion menu
 set wildmenu
 set wildmode=longest:full,full
+
+" Make pane navigation available in one keystroke
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" :help splits
+"
+"  Resizing splits
+"
+" Vim’s defaults are useful for changing split shapes:
+"
+" "Max out the height of the current split
+" ctrl + w _
+"
+" "Max out the width of the current split
+" ctrl + w |
+"
+" "Normalize all split sizes, which is very handy when resizing terminal
+" ctrl + w =
+"
+" More split manipulation
+"
+" "Swap top/bottom or left/right split
+" Ctrl+W R
+"
+" "Break out current window into a new tabview
+" Ctrl+W T
+"
+" "Close every window in the current tabview but the current one
+" Ctrl+W o
