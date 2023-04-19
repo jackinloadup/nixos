@@ -34,8 +34,8 @@ in {
     tui = true;
     sound = true;
     virtualization = false;
-    displayManager = "greetd";
-    windowManagers = [ "sway" ];
+    displayManager = "gdm";
+    windowManagers = [ "sway" "gnome" ];
     impermanence = mkDefault true;
     lowLevelXF86keys.enable = true;
     kernel = {
@@ -46,14 +46,15 @@ in {
       panicOnHungTaskTimeout = mkForce 1;
     };
   };
-  services.xserver.displayManager.autoLogin.user = "lriutzel";
-  services.xserver.displayManager.defaultSession = "sway";
+  #services.xserver.displayManager.autoLogin.user = "lriutzel";
+  #services.xserver.displayManager.defaultSession = "sway";
 
-  #gumdrop = {
-  #  storageServer.enable = false;
-  #  storageServer.media = true;
-  #  storageServer.roms = true;
-  #};
+  gumdrop = {
+    printerScanner = true;
+    storageServer.enable = false;
+    storageServer.media = true;
+    storageServer.roms = true;
+  };
 
   nix.settings.max-jobs = mkDefault 2;
 
