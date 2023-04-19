@@ -49,7 +49,7 @@
     # Takes the NixOS module system and makes it work for disk partitioning as well
     disko = {
       #url = github:nix-community/disko;
-      url = "/home/lriutzel/Projects/disko";
+      url = "/home/lriutzel/Projects/nix/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -110,7 +110,7 @@
         minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
       };
 
-      hydraJobs = mapAttrs getCfg self.nixosConfiguratons;
+      #hydraJobs = mapAttrs getCfg self.nixosConfiguratons;
 
     } //
 
