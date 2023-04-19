@@ -77,7 +77,7 @@
       "/persist/lib" = btrfs "persist";
       "/var/log" = btrfs "log";
 
-      "/mnt" = {
+      "/mnt/storage" = {
         device = "/dev/disk/by-label/storage";
         fsType = "ext4";
         neededForBoot = false;
