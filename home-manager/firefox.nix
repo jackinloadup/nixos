@@ -115,6 +115,7 @@ in
             "browser.newtabpage.activity-stream.feeds.sections" = false;
             "browser.newtabpage.activity-stream.feeds.system.topstories" = false; # Disable top stories
             "browser.newtabpage.activity-stream.section.highlights.includePocket" = false; # Disable pocket
+            "browser.tabs.firefox-view" = false; # Disable Firefox View
   
             # Disable some not so useful functionality.
             "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
