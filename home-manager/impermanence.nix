@@ -21,6 +21,7 @@ in {
         "dotfiles"
         ".ssh"
         ".cargo"
+        ".kube"
         ".rustup"
         ".thunderbird"
         ".password-store"
