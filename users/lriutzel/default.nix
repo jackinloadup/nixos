@@ -83,6 +83,7 @@ in {
         ../../home-manager/alacritty.nix
         ../../home-manager/development.nix
         ../../home-manager/graphical.nix
+        ../../home-manager/openrct2.nix
         ../../home-manager/gpg.nix
         ../../home-manager/i3.nix
         ../../home-manager/impermanence.nix
