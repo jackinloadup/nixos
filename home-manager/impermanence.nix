@@ -45,6 +45,7 @@ in {
         ".config/LBRY"
         ".config/ghb" # handbrake
         ".config/kvibes" # MediaElch
+        ".config/OpenRCT2" # MediaElch
         #".config/unity3d" # game saves
         #".config/StardewValley"
         #".config/pipewire"
