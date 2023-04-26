@@ -7,11 +7,7 @@ let
 in {
   imports = [ ];
 
-  options.machine.adb = mkEnableOption "Enable ADB";
-
-  config = mkIf config.machine.adb {
-    programs.adb.enable = true;
-
+  config = mkIf config.programs.adb.enable {
     users.users = addExtraGroups normalUsers ["adbusers"];
   };
 }

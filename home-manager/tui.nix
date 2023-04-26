@@ -1,6 +1,7 @@
 { pkgs, config, lib, nixosConfig, ... }:
 
 let
+  inherit (lib) optionals;
   settings = import ../settings;
 in {
   imports = [
@@ -25,6 +26,7 @@ in {
         historyIgnore = [ "l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit" ];
         initExtra = ''
           source ${config.lib.base16.templateFile { name = "shell"; }}
+        '' + optionals config.programs.starship.enable ''
           eval "$(starship init bash)"
           '';
         shellOptions = [

@@ -2,18 +2,10 @@
 
 let
   inherit (lib) mkIf mkEnableOption types attrNames genAttrs;
-  cfg = config.machine;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
-  imports = [];
-
-
-  options.machine.sdr = mkEnableOption "Enable SDR platform";
-
-  config = mkIf cfg.sdr {
-    hardware.rtl-sdr.enable = true;
-
+  config = mkIf config.hardware.rtl-sdr.enable {
     users.users = addExtraGroups normalUsers [ "plugdev" ];
 
     environment.systemPackages = with pkgs; [

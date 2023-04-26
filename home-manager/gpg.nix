@@ -15,17 +15,15 @@ in {
       #homeDir = "${config.xdg.dataHome}/gnupg";
     };
 
-    services = {
-      gpg-agent = {
-        enableExtraSocket = false;
-        enableScDaemon = false;
-        enableSshSupport = true;
-        defaultCacheTtl = minsToSecs 10;
-        defaultCacheTtlSsh = minsToSecs 60;
-        maxCacheTtl = hoursToSecs 1; # 1 hour
-        maxCacheTtlSsh = hoursToSecs 4; # 1 hour
-        pinentryFlavor = "gnome3";
-      };
+    services.gpg-agent = {
+      enableExtraSocket = false;
+      enableScDaemon = false;
+      enableSshSupport = true;
+      defaultCacheTtl = minsToSecs 10;
+      defaultCacheTtlSsh = minsToSecs 60;
+      maxCacheTtl = hoursToSecs 1; # 1 hour
+      maxCacheTtlSsh = hoursToSecs 4; # 1 hour
+      pinentryFlavor = "gnome3";
     };
   };
 }

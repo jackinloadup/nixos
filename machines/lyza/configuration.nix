@@ -12,6 +12,12 @@ in {
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
+  services.pipewire.enable = true;
+  #services.xserver.displayManager.autoLogin.user = "lriutzel";
+  #services.xserver.displayManager.defaultSession = "sway";
+  services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver.displayManager.gdm.enable = true;
   #services.getty = {
   #  autologinUser = "kodi";
   #  extraArgs = [
@@ -22,20 +28,17 @@ in {
   #    "--skip-login"
   #  ];
   #};
+  hardware.bluetooth.enable = true;
 
   machine = {
     users = mkDefault [
       "lriutzel"
     ];
-    bluetooth = true;
+    windowManagers = [ "sway" ];
     sizeTarget = 2;
     quietBoot = true;
     minimal = false;
     tui = true;
-    sound = true;
-    virtualization = false;
-    displayManager = "gdm";
-    windowManagers = [ "sway" "gnome" ];
     impermanence = mkDefault true;
     lowLevelXF86keys.enable = true;
     kernel = {
@@ -46,8 +49,6 @@ in {
       panicOnHungTaskTimeout = mkForce 1;
     };
   };
-  #services.xserver.displayManager.autoLogin.user = "lriutzel";
-  #services.xserver.displayManager.defaultSession = "sway";
 
   gumdrop = {
     printerScanner = true;

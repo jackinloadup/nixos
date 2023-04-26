@@ -4,14 +4,8 @@ let
   inherit (lib) mkIf mkEnableOption;
   ifGraphical = config.machine.sizeTarget > 1;
 in {
-  imports = [];
-
-  options.machine.bluetooth = mkEnableOption "Enable bluetooth";
-
-  config = mkIf config.machine.bluetooth {
+  config = mkIf config.hardware.bluetooth.enable {
     hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
       disabledPlugins = [ "sap" ]; # SIM Access Profile fails and isn't needed
       hsphfpd.enable = false; # Handled in Wireplumer
       settings = {

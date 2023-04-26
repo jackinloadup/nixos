@@ -58,6 +58,8 @@ in {
       powertop # debug power usage andbattery draw
       lshw # list hardware
       dmidecode # Read DMI (SMBIOS)
+      # builds cuda stuffs
+      nvtop # A (h)top like task monitor for AMD, Intel and NVIDIA GPUs
 
       # Disk
       parted # a partition manipulation program

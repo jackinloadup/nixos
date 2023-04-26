@@ -3,7 +3,6 @@
 let
   inherit (lib) mkIf mkOption types;
   inherit (builtins) elem;
-  cfg = config.machine;
   home-manager = inputs.home-manager;
 in {
   imports = [

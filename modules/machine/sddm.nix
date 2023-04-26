@@ -1,21 +1,13 @@
 { lib, pkgs, config, ... }:
 
 let
-  inherit (lib) mkIf mkOption types;
+  inherit (lib) mkIf;
 in {
-  imports = [ ];
-
-  options.machine.displayManager = mkOption {
-    type = with types; nullOr (enum [ "sddm" ]);
-  };
-
-  config = mkIf (config.machine.displayManager == "sddm") {
-
+  config = mkIf config.services.xserver.displayManager.sddm.enable {
     #services.xserver.enable = true;
     #services.xserver.autorun = true;
     services.xserver.displayManager.lightdm.enable = false;
     services.xserver.displayManager.sddm = {
-      enable = true;
       wayland = true;
     };
   };

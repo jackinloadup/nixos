@@ -8,16 +8,11 @@ let
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
-  imports = [ ];
-
-  options.machine.docker = mkEnableOption "Enable docker";
-
-  config = mkIf cfg.docker {
+  config = mkIf config.virtualisation.docker.enable {
     networking.hosts = {
       "172.17.0.1" = [ "host.docker.internal" ];
     };
     virtualisation.docker = {
-      enable = true;
       autoPrune.enable = true;
     };
 

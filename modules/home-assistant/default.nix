@@ -1,16 +1,11 @@
 { lib, pkgs, config, ... }:
 
 let
-  inherit (lib) mkIf mkEnableOption;
-  cfg = config.machine;
+  inherit (lib) mkIf;
   settings = import ../../settings;
 in {
-  imports = [];
 
-
-  options.machine.home-assistant = mkEnableOption "Install and configure home assistant on this machine";
-
-  config = mkIf cfg.home-assistant {
+  config = mkIf config.services.home-assistant.enable {
     #services.postgresql = {
     #  enable = true;
     #  ensureDatabases = [ "hass" ];

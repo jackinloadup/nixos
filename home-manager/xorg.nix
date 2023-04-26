@@ -2,9 +2,8 @@
 
 let
   inherit (lib) mkIf mkDefault;
-  ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
-  config = mkIf ifGraphical {
+  config = mkIf nixosConfig.services.xserver.enable {
     home.keyboard = null; # only works with x11 i believe
     home.pointerCursor.x11.enable = mkDefault true;
 
