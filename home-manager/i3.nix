@@ -15,7 +15,7 @@ in
     ./base16.nix
   ];
 
-  config = mkIf (builtins.elem "i3" nixosConfig.machine.windowManagers) {
+  config = mkIf nixosConfig.services.xserver.windowManager.i3.enable {
     programs.alacritty.enable = true;
 
     xsession.windowManager.i3 = let

@@ -3,13 +3,7 @@
 let
   inherit (lib) mkIf mkOption types;
 in {
-  imports = [ ];
-
-  options.machine.windowManagers = mkOption {
-    type = with types; nullOr (listOf (enum [ "i3" ]));
-  };
-
-  config = mkIf (builtins.elem "i3" config.machine.windowManagers) {
+  config = mkIf config.services.xserver.windowManager.i3.enable {
     programs.dconf.enable = true;
 
     services.xserver = {
@@ -19,20 +13,19 @@ in {
       desktopManager.xterm.enable = false;
 
       windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [
-          dmenu #application launcher most people use
-          i3status # gives you the default i3 status bar
-          i3lock #default i3 screen locker
-          i3blocks #if you are planning on using i3blocks over i3status
-          arandr # gui for display management
-          feh # lightweight image viewer. Used for background in i3.
-          xorg.xrandr # tui for display management
-          xorg.xauth
-          xorg.xhost
-          xorg.xev
-          xorg.xinput
-          xorg.xf86inputjoystick
+        extraPackages = [
+          pkgs.dmenu #application launcher most people use
+          pkgs.i3status # gives you the default i3 status bar
+          pkgs.i3lock #default i3 screen locker
+          pkgs.i3blocks #if you are planning on using i3blocks over i3status
+          pkgs.arandr # gui for display management
+          pkgs.feh # lightweight image viewer. Used for background in i3.
+          pkgs.xorg.xrandr # tui for display management
+          pkgs.xorg.xauth
+          pkgs.xorg.xhost
+          pkgs.xorg.xev
+          pkgs.xorg.xinput
+          pkgs.xorg.xf86inputjoystick
        ];
       };
     };

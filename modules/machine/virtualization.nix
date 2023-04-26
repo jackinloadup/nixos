@@ -8,16 +8,11 @@ let
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
-  imports = [ ];
-
-  options.machine.virtualization = mkEnableOption "Enable virtualization";
-
-  config = mkIf config.machine.virtualization {
+  config = mkIf config.virtualisation.libvirtd.enable {
     boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
     virtualisation.spiceUSBRedirection.enable = true;
     virtualisation.libvirtd = {
-      enable = true;
       qemu = {
         ovmf.enable = true;
         swtpm.enable = true;

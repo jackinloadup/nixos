@@ -34,9 +34,7 @@ in
     ../waybar.nix
   ];
 
-  config = mkIf (elem "sway" nixosConfig.machine.windowManagers) {
-    #swayEnabled = nixosConfig.programs.sway.enable;
-
+  config = mkIf config.wayland.windowManager.sway.enable {
     programs.foot.enable = true;
     programs.foot.server.enable = true;
     services.dunst.enable = true;
@@ -46,9 +44,11 @@ in
       wl-clipboard
       #mako
       #dmenu
-      gnome.adwaita-icon-theme
+      ddcutil
+      gopsuinfo
 
       #gksu # gui for root privilages # needed for zenmap # gone in unstable
+    ] ++ optionals config.wayland.windowManager.sway.xwayland [
       # enable  xhost si:localuser:root
       # disable xhost -si:localuser:root
       xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
@@ -58,7 +58,6 @@ in
     #services.flameshot.enable = true;
 
     wayland.windowManager.sway = {
-      enable = true;
       package = null; # don't override system-installed one
       wrapperFeatures.gtk = true;
 
@@ -207,6 +206,7 @@ in
           #{ command = "${pkgs.mako}/bin/mako"; }
           #{ command = "${pkgs.nextcloud-client}/bin/nextcloud"; }
           #{ command = "${pkgs.keepassxc}/bin/keepassxc"; }
+          #{ command = "${getExe pkgs.nwg-panel}"; }
           {
             command =
               let

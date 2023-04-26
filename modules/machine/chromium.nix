@@ -4,19 +4,14 @@
 # would be more ideal or at least an alterate if using
 # nix seporate from nixos
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
 in {
-  imports = [ ];
-
-  options.machine.chromium = mkEnableOption "Enable extra options only needed for gaming";
-
-  config = mkIf config.machine.chromium {
+  config = mkIf config.programs.chromium.enable {
     environment.systemPackages = with pkgs; [
       chromium
     ];
 
     programs.chromium = {
-      enable = true; # enable policies doesn't install chromium
       extraOpts = {
         "BrowserSignin" = 0;
         "SyncDisabled" = true;

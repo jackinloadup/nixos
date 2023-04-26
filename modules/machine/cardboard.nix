@@ -1,19 +1,12 @@
 { lib, pkgs, config, ... }:
 
 let
-  inherit (lib) mkIf mkOption types;
-  inherit (builtins) elem;
+  inherit (lib) mkIf mkEnableOption;
 in {
-  imports = [ ];
+  options.programs.cardboard.enable = mkEnableOption "A scrollable, tiling Wayland compositor inspired on PaperWM";
 
-  options.machine.windowManagers = mkOption {
-    type = with types; nullOr (listOf (enum [ "cardboard" ]));
-  };
-
-  config = mkIf (elem "cardboard" config.machine.windowManagers) {
-    environment.systemPackages = with pkgs; [
-      cardboard
-    ];
+  config = mkIf config.programs.cardboard.enable {
+    environment.systemPackages = [ pkgs.cardboard ];
   };
 }
 

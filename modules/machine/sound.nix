@@ -2,20 +2,14 @@
 
 let
   inherit (lib) mkIf mkEnableOption;
-  cfg = config.machine;
 in {
-  imports = [ ];
-
-  options.machine.sound = mkEnableOption "Enable sound through pipewire";
-
-  config = mkIf cfg.sound {
+  config = mkIf config.services.pipewire.enable {
     sound.enable = false; # Enables ALSA. Conflicts with pipewire?
     security.rtkit.enable = true; # Allows pipewire to run "realtime"
     hardware.pulseaudio.enable = false; # Disable pulseaudio
 
     # Enable pipewire https://nixos.wiki/wiki/PipeWire
     services.pipewire = {
-      enable = true;
       alsa.enable = false;
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this

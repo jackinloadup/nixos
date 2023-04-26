@@ -12,7 +12,7 @@ in {
       enable = mkDefault true; #TODO limit to authorized keys only
       allowSFTP = mkDefault true; # maybe controls if scp works?
       permitRootLogin = "yes";
-      passwordAuthentication = true;
+      passwordAuthentication = false;
       startWhenNeeded = mkDefault true;
 
       # disable insecure ciphers and macs

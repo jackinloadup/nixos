@@ -5,11 +5,7 @@ let
 in {
   imports = [ ];
 
-  options.machine.displayManager = mkOption {
-    type = with types; nullOr (enum [ "gdm" ]);
-  };
-
-  config = mkIf (config.machine.displayManager == "gdm") {
+  config = mkIf config.services.xserver.displayManager.gdm.enable {
     programs.dconf.enable = true;
 
     # gnome has its own power management tool
@@ -19,7 +15,6 @@ in {
     services.xserver.autorun = true;
     services.xserver.displayManager.lightdm.enable = false;
     services.xserver.displayManager.gdm = {
-      enable = true;
       wayland = true;
     };
   };

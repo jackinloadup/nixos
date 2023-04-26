@@ -54,7 +54,6 @@ in {
     hunspellDicts.en_US-large
     hyphen
 
-    chromium # web browser
     xfce.thunar # File manager
     #pantheon.elementary-files
     cinnamon.nemo # File manager
@@ -66,6 +65,8 @@ in {
     ## Audio
     pavucontrol # GUI volume source/sink manager
   ];
+
+  programs.chromium.enable = true;
 
   services = lib.mkIf ifGraphical {
     playerctld.enable = true;

@@ -7,11 +7,8 @@ let
 in {
   imports = [];
 
-  options.machine.botamusique = mkEnableOption "Enable botamusique";
-
-  config = mkIf config.machine.botamusique {
+  config = mkIf config.services.botamusique.enable {
     services.botamusique = {
-      enable = true;
       settings = {
         server.host = "mumble.wiledesign.com";
         bot.username = "music";

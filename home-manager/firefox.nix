@@ -1,11 +1,20 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 let
+  inherit (lib) mkIf; #makeDesktopItem;
   inherit (lib.attrsets) genAttrs;
 in
 {
-  config = lib.mkIf config.programs.firefox.enable {
-    home.packages = with pkgs; [
-      ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
+  config = mkIf config.programs.firefox.enable {
+    home.packages = [
+      pkgs.ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
+      #(makeDesktopItem { # convience alias to open a private window
+      #  name = "firefox-private";
+      #  desktopName = "Firefox (Private)";
+      #  genericName = "Open a private Firefox window";
+      #  icon = "firefox";
+      #  exec = "${pkgs.firefox-bin}/bin/firefox --private-window";
+      #  categories = [ "Network" ];
+      #})
     ];
 
     xdg.mimeApps = {
@@ -60,12 +69,12 @@ in
         #back-to-close-we
         #detect-cloudflare-plus # True Sight - track what content delievery networks are serving you
         sponsorblock
-        snowflake
-        old-reddit-redirect
-        reddit-enhancement-suite
-        ff2mpv
-        link-cleaner
-        markdownload
+        #snowflake
+        #old-reddit-redirect
+        #reddit-enhancement-suite
+        #ff2mpv
+        #link-cleaner
+        #markdownload
         #ipfs-companion
         #javascript-restrictor
       ];

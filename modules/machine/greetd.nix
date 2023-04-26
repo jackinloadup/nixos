@@ -15,11 +15,11 @@ in {
     # keep systemd startup logs on tty1
     boot.kernelParams = [ "console=tty1" ];
 
-    environment.etc."greetd/environments".text = ''
-      ${lib.optionalString config.programs.sway.enable "${getBin pkgs.systemd}/bin/systemd-cat -t sway ${getExe pkgs.sway}"}
-      ${lib.optionalString config.services.xserver.windowManager.i3.enable "${getBin pkgs.systemd}/bin/systemd-cat -t i3 ${getBin pkgs.xorg.xinit}/bin/startx ~/.xsession"}
-      ${lib.optionalString config.services.xserver.desktopManager.gnome.enable "${getBin pkgs.systemd}/bin/systemd-cat -t gnome gnome-session"}
-    '';
+    #environment.etc."greetd/environments".text = ''
+    #  ${lib.optionalString config.programs.sway.enable "${getBin pkgs.systemd}/bin/systemd-cat -t sway ${getExe pkgs.sway}"}
+    #  ${lib.optionalString config.services.xserver.windowManager.i3.enable "${getBin pkgs.systemd}/bin/systemd-cat -t i3 ${getBin pkgs.xorg.xinit}/bin/startx ~/.xsession"}
+    #  ${lib.optionalString config.services.xserver.desktopManager.gnome.enable "${getBin pkgs.systemd}/bin/systemd-cat -t gnome gnome-session"}
+    #'';
 
     users.users.greeter.group = "greeter";
     users.groups.greeter = { };
@@ -42,7 +42,7 @@ in {
       in
       {
         enable = true;
-        vt = 2; # use tty2 to stay away from systemd startup logs
+        vt = 7; # use tty7 to stay away from systemd startup logs
         settings = {
           default_session = {
             command = "${getExe pkgs.sway} --config ${greetdSwayCfg}";

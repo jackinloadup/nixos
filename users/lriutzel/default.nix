@@ -22,11 +22,6 @@ in {
 
   # If user is enabled
   config = mkIf (builtins.elem username config.machine.users) {
-    programs.nix-ld.enable = true;
-    environment.variables = {
-        NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (config.systemd.packages ++ config.environment.systemPackages);
-        NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
-    };
 
     nix.settings.trusted-users = [ username ];
 
@@ -47,15 +42,23 @@ in {
     };
 
 
+    programs.nix-ld.enable = true;
     programs.wireshark.enable = ifFull;
 
     services.trezord.enable = ifGraphical;
+
+    hardware.yubikey.enable = ifGraphical;
 
     environment.etc."nixos/flake.nix".source = "/home/${username}/dotfiles/flake.nix";
     environment.systemPackages = with pkgs; mkIf ifGraphical [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       nmapsi4 # QT frontend for nmap
     ];
+    environment.variables = {
+        # Supports inputs.nix-ld
+        NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (config.systemd.packages ++ config.environment.systemPackages);
+        NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
+    };
 
 
     # DON'T set useGlobalPackages! It's not necessary in newer
@@ -91,7 +94,6 @@ in {
         ../../home-manager/sway/default.nix
         ../../home-manager/syncthing.nix
         ../../home-manager/xorg.nix
-        #./task-warrior
       ]
       ++ optionals ifFull [
       ];
@@ -108,12 +110,38 @@ in {
 
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
+      programs.fzf.enable = ifTui;
+      programs.thunderbird.enable = ifGraphical; # Email client
+      programs.thunderbird.profiles = {
+        lriutzel = {
+          isDefault = true;
+
+        };
+      }; # Email client
+      programs.obs-studio = {
+        enable = ifGraphical;
+        plugins = [ 
+          pkgs.obs-studio-plugins.wlrobs
+          pkgs.obs-studio-plugins.obs-multi-rtmp
+        ];
+      };
+      programs.zsh.enable = ifTui;
+      programs.starship.enable = ifTui;
+
       services.gpg-agent.enable = ifGraphical;
       services.syncthing.enable = ifGraphical;
 
+      #programs.rbw = {
+      #  enable = true;
+      #  settings = {
+      #    inherit email;
+      #    lock_timeout = 300;
+      #    pinentry = "gnome3";
+      #  };
+      #};
+
       home.packages = with pkgs; []
       ++ optionals ifGraphical [ # TUI tools but loading if graphical
-        fzf
         unstable.mqttui # mqtt tui
 
         # markdown tools
@@ -141,7 +169,6 @@ in {
         #gnome.vinagre # VNC view another computer
         fractal # matrix client
         nheko   # matrix client
-        thunderbird # Email client
         #mumble # voice chat application
         signal-desktop # messaging client
 
@@ -177,9 +204,6 @@ in {
         ## Video
         handbrake
         lbry
-        obs-studio
-        obs-studio-plugins.wlrobs
-        obs-studio-plugins.obs-multi-rtmp
 
         ## Debugging
         wireshark
@@ -190,8 +214,6 @@ in {
         #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
       ];
     };
-
-    hardware.yubikey.enable = ifGraphical;
 
     #modules.browsers.firefox = {
     #  enable = ifGraphical;

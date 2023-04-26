@@ -12,37 +12,42 @@ in {
     ./sway-monitor-setup.nix
   ];
 
+  hardware.rtl-sdr.enable = false;
+  hardware.bluetooth.enable = true;
+
+  programs.adb.enable = true;
+  programs.chirp.enable = true;
+  programs.chromium.enable = true;
+  programs.steam.enable = true;
+  programs.simula.enable = true;
+
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
 
+  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.windowManager.i3.enable = true;
+
   services.hydra.enable = true;
   services.nextcloud.enable = true;
+  services.pipewire.enable = true;
+
+  virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   machine = {
     users = [
       "lriutzel"
     ];
-    adb = true;
-    chirp = true;
-    chromium = true;
-    docker = true;
     tui = true;
     sizeTarget = 3;
-    bluetooth = true;
-    botamusique = false;
     encryptedRoot = true;
     gaming = true;
     impermanence = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
-    simula = true;
-    sdr = true;
-    sound = true;
-    steam = true;
     displayManager = "greetd";
-    windowManagers = [ "sway" "i3" ];
-    virtualization = true;
+    windowManagers = [ "sway" ];
     locale = settings.user.locale;
     characterSet = settings.user.characterSet;
   };
@@ -50,6 +55,13 @@ in {
   # Causes kernel build
   boot.crashDump.enable = false;
 
+  boot.binfmt.emulatedSystems = [
+    "wasm32-wasi"
+    "x86_64-windows"
+    "aarch64-linux"
+  ];
+
+  # dragon, doesn't look too good in tty only works in pty
   environment.etc.issue.source = lib.mkForce ./issue-banner;
 
   gumdrop = {
@@ -59,15 +71,15 @@ in {
     storageServer.roms = true;
   };
 
-  networking.hostName = "reg";
   nix.settings.max-jobs = lib.mkDefault 16;
 
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.self.overlays.default
-    inputs.self.overlays.kodi-wayland
+    #inputs.self.overlays.kodi-wayland
   ];
 
+  networking.hostName = "reg";
   networking.bridges.br0.interfaces = ["eno1"];
   networking.interfaces.br0.useDHCP = true;
   virtualisation.libvirtd.allowedBridges = [ "br0" ];

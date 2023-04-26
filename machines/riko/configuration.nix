@@ -2,38 +2,41 @@
 
 with inputs;
 let
+  inherit (lib) mkDefault;
   settings = import ../../settings;
 in {
-
   imports = [
     ./hardware-configuration.nix
   ];
 
+  hardware.bluetooth.enable = true;
+  hardware.rtl-sdr.enable = false;
   hardware.yubikey.enable = true;
 
+  programs.adb.enable = true;
+  programs.chromium.enable = true;
+  programs.steam.enable = true;
+
+  services.pipewire.enable = true;
+  services.xserver.displayManager.autoLogin.user = "lriutzel";
+  services.xserver.displayManager.defaultSession = "sway";
+  #services.xserver.desktopManager.i3.enable = true;
+
   # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
+  virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   machine = {
     users = [ "lriutzel" ];
-    adb = true;
-    chromium = true;
-    docker = true;
     tui = true;
     sizeTarget = 2;
-    bluetooth = true;
     encryptedRoot = true;
     lowLevelXF86keys.enable = true;
     quietBoot = true;
-    sdr = false;
-    sound = true;
-    steam = true;
+    gaming = true;
     displayManager = "greetd";
-    windowManagers = [ "sway" "i3" ];
-    virtualization = true;
+    windowManagers = [ "sway" ];
   };
-
-  services.xserver.displayManager.autoLogin.user = "lriutzel";
-  services.xserver.displayManager.defaultSession = "sway";
 
   gumdrop = {
     printerScanner = true;
@@ -47,7 +50,7 @@ in {
   networking.hostName = "riko";
 
   # Playing with iwd 
-  environment.systemPackages = with pkgs; [ iwgtk ];
+  environment.systemPackages = [ pkgs.iwgtk ];
   networking.networkmanager.wifi.backend = "iwd";
   networking.wireless.iwd.enable = true;
   networking.wireless.iwd.settings = {
@@ -70,11 +73,11 @@ in {
     };
   };
 
-  nix.settings.max-jobs = lib.mkDefault 4;
+  nix.settings.max-jobs = mkDefault 4;
 
   nixpkgs.overlays = [
     inputs.self.overlays.default
-    inputs.self.overlays.kodi-wayland
+    #inputs.self.overlays.kodi-wayland
   ];
   #fonts.fontconfig.dpi = 152;
 

@@ -1,7 +1,6 @@
 { lib, pkgs, config, inputs, ... }:
 
 let
-  cfg = config.machine;
   settings = import ../../settings;
 in {
   imports = [

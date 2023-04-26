@@ -17,13 +17,14 @@ in {
     quietBoot = true;
     home-assistant = true;
     tui = true;
-    virtualization = true;
     windowManagers = [];
   };
 
   gumdrop = {
     adguard = true;
   };
+
+  virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.onShutdown = "shutdown";
 
   machine.kernel = {

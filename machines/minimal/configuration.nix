@@ -14,15 +14,11 @@ in {
     users = [
 #      "lriutzel"
     ];
-    adb = false;
     tui = false;
     sizeTarget = 0;
-    bluetooth = false;
     encryptedRoot = false;
     lowLevelXF86keys.enable = false;
     quietBoot = false;
-    sdr = false;
-    sound = false;
     windowManagers = [];
     minimal = true;
   };

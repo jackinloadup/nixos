@@ -11,6 +11,8 @@ in {
     ./auto-pair-ps3-remote.nix
   ];
 
+  hardware.bluetooth.enable = true;
+
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
   services.getty = {
@@ -23,19 +25,17 @@ in {
       "--skip-login"
     ];
   };
+  services.pipewire.enable = true;
 
   machine = {
     users = [
       "lriutzel"
       "kodi"
     ];
-    bluetooth = true;
     sizeTarget = 1;
     quietBoot = true;
     minimal = true;
     tui = false;
-    sound = true;
-    virtualization = false;
     #displayManager = "gdm";
     windowManagers = [ ];
     kernel = {

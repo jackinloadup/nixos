@@ -6,8 +6,7 @@ let
   theme = settings.theme;
   font = theme.font;
   swayEnabled = config.wayland.windowManager.sway.enable;
-in
-{
+in {
   imports = [
     ./base16.nix
   ];

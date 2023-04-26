@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   settings = import ../../settings;
   ifTui = config.machine.sizeTarget > 0;
   ifGraphical = config.machine.sizeTarget > 1;
@@ -10,8 +10,8 @@ in {
     console.font = mkIf ifTui console;
     fonts = mkIf ifGraphical {
       fontconfig = {
-        enable = true;
-        antialias = true;
+        enable = mkDefault true;
+        antialias = mkDefault true;
         defaultFonts = {
           serif = [ serif.family ];
           sansSerif = [ normal.family ];
