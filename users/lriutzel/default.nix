@@ -49,7 +49,7 @@ in {
 
     hardware.yubikey.enable = ifGraphical;
 
-    environment.etc."nixos/flake.nix".source = "/home/${username}/dotfiles/flake.nix";
+    environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
     environment.systemPackages = with pkgs; mkIf ifGraphical [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
       nmapsi4 # QT frontend for nmap
@@ -102,11 +102,11 @@ in {
       home.homeDirectory = mkOverride 10 homeDir;
 
       home.sessionVariables = {
-        NIXOS_CONFIG="${homeDir}/dotfiles/flake.nix";
-        NIX_PATH="nixos-config=${homeDir}/dotfiles/flake.nix:$NIX_PATH";
+        NIXOS_CONFIG="${homeDir}/Projects/dotfiles/flake.nix";
+        NIX_PATH="nixos-config=${homeDir}/Projects/dotfiles/flake.nix:$NIX_PATH";
       };
 
-      programs.git.extraConfig.safe.directory = "${homeDir}/dotfiles";
+      programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
@@ -130,6 +130,7 @@ in {
 
       services.gpg-agent.enable = ifGraphical;
       services.syncthing.enable = ifGraphical;
+      wayland.windowManager.sway.enable = ifGraphical;
 
       #programs.rbw = {
       #  enable = true;

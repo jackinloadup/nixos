@@ -1,7 +1,7 @@
 { config, pkgs, nixosConfig, lib, inputs, ... }:
 
 let
-  inherit (lib) mkIf getBin getExe;
+  inherit (lib) mkIf getBin getExe optionals;
   inherit (builtins) elem mul;
 
   settings = import ../../settings;
