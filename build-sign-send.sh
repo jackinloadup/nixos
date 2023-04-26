@@ -35,7 +35,7 @@ HOST_USER="root"
 DEVICE="/dev/sda"
 
 # NIX signing key
-KEY_FILE="$HOME/Projects/secrets/reg-nix-secret-key"
+KEY_FILE="$HOME/Projects/secrets/services/nix/reg-nix-secret-key"
 
 # Name of the ZFS pool
 ZPOOL="zroot_${HOST}"
@@ -69,7 +69,7 @@ main () {
   cd ~
 
   echo "Build $FLAKE"
-  nixos-rebuild build --flake ~/dotfiles#${FLAKE} || exit $?
+  nixos-rebuild build --flake ~/Projects/dotfiles#${FLAKE} || exit $?
 
   echo "Sign $FLAKE"
   nix store sign --key-file $KEY_FILE --recursive ~/result || exit $?
