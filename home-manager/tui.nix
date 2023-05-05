@@ -74,6 +74,7 @@ in {
       iotop
       inetutils
       usbutils # an alternative could be busybox cope toybox
+      hwloc # can show hardware topo with lstopo
       #unzip # duh
       lftp
 
@@ -81,6 +82,7 @@ in {
       #unar # An archive unpacker program GUI & TUI
       units
 
+      sad # tool to search and replace
       jless # json viewer
       tealdeer # $tldr strace
       nota # fancy cli calculator
@@ -111,6 +113,9 @@ in {
       # Fun
       asciiquarium # Fun aquarium animation
       cmatrix # Fun matrix animation
+
+      # k8s
+      k9s # Kubernetes CLI To Manage Your Clusters In Style
     ];
   };
 }

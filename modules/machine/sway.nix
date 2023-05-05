@@ -22,6 +22,7 @@ in {
 
         wev
         wdisplays
+        wlr-randr
 
         bemenu
         j4-dmenu-desktop
