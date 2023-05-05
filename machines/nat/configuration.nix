@@ -11,7 +11,6 @@ in {
     ./auto-pair-ps3-remote.nix
   ];
 
-  hardware.bluetooth.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
@@ -119,6 +118,7 @@ in {
   };
 
   hardware = {
+    bluetooth.enable = true;
     bluetooth.settings.General.Name = "Entertainment";
     opengl.enable = mkForce true;
     opengl.driSupport = mkForce true;
