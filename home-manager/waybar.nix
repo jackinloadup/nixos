@@ -11,9 +11,8 @@ in {
     ./base16.nix
   ];
 
-  config = {
+  config = mkIf config.programs.waybar.enable {
     programs.waybar = {
-      enable = true;
       systemd = {
         enable = false;
         #target = "sway-session.target"; # not available in HM 21.11

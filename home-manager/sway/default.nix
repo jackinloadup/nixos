@@ -37,6 +37,7 @@ in
   config = mkIf config.wayland.windowManager.sway.enable {
     programs.foot.enable = true;
     programs.foot.server.enable = true;
+    programs.waybar.enable = true;
     services.dunst.enable = true;
 
     home.packages = with pkgs; [
