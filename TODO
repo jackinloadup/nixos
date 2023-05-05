@@ -18,6 +18,7 @@ gamescope - SteamOS session compositing window manager - https://github.com/Plag
 
 # proposed
 gnupg
+clamav - OnAccessScan
 wfvm https://git.m-labs.hk/M-Labs/wfvm
 quickemu
 tpm remote attestation
