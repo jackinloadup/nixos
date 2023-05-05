@@ -31,6 +31,8 @@ in {
         # C-b + C-b will go to the last window
         bind-key C-b last-window
 
+        bind-key -T copy-mode-vi v send-keys -X begin-selection
+
         # don't rename windows automatically
         set-option -g allow-rename off
 
@@ -64,6 +66,9 @@ in {
         #set-option -g lock-command asciiquarium
         #set-option -g lock-after-time 180
       '';
+      plugins = with pkgs.tmuxPlugins; [
+        vim-tmux-navigator
+      ];
       #plugins = with pkgs.tmuxPlugins; [
       #  {
       #    plugin = pain-control;
