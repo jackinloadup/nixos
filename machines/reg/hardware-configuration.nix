@@ -4,6 +4,9 @@
   imports = [ ];
 
   config = {
+    # Possible fix for bluetooth not connecting
+    boot.kernelParams = [ "btusb.enable_autosuspend=n" ];
+
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     boot.kernelModules = [ "kvm-amd" ];
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod" ];
