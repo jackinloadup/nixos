@@ -4,20 +4,29 @@
 let
   inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
+  isUserFacing = false;
 in {
 
   imports = [
     ./hardware-configuration.nix
   ];
 
+
+  boot.plymouth.enable = isUserFacing;
+
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
-  services.pipewire.enable = true;
+  services.pipewire.enable = isUserFacing;
   #services.xserver.displayManager.autoLogin.user = "lriutzel";
   #services.xserver.displayManager.defaultSession = "sway";
-  services.xserver.desktopManager.gnome.enable = true;
 
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = isUserFacing;
+  services.xserver.displayManager.gdm.enable = isUserFacing;
+
+  services.k3s.enable = true;
+  services.k3s.role = "server";
+  services.k3s.clusterInit = true;
+
   #services.getty = {
   #  autologinUser = "kodi";
   #  extraArgs = [
@@ -28,19 +37,19 @@ in {
   #    "--skip-login"
   #  ];
   #};
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth.enable = isUserFacing;
 
   machine = {
     users = mkDefault [
       "lriutzel"
     ];
-    windowManagers = [ "sway" ];
-    sizeTarget = 2;
-    quietBoot = true;
+    windowManagers = [ ];
+    sizeTarget = 1;
+    quietBoot = isUserFacing;
     minimal = false;
     tui = true;
     impermanence = mkDefault true;
-    lowLevelXF86keys.enable = true;
+    lowLevelXF86keys.enable = isUserFacing;
     kernel = {
       rebootAfterPanic = mkForce 10;
       panicOnOOM = mkForce true;
@@ -66,10 +75,6 @@ in {
   #    inputs.self.overlays.plymouth-no-gtk
   #    inputs.self.overlays.pipewire-minimal
     ];
-  };
-
-  boot.plymouth = {
-    enable = true;
   };
 
 
@@ -103,10 +108,6 @@ in {
     };
 
     vmVariantWithBootLoader = vmVariant;
-  };
-
-  hardware = {
-    bluetooth.settings.General.Name = "Lyza";
   };
 
   networking = {
