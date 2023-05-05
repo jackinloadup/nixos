@@ -1,22 +1,21 @@
-{ pkgs, lib, nixosConfig, ... }:
+{ pkgs, lib, config, ... }:
 
 let 
-  isGraphical = nixosConfig.machine.sizeTarget > 1;
+  inherit (lib) mkIf;
 in {
 
-  config = lib.mkIf isGraphical {
+  config = mkIf config.services.mopidy.enable {
     home.packages = with pkgs; [
       ncmpcpp
     ];
 
     services.mopidy = {
-      enable = true;
-      extensionPackages = with pkgs; [
-        # mopidy-spotify #removed because Spotify stopped supporting libspotify
-        # mopidy-local
-        mopidy-mpd
-        mopidy-mpris
-        mopidy-somafm
+      extensionPackages = [
+        # pkgs.mopidy-spotify #removed because Spotify stopped supporting libspotify
+        # pkgs.mopidy-local
+        pkgs.mopidy-mpd
+        pkgs.mopidy-mpris
+        pkgs.mopidy-somafm
       ];
       settings = {
         file = {

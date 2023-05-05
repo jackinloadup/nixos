@@ -1,7 +1,7 @@
 { inputs, lib, pkgs, config, ... }:
 
 let
-  inherit (lib) mkOption mkIf mkOverride optionals;
+  inherit (lib) mkOption mkIf mkOverride optionals elem;
   inherit (lib.types) listOf enum;
 
   cfg = config.machine;
@@ -10,6 +10,9 @@ let
   ifFull = cfg.sizeTarget > 2;
   settings = import ./settings.nix;
   username = settings.username;
+  fullSystems = [ "reg" "riko" ];
+  hostname = config.networking.hostName;
+  isFullSystem = elem hostname fullSystems;
 in {
   imports = [
     inputs.nix-ld.nixosModules.nix-ld
@@ -41,20 +44,19 @@ in {
       ];
     };
 
+    #programs.nix-ld.enable = isFullSystem;
+    programs.wireshark.enable = isFullSystem;
 
-    programs.nix-ld.enable = true;
-    programs.wireshark.enable = ifFull;
+    services.trezord.enable = isFullSystem;
 
-    services.trezord.enable = ifGraphical;
-
-    hardware.yubikey.enable = ifGraphical;
+    hardware.yubikey.enable = isFullSystem;
 
     environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
-    environment.systemPackages = with pkgs; mkIf ifGraphical [
+    environment.systemPackages = mkIf isFullSystem [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
-      nmapsi4 # QT frontend for nmap
+      pkgs.nmapsi4 # QT frontend for nmap
     ];
-    environment.variables = {
+    environment.variables = mkIf isFullSystem {
         # Supports inputs.nix-ld
         NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (config.systemd.packages ++ config.environment.systemPackages);
         NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
@@ -75,8 +77,9 @@ in {
         ../../home-manager/foot.nix
         ../../home-manager/mpv.nix
         ../../home-manager/music.nix
+        ../../home-manager/openrct2.nix
+        ../../home-manager/zoom.nix
         ../../home-manager/zsh.nix
-        ./mobomo.nix
         inputs.secrets.homemanagerModules.lriutzel
       ]
       ++ optionals ifTui [
@@ -86,7 +89,6 @@ in {
         ../../home-manager/alacritty.nix
         ../../home-manager/development.nix
         ../../home-manager/graphical.nix
-        ../../home-manager/openrct2.nix
         ../../home-manager/gpg.nix
         ../../home-manager/i3.nix
         ../../home-manager/impermanence.nix
@@ -95,7 +97,7 @@ in {
         ../../home-manager/syncthing.nix
         ../../home-manager/xorg.nix
       ]
-      ++ optionals ifFull [
+      ++ optionals isFullSystem [
       ];
 
       home.username = settings.username;
@@ -108,10 +110,11 @@ in {
 
       programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
+      programs.neovim.enable = true;
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
       programs.fzf.enable = ifTui;
-      programs.thunderbird.enable = ifGraphical; # Email client
+      programs.thunderbird.enable = isFullSystem; # Email client
       programs.thunderbird.profiles = {
         lriutzel = {
           isDefault = true;
@@ -119,18 +122,21 @@ in {
         };
       }; # Email client
       programs.obs-studio = {
-        enable = ifGraphical;
+        enable = isFullSystem;
         plugins = [ 
           pkgs.obs-studio-plugins.wlrobs
           pkgs.obs-studio-plugins.obs-multi-rtmp
         ];
       };
+      programs.openrct2.enable = isFullSystem;
+      programs.zoom-us.enable = isFullSystem;
       programs.zsh.enable = ifTui;
       programs.starship.enable = ifTui;
 
-      services.gpg-agent.enable = ifGraphical;
-      services.syncthing.enable = ifGraphical;
-      wayland.windowManager.sway.enable = ifGraphical;
+      services.gpg-agent.enable = isFullSystem;
+      services.mopidy.enable = isFullSystem;
+      services.syncthing.enable = isFullSystem;
+      wayland.windowManager.sway.enable = isFullSystem;
 
       #programs.rbw = {
       #  enable = true;
@@ -151,7 +157,7 @@ in {
         mdr # tui viewer
         # mdv # tui viewer not in nixpkgs yet
       ]
-      ++ optionals ifGraphical [
+      ++ optionals isFullSystem [
         emulsion # mimimal linux image viewer built in rust
         imv # minimal image viewer
         tor-browser-bundle-bin
@@ -181,7 +187,7 @@ in {
 
         kodi-wayland
       ]
-      ++ optionals ifFull [
+      ++ optionals isFullSystem [
         #helvum # pipewire patchbay # failing to build
         easyeffects # Audio effects
 

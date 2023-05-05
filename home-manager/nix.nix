@@ -8,6 +8,9 @@
       inputs.nur.overlay
     ];
 
+    # expose registry items that are relevant outside of nixos
+    #nix.registry = nixosConfig.nix.registry;
+
     #nix.package = pkgs.nix;
     nix.extraOptions = ''
       experimental-features = nix-command flakes

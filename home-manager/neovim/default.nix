@@ -1,11 +1,12 @@
-{ config, pkgs, nixosConfig, ... }:
+{ lib, config, pkgs, nixosConfig, ... }:
 
 let
+  inherit (lib) mkIf;
   nvim-syntax-rsc-mikrotik = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/olejor/mikrotik/master/syntax/vim/rsc.vim";
     sha256 = "b32568b014864eb7399c900d82f8e2d921c5b7cc83cafd5525296a7acbdfc20e";
   };
-in {
+in mkIf config.programs.neovim.enable {
   home.file."${config.xdg.configHome}/nvim/syntax/rsc.vim".source = nvim-syntax-rsc-mikrotik;
 
   home.sessionVariables = {
@@ -23,7 +24,6 @@ in {
   ];
 
   programs.neovim = {
-    enable = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
