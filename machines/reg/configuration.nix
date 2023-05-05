@@ -76,7 +76,7 @@ in {
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.self.overlays.default
-    #inputs.self.overlays.kodi-wayland
+    inputs.self.overlays.kodi-wayland
   ];
 
   networking.hostName = "reg";
