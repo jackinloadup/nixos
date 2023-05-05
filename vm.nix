@@ -1,4 +1,4 @@
-{ pkgs, ... }: let 
+{pkgs, ...}: let
   flake = import ./flake.nix;
 in {
   # ssh setup
@@ -6,10 +6,10 @@ in {
   boot.initrd.network.ssh = {
     enable = true;
     port = 22;
-    authorizedKeys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1pkTHUApo4oX3PLXnXcTLZ7xszEdeYJfBFEUyliYgD32INvsvQhl3ZmhZ1P5IMDmrMb/zd9dsMbtfY1fgy+unSMblb6RS7SxOt6vfifxNc1R7ylaa1HufgAhJHT+bSWNGPliA5Ds2XbdbPh3I6yRFT+V37QUz9EesDFaUC0JVEgqVOAUikSAGXhAeskTpQhD//32lEPwPM45iVS7Zix34LYrQ/RyVL9EKMRGLGFkJ3UgLsn6j8Wos7EM9YoW8s7lueShBcCFLqGus2Mjg71L14MWM1CCtaiFeBr04BtmhtvCjKJ505zfVLWLC8bg/URR6mIZABc1OqKRnm017tlJ3Q== lriutzel@gmail.com"];
+    authorizedKeys = ["ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1pkTHUApo4oX3PLXnXcTLZ7xszEdeYJfBFEUyliYgD32INvsvQhl3ZmhZ1P5IMDmrMb/zd9dsMbtfY1fgy+unSMblb6RS7SxOt6vfifxNc1R7ylaa1HufgAhJHT+bSWNGPliA5Ds2XbdbPh3I6yRFT+V37QUz9EesDFaUC0JVEgqVOAUikSAGXhAeskTpQhD//32lEPwPM45iVS7Zix34LYrQ/RyVL9EKMRGLGFkJ3UgLsn6j8Wos7EM9YoW8s7lueShBcCFLqGus2Mjg71L14MWM1CCtaiFeBr04BtmhtvCjKJ505zfVLWLC8bg/URR6mIZABc1OqKRnm017tlJ3Q== lriutzel@gmail.com"];
     #hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" "/etc/secrets/initrd/ssh_host_ed25519_key" ];
   };
-  boot.initrd.availableKernelModules = [ "igb" ];
+  boot.initrd.availableKernelModules = ["igb"];
 
   # Allow the user to login as root without password.
   users.extraUsers.root.initialHashedPassword = "";
@@ -25,7 +25,7 @@ in {
     memorySize = 1024;
     graphics = true;
     qemu = {
-      options = [ "-bios" "${pkgs.OVMF.fd}/FV/OVMF.fd" ];
+      options = ["-bios" "${pkgs.OVMF.fd}/FV/OVMF.fd"];
       networkingOptions = [
         # We need to re-define our usermode network driver
         # since we are overriding the default value.
@@ -35,7 +35,6 @@ in {
       ];
     };
   };
-
 
   services.openssh.enable = true;
   #services.xserver.enable = true;

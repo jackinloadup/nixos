@@ -1,9 +1,14 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf; #makeDesktopItem;
   inherit (lib.attrsets) genAttrs;
-in
-{
+in {
   config = mkIf config.programs.firefox.enable {
     home.packages = [
       pkgs.ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
@@ -125,7 +130,7 @@ in
             "browser.newtabpage.activity-stream.feeds.system.topstories" = false; # Disable top stories
             "browser.newtabpage.activity-stream.section.highlights.includePocket" = false; # Disable pocket
             "browser.tabs.firefox-view" = false; # Disable Firefox View
-  
+
             # Disable some not so useful functionality.
             "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
             "extensions.htmlaboutaddons.recommendations.enabled" = false;
@@ -175,19 +180,19 @@ in
             "datareporting.healthreport.uploadEnabled" = false;
             "datareporting.healthreport.service.enabled" = false;
             "datareporting.policy.dataSubmissionEnabled" = false;
-  
+
             # skip homepage when starting
             "browser.search.firstRunSkipsHomepage" = true;
             # allow use of system gtk dark theme
             "widget.content.allow-gtk-dark-theme" = true;
-  
+
             "media.eme.enabled" = true; # Enable DRM
             "media.gmp-widevinecdm.visible" = true; # Enable DRM
             "media.gmp-widevinecdm.enabled" = true; # Enable DRM
-  
+
             # Use screen share indicator that works better in Wayland
             "privacy.webrtc.legacyGlobalIndicator" = false;
-  
+
             # causing issues to to it eliminating timezones. can't make exceptions
             # per site. will explore a profile per task in the future.
             #"privacy.resistFingerprinting" = true;
@@ -201,7 +206,7 @@ in
           };
         };
       };
-  
+
       #extraPolicies = {
       #  CaptivePortal = true;
       #  DisableFirefoxStudies = true;
@@ -217,7 +222,7 @@ in
       #     SkipOnboarding = true;
       #   };
       #};
-  
+
       #  extraPrefs = ''
       #    // Show more ssl cert infos
       #    lockPref("security.identityblock.show_extended_validation", true);

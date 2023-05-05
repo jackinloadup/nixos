@@ -1,12 +1,15 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
 in {
-  imports = [ ];
+  imports = [];
 
   options.machine.displayManager = mkOption {
-    type = with types; nullOr (enum [ "ly" ]);
+    type = with types; nullOr (enum ["ly"]);
   };
 
   config = mkIf (config.machine.displayManager == "ly") {

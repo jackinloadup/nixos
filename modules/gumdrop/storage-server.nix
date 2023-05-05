@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption mkOption mkMerge mkForce types;
   cfg = config.gumdrop.storageServer;
   settings = import ../../settings;
@@ -22,7 +25,12 @@ in {
   };
 
   config = let
-    mount = { name, mount ? "gumdrop/${name}", remoteMount ? "storage/${name}" } : if cfg.${name}
+    mount = {
+      name,
+      mount ? "gumdrop/${name}",
+      remoteMount ? "storage/${name}",
+    }:
+      if cfg.${name}
       then {
         "/mnt/${mount}" = {
           device = "${address}:/mnt/${remoteMount}";
@@ -37,15 +45,16 @@ in {
           ];
         };
       }
-    else {};
-  in mkIf cfg.enable {
-    # https://nixos.wiki/wiki/NFS
-    fileSystems = mkMerge [
-      ( mount { name = "media"; } )
-      ( mount { name = "roms"; } )
-    ];
+      else {};
+  in
+    mkIf cfg.enable {
+      # https://nixos.wiki/wiki/NFS
+      fileSystems = mkMerge [
+        (mount {name = "media";})
+        (mount {name = "roms";})
+      ];
 
-    # This service isn't needed for NFSv4. Needed pre v4
-    services.rpcbind.enable = mkForce false;
-  };
+      # This service isn't needed for NFSv4. Needed pre v4
+      services.rpcbind.enable = mkForce false;
+    };
 }

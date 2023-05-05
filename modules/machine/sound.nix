@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
 in {
   config = mkIf config.services.pipewire.enable {
@@ -20,7 +23,8 @@ in {
       #media-session.enable = true;
 
       config.pipewire = {
-        "context.properties" = { # debug tuning
+        "context.properties" = {
+          # debug tuning
           #"link.max-buffers" = 64;
           #"link.max-buffers" = 16; # version < 3 clients can't handle more than this
           #"log.level" = 2; # https://docs.pipewire.org/page_daemon.html
@@ -34,10 +38,10 @@ in {
 
     # if undistract me is enabled go ahead and use sound
     programs.bash.undistractMe.playSound = true;
-    environment.systemPackages = (with pkgs; [
+    environment.systemPackages = with pkgs; [
       pulseaudio
       #pamixer # TUI volume source/sink manager
       pulsemixer # TUI volume source/sink manager
-    ]);
+    ];
   };
 }

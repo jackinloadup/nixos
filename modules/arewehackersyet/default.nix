@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.machine;
   settings = import ../../settings;
@@ -9,13 +12,14 @@ in {
 
   options.machine = {
     # https://jjjollyjim.github.io/arewehackersyet/index.html
-    arewehackersyet = mkEnableOption "Tools from kali linux" ;
+    arewehackersyet = mkEnableOption "Tools from kali linux";
   };
 
   config = mkIf cfg.arewehackersyet {
-      environment.systemPackages = with pkgs; mkIf (cfg.sizeTarget > 0) [
+    environment.systemPackages = with pkgs;
+      mkIf (cfg.sizeTarget > 0) [
         gnome.simple-scan
-       	aircrack-ng 
+        aircrack-ng
         wifite2
         bully
         cowpatty

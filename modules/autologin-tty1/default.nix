@@ -1,5 +1,9 @@
-{ lib, pkgs, config, ... }:
-
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 # @TODO start something like agetty@tty1.service after autovt@tty1 stops
 let
   inherit (lib) mkIf mkEnableOption mkOption types;
@@ -22,25 +26,25 @@ in {
   config = mkIf cfg.enable {
     systemd.targets = {
       "autologin-tty1" = {
-        requires = [ "multi-user.target" ];
-        after = [ "multi-user.target" ];
+        requires = ["multi-user.target"];
+        after = ["multi-user.target"];
         unitConfig.AllowIsolate = "yes";
       };
     };
-  
+
     systemd.services = {
       "autovt@tty1" = {
         enable = true;
         restartIfChanged = false;
         description = "autologin service at tty1";
-        after = [ "suppress-kernel-logging.service" ];
-        wantedBy = [ "autologin-tty1.target" ];
+        after = ["suppress-kernel-logging.service"];
+        wantedBy = ["autologin-tty1.target"];
         serviceConfig = {
-          ExecStart =  concatStringsSep " " ([
+          ExecStart = concatStringsSep " " [
             "@${pkgs.utillinux}/sbin/agetty"
             "agetty --login-program ${pkgs.shadow}/bin/login"
             "--autologin ${cfg.user} --noclear %I $TERM"
-          ]);
+          ];
           Restart = "no";
           Type = "idle";
         };
@@ -49,8 +53,8 @@ in {
         enable = true;
         restartIfChanged = false;
         description = "suppress kernel logging to the console";
-        after = [ "multi-user.target" ];
-        wantedBy = [ "autologin-tty1.target" ];
+        after = ["multi-user.target"];
+        wantedBy = ["autologin-tty1.target"];
         serviceConfig = {
           ExecStart = "${pkgs.utillinux}/sbin/dmesg -n 1";
           Type = "oneshot";

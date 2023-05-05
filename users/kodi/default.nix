@@ -1,6 +1,10 @@
-{ inputs, lib, pkgs, config, ... }:
-
-let
+{
+  inputs,
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
   inherit (builtins) elem;
   home-manager = inputs.home-manager;
@@ -10,7 +14,7 @@ in {
 
   # Make user available in user list
   options.machine.users = mkOption {
-    type = with types; listOf (enum [ "kodi" ]);
+    type = with types; listOf (enum ["kodi"]);
   };
 
   # If user is enabled
@@ -42,11 +46,9 @@ in {
     # https://github.com/nixcon/nixcon-video-infra/blob/13b5fc1e4cd12c1ce99defc60ee59e6cd3631880/nixpkgs/pkgs/misc/emulators/retroarch/kodi-advanced-launchers.nix
     # above contains method for handling kodi to retroarch
 
-
     #services.cage.user = "kodi";
     #services.cage.program = "${pkgs.kodi-wayland}/bin/kodi-standalone";
     #services.cage.enable = true;
-
 
     environment.systemPackages = with pkgs; [
       libcec
@@ -55,6 +57,5 @@ in {
       #retroarchFull
       #sixpair # usb pair playstation controllers
     ];
-
   };
 }

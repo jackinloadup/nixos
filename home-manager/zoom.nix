@@ -1,9 +1,13 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   cfg = config.programs.zoom-us;
 in {
-
   options = {
     programs.zoom-us.enable = lib.mkEnableOption "Enable Zoom-us application and settings";
   };
@@ -15,15 +19,18 @@ in {
     ];
 
     wayland.windowManager.sway.config.window.commands = [
-      { # Zoom audio choice window
+      {
+        # Zoom audio choice window
         command = "floating enable";
         criteria.title = "Choose ONE of the audio conference options";
       }
-      { # Zoom "you are connected to computer audio" window
+      {
+        # Zoom "you are connected to computer audio" window
         command = "floating enable";
         criteria.title = "zoom";
       }
-      { # Zoom meeting window
+      {
+        # Zoom meeting window
         command = "inhibit_idle open";
         criteria.title = "Zoom Meeting";
       }

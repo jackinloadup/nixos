@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.machine;
   settings = import ../../settings;
@@ -32,7 +35,7 @@ in {
     ];
 
     services.xserver = {
-      modules = [ pkgs.xorg.xf86inputjoystick ];
+      modules = [pkgs.xorg.xf86inputjoystick];
     };
 
     qt5.enable = true;

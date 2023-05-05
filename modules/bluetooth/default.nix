@@ -1,12 +1,15 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   ifGraphical = config.machine.sizeTarget > 1;
 in {
   config = mkIf config.hardware.bluetooth.enable {
     hardware.bluetooth = {
-      disabledPlugins = [ "sap" ]; # SIM Access Profile fails and isn't needed
+      disabledPlugins = ["sap"]; # SIM Access Profile fails and isn't needed
       hsphfpd.enable = false; # Handled in Wireplumer
       settings = {
         General = {
@@ -31,18 +34,18 @@ in {
       };
     };
 
-    environment.systemPackages = [ pkgs.bluetuith ];
+    environment.systemPackages = [pkgs.bluetuith];
     environment.etc."bluetooth/input.conf".text = ''
-[General]
-IdleTimeout=1
-'';
-# I can't seem to find offical documentation for what can be in these files
-# Enable field is under testing
+      [General]
+      IdleTimeout=1
+    '';
+    # I can't seem to find offical documentation for what can be in these files
+    # Enable field is under testing
     environment.etc."bluetooth/audio.conf".text = ''
-[General]
-AutoConnect=true
-Enable=Source,Sink,Headset,Gateway,Control,Socket,Media
-'';
+      [General]
+      AutoConnect=true
+      Enable=Source,Sink,Headset,Gateway,Control,Socket,Media
+    '';
 
     # hsphfpd fails if this is enabled https://github.com/NixOS/nixpkgs/issues/114222
     systemd.user.services.telephony_client.enable = false; # work around for above
@@ -55,10 +58,10 @@ Enable=Source,Sink,Headset,Gateway,Control,Socket,Media
       media-session.config.bluez-monitor.rules = [
         {
           # Matches all cards
-          matches = [{ "device.name" = "~bluez_card.*"; }];
+          matches = [{"device.name" = "~bluez_card.*";}];
           actions = {
             "update-props" = {
-              "bluez5.auto-connect" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
+              "bluez5.auto-connect" = ["hfp_hf" "hsp_hs" "a2dp_sink"];
               # mSBC is not expected to work on all headset + adapter combinations.
               "bluez5.msbc-support" = true;
               # SBC-XQ is not expected to work on all headset + adapter combinations.
@@ -69,9 +72,9 @@ Enable=Source,Sink,Headset,Gateway,Control,Socket,Media
         {
           matches = [
             # Matches all sources
-            { "node.name" = "~bluez_input.*"; }
+            {"node.name" = "~bluez_input.*";}
             # Matches all outputs
-            { "node.name" = "~bluez_output.*"; }
+            {"node.name" = "~bluez_output.*";}
           ];
           actions = {
             # prevent poping sound when devices are stopped and started

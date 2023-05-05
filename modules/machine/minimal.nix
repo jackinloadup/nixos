@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkDefault mkEnableOption;
   cfg = config.machine;
 in {
@@ -30,6 +33,5 @@ in {
     ## Disable udisks, sounds, …
     services.udisks2.enable = mkDefault false;
     xdg.sounds.enable = mkDefault false;
-
   };
 }

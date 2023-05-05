@@ -1,5 +1,10 @@
-{ lib, pkgs, config, inputs, ... }:
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   inherit (lib) mkOption mkEnableOption mkDefault mkIf;
   inherit (lib.types) listOf enum nullOr str ints;
   cfg = config.machine;
@@ -9,8 +14,9 @@ let
 in {
   imports = [
     "${inputs.impermanence}/nixos.nix"
-    inputs.home-manager.nixosModules.home-manager {
-      home-manager.extraSpecialArgs = { inherit inputs; };
+    inputs.home-manager.nixosModules.home-manager
+    {
+      home-manager.extraSpecialArgs = {inherit inputs;};
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "hm-backup";
     }
@@ -52,16 +58,16 @@ in {
       description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Tui 2=Graphical 3=Full";
     };
     debugTools = mkOption {
-      type = listOf enum [ "hardware" "network" "os" "fs" "tui" "gui" ];
+      type = listOf enum ["hardware" "network" "os" "fs" "tui" "gui"];
       default = [];
-      example = [ "hardware" "network" "os" "fs" "tui" "gui"];
+      example = ["hardware" "network" "os" "fs" "tui" "gui"];
       description = "The category of debug tools to be install";
     };
     includeDocs = mkEnableOption "Should documentation be installed?";
     users = mkOption {
-      type =  listOf (enum [ ]);
-      default = [ ];
-      example = [ "john" "jane" "liljohn" ];
+      type = listOf (enum []);
+      default = [];
+      example = ["john" "jane" "liljohn"];
       description = "What users will be loaded onto the machine";
     };
     defaultUser = mkOption {
@@ -71,13 +77,13 @@ in {
       description = "Declare if there is a user who should be considered the default user. Enables things like autologin";
     };
     displayManager = mkOption {
-      type = nullOr (enum [ ]);
+      type = nullOr (enum []);
       default = null;
-      example = [ "gdm" "lightdm" "ly" ];
+      example = ["gdm" "lightdm" "ly"];
       description = "Application which manages the physical user seat";
     };
     windowManagers = mkOption {
-      type = nullOr (listOf (enum [ ]));
+      type = nullOr (listOf (enum []));
       default = null;
       example = "gnome";
       description = "Available window manager environments. ex: Gnome KDE XFCE";
@@ -134,20 +140,21 @@ in {
       };
 
       # Imporved networking
-      kernelModules = [ "tcp_bbr" ];
+      kernelModules = ["tcp_bbr"];
       kernel.sysctl."net.ipv4.tcp_congestion_control" = "bbr";
       kernel.sysctl."net.core.default_qdisc" = "fq";
     };
-#  } // (if cfg.sizeTarget > -1 then {
+    #  } // (if cfg.sizeTarget > -1 then {
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
-    environment.systemPackages = with pkgs; mkIf ifTui [
-      #nix-plugins # Collection of miscellaneous plugins for the nix expression language
+    environment.systemPackages = with pkgs;
+      mkIf ifTui [
+        #nix-plugins # Collection of miscellaneous plugins for the nix expression language
 
-      fuse3
-      libva-utils
-    ];
+        fuse3
+        libva-utils
+      ];
 
     powerManagement = {
       enable = mkDefault ifTui;
@@ -173,7 +180,6 @@ in {
 
       firewall.enable = true;
     };
-
 
     hardware = {
       # Enable firmware for bluetooth/wireless (Intel® Wireless-AC 9560).

@@ -1,6 +1,10 @@
-{ lib, pkgs, config, inputs, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   settings = import ../../settings;
 in {
   imports = [

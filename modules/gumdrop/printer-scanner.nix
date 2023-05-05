@@ -1,13 +1,16 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) attrNames mkIf mkEnableOption genAttrs types;
   cfg = config.machine;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
   printer = {
     make = "Brother";
-    model = "MFC-9130CW"; 
+    model = "MFC-9130CW";
     address = "printer.home.lucasr.com";
     location = "Office";
   };
@@ -23,7 +26,7 @@ in {
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
-    services.printing.drivers = with pkgs; [ cups-filters mfc9130cwlpr mfc9130cwcupswrapper ];
+    services.printing.drivers = with pkgs; [cups-filters mfc9130cwlpr mfc9130cwcupswrapper];
 
     services.colord.enable = true;
 
@@ -50,6 +53,6 @@ in {
       };
     };
 
-    users.users = addExtraGroups normalUsers [ "scanner" "lp" ];
+    users.users = addExtraGroups normalUsers ["scanner" "lp"];
   };
 }

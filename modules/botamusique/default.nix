@@ -1,5 +1,9 @@
-{ lib, pkgs, config, ... }:
-
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 # @TODO start something like agetty@tty1.service after autovt@tty1 stops
 let
   inherit (lib) mkIf mkEnableOption;

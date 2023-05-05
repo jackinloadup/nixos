@@ -1,5 +1,9 @@
-{ lib, pkgs, config, ... }:
-
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 # If extraOpts can be expressed in home-manager that
 # would be more ideal or at least an alterate if using
 # nix seporate from nixos
@@ -47,6 +51,4 @@ in {
       defaultSearchProviderSuggestURL = "https://www.duckduckgo.com/qbox?query={searchTerms}";
     };
   };
-
 }
-

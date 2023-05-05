@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption;
   settings = import ../../settings;
 in {
@@ -24,7 +27,7 @@ in {
         DNS1 = "1.1.1.1#53";
         DNS2 = "1.0.0.1#53";
       };
-      volumes = [ "pihole:/etc/pihole" ];
+      volumes = ["pihole:/etc/pihole"];
       extraOptions = [
         #"--network=pihole-unbound"
         #"--ip=172.19.0.2"

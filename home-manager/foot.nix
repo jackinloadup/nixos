@@ -1,6 +1,10 @@
-{ config, lib, pkgs, nixosConfig, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  nixosConfig,
+  ...
+}: let
   inherit (lib) mkIf;
   settings = import ../settings;
   theme = settings.theme;
@@ -16,7 +20,7 @@ in {
     #  ssh = "TERM=xterm-265color ssh";
     #};
 
-    systemd.user.services.foot = mkIf swayEnabled  {
+    systemd.user.services.foot = mkIf swayEnabled {
       Unit.BindsTo = "sway-session.target";
       Install.WantedBy = ["sway-session.target"];
     };

@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf concatStrings;
 in {
   config = {
@@ -31,7 +33,7 @@ in {
         username = {
           disabled = false;
         };
-        aws = { 
+        aws = {
           format = "on [$symbol($profile )(\($region\) )]($style)";
           style = "bold blue";
           symbol = "🅰 ";

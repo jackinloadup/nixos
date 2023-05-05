@@ -1,7 +1,11 @@
-{ self, inputs, pkgs, lib, ... }:
-
-with inputs;
-let
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+with inputs; let
   settings = import ../../settings;
 in {
   imports = [
@@ -47,7 +51,7 @@ in {
     lowLevelXF86keys.enable = true;
     quietBoot = true;
     displayManager = "greetd";
-    windowManagers = [ "sway" ];
+    windowManagers = ["sway"];
     locale = settings.user.locale;
     characterSet = settings.user.characterSet;
   };
@@ -82,11 +86,11 @@ in {
   networking.hostName = "reg";
   networking.bridges.br0.interfaces = ["eno1"];
   networking.interfaces.br0.useDHCP = true;
-  virtualisation.libvirtd.allowedBridges = [ "br0" ];
+  virtualisation.libvirtd.allowedBridges = ["br0"];
 
   #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
   #networking.firewall.allowedUDPPorts = [ 8000 ];
-  
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
 

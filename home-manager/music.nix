@@ -1,9 +1,11 @@
-{ pkgs, lib, config, ... }:
-
-let 
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkIf;
 in {
-
   config = mkIf config.services.mopidy.enable {
     home.packages = with pkgs; [
       ncmpcpp

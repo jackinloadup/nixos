@@ -1,9 +1,14 @@
-{ inputs, pkgs, config, lib, nixosConfig, ... }:
-
-let
+{
+  inputs,
+  pkgs,
+  config,
+  lib,
+  nixosConfig,
+  ...
+}: let
   inherit (lib) mkDefault;
 in {
-  imports = [ ];
+  imports = [];
 
   config = {
     # Home manager will have the same stateVersion as system

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (lib) mkIf;
 in {
   config = mkIf config.programs.taskwarrior.enable {
@@ -18,8 +21,8 @@ in {
       config = {
         confirmation = false;
         report.minimal.filter = "status:pending";
-        report.active.columns = [ "id" "start" "entry.age" "priority" "project" "due" "description" ];
-        report.active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
+        report.active.columns = ["id" "start" "entry.age" "priority" "project" "due" "description"];
+        report.active.labels = ["ID" "Started" "Age" "Priority" "Project" "Due" "Description"];
       };
     };
   };

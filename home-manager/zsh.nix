@@ -1,6 +1,11 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf concatStrings mkDefault optionals;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
 in {
@@ -8,15 +13,18 @@ in {
     programs.zsh = mkIf config.programs.zsh.enable {
       enableAutosuggestions = mkDefault true;
 
-      initExtra = ''
-        function set_win_title(){
-          echo -ne "\033]0; $(basename "$PWD") \007"
-        }
-        precmd_functions+=(set_win_title)
+      initExtra =
+        ''
+          function set_win_title(){
+            echo -ne "\033]0; $(basename "$PWD") \007"
+          }
+          precmd_functions+=(set_win_title)
 
-        '' + optionals config.programs.starship.enable ''
-        eval "$(starship init zsh)"
-        '' + interactive;
+        ''
+        + optionals config.programs.starship.enable ''
+          eval "$(starship init zsh)"
+        ''
+        + interactive;
 
       shellAliases = nixosConfig.environment.shellAliases;
 
@@ -33,10 +41,10 @@ in {
       };
 
       dirHashes = {
-        docs  = "$HOME/Documents";
-        vids  = "$HOME/Videos";
-        dl    = "$HOME/Downloads";
-        p     = "$HOME/Projects";
+        docs = "$HOME/Documents";
+        vids = "$HOME/Videos";
+        dl = "$HOME/Downloads";
+        p = "$HOME/Projects";
       };
 
       #zsh-autoenv.enable = false;

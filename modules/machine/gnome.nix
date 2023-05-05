@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkForce;
 in {
   config = mkIf config.services.xserver.desktopManager.gnome.enable {
@@ -36,4 +39,3 @@ in {
     ];
   };
 }
-

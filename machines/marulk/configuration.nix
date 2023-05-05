@@ -1,10 +1,15 @@
-{ self, inputs, pkgs, lib, ... }:
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 # Machine runs DNS and home-assistant vm
 let
   inherit (lib) mkForce mkDefault;
   settings = import ../../settings;
 in {
-
   imports = [
     ./hardware-configuration.nix
   ];
@@ -46,15 +51,17 @@ in {
     useDHCP = true;
     ipv4.addresses = [
       # Capture IP for Adguard
-      { address = "10.16.1.2"; prefixLength = 8; }
+      {
+        address = "10.16.1.2";
+        prefixLength = 8;
+      }
     ];
   };
-
 
   networking.dhcpcd = {
     #wait = "ipv4";
     persistent = true;
- };
+  };
 
   #networking.nat = {
   #  enable = true;

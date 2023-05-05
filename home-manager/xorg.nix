@@ -1,6 +1,11 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf mkDefault;
 in {
   config = mkIf nixosConfig.services.xserver.enable {
@@ -12,7 +17,7 @@ in {
     };
 
     home.sessionVariables = {
-      XAUTHORITY="${config.home.homeDirectory}/.Xauthority";
+      XAUTHORITY = "${config.home.homeDirectory}/.Xauthority";
     };
   };
 }

@@ -1,16 +1,19 @@
-{ self, inputs, pkgs, lib, ... }:
-
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 # machine runs ?
 let
   inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
   isUserFacing = false;
 in {
-
   imports = [
     ./hardware-configuration.nix
   ];
-
 
   boot.plymouth.enable = isUserFacing;
 
@@ -43,7 +46,7 @@ in {
     users = mkDefault [
       "lriutzel"
     ];
-    windowManagers = [ ];
+    windowManagers = [];
     sizeTarget = 1;
     quietBoot = isUserFacing;
     minimal = false;
@@ -72,17 +75,16 @@ in {
     overlays = [
       inputs.nur.overlay
       inputs.self.overlays.default
-  #    inputs.self.overlays.plymouth-no-gtk
-  #    inputs.self.overlays.pipewire-minimal
+      #    inputs.self.overlays.plymouth-no-gtk
+      #    inputs.self.overlays.pipewire-minimal
     ];
   };
-
 
   virtualisation = rec {
     vmVariant = {
       networking.hostName = mkForce "lyzavm";
       #services.xserver.displayManager.defaultSession = mkForce "none+i3";
-      boot.initrd.kernelModules = [ ];
+      boot.initrd.kernelModules = [];
 
       virtualisation = {
         #useEFIBoot = true;
@@ -92,7 +94,7 @@ in {
         cores = 4;
         graphics = true;
         memorySize = 2048;
-        qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
+        qemu.networkingOptions = ["-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper"];
         qemu.options = [
           #"-device virtio-gpu-pci"
           #"-device virtio-gpu-gl-pci"
@@ -123,7 +125,7 @@ in {
   };
   networking.networkmanager.enable = true;
   networking.wireless.enable = mkForce false;
-  # Playing with iwd 
+  # Playing with iwd
   #environment.systemPackages = with pkgs; [ iwgtk ];
   networking.networkmanager.wifi.backend = "iwd";
   networking.wireless.iwd.enable = true;
@@ -149,7 +151,7 @@ in {
 
   # clean logs older than 2d
   services.cron.systemCronJobs = [
-      "0 20 * * * root journalctl --vacuum-time=2d"
+    "0 20 * * * root journalctl --vacuum-time=2d"
   ];
 
   # This value determines the NixOS release from which the default
