@@ -29,7 +29,7 @@ in {
   services.xserver.windowManager.i3.enable = true;
 
   services.hydra.enable = true;
-  services.nextcloud.enable = true;
+  services.nextcloud.enable = false;
   services.pipewire.enable = true;
 
   virtualisation.docker.enable = true;
