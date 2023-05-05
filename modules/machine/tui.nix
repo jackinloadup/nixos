@@ -177,7 +177,7 @@ set previewer /etc/lf/pv.sh
 map i $LESSOPEN='| /etc/lf/pv.sh %s' less -R $f
 cmd open ''${{
     case $(file --mime-type $f -b) in
-        text/*) vi $fx;;
+        text/*) $EDITOR $fx;;
         image/*) imv $fx;;
         *) for f in $fx; do xdg-open $f > /dev/null 2> /dev/null & done;;
     esac
@@ -197,6 +197,7 @@ case "$1" in
     *.jpg) viu -t "$1" -;;
     *.png) viu -t "$1" -;;
     *.gif) viu -t "$1" -;;
+    *.iso) fdisk -l "$1" -;;
     *) bat --force-colorization --style=numbers --theme gruvbox-dark "$1";;
 esac
 '';
