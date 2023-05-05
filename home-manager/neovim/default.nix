@@ -50,6 +50,9 @@ in mkIf config.programs.neovim.enable {
       vim-gitgutter # git status in the gutter
       vim-airline # like starship for status line
 
+      # tmux
+      (import ./vim-tmux-navigator.nix { pkgs = pkgs; }) # 
+
       # Editor Features
       (import ./indentline.nix { pkgs = pkgs; }) # vscode-like pictograms to neovim built-in lsp
       vim-fugitive # A Git wrapper so awesome, it should be illegal
