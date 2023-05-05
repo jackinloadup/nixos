@@ -1,9 +1,12 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkOption mkForce types;
 in {
-  imports = [ ];
+  imports = [];
 
   config = mkIf config.services.xserver.displayManager.gdm.enable {
     programs.dconf.enable = true;

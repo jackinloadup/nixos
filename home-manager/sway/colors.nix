@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
-
-with config.lib.base16.theme;
 {
+  config,
+  pkgs,
+  ...
+}:
+with config.lib.base16.theme; {
   colors = {
     background = "#${base00-hex}";
     focused = {

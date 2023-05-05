@@ -1,6 +1,10 @@
-{ lib, pkgs, config, inputs, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   inherit (lib) mkDefault;
 in {
   # explore locking ssh capabilities by user

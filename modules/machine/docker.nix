@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption genAttrs attrNames;
   cfg = config.machine;
   ifTui = config.machine.sizeTarget > 0;
@@ -10,18 +13,22 @@ let
 in {
   config = mkIf config.virtualisation.docker.enable {
     networking.hosts = {
-      "172.17.0.1" = [ "host.docker.internal" ];
+      "172.17.0.1" = ["host.docker.internal"];
     };
     virtualisation.docker = {
       autoPrune.enable = true;
     };
 
-    environment.systemPackages = with pkgs; mkIf ifTui [ # if system is not minimal
-      dive
-    ] // mkIf ifGraphical [ # if system is full user
-    ];
+    environment.systemPackages = with pkgs;
+      mkIf ifTui [
+        # if system is not minimal
+        dive
+      ]
+      // mkIf ifGraphical [
+        # if system is full user
+      ];
 
-    users.users = addExtraGroups normalUsers [ "docker" ];
+    users.users = addExtraGroups normalUsers ["docker"];
 
     #systemd.services."docker-network-paperless" = {
     #  serviceConfig.Type = "oneshot";

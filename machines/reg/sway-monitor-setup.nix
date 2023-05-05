@@ -1,6 +1,10 @@
-{ self, inputs, pkgs, lib, ... }:
-
 {
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: {
   home-manager.users.lriutzel.wayland.windowManager.sway.config = {
     output = {
       "DP-1" = {
@@ -14,8 +18,10 @@
     };
 
     workspaceOutputAssign = [
-      { output = "DP-1"; workspace = "1"; }
+      {
+        output = "DP-1";
+        workspace = "1";
+      }
     ];
   };
-
 }

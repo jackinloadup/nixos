@@ -1,16 +1,20 @@
-{ self, inputs, pkgs, lib, ... }:
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 # machine runs kodi
 let
   inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {
-
   imports = [
     ./hardware-configuration.nix
     ./auto-pair-ps3-remote.nix
   ];
-
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
@@ -36,7 +40,7 @@ in {
     minimal = true;
     tui = false;
     #displayManager = "gdm";
-    windowManagers = [ ];
+    windowManagers = [];
     kernel = {
       rebootAfterPanic = mkForce 10;
       panicOnOOM = mkForce true;
@@ -75,7 +79,8 @@ in {
   };
 
   boot.kernelPatches = [
-    { name = "sony-bd-remote-buttons";
+    {
+      name = "sony-bd-remote-buttons";
       patch = ../../patches/linux-sony-bd-remote.patch;
     }
   ];
@@ -83,13 +88,12 @@ in {
     enable = true;
   };
 
-
   virtualisation = rec {
     vmVariant = {
       networking.hostName = mkForce "natvm";
       #services.xserver.displayManager.defaultSession = mkForce "none+i3"a;
       boot.loader.efi.efiSysMountPoint = mkForce "/boot";
-      boot.initrd.kernelModules = [ ];
+      boot.initrd.kernelModules = [];
 
       virtualisation = {
         #useEFIBoot = true;
@@ -99,7 +103,7 @@ in {
         cores = 4;
         graphics = true;
         memorySize = 2048;
-        qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
+        qemu.networkingOptions = ["-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper"];
         qemu.options = [
           #"-device virtio-gpu-pci"
           #"-device virtio-gpu-gl-pci"
@@ -136,14 +140,14 @@ in {
     interfaces.enp1s0.useDHCP = true;
     firewall = {
       # for the Kodi web interface
-      allowedTCPPorts = [ 8080 ];
-      allowedUDPPorts = [ 8080 ];
+      allowedTCPPorts = [8080];
+      allowedUDPPorts = [8080];
     };
   };
 
   # clean logs older than 2d
   services.cron.systemCronJobs = [
-      "0 20 * * * root journalctl --vacuum-time=2d"
+    "0 20 * * * root journalctl --vacuum-time=2d"
   ];
 
   # This value determines the NixOS release from which the default

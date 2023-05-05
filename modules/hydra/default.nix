@@ -1,6 +1,10 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 # look into using hail to deploy from hydra
-
 let
   inherit (lib) mkIf;
 in {
@@ -9,7 +13,8 @@ in {
       settings.sandbox = true;
       nrBuildUsers = config.nix.settings.max-jobs;
       buildMachines = [
-        { hostName = "localhost";
+        {
+          hostName = "localhost";
           system = "x86_64-linux";
           supportedFeatures = ["kvm" "nixos-test" "big-parallel" "benchmark"];
           maxJobs = 8;
@@ -28,7 +33,7 @@ in {
       ];
     };
 
-    services.postgresqlBackup.databases = [ "hydra" ];
+    services.postgresqlBackup.databases = ["hydra"];
 
     services.hydra = {
       hydraURL = "http://localhost:3000"; # externally visible URL

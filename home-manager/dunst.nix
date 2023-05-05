@@ -1,6 +1,11 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   settings = import ../settings;
   isGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
@@ -19,7 +24,7 @@ in {
       settings = {
         global = with settings.theme; {
           follow = "keyboard"; # Show notifications where the keyboard has foucs.
-          font = "${font.normal.family} ${font.normal.style} ${toString(font.size)}";
+          font = "${font.normal.family} ${font.normal.style} ${toString (font.size)}";
           word_wrap = "yes";
           format = "<b>%s</b>\\n%b";
           frame_width = borderWidth; # Border size.
@@ -51,23 +56,23 @@ in {
         };
 
         urgency_low = with config.lib.base16.theme; {
-          background ="#${base00-hex}";
-          foreground ="#${base04-hex}";
-          frame_color ="#${base03-hex}";
+          background = "#${base00-hex}";
+          foreground = "#${base04-hex}";
+          frame_color = "#${base03-hex}";
           timeout = "15s";
         };
 
         urgency_normal = with config.lib.base16.theme; {
-          background ="#${base00-hex}";
-          foreground ="#${base04-hex}";
-          frame_color ="#${base0A-hex}";
+          background = "#${base00-hex}";
+          foreground = "#${base04-hex}";
+          frame_color = "#${base0A-hex}";
           timeout = "30s";
         };
 
         urgency_critical = with config.lib.base16.theme; {
-          background ="#${base00-hex}";
-          foreground ="#${base04-hex}";
-          frame_color ="#${base0B-hex}";
+          background = "#${base00-hex}";
+          foreground = "#${base04-hex}";
+          frame_color = "#${base0B-hex}";
           timeout = "1d";
         };
       };

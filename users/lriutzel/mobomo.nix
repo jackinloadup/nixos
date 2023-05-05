@@ -1,6 +1,9 @@
-{ lib, config, nixosConfig, ... }:
-
-let
+{
+  lib,
+  config,
+  nixosConfig,
+  ...
+}: let
   cfg = nixosConfig.machine;
   ifTui = cfg.sizeTarget > 0;
   ifGraphical = cfg.sizeTarget > 1;

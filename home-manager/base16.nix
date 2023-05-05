@@ -1,9 +1,13 @@
-{ inputs, pkgs, config, lib, nixosConfig, ... }:
-
-let
-  settings = import ../settings;
-in
 {
+  inputs,
+  pkgs,
+  config,
+  lib,
+  nixosConfig,
+  ...
+}: let
+  settings = import ../settings;
+in {
   imports = [
     inputs.base16.hmModule
   ];
@@ -20,6 +24,5 @@ in
         fontSize = font.size;
       };
     };
-
   };
 }

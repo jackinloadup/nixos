@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkDefault;
   settings = import ../../settings;
   ifTui = config.machine.sizeTarget > 0;
@@ -13,10 +16,10 @@ in {
         enable = mkDefault true;
         antialias = mkDefault true;
         defaultFonts = {
-          serif = [ serif.family ];
-          sansSerif = [ normal.family ];
-          monospace = [ mono.family ];
-          emoji = [ emoji.family ];
+          serif = [serif.family];
+          sansSerif = [normal.family];
+          monospace = [mono.family];
+          emoji = [emoji.family];
         };
 
         localConf = ''
@@ -46,7 +49,7 @@ in {
       };
       fonts = with pkgs; [
         # Nerdfonts is kinda heavy. We are cutting it down but still looks like it might be 4-10mb
-        (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+        (nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];})
         lato
         noto-fonts-emoji
       ];

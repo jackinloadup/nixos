@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
 in {
   config = mkIf config.services.xserver.windowManager.i3.enable {
@@ -26,10 +29,8 @@ in {
           pkgs.xorg.xev
           pkgs.xorg.xinput
           pkgs.xorg.xf86inputjoystick
-       ];
+        ];
       };
     };
   };
-
 }
-

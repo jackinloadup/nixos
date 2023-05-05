@@ -1,6 +1,11 @@
-{ self, inputs, pkgs, lib, config, ... }:
-
-let
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   swayConfig = config.wayland.windowManager.sway.config;
   kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";
 in {
@@ -41,7 +46,7 @@ in {
       #settings = {
       #  cache = {
       #    buffermode = 1; # buffer all filesystems
-      #    #memorysize = ; # 
+      #    #memorysize = ; #
       #    readfactor = 4.0; # determines the max readrate in terms of readfactor * avg bitrate of a video file
       #  };
       #  seeksteps = "15, 30, 30, 60, 60, 300";

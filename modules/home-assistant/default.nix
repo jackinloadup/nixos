@@ -1,10 +1,12 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf;
   settings = import ../../settings;
 in {
-
   config = mkIf config.services.home-assistant.enable {
     #services.postgresql = {
     #  enable = true;
@@ -18,11 +20,10 @@ in {
     #};
 
     # Allow communication with zigbee
-    users.users.lriutzel.extraGroups = [ "dialout" ];
+    users.users.lriutzel.extraGroups = ["dialout"];
 
     # Open port for mqtt
     networking.firewall = {
-
       allowedTCPPorts = [
         1883 # mosquitto
         5900 # spice for hass vm
@@ -46,7 +47,7 @@ in {
             # trusted.
             # TODO make this more secure
             mosquitto = {
-              acl = [ "readwrite #" ];
+              acl = ["readwrite #"];
               password = "mosquitto";
             };
           };
@@ -55,7 +56,6 @@ in {
     };
 
     # TODO submit upstream?
-    systemd.services.mosquitto.after = [ "network-online.target" ];
+    systemd.services.mosquitto.after = ["network-online.target"];
   };
 }
-

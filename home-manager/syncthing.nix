@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
-let 
+{
+  config,
+  lib,
+  ...
+}: let
   inherit (lib) mkForce;
   homeDir = config.home.homeDirectory;
 in {

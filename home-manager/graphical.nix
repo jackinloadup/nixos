@@ -1,6 +1,11 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkDefault;
   settings = import ../settings;
   ifGraphical = nixosConfig.machine.sizeTarget > 1;
@@ -38,33 +43,35 @@ in {
     theme.package = pkgs.${gtk.package};
   };
 
-  home.packages = with pkgs; [
-    drm_info # Small cli utility to dump info about DRM devices
-  ] ++ lib.optionals ifGraphical [
-    #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+  home.packages = with pkgs;
+    [
+      drm_info # Small cli utility to dump info about DRM devices
+    ]
+    ++ lib.optionals ifGraphical [
+      #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
-    # GUI
-    # ---------------------------------------
-    #libreoffice # Office suite
-    libnotify # for notify-send
-    # darktile # alternative PTY to try out. GPU + go
+      # GUI
+      # ---------------------------------------
+      #libreoffice # Office suite
+      libnotify # for notify-send
+      # darktile # alternative PTY to try out. GPU + go
 
-    # Spelling
-    hunspell
-    hunspellDicts.en_US-large
-    hyphen
+      # Spelling
+      hunspell
+      hunspellDicts.en_US-large
+      hyphen
 
-    xfce.thunar # File manager
-    #pantheon.elementary-files
-    cinnamon.nemo # File manager
-    #flameshot
-    gnome.gnome-disk-utility
-    #calibre # ebook tool,  assist with kindle
-    #obsidian # Markdown information archive
+      xfce.thunar # File manager
+      #pantheon.elementary-files
+      cinnamon.nemo # File manager
+      #flameshot
+      gnome.gnome-disk-utility
+      #calibre # ebook tool,  assist with kindle
+      #obsidian # Markdown information archive
 
-    ## Audio
-    pavucontrol # GUI volume source/sink manager
-  ];
+      ## Audio
+      pavucontrol # GUI volume source/sink manager
+    ];
 
   programs.chromium.enable = true;
 

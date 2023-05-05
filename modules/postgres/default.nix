@@ -1,11 +1,14 @@
-{ lib, config, pkgs, ... }:
-
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf;
 in {
   config = mkIf config.services.postgresql.enable {
     # Open port to nextwork
-    networking.firewall.allowedTCPPorts = [ config.services.postgresql.port ];
+    networking.firewall.allowedTCPPorts = [config.services.postgresql.port];
 
     services.postgresql = {
       package = pkgs.postgresql_15;
@@ -88,15 +91,15 @@ in {
     };
     #
     # Mount Nextcloud Storage
-    system.fsPackages = [ pkgs.sshfs ];
+    system.fsPackages = [pkgs.sshfs];
     fileSystems.postgresqlBackup = {
       mountPoint = "/mnt/postgres";
       device = "postgres@truenas.home.lucasr.com:/mnt/storage/backed-up/postgres/";
       fsType = "sshfs";
       options = [
-        "allow_other"          # for non-root access
-        "_netdev"              # requires network to mount
-        "x-systemd.automount"  # mount on demand
+        "allow_other" # for non-root access
+        "_netdev" # requires network to mount
+        "x-systemd.automount" # mount on demand
 
         # The ssh key must not be encrypted, have strict
         # permissions (like 600) and owned by root.
@@ -124,5 +127,4 @@ in {
       ];
     };
   };
-
 }

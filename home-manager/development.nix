@@ -1,18 +1,22 @@
-{ pkgs, lib, nixosConfig, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  nixosConfig,
+  ...
+}: let
   inherit (lib) mkIf;
   settings = import ../settings;
   sizeTarget = nixosConfig.machine.sizeTarget;
   ifGraphical = sizeTarget > 1;
 in {
-  home.packages = with pkgs; mkIf ifGraphical [
-    gdb # debugger
-    hyperfine
-    valgrind
-    #rr # time traveling debugger # failed on unstable
-    #allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
-  ];
+  home.packages = with pkgs;
+    mkIf ifGraphical [
+      gdb # debugger
+      hyperfine
+      valgrind
+      #rr # time traveling debugger # failed on unstable
+      #allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
+    ];
 
   home.file.".gdbinit".text = ''
     set disassembly-flavor intel
@@ -117,19 +121,19 @@ in {
     # current layout fn makes hashed name. human readable is also possible
     # https://github.com/direnv/direnv/wiki/Customizing-cache-location
     stdlib = ''
-# Two things to know:
-# * `direnv_layour_dir` is called once for every {.direnvrc,.envrc} sourced
-# * The indicator for a different direnv file being sourced is a different $PWD value
-# This means we can hash $PWD to get a fully unique cache path for any given environment
+      # Two things to know:
+      # * `direnv_layour_dir` is called once for every {.direnvrc,.envrc} sourced
+      # * The indicator for a different direnv file being sourced is a different $PWD value
+      # This means we can hash $PWD to get a fully unique cache path for any given environment
 
-: ''${XDG_CACHE_HOME:=$HOME/.cache}
-declare -A direnv_layout_dirs
-direnv_layout_dir() {
-	echo "''${direnv_layout_dirs[$PWD]:=$(
-		echo -n "$XDG_CACHE_HOME"/direnv/layouts/
-		echo -n "$PWD" | sha1sum | cut -d ' ' -f 1
-	)}"
-}
+      : ''${XDG_CACHE_HOME:=$HOME/.cache}
+      declare -A direnv_layout_dirs
+      direnv_layout_dir() {
+      	echo "''${direnv_layout_dirs[$PWD]:=$(
+      		echo -n "$XDG_CACHE_HOME"/direnv/layouts/
+      		echo -n "$PWD" | sha1sum | cut -d ' ' -f 1
+      	)}"
+      }
     ''; # custom functions ect
     config = {
       global = {

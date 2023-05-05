@@ -1,16 +1,20 @@
-{ config, pkgs, nixosConfig, lib, inputs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  nixosConfig,
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf;
   settings = import ../settings;
   theme = settings.theme;
   fontsConfig = {
-    names = [ theme.font.mono.family ];
-    style =  theme.font.mono.style;
+    names = [theme.font.mono.family];
+    style = theme.font.mono.style;
     size = builtins.mul theme.font.size 1.0; # typecast to float
   };
-in
-{
+in {
   imports = [
     ./base16.nix
   ];
@@ -19,28 +23,27 @@ in
     programs.alacritty.enable = true;
 
     xsession.windowManager.i3 = let
-        left = "h"; # vim directions ftw
-        down = "j";
-        up = "k";
-        right = "l";
-        terminal = "alacritty";
-        menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'" ;
+      left = "h"; # vim directions ftw
+      down = "j";
+      up = "k";
+      right = "l";
+      terminal = "alacritty";
+      menu = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --no-generic --term=foot --dmenu='bemenu -i -l 10'";
     in {
       enable = true;
       config = {
-
         terminal = terminal;
         modifier = "Mod4";
         defaultWorkspace = "workspace number 1";
         assigns = {
-          "10" = [{class = "^Spotify$"; }];
+          "10" = [{class = "^Spotify$";}];
         };
         menu = menu;
 
         #keybindings = lib.mkOptionDefault {
-          keybindings = let
-            mod = "Mod4";
-          in {
+        keybindings = let
+          mod = "Mod4";
+        in {
           "${mod}+Return" = "exec ${terminal}";
 
           "${mod}+Shift+q" = "kill";
@@ -158,46 +161,46 @@ in
           };
         };
 
-        bars = with config.lib.base16.theme; [{
-          #command = "${pkgs.waybar}/bin/waybar";
-          #position = "top";
-          #fonts = fontConf;
-          #trayOutput = "*";
-          colors = {
-            background = "#${base00-hex}";
-            statusline = "#${base04-hex}";
-            separator = "#${base01-hex}";
-            focusedWorkspace = {
-              border = "#${base05-hex}";
-              background = "#${base0D-hex}";
-              text = "#${base00-hex}";
+        bars = with config.lib.base16.theme; [
+          {
+            #command = "${pkgs.waybar}/bin/waybar";
+            #position = "top";
+            #fonts = fontConf;
+            #trayOutput = "*";
+            colors = {
+              background = "#${base00-hex}";
+              statusline = "#${base04-hex}";
+              separator = "#${base01-hex}";
+              focusedWorkspace = {
+                border = "#${base05-hex}";
+                background = "#${base0D-hex}";
+                text = "#${base00-hex}";
+              };
+              activeWorkspace = {
+                border = "#${base05-hex}";
+                background = "#${base03-hex}";
+                text = "#${base00-hex}";
+              };
+              inactiveWorkspace = {
+                border = "#${base03-hex}";
+                background = "#${base01-hex}";
+                text = "#${base05-hex}";
+              };
+              urgentWorkspace = {
+                border = "#${base08-hex}";
+                background = "#${base08-hex}";
+                text = "#${base00-hex}";
+              };
+              bindingMode = {
+                border = "#${base00-hex}";
+                background = "#${base0A-hex}";
+                text = "#${base00-hex}";
+              };
             };
-            activeWorkspace = {
-              border = "#${base05-hex}";
-              background = "#${base03-hex}";
-              text = "#${base00-hex}";
-            };
-            inactiveWorkspace = {
-              border = "#${base03-hex}";
-              background = "#${base01-hex}";
-              text = "#${base05-hex}";
-            };
-            urgentWorkspace = {
-              border = "#${base08-hex}";
-              background = "#${base08-hex}";
-              text = "#${base00-hex}";
-            };
-            bindingMode = {
-              border = "#${base00-hex}";
-              background = "#${base0A-hex}";
-              text = "#${base00-hex}";
-            };
-          };
-        }];
-
+          }
+        ];
       };
     };
-
 
     programs.i3status = with config.lib.base16.theme; {
       enable = true;

@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkOption types;
   cfg = config.machine;
   settings = import ../../settings;
@@ -24,16 +27,15 @@ in {
 
   config = {
     # Select and limit locales
-    i18n = with settings.user;
-    let
+    i18n = with settings.user; let
       localeFull = "${cfg.locale}.${cfg.characterSet}";
       localeExtended = "${localeFull}/${cfg.characterSet}";
     in {
-      supportedLocales = [ localeExtended ];
+      supportedLocales = [localeExtended];
       defaultLocale = localeFull;
       glibcLocales = pkgs.glibcLocales.override {
         allLocales = false;
-        locales = [ localeExtended ];
+        locales = [localeExtended];
       };
     };
   };

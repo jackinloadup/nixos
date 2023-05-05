@@ -18,18 +18,19 @@
   #  events = "disabled";
   #};
 }
-      #input = {
-      #  "type:keyboard" =
-      #    if hostName == "spica" then {
-      #      xkb_layout = "print-switch";
-      #    } else {
-      #      xkb_layout = "gb,apl,gr";
-      #      xkb_variant = "colemak,,";
-      #      xkb_options = "grp:ctrls_toggle,grp:menu_switch";
-      #      xkb_numlock = "enabled";
-      #    };
-      #  "type:touchpad" = {
-      #    click_method = "clickfinger";
-      #    tap = "enabled";
-      #  };
-      #};
+#input = {
+#  "type:keyboard" =
+#    if hostName == "spica" then {
+#      xkb_layout = "print-switch";
+#    } else {
+#      xkb_layout = "gb,apl,gr";
+#      xkb_variant = "colemak,,";
+#      xkb_options = "grp:ctrls_toggle,grp:menu_switch";
+#      xkb_numlock = "enabled";
+#    };
+#  "type:touchpad" = {
+#    click_method = "clickfinger";
+#    tap = "enabled";
+#  };
+#};
+

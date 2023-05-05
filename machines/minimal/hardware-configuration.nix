@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/efi";
     fsType = "vfat";

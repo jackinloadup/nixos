@@ -1,6 +1,11 @@
-{ self, inputs, pkgs, lib, config, ... }:
-
-let
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   swayConfig = config.wayland.windowManager.sway.config;
   kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";
 in {
@@ -9,7 +14,6 @@ in {
   ];
 
   config = {
-
     home.packages = with pkgs; [
       sway
 
@@ -70,7 +74,7 @@ in {
         };
         bars = [];
         seat = {
-          "*" = { hide_cursor = "3000"; };
+          "*" = {hide_cursor = "3000";};
         };
         keybindings = let
           inherit (swayConfig) modifier terminal;

@@ -1,5 +1,9 @@
-{ lib, pkgs, config, ... }:
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption mkDefault;
   cfg = config.machine;
 in {

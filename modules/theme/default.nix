@@ -1,6 +1,10 @@
-{ lib, pkgs, config, inputs, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption types fetchFromGitHub;
   settings = import ../../settings;
 in {
@@ -19,12 +23,12 @@ in {
       };
     };
 
-    environment.systemPackages =
-      let
-        cfg = config.machine.starlight;
-        theme = config.lib.base16.theme;
-        toPx = pt: pt * 4 / 3;
-        starlight-oomox-theme = with pkgs; stdenv.mkDerivation rec {
+    environment.systemPackages = let
+      cfg = config.machine.starlight;
+      theme = config.lib.base16.theme;
+      toPx = pt: pt * 4 / 3;
+      starlight-oomox-theme = with pkgs;
+        stdenv.mkDerivation rec {
           name = "starlight-oomox-theme-v1.0";
           src = fetchFromGitHub {
             owner = "themix-project";
@@ -34,9 +38,9 @@ in {
             fetchSubmodules = true;
           };
           dontBuild = true;
-          nativeBuildInputs = [ glib libxml2 bc ];
-          buildInputs = [ gnome3.gnome-themes-extra gdk-pixbuf librsvg pkgs.sassc pkgs.inkscape pkgs.optipng ];
-          propagatedUserEnvPkgs = [ gtk-engine-murrine ];
+          nativeBuildInputs = [glib libxml2 bc];
+          buildInputs = [gnome3.gnome-themes-extra gdk-pixbuf librsvg pkgs.sassc pkgs.inkscape pkgs.optipng];
+          propagatedUserEnvPkgs = [gtk-engine-murrine];
           installPhase = ''
             # icon theme
             mkdir -p $out/share/icons/Starlight
@@ -87,11 +91,11 @@ in {
             popd
           '';
         };
-      in
+    in
       with pkgs; [
         bibata-cursors
         gtk-engine-murrine
-        (starlight-oomox-theme)
+        starlight-oomox-theme
       ];
   };
 }

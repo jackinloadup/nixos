@@ -1,21 +1,20 @@
-{ pkgsi686Linux
-, stdenv
-, a2ps
-, coreutils
-, dpkg
-, fetchurl
-, file
-, ghostscript
-, gnugrep
-, gnused
-, lib
-, makeWrapper
-, perl
-, psutils
-, which
-}:
-
-let
+{
+  pkgsi686Linux,
+  stdenv,
+  a2ps,
+  coreutils,
+  dpkg,
+  fetchurl,
+  file,
+  ghostscript,
+  gnugrep,
+  gnused,
+  lib,
+  makeWrapper,
+  perl,
+  psutils,
+  which,
+}: let
   model = "mfc9130cw";
   humanModel = "MFC-9130CW";
   cupsVersion = "1.1.4-0";
@@ -23,7 +22,6 @@ let
 
   reldir = "opt/brother/Printers/${model}";
   filterFile = "lpd/filter${model}";
-
 in rec {
   driver = pkgsi686Linux.stdenv.mkDerivation rec {
     version = lprVersion;
@@ -33,7 +31,7 @@ in rec {
     };
     name = "${model}lpr-${lprVersion}";
 
-    nativeBuildInputs = [ dpkg makeWrapper ];
+    nativeBuildInputs = [dpkg makeWrapper];
 
     unpackPhase = "dpkg-deb -x $src $out";
 
@@ -47,13 +45,28 @@ in rec {
 
       wrapProgram "$file" \
         --prefix PATH : ${lib.makeBinPath [
-          coreutils ghostscript gnugrep gnused which a2ps file psutils
-        ]}
+        coreutils
+        ghostscript
+        gnugrep
+        gnused
+        which
+        a2ps
+        file
+        psutils
+      ]}
 
       wrapProgram "$dir/lpd/psconvertij2" \
         --prefix PATH : ${lib.makeBinPath [
-          coreutils ghostscript gnugrep gnused which a2ps file psutils pkgsi686Linux.gawk
-        ]}
+        coreutils
+        ghostscript
+        gnugrep
+        gnused
+        which
+        a2ps
+        file
+        psutils
+        pkgsi686Linux.gawk
+      ]}
       # need to use i686 glibc here, these are 32bit proprietary binaries
       patchelf --set-interpreter "${pkgsi686Linux.glibc}/lib/ld-linux.so.2" \
         "$dir/lpd/br${model}filter"
@@ -66,8 +79,8 @@ in rec {
       description = "Brother ${lib.strings.toUpper model} driver";
       homepage = http://www.brother.com/;
       license = lib.licenses.unfree;
-      platforms = [ "x86_64-linux" "i686-linux" ];
-      maintainers = [ lib.maintainers.syd ];
+      platforms = ["x86_64-linux" "i686-linux"];
+      maintainers = [lib.maintainers.syd];
     };
   };
 
@@ -79,7 +92,7 @@ in rec {
     };
     name = "${model}cupswrapper-${cupsVersion}";
 
-    nativeBuildInputs = [ dpkg makeWrapper pkgsi686Linux.cups ];
+    nativeBuildInputs = [dpkg makeWrapper pkgsi686Linux.cups];
 
     unpackPhase = "dpkg-deb -x $src $out";
 
@@ -117,11 +130,11 @@ in rec {
         "$dir/cupswrapper/brcupsconfpt1"
 
       wrapProgram "$dir/cupswrapper/brcupsconfpt1" \
-        --prefix PATH : ${lib.makeBinPath [ coreutils gnugrep gnused ghostscript]} \
+        --prefix PATH : ${lib.makeBinPath [coreutils gnugrep gnused ghostscript]} \
         --prefix PATH : $driver/usr/bin
 
       wrapProgram "$file" \
-        --prefix PATH : ${lib.makeBinPath [ coreutils gnugrep gnused ghostscript]}
+        --prefix PATH : ${lib.makeBinPath [coreutils gnugrep gnused ghostscript]}
 
       echo "We expect something like \"lpinfo: not found\", this can be ignored."
 
@@ -133,16 +146,15 @@ in rec {
         --replace '/opt/brother/Printers/mfc9130cw/inf/br${model}rc' "$basedir/inf/br${model}rc"
 
       wrapProgram "$lpdwrapperfile" \
-        --prefix PATH : ${lib.makeBinPath [ coreutils gnugrep gnused psutils ghostscript ]}
+        --prefix PATH : ${lib.makeBinPath [coreutils gnugrep gnused psutils ghostscript]}
     '';
 
     meta = {
       description = "Brother ${lib.strings.toUpper model} CUPS wrapper driver";
       homepage = http://www.brother.com/;
       license = lib.licenses.gpl2;
-      platforms = [ "x86_64-linux" "i686-linux" ];
-      maintainers = [ lib.maintainers.syd ];
+      platforms = ["x86_64-linux" "i686-linux"];
+      maintainers = [lib.maintainers.syd];
     };
   };
 }
-

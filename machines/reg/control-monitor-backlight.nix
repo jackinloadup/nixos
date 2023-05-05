@@ -1,6 +1,11 @@
-{ self, inputs, pkgs, lib, config, ... }:
-
-let
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) attrNames genAttrs;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
@@ -12,6 +17,6 @@ in {
     # ddccontrol-db
     # i2c-tools
     #
-    users.users = addExtraGroups normalUsers [ "i2c" ];
+    users.users = addExtraGroups normalUsers ["i2c"];
   };
 }

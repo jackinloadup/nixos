@@ -1,13 +1,16 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkOption types;
   inherit (builtins) elem;
 in {
-  imports = [ ];
+  imports = [];
 
   options.machine.windowManagers = mkOption {
-    type = with types; nullOr (listOf (enum [ "sway" ]));
+    type = with types; nullOr (listOf (enum ["sway"]));
   };
 
   config = mkIf (elem "sway" config.machine.windowManagers) {
@@ -53,7 +56,7 @@ in {
     xdg = {
       portal = {
         enable = true;
-        extraPortals = with pkgs; mkIf (!config.services.xserver.desktopManager.gnome.enable) [ xdg-desktop-portal-gtk ];
+        extraPortals = with pkgs; mkIf (!config.services.xserver.desktopManager.gnome.enable) [xdg-desktop-portal-gtk];
         wlr = {
           enable = true;
           #settings = {

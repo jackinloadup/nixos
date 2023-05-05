@@ -1,15 +1,19 @@
-{ lib, pkgs, config, inputs, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf;
   cfg = config.machine;
   settings = import ../../settings;
 in {
   config = mkIf cfg.tui {
-    environment.systemPackages = (with pkgs; [
+    environment.systemPackages = with pkgs; [
       tmux
       #tmux-cssh;
-    ]);
+    ];
 
     programs.tmux = {
       enable = true; # Enables system-wide configuration

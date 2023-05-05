@@ -1,6 +1,10 @@
-{ lib, inputs, pkgs, config, ...}: 
-
-let
+{
+  lib,
+  inputs,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf;
   inherit (builtins) hasAttr;
   ## TODOS
@@ -12,12 +16,11 @@ let
   ##
   hostname = config.networking.hostName;
   device = "/dev/sda"; # TODO change per host
-  zfsPoolName = "zroot_${ hostname }";
-  rootPartionName = "nixos_${ hostname }";
-  impermanence = ((hasAttr "machine" config) && config.machine.impermanence);
+  zfsPoolName = "zroot_${hostname}";
+  rootPartionName = "nixos_${hostname}";
+  impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
 in {
-
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
     inputs.disko.nixosModules.disko
@@ -30,8 +33,8 @@ in {
       (pkgs.writeScriptBin "disko" (config.system.build.mountScript))
     ];
 
-    boot.initrd.supportedFilesystems = [ "zfs" ];
-    boot.supportedFilesystems = [ "zfs" ];
+    boot.initrd.supportedFilesystems = ["zfs"];
+    boot.supportedFilesystems = ["zfs"];
 
     services.zfs.autoScrub.enable = true;
     boot.zfs.forceImportRoot = true;
@@ -49,7 +52,8 @@ in {
         };
       };
       disk = {
-        boot = { # The device we are planning to boot from
+        boot = {
+          # The device we are planning to boot from
           inherit device;
           type = "disk";
           content = {
@@ -125,22 +129,24 @@ in {
             filesystem = mountpoint: {
               zfs_type = "filesystem";
               inherit mountpoint;
-            #  options."com.sun:auto-snapshot" = "true";
+              #  options."com.sun:auto-snapshot" = "true";
             };
           in {
             "local" = unmountable;
             "safe" = unmountable;
             "local/nix" = filesystem "/nix" // {options.mountpoint = "legacy";};
-          #} // mkIf impermanence {
+            #} // mkIf impermanence {
             "local/etc" = filesystem "/persist/etc";
             "local/lib" = filesystem "/persist/lib";
             "local/log" = filesystem "/persist/log";
             "safe/home" = filesystem "/persist/home";
-          #} // mkIf (!tmpfsRoot) {
-            "local/root" = filesystem "/" // {
-              postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
-              options.mountpoint = "legacy";
-            };
+            #} // mkIf (!tmpfsRoot) {
+            "local/root" =
+              filesystem "/"
+              // {
+                postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
+                options.mountpoint = "legacy";
+              };
 
             #zfs_fs = {
             #  zfs_type = "filesystem";

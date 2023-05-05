@@ -21,7 +21,7 @@
     currency = "USD";
   };
 
-  timeouts = { 
+  timeouts = {
     show_age_after = 60;
     idle = 150;
     screenLock = 300;
@@ -70,7 +70,6 @@
     };
   };
 }
-
 ###############
 # User settings
 ###############
@@ -86,7 +85,6 @@
 # smartcard?
 # gnupgp
 # user application categories (mvp, debug, desktop, browsers, ect);
-
 ###############
 # Machine settings
 ###############
@@ -108,3 +106,4 @@
 # printing/scanning
 # physical monitor arangement?
 # power and fan control
+

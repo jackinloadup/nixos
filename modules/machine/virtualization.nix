@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) mkIf mkEnableOption genAttrs optionals attrNames;
   cfg = config.machine;
   ifTui = cfg.sizeTarget > 0;
@@ -9,7 +12,7 @@ let
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
   config = mkIf config.virtualisation.libvirtd.enable {
-    boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+    boot.kernelModules = ["kvm-amd" "kvm-intel"];
 
     virtualisation.spiceUSBRedirection.enable = true;
     virtualisation.libvirtd = {
@@ -28,16 +31,20 @@ in {
     security.polkit.enable = lib.mkForce true; # needed for virt-manager?
 
     # might only apply to libvirt
-    environment.systemPackages = with pkgs; [ # if system is minimal
-      virt-top
-      usbutils # for lsusb
-    ] ++ optionals ifTui [
-      qemu
-    ] ++ optionals ifGraphical [
-      virt-manager # includes virt-install which maybe we want in cli?
-      spice-gtk
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        # if system is minimal
+        virt-top
+        usbutils # for lsusb
+      ]
+      ++ optionals ifTui [
+        qemu
+      ]
+      ++ optionals ifGraphical [
+        virt-manager # includes virt-install which maybe we want in cli?
+        spice-gtk
+      ];
 
-    users.users = addExtraGroups normalUsers [ "libvirtd" ];
+    users.users = addExtraGroups normalUsers ["libvirtd"];
   };
 }

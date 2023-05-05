@@ -1,5 +1,9 @@
-{inputs, pkgs, config, ...}: {
-
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}: {
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
     inputs.disko.nixosModules.disko

@@ -1,6 +1,10 @@
-{ lib, pkgs, config, inputs, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}: let
   inherit (lib) mkIf mkDefault mkEnableOption types;
   cfg = config.machine;
   settings = import ../../settings;
@@ -13,93 +17,95 @@ in {
   options.machine.tui = mkEnableOption "Extensive tui tools";
 
   config = mkIf cfg.tui {
-    environment.systemPackages = (with pkgs; [
-      pv # progress meter
+    environment.systemPackages =
+      (with pkgs; [
+        pv # progress meter
 
-      #vim # text editor
-      neovim # text editor
-      fswatch # file change monitor
+        #vim # text editor
+        neovim # text editor
+        fswatch # file change monitor
 
-      git # source code manager
+        git # source code manager
 
-      #ncpamixer # couldn't get it to work
+        #ncpamixer # couldn't get it to work
 
-      #vlock # tty/vtty locker
-      # fasd # quick access to files and dir
+        #vlock # tty/vtty locker
+        # fasd # quick access to files and dir
 
-      exa # ls replacement
-      jq # json parsing
-      tree # file/directory viewer in tree format
-      ripgrep # grep alternative
-      rsync
-      pass # password manager
-      lf # file manager
-    #  highlight # highlight files for previews
-    #  poppler_utils # for pdf2text
-      bat # cat alternative
-      viu # terminal image viewer
-      lesspipe
-      reptyr # Reparent a running program to a new terminal
+        exa # ls replacement
+        jq # json parsing
+        tree # file/directory viewer in tree format
+        ripgrep # grep alternative
+        rsync
+        pass # password manager
+        lf # file manager
+        #  highlight # highlight files for previews
+        #  poppler_utils # for pdf2text
+        bat # cat alternative
+        viu # terminal image viewer
+        lesspipe
+        reptyr # Reparent a running program to a new terminal
 
-      ## compression tools
-      unzip
-      #unrar #unfree
-      unrar-wrapper # free wrapper around unrar
-      p7zip
+        ## compression tools
+        unzip
+        #unrar #unfree
+        unrar-wrapper # free wrapper around unrar
+        p7zip
 
-      ## http/web
-      lynx # text web browser
-      wget # http client
-      curl # http client
+        ## http/web
+        lynx # text web browser
+        wget # http client
+        curl # http client
 
-      # Debug
-      ## hardware
-      pciutils
-      powertop # debug power usage andbattery draw
-      lshw # list hardware
-      dmidecode # Read DMI (SMBIOS)
-      # builds cuda stuffs
-      nvtop # A (h)top like task monitor for AMD, Intel and NVIDIA GPUs
+        # Debug
+        ## hardware
+        pciutils
+        powertop # debug power usage andbattery draw
+        lshw # list hardware
+        dmidecode # Read DMI (SMBIOS)
+        # builds cuda stuffs
+        nvtop # A (h)top like task monitor for AMD, Intel and NVIDIA GPUs
 
-      # Disk
-      parted # a partition manipulation program
+        # Disk
+        parted # a partition manipulation program
 
-      ## network
-      iftop # a partition manipulation program 
-      latencytop
-      jnettop # View hosts/ports taking up the most network traffic
-      dnstop # displays various tables of DNS traffic on your network
-      dnsutils # provide dig nslookup nsupdate
-      mtr # traceroute and ping
-      bridge-utils # brctl
+        ## network
+        iftop # a partition manipulation program
+        latencytop
+        jnettop # View hosts/ports taking up the most network traffic
+        dnstop # displays various tables of DNS traffic on your network
+        dnsutils # provide dig nslookup nsupdate
+        mtr # traceroute and ping
+        bridge-utils # brctl
 
-      ## io
-      iotop # simple top-like I/O monitor
-      input-utils # lsinput
-      nmon # performance stats monitor
+        ## io
+        iotop # simple top-like I/O monitor
+        input-utils # lsinput
+        nmon # performance stats monitor
 
-      ## files
-      lsof # list open files
-      ncdu # ncurses disk usage viewer
-      file # determine file type
-      fd # find alternative
-      btrfs-progs
+        ## files
+        lsof # list open files
+        ncdu # ncurses disk usage viewer
+        file # determine file type
+        fd # find alternative
+        btrfs-progs
 
-      ## Executables
-      binutils
-      patchelf
+        ## Executables
+        binutils
+        patchelf
 
-      ## OS (nix/linux)
-      nix-tree # A terminal curses application to browse a Nix store paths dependencies
-      nix-diff
-      vulnix # vulnerability scanner for nix
-      # atop?
-    ]) ++ (with config.boot.kernelPackages; [
-      turbostat # Report processor frequency and idle statistics
-      perf # Linux tools to profile with performance counters
-      tmon # Monitoring and Testing Tool for Linux kernel thermal subsystem
-      usbip # allows to pass USB device from server to client over the network
-    ]);
+        ## OS (nix/linux)
+        nix-tree # A terminal curses application to browse a Nix store paths dependencies
+        nix-diff
+        vulnix # vulnerability scanner for nix
+        # atop?
+      ])
+      ++ (with config.boot.kernelPackages; [
+        turbostat # Report processor frequency and idle statistics
+        perf # Linux tools to profile with performance counters
+        tmon # Monitoring and Testing Tool for Linux kernel thermal subsystem
+        usbip # allows to pass USB device from server to client over the network
+      ]);
 
     console = {
       earlySetup = mkDefault true;
@@ -142,7 +148,7 @@ in {
     programs = {
       bash = {
         interactiveShellInit = ''
-          source ${config.lib.base16.templateFile { name = "shell"; }}
+          source ${config.lib.base16.templateFile {name = "shell";}}
         '';
       };
 
@@ -173,34 +179,34 @@ in {
 
     environment.etc = {
       "lf/lfrc".text = ''
-set previewer /etc/lf/pv.sh
-map i $LESSOPEN='| /etc/lf/pv.sh %s' less -R $f
-cmd open ''${{
-    case $(file --mime-type $f -b) in
-        text/*) $EDITOR $fx;;
-        image/*) imv $fx;;
-        *) for f in $fx; do xdg-open $f > /dev/null 2> /dev/null & done;;
-    esac
-}}
+        set previewer /etc/lf/pv.sh
+        map i $LESSOPEN='| /etc/lf/pv.sh %s' less -R $f
+        cmd open ''${{
+            case $(file --mime-type $f -b) in
+                text/*) $EDITOR $fx;;
+                image/*) imv $fx;;
+                *) for f in $fx; do xdg-open $f > /dev/null 2> /dev/null & done;;
+            esac
+        }}
       '';
       "lf/pv.sh" = {
         mode = "0755";
         text = ''
-#!/bin/sh
+          #!/bin/sh
 
-case "$1" in
-    *.tar*) tar tf "$1";;
-    *.zip) unzip -l "$1";;
-    *.rar) unrar l "$1";;
-    *.7z) 7z l "$1";;
-    *.pdf) pdftotext "$1" -;;
-    *.jpg) viu -t "$1" -;;
-    *.png) viu -t "$1" -;;
-    *.gif) viu -t "$1" -;;
-    *.iso) fdisk -l "$1" -;;
-    *) bat --force-colorization --style=numbers --theme gruvbox-dark "$1";;
-esac
-'';
+          case "$1" in
+              *.tar*) tar tf "$1";;
+              *.zip) unzip -l "$1";;
+              *.rar) unrar l "$1";;
+              *.7z) 7z l "$1";;
+              *.pdf) pdftotext "$1" -;;
+              *.jpg) viu -t "$1" -;;
+              *.png) viu -t "$1" -;;
+              *.gif) viu -t "$1" -;;
+              *.iso) fdisk -l "$1" -;;
+              *) bat --force-colorization --style=numbers --theme gruvbox-dark "$1";;
+          esac
+        '';
       };
     };
   };

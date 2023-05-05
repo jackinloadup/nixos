@@ -1,28 +1,32 @@
-{ inputs, pkgs, config, lib, nixosConfig, ... }:
-
-let
+{
+  inputs,
+  pkgs,
+  config,
+  lib,
+  nixosConfig,
+  ...
+}: let
   inherit (lib.attrsets) genAttrs;
   inherit (lib) mkIf;
   settings = import ../settings;
-in
-{
+in {
   config = mkIf config.programs.mpv.enable {
     programs.mpv = {
       config = {
         force-window = true;
-        video-sync ="display-resample";
-        interpolation =true;
+        video-sync = "display-resample";
+        interpolation = true;
         ytdl-format = "bestvideo+bestaudio"; #TODO adjust for laptop screen size
 
         # hardware accelerate
         hwdec = "auto-safe"; # battery
         profile = "gpu-hq";
-        vo="gpu";
-        gpu-context="wayland";
+        vo = "gpu";
+        gpu-context = "wayland";
 
         # language
-        alang="${settings.user.langCode},eng"; # audio language, multiple possible
-        slang="${settings.user.langCode},eng"; # subtitle language
+        alang = "${settings.user.langCode},eng"; # audio language, multiple possible
+        slang = "${settings.user.langCode},eng"; # subtitle language
         #cache-default = 4000000;
         #tscale = "oversample";
       };

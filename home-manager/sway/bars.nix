@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
-
-with config.lib.base16.theme;
 {
+  config,
+  pkgs,
+  ...
+}:
+with config.lib.base16.theme; {
   bars = [
     {
       command = "${pkgs.waybar}/bin/waybar";

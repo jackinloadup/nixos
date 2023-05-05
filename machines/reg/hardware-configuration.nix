@@ -1,20 +1,18 @@
-{ pkgs, ... }:
-
-{
-  imports = [ ];
+{pkgs, ...}: {
+  imports = [];
 
   config = {
     # Possible fix for bluetooth not connecting
-    boot.kernelParams = [ "btusb.enable_autosuspend=n" ];
+    boot.kernelParams = ["btusb.enable_autosuspend=n"];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    boot.kernelModules = [ "kvm-amd" ];
-    boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod" ];
-    boot.initrd.kernelModules = [ "kvm-amd" ];
+    boot.kernelModules = ["kvm-amd"];
+    boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod"];
+    boot.initrd.kernelModules = ["kvm-amd"];
     boot.loader.efi.canTouchEfiVariables = true;
 
-    boot.initrd.supportedFilesystems = [ "btrfs" ];
-    boot.supportedFilesystems = [ "btrfs" ];
+    boot.initrd.supportedFilesystems = ["btrfs"];
+    boot.supportedFilesystems = ["btrfs"];
     # We have a lot of ram. We can wait a bit before we think we need to swap.
     # does this even matter if I don't have swap attached?
     boot.kernel.sysctl."vm.swappiness" = 5;
@@ -25,13 +23,12 @@
 
     programs.fuse.userAllowOther = true;
     services.btrfs.autoScrub.enable = true;
-    services.btrfs.autoScrub.fileSystems = [ "/dev/disk/by-label/nixos" ];
+    services.btrfs.autoScrub.fileSystems = ["/dev/disk/by-label/nixos"];
 
     hardware.opengl.extraPackages = with pkgs; [
       radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
       radeon-profile
     ];
-
 
     fileSystems = let
       btrfs = subvol: {
@@ -101,7 +98,7 @@
 
     #boot = {
     #  # filefrag -v /var/swapfile to get offset
-    #  kernelParams = ["resume=/var/swapfile" "resume_offset=17887232" ]; 
+    #  kernelParams = ["resume=/var/swapfile" "resume_offset=17887232" ];
     #  resumeDevice = "/dev/disk/by-label/nixos";
     #};
   };

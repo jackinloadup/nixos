@@ -1,7 +1,11 @@
-{ self, inputs, pkgs, lib, ... }:
-
-with inputs;
-let
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+with inputs; let
   inherit (lib) mkDefault;
   settings = import ../../settings;
 in {
@@ -27,7 +31,7 @@ in {
   virtualisation.libvirtd.enable = true;
 
   machine = {
-    users = [ "lriutzel" ];
+    users = ["lriutzel"];
     tui = true;
     sizeTarget = 2;
     encryptedRoot = true;
@@ -35,7 +39,7 @@ in {
     quietBoot = true;
     gaming = true;
     displayManager = "greetd";
-    windowManagers = [ "sway" ];
+    windowManagers = ["sway"];
   };
 
   gumdrop = {
@@ -49,8 +53,8 @@ in {
 
   networking.hostName = "riko";
 
-  # Playing with iwd 
-  environment.systemPackages = [ pkgs.iwgtk ];
+  # Playing with iwd
+  environment.systemPackages = [pkgs.iwgtk];
   networking.networkmanager.wifi.backend = "iwd";
   networking.wireless.iwd.enable = true;
   networking.wireless.iwd.settings = {

@@ -70,29 +70,33 @@
     secrets.url = "/home/lriutzel/Projects/secrets";
   };
 
-  outputs = { self, ... }@inputs:
-    let
-      inherit (inputs.nixpkgs.lib) mapAttrs;
-      inherit (inputs.flake-utils.lib) eachSystem flattenTree mkApp;
-      defaultPkgs = inputs.nixpkgs;
+  outputs = {self, ...} @ inputs: let
+    inherit (inputs.nixpkgs.lib) mapAttrs;
+    inherit (inputs.flake-utils.lib) eachSystem flattenTree mkApp;
+    defaultPkgs = inputs.nixpkgs;
 
-      selfLib = import ./lib/default.nix { lib = defaultPkgs.lib; inherit inputs; };
-      inherit (selfLib) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
+    selfLib = import ./lib/default.nix {
+      lib = defaultPkgs.lib;
+      inherit inputs;
+    };
+    inherit (selfLib) importDirOfOverlays mkNixosSystem mkNixosSystemGenerator;
 
-      supportedX86Systems = [
-        "i686-linux"
-        "x86_64-linux"
-      ];
+    supportedX86Systems = [
+      "i686-linux"
+      "x86_64-linux"
+    ];
 
-      supportedSystems = supportedX86Systems ++ [
+    supportedSystems =
+      supportedX86Systems
+      ++ [
         "aarch64-linux"
       ];
 
-      #forAllSystems = nixlib.genAttrs supportedSystems;
+    #forAllSystems = nixlib.genAttrs supportedSystems;
 
-
-      getCfg = _: cfg: cfg.config.system.build.toplevel;
-    in {
+    getCfg = _: cfg: cfg.config.system.build.toplevel;
+  in
+    {
       # Expose overlay to flake outputs, to allow using it from other flakes.
       overlays = importDirOfOverlays "overlays";
 
@@ -111,37 +115,33 @@
       };
 
       #hydraJobs = mapAttrs getCfg self.nixosConfiguratons;
+    }
+    // (eachSystem supportedSystems)
+    (system: let
+      pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
+    in rec {
+      devShells = flattenTree {
+        rust = import ./shells/rust.nix {inherit pkgs;};
+      };
+    })
+    // (eachSystem supportedX86Systems)
+    (system: let
+      pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
+    in rec {
+      # Custom packages added via the overlay are selectively added here, to
+      # allow using them from other flakes that import this one.
+      packages = flattenTree {
+        winbox = pkgs.wineApps.winbox;
+      };
 
-    } //
-
-    (eachSystem supportedSystems)
-    (system:
-    let pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
-      in rec {
-        devShells = flattenTree {
-          rust = import ./shells/rust.nix { inherit pkgs; };
-        };
-      }) //
-
-    (eachSystem supportedX86Systems)
-    (system:
-    let pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
-      in rec {
-        # Custom packages added via the overlay are selectively added here, to
-        # allow using them from other flakes that import this one.
-        packages = flattenTree {
-          winbox = pkgs.wineApps.winbox;
-        };
-
-        apps = {
-          winbox = mkApp { drv = packages.winbox; };
-        };
-      }) //
-
-    ({
-        packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
-        formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
-      });
+      apps = {
+        winbox = mkApp {drv = packages.winbox;};
+      };
+    })
+    // {
+      packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
+      formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
+    };
 
   nixConfig = {
     extra-substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
