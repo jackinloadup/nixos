@@ -4,10 +4,11 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   settings = import ../../settings;
 in {
-  config = mkIf config.services.home-assistant.enable {
+  options.machine.home-assistant = mkEnableOption "Enable Home Assistant config";
+  config = mkIf config.machine.home-assistant {
     #services.postgresql = {
     #  enable = true;
     #  ensureDatabases = [ "hass" ];
