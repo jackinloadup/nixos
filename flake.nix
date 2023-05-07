@@ -141,6 +141,12 @@
     // {
       packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
       formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
+      templates = {
+        shell = {
+          path = ./templates/shell;
+          description = "A nix shell using direnv to autoload on entry";
+        };
+      };
     };
 
   nixConfig = {
