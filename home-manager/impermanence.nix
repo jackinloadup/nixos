@@ -32,6 +32,7 @@ in {
           #".nixops"
           #".task"
           #".local/share/keyrings"
+          ".local/share/nix"
           ".local/share/lbry"
           ".local/share/MindForger"
           ".local/share/Mumble"
