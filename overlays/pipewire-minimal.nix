@@ -10,7 +10,7 @@ in
         libcameraSupport = false;
         gstreamerSupport = false;
         ffmpegSupport = true;
-        bluezSupport = false;
+        #bluezSupport = false;
         nativeHspSupport = false;
         nativeHfpSupport = false;
         ofonoSupport = false;

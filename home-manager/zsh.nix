@@ -6,7 +6,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf concatStrings mkDefault optionals;
+  inherit (lib) mkIf concatStrings mkDefault optionalString;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
 in {
   config = {
@@ -21,7 +21,7 @@ in {
           precmd_functions+=(set_win_title)
 
         ''
-        + optionals config.programs.starship.enable ''
+        + optionalString config.programs.starship.enable ''
           eval "$(starship init zsh)"
         ''
         + interactive;

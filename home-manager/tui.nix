@@ -5,7 +5,7 @@
   nixosConfig,
   ...
 }: let
-  inherit (lib) optionals;
+  inherit (lib) optionalString;
   settings = import ../settings;
 in {
   imports = [
@@ -32,7 +32,7 @@ in {
           ''
             source ${config.lib.base16.templateFile {name = "shell";}}
           ''
-          + optionals config.programs.starship.enable ''
+          + optionalString config.programs.starship.enable ''
             eval "$(starship init bash)"
           '';
         shellOptions = [

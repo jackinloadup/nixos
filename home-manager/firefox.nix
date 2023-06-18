@@ -64,28 +64,30 @@ in {
       #      sha256 = "1h768ljlh3pi23l27qp961v1hd0nbj2vasgy11bmcrlqp40zgvnr";
       #    })
       #  ];
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        darkreader
-        ublock-origin
-        bitwarden
-        #decentraleyes
-        localcdn #fork of decentraleyes
-        i-dont-care-about-cookies
-        #back-to-close-we
-        #detect-cloudflare-plus # True Sight - track what content delievery networks are serving you
-        sponsorblock
-        #snowflake
-        #old-reddit-redirect
-        #reddit-enhancement-suite
-        #ff2mpv
-        #link-cleaner
-        #markdownload
-        #ipfs-companion
-        #javascript-restrictor
-      ];
       profiles = {
         "${config.home.username}" = {
           isDefault = true;
+
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            darkreader
+            ublock-origin
+            bitwarden
+            #decentraleyes
+            localcdn #fork of decentraleyes
+            i-dont-care-about-cookies
+            #back-to-close-we
+            #detect-cloudflare-plus # True Sight - track what content delievery networks are serving you
+            sponsorblock
+            #snowflake
+            #old-reddit-redirect
+            #reddit-enhancement-suite
+            #ff2mpv
+            #link-cleaner
+            #markdownload
+            #ipfs-companion
+            #javascript-restrictor
+          ];
+
           settings = {
             "browser.startup.blankWindow" = true;
             "browser.startup.page" = 3; # Startup - Open previous windows and tabs

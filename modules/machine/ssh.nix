@@ -15,27 +15,30 @@ in {
     services.openssh = {
       enable = mkDefault true; #TODO limit to authorized keys only
       allowSFTP = mkDefault true; # maybe controls if scp works?
-      permitRootLogin = "yes";
-      passwordAuthentication = false;
       startWhenNeeded = mkDefault true;
 
-      # disable insecure ciphers and macs
-      ciphers = [
-        "chacha20-poly1305@openssh.com"
-        "aes256-gcm@openssh.com"
-        "aes128-gcm@openssh.com"
-        "aes256-ctr"
-        "aes192-ctr"
-        "aes128-ctr"
-      ];
-      kexAlgorithms = [
-        "curve25519-sha256@libssh.org"
-      ];
-      macs = [
-        "hmac-sha2-512-etm@openssh.com"
-        "hmac-sha2-256-etm@openssh.com"
-        "hmac-sha2-512,hmac-sha2-256"
-      ];
+      settings = {
+        PermitRootLogin = "yes";
+        PasswordAuthentication = false;
+        # disable insecure ciphers and macs
+        Ciphers = [
+          "chacha20-poly1305@openssh.com"
+          "aes256-gcm@openssh.com"
+          "aes128-gcm@openssh.com"
+          "aes256-ctr"
+          "aes192-ctr"
+          "aes128-ctr"
+        ];
+        KexAlgorithms = [
+          "curve25519-sha256@libssh.org"
+        ];
+        Macs = [
+          "hmac-sha2-512-etm@openssh.com"
+          "hmac-sha2-256-etm@openssh.com"
+          "hmac-sha2-512,hmac-sha2-256"
+        ];
+      };
+
       extraConfig = ''
         # don't allow system accounts to login
         # possibly change this to a new group like ssh_login

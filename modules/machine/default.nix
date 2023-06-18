@@ -129,8 +129,8 @@ in {
       };
 
       # don't keep /tmp on disk
-      tmpOnTmpfs = true;
-      cleanTmpDir = true;
+      tmp.useTmpfs = true;
+      tmp.cleanOnBoot = true;
 
       loader.systemd-boot = {
         enable = mkDefault true;
