@@ -35,6 +35,7 @@
         },
       },
       sources = cmp.config.sources({
+        { name = "copilot", group_index = 2 },
         { name = "nvim_lsp" },
         { name = "luasnip" },
         { name = "buffer", keyword_length = 5 },
@@ -48,6 +49,9 @@
       formatting = {
         format = require("lspkind").cmp_format {
           with_text = true,
+          -- mode = "symbol",
+          -- max_width = 50,
+          -- symbol_map = { Copilot = "" },
           menu = {
             buffer = "[buf]",
             nvim_lsp = "[LSP]",
