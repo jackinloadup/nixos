@@ -17,6 +17,7 @@ in {
   ];
 
   hardware.rtl-sdr.enable = false;
+  boot.plymouth.enable = false;
   hardware.bluetooth.enable = true;
 
   programs.adb.enable = true;
@@ -49,7 +50,6 @@ in {
     gaming = true;
     impermanence = true;
     lowLevelXF86keys.enable = true;
-    quietBoot = true;
     displayManager = "greetd";
     windowManagers = ["sway"];
     locale = settings.user.locale;

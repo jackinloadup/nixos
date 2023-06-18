@@ -12,6 +12,7 @@ in {
   imports = [
     ./hardware-configuration.nix
   ];
+  boot.initrd.verbose = false;
 
   hardware.bluetooth.enable = true;
   hardware.rtl-sdr.enable = false;
@@ -36,7 +37,6 @@ in {
     sizeTarget = 2;
     encryptedRoot = true;
     lowLevelXF86keys.enable = true;
-    quietBoot = true;
     gaming = true;
     displayManager = "greetd";
     windowManagers = ["sway"];

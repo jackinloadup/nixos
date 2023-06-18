@@ -16,6 +16,7 @@ in {
   ];
 
   boot.plymouth.enable = isUserFacing;
+  boot.initrd.verbose = !isUserFacing;
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
@@ -48,7 +49,6 @@ in {
     ];
     windowManagers = [];
     sizeTarget = 1;
-    quietBoot = isUserFacing;
     minimal = false;
     tui = true;
     impermanence = mkDefault true;
