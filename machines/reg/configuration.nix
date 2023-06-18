@@ -26,6 +26,10 @@ in {
   programs.steam.enable = true;
   programs.simula.enable = true;
 
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   #services.xserver.displayManager.autoLogin.enable = true;
