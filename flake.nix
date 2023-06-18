@@ -2,7 +2,7 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-23.05;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
     # explore prebuilt unfree packages
     #nixpkgs-unfree.url = github:numtide/nixos-unfree;
@@ -27,7 +27,7 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      url = github:nix-community/home-manager/release-22.11;
+      url = github:nix-community/home-manager/release-23.05;
       #url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";

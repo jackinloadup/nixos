@@ -22,18 +22,19 @@ in {
       # no need to redefine it in your config for now)
       #media-session.enable = true;
 
-      config.pipewire = {
-        "context.properties" = {
-          # debug tuning
-          #"link.max-buffers" = 64;
-          #"link.max-buffers" = 16; # version < 3 clients can't handle more than this
-          #"log.level" = 2; # https://docs.pipewire.org/page_daemon.html
-          #"default.clock.rate" = 48000;
-          #"default.clock.quantum" = 1024;
-          #"default.clock.min-quantum" = 32;
-          #"default.clock.max-quantum" = 8192;
-        };
-      };
+      # pipewire.config gone in 23.05
+      #config.pipewire = {
+      #  "context.properties" = {
+      #    # debug tuning
+      #    #"link.max-buffers" = 64;
+      #    #"link.max-buffers" = 16; # version < 3 clients can't handle more than this
+      #    #"log.level" = 2; # https://docs.pipewire.org/page_daemon.html
+      #    #"default.clock.rate" = 48000;
+      #    #"default.clock.quantum" = 1024;
+      #    #"default.clock.min-quantum" = 32;
+      #    #"default.clock.max-quantum" = 8192;
+      #  };
+      #};
     };
 
     # if undistract me is enabled go ahead and use sound
