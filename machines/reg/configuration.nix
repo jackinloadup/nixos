@@ -26,6 +26,8 @@ in {
   programs.steam.enable = true;
   programs.simula.enable = true;
 
+  services.kubo.enable = true;
+  services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
