@@ -59,6 +59,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = github:Mic92/nix-index-database;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Fuse filesystem that returns symlinks to executables based on the PATH of
     # the requesting process. This is useful to execute shebangs on NixOS that
     # assume hard coded locations in locations like /bin or /usr/bin etc.

@@ -84,6 +84,7 @@ in {
           ../../home-manager/zoom.nix
           ../../home-manager/zsh.nix
           inputs.secrets.homemanagerModules.lriutzel
+          inputs.nix-index-database.hmModules.nix-index
         ]
         ++ optionals ifTui [
           ../../home-manager/tui.nix
@@ -114,6 +115,7 @@ in {
       programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
       programs.neovim.enable = true;
+      programs.nix-index-database.comma.enable = isFullSystem;
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
       programs.fzf.enable = ifTui;
