@@ -32,7 +32,7 @@ in
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
-      withNodeJs = false;
+      withNodeJs = true;
       withPython3 = false;
       withRuby = false;
 
@@ -84,6 +84,14 @@ in
 
         (import ./telescope-nvim.nix {pkgs = pkgs;}) # Find, Filter, Preview, Pick
         (import ./luasnip.nix {pkgs = pkgs;}) # Snippet engine
+        {
+          plugin = pkgs.vimPlugins.copilot-cmp;
+          type = "lua";
+          config = ''
+            require("copilot_cmp").setup()
+          '';
+        }
+        (import ./copilot.nix {pkgs = pkgs;}) # github copilot requires nodejs
       ];
 
       extraConfig = ''
