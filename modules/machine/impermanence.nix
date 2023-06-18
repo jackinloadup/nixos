@@ -72,7 +72,7 @@ in {
           ]
           ++ optionals config.services.kubo.enable [
             # ipfs
-            "/var/lib/ipfs"
+            config.services.kubo.dataDir
           ]
           ++ optionals config.services.fwupd.enable [
             "/var/lib/fwup"

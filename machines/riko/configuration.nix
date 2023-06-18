@@ -22,6 +22,8 @@ in {
   programs.chromium.enable = true;
   programs.steam.enable = true;
 
+  services.kubo.enable = true;
+  services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   services.pipewire.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
