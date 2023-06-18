@@ -17,6 +17,7 @@ in {
   ];
 
   hardware.rtl-sdr.enable = false;
+  boot.initrd.verbose = false;
   boot.plymouth.enable = false;
   hardware.bluetooth.enable = true;
 
