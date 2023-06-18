@@ -42,6 +42,7 @@ in {
         "networkmanager"
         "wireshark"
         "dialout" # needed for flashing serial devices ttyUSB0
+        "ipfs"
         #dip netdev plugdev
         # cdrom floppy
       ];
