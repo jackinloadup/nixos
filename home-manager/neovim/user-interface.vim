@@ -54,6 +54,15 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Center cursor on screen when moving half pages
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Center cursor on screen when searching forward/backward
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
