@@ -16,6 +16,8 @@ in {
     ./auto-pair-ps3-remote.nix
   ];
 
+  boot.initrd.verbose = false;
+  boot.plymouth.enable = true;
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
   services.getty = {
@@ -36,7 +38,6 @@ in {
       "kodi"
     ];
     sizeTarget = 1;
-    quietBoot = true;
     minimal = true;
     tui = false;
     #displayManager = "gdm";
@@ -84,9 +85,6 @@ in {
       patch = ../../patches/linux-sony-bd-remote.patch;
     }
   ];
-  boot.plymouth = {
-    enable = true;
-  };
 
   virtualisation = rec {
     vmVariant = {

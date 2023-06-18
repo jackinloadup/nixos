@@ -14,12 +14,13 @@ in {
     ./hardware-configuration.nix
   ];
 
+  boot.initrd.verbose = false;
+
   machine = {
     users = [
       "lriutzel"
     ];
     sizeTarget = 1;
-    quietBoot = true;
     home-assistant = true;
     tui = true;
     windowManagers = [];

@@ -4,19 +4,16 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption mkDefault;
-  cfg = config.machine;
+  inherit (lib) mkIf mkDefault;
 in {
-  options.machine.quietBoot = mkEnableOption "Hide boot log from tui/gui";
-
-  config = mkIf cfg.quietBoot {
+  config = mkIf (!config.boot.initrd.verbose) {
     boot = {
       # heard on matrix that timeout should be able to be 0 and still
       # be interupted via firmware buffered input. I didn't experience this yet.
       # setting to 1 to allow capture for now
       loader.timeout = mkDefault 1;
       # Quiet durring boot
-      initrd.verbose = false;
+      #initrd.verbose = false;
 
       # 0 = EMERG
       # 1 = ALERT
