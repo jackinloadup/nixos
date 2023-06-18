@@ -80,6 +80,9 @@ in {
           ++ optionals config.networking.wireless.iwd.enable [
             "/var/lib/iwd"
           ]
+          ++ optionals config.services.jellyfin.enable [
+            "/var/lib/jellyfin"
+          ]
           ++ optionals config.services.postgresql.enable [
             "/var/lib/postgresql"
           ]
