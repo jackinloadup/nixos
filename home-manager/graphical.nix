@@ -52,7 +52,7 @@ in {
 
       # GUI
       # ---------------------------------------
-      #libreoffice # Office suite
+      libreoffice # Office suite
       libnotify # for notify-send
       # darktile # alternative PTY to try out. GPU + go
 

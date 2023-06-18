@@ -181,7 +181,8 @@ in {
           spotify
 
           #gnome.vinagre # VNC view another computer
-          fractal # matrix client
+          #fractal # matrix client
+          fractal-next # matrix client
           nheko # matrix client
           #mumble # voice chat application
           signal-desktop # messaging client
@@ -210,7 +211,7 @@ in {
           mkvtoolnix
 
           #freeoffice # office suite UNFREE
-          tixati # bittorrent client
+          #tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
           blender # 3D render
           cawbird # twitter client
           speedcrunch # gui calculator
@@ -226,6 +227,9 @@ in {
           ## Wine Apps
           wineApps.winbox
           #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
+
+          # alt browser with ipfs builtin
+          brave
         ];
     };
 
