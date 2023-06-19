@@ -48,8 +48,7 @@
 
     # Takes the NixOS module system and makes it work for disk partitioning as well
     disko = {
-      #url = github:nix-community/disko;
-      url = "/home/lriutzel/Projects/nix/disko";
+      url = github:nix-community/disko;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
