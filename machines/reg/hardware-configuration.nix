@@ -19,7 +19,7 @@
 
     # More tmp space is needed to build kernel
     # original 16G (50%), known needed 20G, new 24G
-    boot.tmpOnTmpfsSize = "75%";
+    boot.tmp.tmpfsSize = "75%";
 
     programs.fuse.userAllowOther = true;
     services.btrfs.autoScrub.enable = true;
