@@ -17,7 +17,14 @@ in {
   ];
 
   boot.initrd.verbose = false;
+  boot.kernelPatches = [
+    {
+      name = "sony-bd-remote-buttons";
+      patch = ../../patches/linux-sony-bd-remote.patch;
+    }
+  ];
   boot.plymouth.enable = true;
+
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
   services.getty = {
@@ -78,13 +85,6 @@ in {
       enableMAME = true;
     };
   };
-
-  boot.kernelPatches = [
-    {
-      name = "sony-bd-remote-buttons";
-      patch = ../../patches/linux-sony-bd-remote.patch;
-    }
-  ];
 
   virtualisation = rec {
     vmVariant = {

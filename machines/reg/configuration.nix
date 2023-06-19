@@ -16,10 +16,10 @@ in {
     ./sway-monitor-setup.nix
   ];
 
-  hardware.rtl-sdr.enable = false;
   boot.initrd.verbose = false;
   boot.plymouth.enable = false;
   hardware.bluetooth.enable = true;
+  hardware.rtl-sdr.enable = false;
 
   programs.adb.enable = true;
   programs.chirp.enable = true;
@@ -27,12 +27,15 @@ in {
   programs.steam.enable = true;
   programs.simula.enable = true;
 
+  services.hydra.enable = true;
   services.jellyfin = {
     enable = true;
     openFirewall = true;
   };
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
+  services.nextcloud.enable = false;
+  services.pipewire.enable = true;
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
@@ -40,9 +43,6 @@ in {
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.windowManager.i3.enable = true;
 
-  services.hydra.enable = true;
-  services.nextcloud.enable = false;
-  services.pipewire.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.libvirtd.enable = true;
