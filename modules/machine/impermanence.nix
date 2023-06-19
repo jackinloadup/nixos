@@ -45,12 +45,11 @@ in {
             "/var/lib/nixos"
             #"/var/log"
             #"/var/lib/postgresql"
-            #] ++ optionals config.systemd.package.withCoredump [ # requires wip
-            # patch
+          ]
+          ++ optionals config.systemd.coredump.enable [
             "/var/lib/systemd/coredump"
           ]
           ++ optionals config.hardware.bluetooth.enable [
-            # requires wip
             "/var/lib/bluetooth"
           ]
           ++ optionals config.virtualisation.docker.enable [
@@ -94,6 +93,13 @@ in {
           ]
           ++ optionals config.services.syncthing.enable [
             "/var/lib/syncthing"
+          ];
+        files =
+          []
+          ++ optionals config.networking.networkmanager.enable [
+            "/var/lib/NetworkManager/secret_key"
+            "/var/lib/NetworkManager/seen-bssids"
+            "/var/lib/NetworkManager/timestamps"
           ];
       };
     };
