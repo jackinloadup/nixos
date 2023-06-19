@@ -45,6 +45,13 @@ in {
     inputs.self.overlays.default
   ];
 
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  networking.firewall.extraCommands = ''
+    iptables -t nat -A POSTROUTING -s 10.16.50.0/24 -d 10.16.1.0/24 -j MASQUERADE
+    iptables -I FORWARD 1 -s 10.16.50.0/24 -d 10.16.1.0/24 -j ACCEPT
+    iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  '';
+
   networking.hostName = "marulk";
   networking.networkmanager.enable = mkForce false;
   networking.bridges.br0.interfaces = ["enp1s0"];
@@ -84,6 +91,11 @@ in {
   #    }
   #  ];
   #};
+
+  services.nebula.networks.gumdrop = {
+    isLighthouse = true;
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
