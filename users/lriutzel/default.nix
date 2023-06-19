@@ -136,7 +136,7 @@ in {
       programs.openrct2.enable = isFullSystem;
       programs.zoom-us.enable = isFullSystem;
       programs.zsh.enable = ifTui;
-      programs.starship.enable = ifTui;
+      programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
 
       services.gpg-agent.enable = isFullSystem;
       services.mopidy.enable = isFullSystem;
