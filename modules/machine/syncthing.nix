@@ -17,6 +17,8 @@ in {
       networking.firewall.allowedUDPPorts = [22000];
     }
     // mkIf services.syncthing.enable {
+      networking.firewall.allowedTCPPorts = [22000];
+      networking.firewall.allowedUDPPorts = [22000];
       services.syncthing = {
         extraOptions = {
           gui = {
