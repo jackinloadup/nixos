@@ -36,15 +36,19 @@ in {
   };
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
+
   services.nextcloud.enable = false;
   services.pipewire.enable = true;
+
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
+  #services.xserver.displayManager.gdm.enable = true;
 
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.windowManager.i3.enable = true;
-
+  # xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
+  #     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
+  #services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.windowManager.i3.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.libvirtd.enable = true;

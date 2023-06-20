@@ -25,9 +25,14 @@ in {
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   services.pipewire.enable = true;
+
+  #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
-  #services.xserver.desktopManager.i3.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+
+  #services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.windowManager.i3.enable = true;
 
   # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
   virtualisation.docker.enable = true;
