@@ -18,8 +18,10 @@ in {
 
   boot.initrd.verbose = false;
   boot.plymouth.enable = false;
+
   hardware.bluetooth.enable = true;
   hardware.rtl-sdr.enable = false;
+  hardware.yubikey.enable = true;
 
   programs.adb.enable = true;
   programs.chirp.enable = true;
