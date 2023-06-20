@@ -58,8 +58,8 @@ in {
       description = "Kodi Media Center.";
       serviceConfig = {
         Type = "simple";
-        ExecStart = ''${config.programs.kodi.package}/bin/kodi --lircdev /run/lirc/lircd 
-                  --standalone & waitPID=$!
+        ExecStart = ''          ${config.programs.kodi.package}/bin/kodi --lircdev /run/lirc/lircd
+                            --standalone & waitPID=$!
         '';
         WorkingDirectory = config.users.users.kodi.home;
         Restart = "always";
@@ -68,9 +68,9 @@ in {
       };
       #wantedBy = [ "default.target" ];
 
-      bindsTo = [ "graphical-session.target" ];
-      wants = [ "graphical-session-pre.target" ];
-      after = [ "graphical-session-pre.target" ];
-     };
+      bindsTo = ["graphical-session.target"];
+      wants = ["graphical-session-pre.target"];
+      after = ["graphical-session-pre.target"];
+    };
   };
 }
