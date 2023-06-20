@@ -64,11 +64,11 @@ in {
         terminal = "${pkgs.foot}/bin/foot";
 
         input = import ../../home-manager/sway/input.nix;
-        startup = [
-          {
-            command = "${pkgs.kodi-wayland}/bin/kodi";
-          }
-        ];
+        #startup = [
+        #  {
+        #    command = "${pkgs.kodi-wayland}/bin/kodi";
+        #  }
+        #];
         output = {
           "*".bg = ''${kodiSplash} fill'';
         };
