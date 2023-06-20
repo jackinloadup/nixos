@@ -77,13 +77,6 @@ in {
       inputs.self.overlays.plymouth-no-gtk
       inputs.self.overlays.pipewire-minimal
     ];
-
-    config.retroarch = {
-      enableBsnes = true;
-      enableDolphin = true;
-      enableMGBA = true;
-      enableMAME = true;
-    };
   };
 
   virtualisation = rec {

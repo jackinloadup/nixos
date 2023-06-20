@@ -57,5 +57,12 @@ in {
       #retroarchFull
       #sixpair # usb pair playstation controllers
     ];
+
+    nixpkgs.config.retroarch = {
+      enableBsnes = true;
+      enableDolphin = true;
+      enableMGBA = true;
+      enableMAME = true;
+    };
   };
 }
