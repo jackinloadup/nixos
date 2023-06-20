@@ -25,7 +25,7 @@ in {
   programs.chirp.enable = true;
   programs.chromium.enable = true;
   programs.steam.enable = true;
-  programs.simula.enable = true;
+  programs.simula.enable = false;
 
   services.hydra.enable = true;
   services.jellyfin = {
