@@ -14,7 +14,7 @@ in {
     services.mopidy = {
       extensionPackages = [
         # pkgs.mopidy-spotify #removed because Spotify stopped supporting libspotify
-        # pkgs.mopidy-local
+        pkgs.mopidy-local
         pkgs.mopidy-mpd
         pkgs.mopidy-mpris
         pkgs.mopidy-somafm

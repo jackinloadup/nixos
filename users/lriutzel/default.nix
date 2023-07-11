@@ -161,7 +161,7 @@ in {
         []
         ++ optionals ifGraphical [
           # TUI tools but loading if graphical
-          unstable.mqttui # mqtt tui
+          mqttui # mqtt tui
 
           # markdown tools
           mdcat # tui viewer
@@ -179,11 +179,11 @@ in {
           python39Packages.xdot # graphviz viewer
           graphviz
 
-          # Spotify
-          spotify-tui # spotifyd ui
-          spotifyd # music player no ui
-          # NonFree
-          spotify
+          ## Spotify - disabling and using webui
+          #spotify-tui # spotifyd ui
+          #spotifyd # music player no ui - spotify broke this i believe
+          ## NonFree
+          #spotify
 
           #gnome.vinagre # VNC view another computer
           #fractal # matrix client
@@ -199,6 +199,8 @@ in {
           mediaelch
 
           kodi-wayland
+
+          gnome.file-roller # Archive manager
         ]
         ++ optionals isFullSystem [
           #helvum # pipewire patchbay # failing to build
