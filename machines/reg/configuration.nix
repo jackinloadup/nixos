@@ -45,6 +45,7 @@ in {
   programs.steam.enable = true;
   programs.simula.enable = false;
 
+  services.flatpak.enable = true;
   services.hydra.enable = true;
   services.jellyfin = {
     enable = true;
