@@ -7,6 +7,8 @@
   inherit (lib) mkIf mkForce;
 in {
   config = mkIf config.services.xserver.desktopManager.gnome.enable {
+  # xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
+  #     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
     programs.dconf.enable = true;
 
     # gnome has its own power management tool
@@ -18,6 +20,7 @@ in {
     environment.systemPackages = [
       pkgs.gnome.adwaita-icon-theme
       pkgs.gnome.gnome-session
+      pkgs.gnome.gnome-tweaks
     ];
 
     environment.gnome.excludePackages = [
