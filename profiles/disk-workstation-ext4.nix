@@ -27,7 +27,6 @@
             format = "gpt";
             partitions = [
               {
-                type = "partition";
                 name = "ESP";
                 start = "1MiB";
                 end = "512MiB";
@@ -43,7 +42,6 @@
                 };
               }
               {
-                type = "partition";
                 name = "nixos";
                 start = "512MiB";
                 end = "100%";

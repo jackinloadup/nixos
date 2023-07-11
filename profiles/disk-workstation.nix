@@ -61,7 +61,6 @@ in {
             format = "gpt";
             partitions = [
               {
-                type = "partition";
                 name = "ESP";
                 start = "1MiB";
                 end = "512MiB";
@@ -76,7 +75,6 @@ in {
                 };
               }
               {
-                type = "partition";
                 name = rootPartionName;
                 start = "512MiB";
                 end = "100%";
@@ -122,12 +120,12 @@ in {
 
           datasets = let
             unmountable = {
-              zfs_type = "filesystem";
+              type = "zfs_fs";
               mountpoint = null;
               options.canmount = "off";
             };
             filesystem = mountpoint: {
-              zfs_type = "filesystem";
+              type = "zfs_fs";
               inherit mountpoint;
               #  options."com.sun:auto-snapshot" = "true";
             };
@@ -147,33 +145,12 @@ in {
                 postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
                 options.mountpoint = "legacy";
               };
-
-            #zfs_fs = {
-            #  zfs_type = "filesystem";
-            #  mountpoint = "/zfs_fs";
-            #  options."com.sun:auto-snapshot" = "true";
-            #};
-            #zfs_unmounted_fs = {
-            #  zfs_type = "filesystem";
-            #  options.mountpoint = "none";
-            #};
-            #zfs_legacy_fs = {
-            #  zfs_type = "filesystem";
-            #  options.mountpoint = "legacy";
-            #  mountpoint = "/zfs_legacy_fs";
-            #};
-            #zfs_testvolume = {
-            #  zfs_type = "volume";
-            #  size = "10M";
-            #  content = {
-            #    type = "filesystem";
-            #    format = "ext4";
-            #    mountpoint = "/ext4onzfs";
-            #  };
-            #};
           };
         };
       };
     };
+
+    fileSystems."/persist/etc".neededForBoot = true;
+    fileSystems."/persist/lib".neededForBoot = true;
   };
 }
