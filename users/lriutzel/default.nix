@@ -131,7 +131,7 @@ in {
         lriutzel = {
           isDefault = true;
         };
-      }; # Email client
+      };
       programs.obs-studio = {
         enable = isFullSystem;
         plugins = [
@@ -157,6 +157,25 @@ in {
       #    pinentry = "gnome3";
       #  };
       #};
+      #
+      #
+      xdg.desktopEntries = {
+        mindforger = {
+          name = "MindForger";
+          genericName = "Personal knowledge management application";
+          comment = "Thinking notebook and Markdown editor";
+          icon = "${pkgs.mindforger}/share/icons/hicolor/256x256/apps/mindforger.png";
+          exec = "${pkgs.mindforger}/bin/mindforger ${homeDir}/Documents/mindforger-repository";
+          terminal = false;
+          categories = [
+            "Office"
+            "Utility"
+          ];
+          mimeType = [
+            "text/markdown"
+          ];
+        };
+      };
 
       home.packages = with pkgs;
         []
