@@ -30,7 +30,6 @@
       url = github:nix-community/home-manager/release-23.05;
       #url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
     };
 
     # color library for theming
@@ -71,7 +70,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    secrets.url = "/home/lriutzel/Projects/secrets";
+    secrets = {
+      url = "/home/lriutzel/Projects/secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
 
     nixvim.url = github:pta2002/nixvim;
   };
@@ -120,7 +123,7 @@
         minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
       };
 
-      #hydraJobs = mapAttrs getCfg self.nixosConfiguratons;
+      #hydraJobs = mapAttrs getCfg self.nixosConfigurations;
     }
     // (eachSystem supportedSystems)
     (system: let
@@ -170,6 +173,5 @@
 
   nixConfig = {
     extra-substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
-    #extra-trusted-public-keys
   };
 }
