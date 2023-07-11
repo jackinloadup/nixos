@@ -17,6 +17,7 @@ in {
       sdrangel
       nrsc5
       gqrx
+      rtl_433-dev # hardware.rtl-sdr
     ];
   };
 }

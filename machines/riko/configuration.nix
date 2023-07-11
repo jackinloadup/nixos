@@ -15,7 +15,7 @@ in {
   boot.initrd.verbose = false;
 
   hardware.bluetooth.enable = true;
-  hardware.rtl-sdr.enable = false;
+  hardware.rtl-sdr.enable = true;
   hardware.yubikey.enable = true;
 
   programs.adb.enable = true;
@@ -25,6 +25,21 @@ in {
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   services.pipewire.enable = true;
+
+  services.rtl_433 = {
+    enable = true;
+    package = pkgs.rtl_433-dev;
+    configText = ''
+      output json
+      output mqtt://mqtt.home.lucasr.com,user=mosquitto,pass=mosquitto,retain=0,events=rtl_433[/model][/id]
+      report_meta time:utc
+      frequency 915M
+      frequency 433.92M
+      convert si
+      hop_interval 60
+      gain 0
+    '';
+  };
 
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";

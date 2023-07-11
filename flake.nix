@@ -136,13 +136,26 @@
       # allow using them from other flakes that import this one.
       packages = flattenTree {
         winbox = pkgs.wineApps.winbox;
+        rtl_433-dev = pkgs.rtl_433-dev;
       };
 
       apps = {
         winbox = mkApp {drv = packages.winbox;};
+        rtl_433-dev = mkApp {drv = packages.rtl_433-dev;};
       };
     })
     // {
+      packages.x86_64-linux.rtlamr = defaultPkgs.legacyPackages.x86_64-linux.buildGoModule {
+        pname = "rtlamr";
+        version = "v0.9.1";
+        vendorSha256 = null;
+        src = defaultPkgs.legacyPackages.x86_64-linux.fetchFromGitHub {
+          owner = "bemasher";
+          repo = "rtlamr";
+          rev = "7926ab759fcd07021dfa37d115db4fd10f2d127c";
+          hash = "sha256-d22mvVcz52yeKGebsBa+a1e5JFuybF8SOA0KGLtStw8=";
+        };
+      };
       packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
       formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
       templates = {

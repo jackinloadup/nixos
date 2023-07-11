@@ -18,6 +18,7 @@ in {
   boot.plymouth.enable = isUserFacing;
   boot.initrd.verbose = !isUserFacing;
 
+  hardware.rtl-sdr.enable = true;
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
   services.pipewire.enable = isUserFacing;
