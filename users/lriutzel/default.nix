@@ -54,6 +54,7 @@ in {
     services.trezord.enable = isFullSystem;
 
     hardware.yubikey.enable = isFullSystem;
+    hardware.solo2.enable = true;
 
     environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
     environment.systemPackages = mkIf isFullSystem [
