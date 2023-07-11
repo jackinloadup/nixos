@@ -20,7 +20,7 @@ in {
       '';
     };
     configText = mkOption {
-      type = types.nullOr types.lines;
+      type = types.lines;
       default = ''
         output json
         report_meta time:utc
@@ -30,17 +30,14 @@ in {
         hop_interval  60
       '';
       description = ''
-      https://github.com/merbanan/rtl_433/blob/master/conf/rtl_433.example.conf
-        Alertmanager configuration as YAML text. If non-null, this option
-        defines the text that is written to alertmanager.yml. If null, the
-        contents of alertmanager.yml is generated from the structured config
-        options.
+        Configuration for rtl_433. For all options see the
+        [example config](https://github.com/merbanan/rtl_433/blob/master/conf/rtl_433.example.conf).
       '';
     };
   };
 
   config = mkIf config.services.rtl_433.enable {
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [cfg.package];
 
     users.users.rtl_433 = {
       name = "rtl_433";
@@ -53,13 +50,12 @@ in {
     users.groups.rtl_433.gid = 20001; # should be config.ids.gids.rtl_433;
 
     systemd.services.rtl_433 = let
-      configFile = pkgs.writeText "rtl_433.conf" ''
-      '';
+      configFile = pkgs.writeText "rtl_433.conf" cfg.configText;
     in {
       description = "rtl_433 server daemon";
 
       wantedBy = ["multi-user.target"];
-      after = [ "network.target" ];
+      after = ["network.target"];
 
       restartIfChanged = true;
 
@@ -68,9 +64,10 @@ in {
       serviceConfig = {
         User = "rtl_433";
         Group = "rtl_433";
-        ExecStart = "${cfg.package}/bin/rtl_433 -c ${configFile}";
+        ExecStart = "${cfg.package}/bin/rtl_433 -F log -v -c ${configFile}";
         StateDirectory = "rtl_443";
-        #PrivateDevices = false;
+        #PrivateDevices = true;
+        #DeviceAllow = "/dev/bus/usb/*";
         #PrivateTmp = true;
         #ProtectSystem = "full";
         #ProtectHome = "read-only";
