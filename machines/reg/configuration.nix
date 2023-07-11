@@ -35,6 +35,10 @@ in {
   hardware.rtl-sdr.enable = true;
   hardware.yubikey.enable = true;
 
+  home-manager.users.lriutzel.imports = [
+    ./switch-desk.nix
+  ];
+
   programs.adb.enable = true;
   programs.chirp.enable = true;
   programs.chromium.enable = true;
