@@ -48,12 +48,16 @@ in {
       ];
     };
 
+    programs.command-not-found.enable = !isFullSystem;
     #programs.nix-ld.enable = isFullSystem;
     programs.wireshark.enable = isFullSystem;
 
     services.trezord.enable = isFullSystem;
 
     hardware.yubikey.enable = isFullSystem;
+    hardware.logitech.wireless.enable = isFullSystem;
+    hardware.logitech.wireless.enableGraphical = isFullSystem;
+    hardware.keyboard.qmk.enable = isFullSystem;
     hardware.solo2.enable = true;
 
     environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
