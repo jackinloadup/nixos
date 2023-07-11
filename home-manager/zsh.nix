@@ -11,6 +11,7 @@
 in {
   config = {
     programs.zsh = mkIf config.programs.zsh.enable {
+    programs.nix-index.enableZshIntegration = true;
       enableAutosuggestions = mkDefault true;
 
       initExtra =

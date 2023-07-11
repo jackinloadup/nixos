@@ -74,6 +74,7 @@ in {
     in {
       imports =
         [
+          ../../home-manager/bash.nix
           ../../home-manager/nix.nix
           ../../home-manager/default.nix
           ../../home-manager/dunst.nix
@@ -113,9 +114,12 @@ in {
         NIX_PATH = "nixos-config=${homeDir}/Projects/dotfiles/flake.nix:$NIX_PATH";
       };
 
+      programs.bash.enable = ifTui;
       programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
       programs.neovim.enable = true;
+      programs.nix-index.enable = isFullSystem;
+      programs.command-not-found.enable = !isFullSystem;
       programs.nix-index-database.comma.enable = isFullSystem;
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
