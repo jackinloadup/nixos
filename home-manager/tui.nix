@@ -14,8 +14,8 @@ in {
 
   config = {
     home.sessionVariables = {
-      TERMINFO_DIRS = "${config.home.homeDirectory}/.nix-profile/share/terminfo";
       # Share environment variables between WSL and Windows
+      #TERMINFO_DIRS = "${config.home.homeDirectory}/.nix-profile/share/terminfo";
       #WSLENV="$TERMINFO_DIRS";
     };
 
