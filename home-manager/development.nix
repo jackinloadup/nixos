@@ -53,6 +53,7 @@ in {
       branch.autoSetupRebase = "remote";
       #protocol.keybase.allow = "always";
       #credential.helper = "store --file ~/.git-credentials";
+      rebase.autosquash = true;
     };
 
     aliases = {
