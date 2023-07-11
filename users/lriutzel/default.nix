@@ -58,7 +58,6 @@ in {
     environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
     environment.systemPackages = mkIf isFullSystem [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
-      pkgs.nmapsi4 # QT frontend for nmap
     ];
     environment.variables = mkIf isFullSystem {
       # Supports inputs.nix-ld
@@ -227,6 +226,7 @@ in {
           ## Debugging
           wireshark
           gparted
+          nmapsi4 # QT frontend for nmap
 
           ## Wine Apps
           wineApps.winbox
