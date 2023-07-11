@@ -28,7 +28,7 @@ with pkgs;
       # added for bevy
       udev
       alsaLib
-      xlibsWrapper
+      #xlibsWrapper
       xorg.libXcursor
       xorg.libXrandr
       xorg.libXi # To use x11 feature
