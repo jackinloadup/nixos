@@ -19,6 +19,7 @@ in {
   hardware.yubikey.enable = true;
 
   programs.adb.enable = true;
+  programs.chirp.enable = true;
   programs.chromium.enable = true;
   programs.steam.enable = true;
 
