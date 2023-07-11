@@ -235,11 +235,15 @@ in {
           #{ command = "${pkgs.slack}/bin/slack"; }
           #{ command = "${pkgs.element-desktop-wayland}/bin/element-desktop"; }
           #{ command = "${pkgs.spotify}/bin/spotify"; }
+          {command = "discord";}
         ];
 
         assigns = {
           "1" = [
             {app_id = "firefox";}
+          ];
+          "10" = [
+            {app_id = "discord";}
           ];
           #"8" = [
           #  { app_id = "weechat"; }
