@@ -18,19 +18,23 @@ in {
   boot.plymouth.enable = isUserFacing;
   boot.initrd.verbose = !isUserFacing;
 
+  hardware.bluetooth.enable = isUserFacing;
   hardware.rtl-sdr.enable = true;
+
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
+
+  services.k3s.enable = false;
+  services.k3s.role = "server";
+  services.k3s.clusterInit = true;
+
   services.pipewire.enable = isUserFacing;
+
   #services.xserver.displayManager.autoLogin.user = "lriutzel";
   #services.xserver.displayManager.defaultSession = "sway";
 
   services.xserver.desktopManager.gnome.enable = isUserFacing;
   services.xserver.displayManager.gdm.enable = isUserFacing;
-
-  services.k3s.enable = true;
-  services.k3s.role = "server";
-  services.k3s.clusterInit = true;
 
   #services.getty = {
   #  autologinUser = "kodi";
@@ -42,7 +46,6 @@ in {
   #    "--skip-login"
   #  ];
   #};
-  hardware.bluetooth.enable = isUserFacing;
 
   machine = {
     users = mkDefault [

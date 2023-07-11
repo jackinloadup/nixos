@@ -6,7 +6,9 @@
   ...
 }:
 with inputs; let
+  inherit (lib) mkForce;
   settings = import ../../settings;
+  debug = false;
 in {
   imports = [
     ./change-logitec-suspend.nix
@@ -16,9 +18,19 @@ in {
     ./sway-monitor-setup.nix
   ];
 
-  boot.initrd.verbose = false;
-  boot.plymouth.enable = false;
+  boot.binfmt.emulatedSystems = [
+    "wasm32-wasi"
+    #"i686-embedded"
+    "x86_64-windows"
+    "aarch64-linux"
+  ];
+  boot.crashDump.enable = false; # Causes kernel build
 
+  boot.initrd.verbose = debug;
+  boot.plymouth.enable = debug;
+
+  # dragon, doesn't look too good in tty only works in pty
+  environment.etc.issue.source = mkForce ./issue-banner;
   hardware.bluetooth.enable = true;
   hardware.rtl-sdr.enable = true;
   hardware.yubikey.enable = true;
@@ -83,18 +95,6 @@ in {
     locale = settings.user.locale;
     characterSet = settings.user.characterSet;
   };
-
-  # Causes kernel build
-  boot.crashDump.enable = false;
-
-  boot.binfmt.emulatedSystems = [
-    "wasm32-wasi"
-    "x86_64-windows"
-    "aarch64-linux"
-  ];
-
-  # dragon, doesn't look too good in tty only works in pty
-  environment.etc.issue.source = lib.mkForce ./issue-banner;
 
   gumdrop = {
     printerScanner = true;
