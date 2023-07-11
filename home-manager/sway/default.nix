@@ -284,6 +284,11 @@ in {
          "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-log-out.svg"
        },
        {
+         "label": "Suspend",
+         "exec": "systemctl suspend",
+         "icon": "${pkgs.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-suspend.svg"
+       },
+       {
          "label": "Reboot",
          "exec": "systemctl reboot",
          "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-reboot.svg"
