@@ -90,7 +90,7 @@ in {
 
         floating.criteria = [{class = "^Wine$";}];
 
-        menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} -i -l 10'";
+        menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
 
         keybindings = let
           inherit (swayConfig) left down up right menu terminal modifier;
