@@ -86,6 +86,7 @@ in {
           ../../home-manager/zsh.nix
           inputs.secrets.homemanagerModules.lriutzel
           inputs.nix-index-database.hmModules.nix-index
+          #inputs.nixvim.homeManagerModules.nixvim
         ]
         ++ optionals ifTui [
           ../../home-manager/tui.nix
@@ -98,6 +99,7 @@ in {
           ../../home-manager/i3.nix
           ../../home-manager/impermanence.nix
           ../../home-manager/neovim/default.nix
+          #../../home-manager/nixvim/default.nix
           ../../home-manager/sway/default.nix
           ../../home-manager/syncthing.nix
           ../../home-manager/xorg.nix

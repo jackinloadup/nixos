@@ -72,6 +72,8 @@
     };
 
     secrets.url = "/home/lriutzel/Projects/secrets";
+
+    nixvim.url = github:pta2002/nixvim;
   };
 
   outputs = {self, ...} @ inputs: let
