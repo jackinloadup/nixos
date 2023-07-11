@@ -35,10 +35,14 @@ in {
           ".local/share/nix"
           ".local/share/lbry"
           ".local/share/MindForger"
+          ".local/share/mopidy"
           ".local/share/Mumble"
           ".local/share/wine-nix-profiles"
           ".local/state/bash"
+          ".config/discord"
+          ".config/dconf"
           ".config/libreoffice"
+          ".config/github-copilot"
           ".config/nwg-panel"
           ".config/Signal"
           ".config/spotify"
@@ -81,6 +85,7 @@ in {
         [
           ".lftp/rc"
           ".bash_history"
+          ".local/state/z"
           #".screenrc"
         ]
         ++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
