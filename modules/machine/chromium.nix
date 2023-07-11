@@ -9,8 +9,9 @@
 # nix seporate from nixos
 let
   inherit (lib) mkIf;
+  cfg = config.programs.chromium;
 in {
-  config = mkIf config.programs.chromium.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       chromium
     ];
@@ -50,5 +51,7 @@ in {
       defaultSearchProviderSearchURL = "https://duckduckgo.com/?q={searchTerms}";
       defaultSearchProviderSuggestURL = "https://www.duckduckgo.com/qbox?query={searchTerms}";
     };
+
+    security.chromiumSuidSandbox.enable = true;
   };
 }
