@@ -16,6 +16,8 @@ in {
       valgrind
       #rr # time traveling debugger # failed on unstable
       #allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
+      #unityhub # Game development tool
+      nurl # Generate Nix fetcher calls from repository URLs
     ];
 
   home.file.".gdbinit".text = ''
