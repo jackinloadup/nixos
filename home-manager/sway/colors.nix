@@ -15,8 +15,8 @@ with config.lib.base16.theme; {
     };
     focusedInactive = {
       border = "#${base03-hex}";
-      background = "#${base01-hex}";
-      text = "#${base05-hex}";
+      background = "#${base06-hex}";
+      text = "#${base03-hex}";
       indicator = "#${base03-hex}";
       childBorder = "#${base01-hex}";
     };
