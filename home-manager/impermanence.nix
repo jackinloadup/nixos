@@ -24,7 +24,7 @@ in {
           "Videos"
           "Projects"
           #"VirtualBox VMs"
-          ".ssh" # locally managed. home-manager does have module
+          #".ssh" # locally managed. home-manager does have module
           ".cargo"
           ".kube"
           ".rustup"
