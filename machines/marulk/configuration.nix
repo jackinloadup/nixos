@@ -12,6 +12,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
+    ./adguard.nix
   ];
 
   boot.initrd.verbose = false;
@@ -24,10 +25,6 @@ in {
     home-assistant = true;
     tui = true;
     windowManagers = [];
-  };
-
-  gumdrop = {
-    adguard = true;
   };
 
   virtualisation.libvirtd.enable = true;
