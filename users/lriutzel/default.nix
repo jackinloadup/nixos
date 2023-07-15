@@ -89,6 +89,7 @@ in {
           ../../home-manager/openrct2.nix
           ../../home-manager/zoom.nix
           ../../home-manager/zsh.nix
+          ./ssh.nix
           inputs.secrets.homemanagerModules.lriutzel
           inputs.nix-index-database.hmModules.nix-index
           #inputs.nixvim.homeManagerModules.nixvim
