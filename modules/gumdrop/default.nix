@@ -8,7 +8,6 @@
   settings = import ../../settings;
 in {
   imports = [
-    ./adguard.nix
     ./printer-scanner.nix
     ./pihole.nix
     ./storage-server.nix
