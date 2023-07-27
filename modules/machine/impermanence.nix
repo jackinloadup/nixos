@@ -54,6 +54,7 @@ in {
           ]
           ++ optionals config.virtualisation.docker.enable [
             "/var/lib/docker"
+            config.services.dockerRegistry.storagePath
           ]
           ++ optionals config.virtualisation.libvirtd.enable [
             "/var/lib/libvirt"
@@ -69,15 +70,11 @@ in {
               mode = "u=rwx,g=rx,o=";
             }
           ]
-          ++ optionals config.services.kubo.enable [
-            # ipfs
+          ++ optionals config.services.kubo.enable [ # ipfs
             config.services.kubo.dataDir
           ]
           ++ optionals config.services.fwupd.enable [
             "/var/lib/fwup"
-          ]
-          ++ optionals config.networking.wireless.iwd.enable [
-            "/var/lib/iwd"
           ]
           ++ optionals config.services.jellyfin.enable [
             "/var/lib/jellyfin"
@@ -92,15 +89,18 @@ in {
             "/var/lib/hydra"
           ]
           ++ optionals config.services.syncthing.enable [
-            "/var/lib/syncthing"
-          ];
-        files =
-          []
+            config.services.syncthing.dataDir
+          ]
+          ++ optionals config.networking.wireless.iwd.enable [
+            "/var/lib/iwd"
+          ]
           ++ optionals config.networking.networkmanager.enable [
-            "/var/lib/NetworkManager/secret_key"
-            "/var/lib/NetworkManager/seen-bssids"
-            "/var/lib/NetworkManager/timestamps"
+            "/var/lib/NetworkManager"
+          ]
+          ++ optionals config.virtualisation.waydroid.enable [
+            "/var/lib/waydroid"
           ];
+        files = [];
       };
     };
   };
