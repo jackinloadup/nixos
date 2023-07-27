@@ -57,7 +57,6 @@ in {
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
 
-  services.nextcloud.enable = false;
   services.pipewire.enable = true;
 
   services.rtl_433 = {
