@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption mkForce;
-  settings = import ../../settings;
 in {
   options.machine.home-assistant = mkEnableOption "Enable Home Assistant config";
   config = mkIf config.machine.home-assistant {
@@ -37,7 +36,7 @@ in {
     };
 
     # Enable mosquitto MQTT broker
-    services.mosquitto = with settings; {
+    services.mosquitto = {
       enable = true;
 
       listeners = [
