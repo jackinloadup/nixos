@@ -26,8 +26,6 @@ in {
     windowManagers = [];
   };
 
-  virtualisation.libvirtd.onShutdown = "shutdown";
-
   nix.settings.max-jobs = mkDefault 2;
 
   nixpkgs.overlays = [
