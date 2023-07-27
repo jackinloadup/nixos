@@ -15,6 +15,57 @@ in {
     ./hardware-configuration.nix
   ];
 
+    #-----------------------------------
+    # initrd remote decrypt root
+    #-----------------------------------
+    # It may be necessary to wait a bit for devices to be initialized.
+    # See https://github.com/NixOS/nixpkgs/issues/98741
+    # Your post-boot network configuration is taken
+    # into account. It should contain:
+    networking.useDHCP = false;
+    networking.interfaces.wlan0.useDHCP = true;
+    networking.interfaces.enp1s0.useDHCP = true;
+
+    boot.initrd = {
+      #preFailCommands = lib.mkOrder 400 ''echo "preFailCommands WOOT"'';
+      #preLVMCommands = lib.mkOrder 400 "sleep 1";
+      network.enable = true;
+      network.ssh.enable = true;
+      network.tor.enable = true;
+      network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
+      systemd.network.enable = true;
+      systemd.network.wait-online.enable = true;
+      systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
+      systemd.extraBin = {
+        ip = "${pkgs.iproute2}/bin/ip";
+        #ps = "${pkgs.procps}/bin/ps";
+      };
+
+      # TODO I haven't figured out get wifi working
+      # Network card drivers. Check `lshw` if unsure.
+      kernelModules = [
+        "ath9k" # wireless (Atheros)
+        "r8169" # wired (Realtek)
+        "usbnet" # USB ethernet
+      ];
+      # Set the shell profile to meet SSH connections with a decryption
+      # prompt that writes to /tmp/continue if successful.
+      #network.postCommands = let
+      #  # I use a LUKS 2 label. Replace this with your disk device's path.
+      #  disk = "/dev/disk/by-label/crypt";
+      #in ''
+      #  echo 'cryptsetup open ${disk} root --type luks && echo > /tmp/continue' >> /root/.profile
+      #  echo 'starting sshd...'
+      #'';
+      # Block the boot process until /tmp/continue is written to
+      #postDeviceCommands = lib.mkOrder 400 ''
+      #  echo 'waiting for root device to be opened...'
+      #  mkfifo /tmp/continue
+      #  cat /tmp/continue
+      #'';
+      systemd.emergencyAccess = true;
+    };
+    #-----------------------------------
   boot.plymouth.enable = isUserFacing;
   boot.initrd.verbose = !isUserFacing;
 

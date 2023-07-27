@@ -26,11 +26,18 @@ in {
   ];
   boot.crashDump.enable = false; # Causes kernel build
 
+  boot.initrd.network.enable = true;
+  boot.initrd.systemd.network.enable = true;
+  boot.initrd.network.tor.enable = true;
+  boot.initrd.network.ntpd.enable = true;
+  boot.initrd.network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
+
   boot.initrd.verbose = debug;
-  boot.plymouth.enable = debug;
+  boot.plymouth.enable = !debug;
 
   # dragon, doesn't look too good in tty only works in pty
   environment.etc.issue.source = mkForce ./issue-banner;
+
   hardware.bluetooth.enable = true;
   hardware.rtl-sdr.enable = true;
 
