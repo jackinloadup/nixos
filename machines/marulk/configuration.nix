@@ -41,8 +41,6 @@ in {
     inputs.self.overlays.default
   ];
 
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-
   networking.hostName = "marulk";
   networking.networkmanager.enable = mkForce false;
   networking.bridges.br0.interfaces = ["enp1s0"];
