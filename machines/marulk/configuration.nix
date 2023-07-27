@@ -28,12 +28,6 @@ in {
 
   virtualisation.libvirtd.onShutdown = "shutdown";
 
-  machine.kernel = {
-    rebootAfterPanic = mkForce 10;
-    panicOnOOM = mkForce true;
-    panicOnHungTaskTimeout = mkForce 1;
-  };
-
   nix.settings.max-jobs = mkDefault 2;
 
   nixpkgs.overlays = [
