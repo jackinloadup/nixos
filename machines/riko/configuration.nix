@@ -6,11 +6,13 @@
   ...
 }:
 with inputs; let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
 in {
   imports = [
     ./hardware-configuration.nix
+    ./rtl_433.nix
+    ./iwd.nix
   ];
   boot.initrd.verbose = false;
 
@@ -26,21 +28,6 @@ in {
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   services.pipewire.enable = true;
-
-  services.rtl_433 = {
-    enable = true;
-    package = pkgs.rtl_433-dev;
-    configText = ''
-      output json
-      output mqtt://mqtt.home.lucasr.com,user=mosquitto,pass=mosquitto,retain=0,events=rtl_433[/model][/id]
-      report_meta time:utc
-      frequency 915M
-      frequency 433.92M
-      convert si
-      hop_interval 60
-      gain 0
-    '';
-  };
 
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
@@ -75,30 +62,6 @@ in {
   powerManagement.cpuFreqGovernor = "powersave";
 
   networking.hostName = "riko";
-
-  # Playing with iwd
-  environment.systemPackages = [pkgs.iwgtk];
-  networking.networkmanager.wifi.backend = "iwd";
-  networking.wireless.iwd.enable = true;
-  networking.wireless.iwd.settings = {
-    General = {
-      AddressRandomization = "network";
-      AddressRandomizationRange = "full";
-      DisableANQP = false; # Hotspot 2.0 explore turning on
-    };
-    Network = {
-      EnableIPv6 = true;
-      RoutePriorityOffset = 300;
-    };
-    Settings = {
-      AutoConnect = true;
-      AlwaysRandomizeAddress = true;
-    };
-    Scan = {
-      InitialPeriodicScanInterval = 1;
-      MaximumPeriodicScanInterval = 60;
-    };
-  };
 
   nix.settings.max-jobs = mkDefault 4;
 
