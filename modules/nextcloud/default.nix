@@ -114,7 +114,7 @@ in {
     # ensure that postgres is running *before* running the setup
     systemd.services."nextcloud-setup" = {
       requires = ["postgresql.service"];
-      after = ["postgresql.service"];
+      after = ["postgresql.service" "mnt-nextcloud.mount"];
     };
 
     services.postgresql = {
@@ -127,9 +127,10 @@ in {
           ensurePermissions."DATABASE \"postgres\"" = "ALL PRIVILEGES";
         }
       ];
+      # allowing whole subnet as marulk uses dhcp
       authentication = ''
-        host nextcloud26 nextcloud 10.16.1.11/32 md5
-        host postgres nextcloud 10.16.1.11/32 md5
+        host nextcloud26 nextcloud 10.16.1.0/24 md5
+        host postgres nextcloud 10.16.1.0/24 md5
       '';
     };
     services.postgresqlBackup.databases = ["nextcloud26"];
