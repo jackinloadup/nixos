@@ -12,10 +12,19 @@
       # opens port
       openFirewall = true;
       extraArgs = ["--no-etc-hosts"];
-      port = 80; # Web gui
-      host = "10.16.1.2";
+      settings = {
+        bind_port = 80; # Web gui
+        bind_host = "10.16.1.2";
+        dns = {
+          #allowed_clients = "10.16.0.0/8";
+          edns_client_subnet = {
+            enable = false;
+          };
+        };
+      };
     };
 
+    systemd.services."adguardhome".wantedBy = ["network.target"];
     # Ensures that adguardhome doesn't stop until libvirtd has
     # This is simply to keep DNS running as long as possible if running on
     # a machine also running libvirtd.
