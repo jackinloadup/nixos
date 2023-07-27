@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkOption mkIf mkOverride optionals elem;
+  inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem;
   inherit (lib.types) listOf enum;
 
   cfg = config.machine;
@@ -135,21 +135,15 @@ in {
       };
 
       programs.bash.enable = ifTui;
+      programs.command-not-found.enable = !isFullSystem;
       programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
       programs.neovim.enable = true;
       programs.nix-index.enable = isFullSystem;
-      programs.command-not-found.enable = !isFullSystem;
       programs.nix-index-database.comma.enable = isFullSystem;
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
       programs.fzf.enable = ifTui;
-      programs.thunderbird.enable = isFullSystem; # Email client
-      programs.thunderbird.profiles = {
-        lriutzel = {
-          isDefault = true;
-        };
-      };
       programs.obs-studio = {
         enable = isFullSystem;
         plugins = [
@@ -158,9 +152,16 @@ in {
         ];
       };
       programs.openrct2.enable = isFullSystem;
+      programs.ssh.enable = true;
+      programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
+      programs.thunderbird.enable = isFullSystem; # Email client
+      programs.thunderbird.profiles = {
+        lriutzel = {
+          isDefault = true;
+        };
+      };
       programs.zoom-us.enable = isFullSystem;
       programs.zsh.enable = ifTui;
-      programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
 
       services.gpg-agent.enable = isFullSystem;
       services.mopidy.enable = isFullSystem;
@@ -233,9 +234,6 @@ in {
           ## Task/notes
           mindforger
 
-          # Media Management
-          mediaelch
-
           kodi-wayland
 
           gnome.file-roller # Archive manager
@@ -250,10 +248,14 @@ in {
           #trezor-suite # wasn't building
           #exodus # Cryptowallet
           #electron-cash # BCH walle
+          libfido2 # interact with fido2 tokens
 
           # Media Management
+          # filebot -get-subtitles --lang en -non-strict ./Season\ 03
           #filebot
           mkvtoolnix
+          mediaelch
+
 
           #freeoffice # office suite UNFREE
           #tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
