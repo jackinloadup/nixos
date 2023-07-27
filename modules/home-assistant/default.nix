@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkForce;
   settings = import ../../settings;
 in {
   options.machine.home-assistant = mkEnableOption "Enable Home Assistant config";
@@ -58,5 +58,8 @@ in {
 
     # TODO submit upstream?
     systemd.services.mosquitto.after = ["network-online.target"];
+
+    virtualisation.libvirtd.enable = mkForce true;
+    virtualisation.libvirtd.onShutdown = "shutdown";
   };
 }
