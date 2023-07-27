@@ -13,10 +13,11 @@
   ifGraphical = cfg.sizeTarget > 1;
   ifFull = cfg.sizeTarget > 2;
   settings = import ./settings.nix;
-  username = settings.username;
+  username = "lriutzel";
   fullSystems = ["reg" "riko"];
   hostname = config.networking.hostName;
   isFullSystem = elem hostname fullSystems;
+  userEnabled = elem username config.machine.users;
 in {
   imports = [
     inputs.nix-ld.nixosModules.nix-ld
@@ -27,11 +28,10 @@ in {
     type = listOf (enum [username]);
   };
 
-  # If user is enabled
-  config = mkIf (builtins.elem username config.machine.users) {
+  config = mkIf userEnabled {
     nix.settings.trusted-users = [username];
 
-    users.users."${username}" = with settings; {
+    users.users."${username}" = {
       shell = pkgs.zsh;
       isNormalUser = true;
       extraGroups = [
@@ -87,7 +87,7 @@ in {
     # home-manager versions and does not work with configs using
     # nixpkgs.config`
     home-manager.users."${username}" = let
-      homeDir = "/home/${settings.username}";
+      homeDir = "/home/${username}";
     in {
       imports =
         [
@@ -126,7 +126,7 @@ in {
         ++ optionals isFullSystem [
         ];
 
-      home.username = settings.username;
+      home.username = username;
       home.homeDirectory = mkOverride 10 homeDir;
 
       home.sessionVariables = {
