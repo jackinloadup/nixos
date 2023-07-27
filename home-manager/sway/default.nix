@@ -240,10 +240,10 @@ in {
 
         assigns = {
           "1" = [
-            {app_id = "firefox";}
+            { app_id = "firefox"; }
           ];
           "10" = [
-            {app_id = "discord";}
+            { class = "discord"; }
           ];
           #"8" = [
           #  { app_id = "weechat"; }
