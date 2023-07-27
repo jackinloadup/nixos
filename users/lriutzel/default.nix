@@ -48,17 +48,26 @@ in {
       ];
     };
 
+    programs.adb.enable = isFullSystem;
     programs.command-not-found.enable = !isFullSystem;
+    programs.chirp.enable = isFullSystem;
+    programs.chromium.enable = isFullSystem;
+    programs.sniffnet.enable = isFullSystem;
     #programs.nix-ld.enable = isFullSystem;
+    # mic noise removal
+    #programs.noisetorch.enable = isFullSystem;
     programs.wireshark.enable = isFullSystem;
 
+    services.tor.enable = isFullSystem;
+    services.tor.client.enable = isFullSystem;
     services.trezord.enable = isFullSystem;
 
-    hardware.yubikey.enable = isFullSystem;
     hardware.logitech.wireless.enable = isFullSystem;
     hardware.logitech.wireless.enableGraphical = isFullSystem;
     hardware.keyboard.qmk.enable = isFullSystem;
-    hardware.solo2.enable = true;
+    hardware.rtl-sdr.enable = isFullSystem;
+    hardware.solo2.enable = isFullSystem;
+    hardware.yubikey.enable = isFullSystem;
 
     environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
     environment.systemPackages = mkIf isFullSystem [
@@ -69,6 +78,10 @@ in {
       NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (config.systemd.packages ++ config.environment.systemPackages);
       NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
     };
+
+    # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
+    virtualisation.docker.enable = isFullSystem;
+    virtualisation.libvirtd.enable = mkDefault isFullSystem;
 
     # DON'T set useGlobalPackages! It's not necessary in newer
     # home-manager versions and does not work with configs using

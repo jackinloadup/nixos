@@ -33,15 +33,11 @@ in {
   environment.etc.issue.source = mkForce ./issue-banner;
   hardware.bluetooth.enable = true;
   hardware.rtl-sdr.enable = true;
-  hardware.yubikey.enable = true;
 
   home-manager.users.lriutzel.imports = [
     ./switch-desk.nix
   ];
 
-  programs.adb.enable = true;
-  programs.chirp.enable = true;
-  programs.chromium.enable = true;
   programs.steam.enable = true;
   programs.simula.enable = false;
 
@@ -81,9 +77,6 @@ in {
   #     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
   #services.xserver.desktopManager.gnome.enable = true;
   #services.xserver.windowManager.i3.enable = true;
-
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
 
   machine = {
     users = [
