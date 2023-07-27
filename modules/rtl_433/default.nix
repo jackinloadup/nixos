@@ -8,6 +8,7 @@
   cfg = config.services.rtl_433;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
+  configFile = pkgs.writeText "rtl_433.conf" cfg.configText;
 in {
   options.services.rtl_433 = {
     enable = mkEnableOption "Enable rtl_433 services";
@@ -36,7 +37,7 @@ in {
     };
   };
 
-  config = mkIf config.services.rtl_433.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = [cfg.package];
 
     users.users.rtl_433 = {
@@ -49,9 +50,7 @@ in {
     };
     users.groups.rtl_433.gid = 20001; # should be config.ids.gids.rtl_433;
 
-    systemd.services.rtl_433 = let
-      configFile = pkgs.writeText "rtl_433.conf" cfg.configText;
-    in {
+    systemd.services.rtl_433 = {
       description = "rtl_433 server daemon";
 
       wantedBy = ["multi-user.target"];
