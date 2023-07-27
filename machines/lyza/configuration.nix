@@ -29,6 +29,8 @@ in {
   services.k3s.clusterInit = true;
 
   services.pipewire.enable = isUserFacing;
+  services.tor.enable = true;
+  services.tor.client.enable = true;
 
   #services.xserver.displayManager.autoLogin.user = "lriutzel";
   #services.xserver.displayManager.defaultSession = "sway";

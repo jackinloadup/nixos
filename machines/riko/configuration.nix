@@ -20,9 +20,6 @@ in {
   hardware.rtl-sdr.enable = true;
   hardware.yubikey.enable = true;
 
-  programs.adb.enable = true;
-  programs.chirp.enable = true;
-  programs.chromium.enable = true;
   programs.steam.enable = true;
 
   services.kubo.enable = true;
@@ -36,10 +33,6 @@ in {
 
   #services.xserver.desktopManager.gnome.enable = true;
   #services.xserver.windowManager.i3.enable = true;
-
-  # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
 
   machine = {
     users = ["lriutzel"];

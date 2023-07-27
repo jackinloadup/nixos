@@ -26,7 +26,6 @@ in {
     windowManagers = [];
   };
 
-  virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.onShutdown = "shutdown";
 
   machine.kernel = {
