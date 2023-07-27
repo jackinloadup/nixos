@@ -37,6 +37,7 @@ in {
           ".local/share/MindForger"
           ".local/share/mopidy"
           ".local/share/Mumble"
+          ".local/share/PrismLauncher"
           ".local/share/wine-nix-profiles"
           ".local/state/bash"
           ".config/discord"
