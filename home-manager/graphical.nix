@@ -135,6 +135,9 @@ in {
       gnomeExtensions.dash-to-panel
       gnomeExtensions.sound-output-device-chooser
       gnomeExtensions.space-bar
+
+      gtk-engine-murrine # Unable to locate theme engine in module_path: "murrine"
+      clearlooks-phenix
     ]
     ++ lib.optionals ifGraphical [
       #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
