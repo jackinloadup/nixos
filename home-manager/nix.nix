@@ -23,5 +23,6 @@
       experimental-features = nix-command flakes
       auto-optimise-store = true
     '';
+    # plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins # https://github.com/shlevy/nix-plugins
   };
 }
