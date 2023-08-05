@@ -171,26 +171,17 @@ in {
 
             "${mod}+Shift+minus" = "move container to scratchpad";
             "${mod}+minus" = "scratchpad show";
-          }
-          // (
-            if hostName == "spica"
-            then {
-              # smart. use hostname then append based on that
-              "XF86MonBrightnessUp" = "exec ${getExe pkgs.light} -A 10";
-              "XF86MonBrightnessDown" = "exec ${getExe pkgs.light} -U 10";
-            }
-            else {}
-          );
+          };
 
         modes = let
           terminal = swayConfig.terminal;
+          Escape = "mode default";
         in {
           resize = let
             Left = "resize shrink width 10 px or 10 ppt";
             Right = "resize grow width 10 px or 10 ppt";
             Up = "resize shrink height 10 px or 10 ppt";
             Down = "resize grow height 10 px or 10 ppt";
-            Escape = "mode default";
           in {
             inherit Left Right Up Down Escape;
             h = Left;
@@ -203,6 +194,8 @@ in {
           "${mode_record}" = {
             "p" = ''exec ${getExe pkgs.slurp} | ${getExe pkgs.grim} -g- $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
             "f" = ''${getExe pkgs.grim} $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
+            Return = Escape;
+            Escape = Escape;
           };
         };
 
