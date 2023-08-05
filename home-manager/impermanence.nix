@@ -51,6 +51,7 @@ in {
           ".config/ghb" # handbrake
           ".config/kvibes" # MediaElch
           ".config/OpenRCT2" # MediaElch
+          #".cache/mozilla"
           #".config/unity3d" # game saves
           #".config/StardewValley"
           #".config/systemd"
