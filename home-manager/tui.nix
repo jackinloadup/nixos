@@ -118,6 +118,7 @@ in {
       # Fun
       asciiquarium # Fun aquarium animation
       cmatrix # Fun matrix animation
+      cava # Console-based Audio Visualizer for Alsa
 
       # k8s
       k9s # Kubernetes CLI To Manage Your Clusters In Style
