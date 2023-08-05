@@ -163,6 +163,9 @@ in {
 
       ## Audio
       pavucontrol # GUI volume source/sink manager
+
+      ## Fun
+      cavalier
     ];
 
   programs.chromium.enable = true;
