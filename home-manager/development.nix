@@ -18,6 +18,7 @@ in {
       #allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
       #unityhub # Game development tool
       nurl # Generate Nix fetcher calls from repository URLs
+      # zeal-qt6 # offline documentation browser
     ];
 
   home.file.".gdbinit".text = ''
