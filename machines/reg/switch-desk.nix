@@ -9,6 +9,9 @@
     # strict
     set -euo pipefail
 
+    # debug
+    set -x
+
     readonly PROGNAME="$(basename "$0")"
 
     # get swaysock from path
