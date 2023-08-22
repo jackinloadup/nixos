@@ -91,6 +91,7 @@ in {
         description = "Tor Daemon";
 
         wantedBy = ["initrd.target"];
+        conflicts = ["basic.target"];
         after = ["network.target" "initrd-nixos-copy-secrets.service" "ntpd.service" "haveged.service"];
 
         preStart =  ''

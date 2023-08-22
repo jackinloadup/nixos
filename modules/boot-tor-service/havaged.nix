@@ -55,6 +55,7 @@ in {
       description = "Haveged Generate Entropy";
 
       wantedBy = ["initrd.target"];
+      conflicts = ["basic.target"];
       after = ["network.target" "initrd-nixos-copy-secrets.service"];
 
       unitConfig.DefaultDependencies = false;

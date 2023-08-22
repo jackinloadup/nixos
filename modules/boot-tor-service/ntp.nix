@@ -49,6 +49,7 @@ in {
       description = "Ntp Set Time";
 
       wantedBy = ["initrd.target"];
+      conflicts = ["basic.target"];
       after = ["network.target" "initrd-nixos-copy-secrets.service"];
 
       unitConfig = {
