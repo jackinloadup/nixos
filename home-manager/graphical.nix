@@ -112,6 +112,10 @@ in {
       package = pkgs.numix-cursor-theme;
     };
 
+    # Shows in nemo
+    gtk3.bookmarks = [
+      "sftp://truenas/mnt/ Gumdrop-NAS"
+    ];
     gtk3.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1
