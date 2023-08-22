@@ -44,7 +44,6 @@ in {
             # https://github.com/nix-community/impermanence/pull/114
             "/var/lib/nixos"
             #"/var/log"
-            #"/var/lib/postgresql"
           ]
           ++ optionals config.systemd.coredump.enable [
             "/var/lib/systemd/coredump"

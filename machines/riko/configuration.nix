@@ -79,7 +79,7 @@ in {
     };
   };
 
-  hardware.brillo.enable = true;
+  hardware.brillo.enable = true; # userspace brightness control for users in video group
   services.acpid = {
     enable = true;
     handlers = {
