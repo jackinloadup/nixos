@@ -4,32 +4,46 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf attrNames any;
   normalUsers = attrNames config.home-manager.users;
-  userHasService = users: service: any (users: config.home-manager.users.${user}.services.${service}.enable) users;
+  userHasService = users: service: any (user: config.home-manager.users.${user}.services.${service}.enable) users;
 in {
   imports = [];
 
   config =
-    {}
-    // mkIf (userHasService normalUsers "syncthing") {
+    #{}
+    {
+    #// mkIf (userHasService normalUsers "syncthing") {
+      networking.extraHosts = ''
+        127.0.0.3 syncthing.internal
+      '';
+
       networking.firewall.allowedTCPPorts = [22000];
-      networking.firewall.allowedUDPPorts = [22000];
-    }
-    // mkIf services.syncthing.enable {
-      networking.firewall.allowedTCPPorts = [22000];
-      networking.firewall.allowedUDPPorts = [22000];
-      services.syncthing = {
-        extraOptions = {
-          gui = {
-            theme = "black";
-          };
-        };
-        #guiAddress = mkIf cfg.server "syncthing.${domain}";¶
-        # if syncthing runs as a user
-        #user = username
-        #configDir = "/home/${username}/.config/syncthing";
-        #dataDir = "/home/${username}/.local/share/syncthing";
-      };
+      networking.firewall.allowedUDPPorts = [21027];
+
+      networking.interfaces.lo.ipv4.addresses = [{
+        address = "127.0.0.3";
+        prefixLength = 8;
+      }];
     };
+    #// mkIf config.services.syncthing.enable {
+    #  networking.extraHosts = ''
+    #    127.0.0.3 syncthing.internal
+    #  '';
+
+    #  services.syncthing = {
+    #    extraOptions = {
+    #      gui = {
+    #        theme = "black";
+    #      };
+    #    };
+    #    guiAddress = "127.0.0.3:80";
+    #    openDefaultPorts = true; # TCP/UDP 22000 for transfers and UDP 21027 for discovery
+    #    #guiAddress = mkIf cfg.server "syncthing.${domain}";¶
+    #    # if syncthing runs as a user
+    #    #user = username
+    #    #configDir = "/home/${username}/.config/syncthing";
+    #    #dataDir = "/home/${username}/.local/share/syncthing";
+    #  };
+    #};
 }

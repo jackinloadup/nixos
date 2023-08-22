@@ -39,6 +39,7 @@ in {
     ./sway.nix
     ./sound.nix
     ./ssh.nix
+    ./syncthing.nix
     ./tui.nix
     ./minimal.nix
     ./nix.nix
