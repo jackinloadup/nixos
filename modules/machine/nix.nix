@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   inherit (builtins) hasAttr;
 
   sizeTarget =
@@ -14,6 +14,7 @@
     else 0;
 
   ifTui = sizeTarget > 0;
+  isReg = config.networking.hostName == "reg";
 
   MBtoBytes = mb: mb * 1024 * 1024;
   minimumFreeSpace = MBtoBytes 100; # 100MB
@@ -26,8 +27,8 @@ in {
         "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
       ];
       trusted-users = ["root"];
-      auto-optimise-store = ifTui;
-      substituters = ["https://aseipp-nix-cache.global.ssl.fastly.net"];
+      auto-optimise-store = mkDefault ifTui;
+      substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
     };
 
     # Enable extra-builtins-file option for nix
@@ -74,6 +75,25 @@ in {
 
       min-free = ${toString minimumFreeSpace}
       max-free = ${toString maximumFreeSpace}
+      builders-use-substitutes = true
     '';
+
+    nix.distributedBuilds = (!isReg);
+
+    nix.buildMachines = mkIf (!isReg) [
+      {
+        hostName = "reg";
+        system = "x86_64-linux";
+        protocol = "ssh-ng";
+        maxJobs = 16;
+        speedFactor = 3;
+        supportedFeatures = [
+          "big-parallel"
+          "nixos-test"
+          "kvm"
+        ];
+      }
+    ];
+
   };
 }
