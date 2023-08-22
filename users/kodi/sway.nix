@@ -10,7 +10,7 @@
   kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";
 in {
   imports = [
-    ../../home-manager/foot.nix
+    ../../modules/home-manager/foot.nix
   ];
 
   config = {
@@ -63,7 +63,7 @@ in {
         modifier = "Mod4";
         terminal = "${pkgs.foot}/bin/foot";
 
-        input = import ../../home-manager/sway/input.nix;
+        input = import ../../modules/home-manager/sway/input.nix;
         #startup = [
         #  {
         #    command = "${pkgs.kodi-wayland}/bin/kodi";

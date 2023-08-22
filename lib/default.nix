@@ -50,7 +50,7 @@ in rec {
     listToAttrs (
       map (name: importModuleSet name (buildPath dir name)) (filesInDir dir)
     );
-  nixosModules = importDirOfModules "modules";
+  nixosModules = importDirOfModules "modules/nixos";
   nixosUsers = importDirOfModules "users";
 
   mkNixosSystem = pkgs: system: hostname:

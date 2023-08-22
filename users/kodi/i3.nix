@@ -8,7 +8,7 @@
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {
   imports = [
-    ../../home-manager/i3.nix
+    ../../modules/home-manager/i3.nix
   ];
 
   programs.bash = {
