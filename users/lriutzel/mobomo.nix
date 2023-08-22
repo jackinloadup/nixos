@@ -9,7 +9,7 @@
   ifGraphical = cfg.sizeTarget > 1;
 in {
   imports = [
-    ../../home-manager/zoom.nix
+    ../../modules/home-manager/zoom.nix
   ];
 
   config = {

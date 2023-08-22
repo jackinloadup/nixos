@@ -91,37 +91,37 @@ in {
     in {
       imports =
         [
-          ../../home-manager/bash.nix
-          ../../home-manager/nix.nix
-          ../../home-manager/default.nix
-          ../../home-manager/dunst.nix
-          ../../home-manager/firefox.nix
-          ../../home-manager/foot.nix
-          ../../home-manager/mpv.nix
-          ../../home-manager/music.nix
-          ../../home-manager/openrct2.nix
-          ../../home-manager/zoom.nix
-          ../../home-manager/zsh.nix
+          ../../modules/home-manager/bash.nix
+          ../../modules/home-manager/nix.nix
+          ../../modules/home-manager/default.nix
+          ../../modules/home-manager/dunst.nix
+          ../../modules/home-manager/firefox.nix
+          ../../modules/home-manager/foot.nix
+          ../../modules/home-manager/mpv.nix
+          ../../modules/home-manager/music.nix
+          ../../modules/home-manager/openrct2.nix
+          ../../modules/home-manager/zoom.nix
+          ../../modules/home-manager/zsh.nix
           ./ssh.nix
           inputs.secrets.homemanagerModules.lriutzel
           inputs.nix-index-database.hmModules.nix-index
           #inputs.nixvim.homeManagerModules.nixvim
         ]
         ++ optionals ifTui [
-          ../../home-manager/tui.nix
+          ../../modules/home-manager/tui.nix
         ]
         ++ optionals ifGraphical [
-          ../../home-manager/alacritty.nix
-          ../../home-manager/development.nix
-          ../../home-manager/graphical.nix
-          ../../home-manager/gpg.nix
-          ../../home-manager/i3.nix
-          ../../home-manager/impermanence.nix
-          ../../home-manager/neovim/default.nix
-          #../../home-manager/nixvim/default.nix
-          ../../home-manager/sway/default.nix
-          ../../home-manager/syncthing.nix
-          ../../home-manager/xorg.nix
+          ../../modules/home-manager/alacritty.nix
+          ../../modules/home-manager/development.nix
+          ../../modules/home-manager/graphical.nix
+          ../../modules/home-manager/gpg.nix
+          ../../modules/home-manager/i3.nix
+          ../../modules/home-manager/impermanence.nix
+          ../../modules/home-manager/neovim/default.nix
+          #../../modules/home-manager/nixvim/default.nix
+          ../../modules/home-manager/sway/default.nix
+          ../../modules/home-manager/syncthing.nix
+          ../../modules/home-manager/xorg.nix
         ]
         ++ optionals isFullSystem [
         ];

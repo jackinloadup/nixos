@@ -35,8 +35,8 @@ in {
 
     home-manager.users.kodi = {
       imports = [
-        ../../home-manager/default.nix
-        ../../home-manager/nix.nix
+        ../../modules/home-manager/default.nix
+        ../../modules/home-manager/nix.nix
         ./kodi.nix
         ./sway.nix
         #./i3.nix
