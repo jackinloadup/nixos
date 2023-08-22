@@ -207,6 +207,7 @@ in {
           mdp # markdown presentation
           mdr # tui viewer
           # mdv # tui viewer not in nixpkgs yet
+          magic-wormhole-rs # Get things from one computer to another, safely.
         ]
         ++ optionals isFullSystem [
           emulsion # mimimal linux image viewer built in rust
@@ -278,6 +279,8 @@ in {
 
           # alt browser with ipfs builtin
           brave
+
+          warp # transfer files between computers gui
         ];
     };
 

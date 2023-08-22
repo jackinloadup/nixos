@@ -121,6 +121,8 @@ in {
       visidata
 
       # TUI to GUI helpers
+      bfs # breadth-first version of the UNIX find command. might be faster than fd?
+      broot # tree directory viewer
       #dragon-drop # in unstable its maybe xdragon
       ## networking
       nethogs
@@ -135,6 +137,7 @@ in {
       # Fun
       asciiquarium # Fun aquarium animation
       cmatrix # Fun matrix animation
+      nms # https://github.com/bartobri/no-more-secrets
       cava # Console-based Audio Visualizer for Alsa
 
       # k8s
