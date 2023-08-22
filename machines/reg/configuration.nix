@@ -57,6 +57,9 @@ in {
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
 
+  networking.firewall.allowedTCPPorts = [ 19999 ]; # netdata port;ff
+  services.netdata.enable = true; 
+
   services.pipewire.enable = true;
 
   services.rtl_433 = {
