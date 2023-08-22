@@ -39,6 +39,7 @@ in {
           ".local/share/Mumble"
           ".local/share/PrismLauncher"
           ".local/share/wine-nix-profiles"
+          ".local/share/invokeai" # todo pull in from nixified-ai
           ".local/state/bash"
           ".config/discord"
           ".config/dconf"
@@ -51,6 +52,7 @@ in {
           ".config/ghb" # handbrake
           ".config/kvibes" # MediaElch
           ".config/OpenRCT2" # MediaElch
+          ".cache/huggingface" # todo pull in from nixified-ai
           #".cache/mozilla"
           #".config/unity3d" # game saves
           #".config/StardewValley"
