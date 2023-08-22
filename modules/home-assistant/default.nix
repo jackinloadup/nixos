@@ -38,6 +38,8 @@ in {
     # Enable mosquitto MQTT broker
     services.mosquitto = {
       enable = true;
+      # unsure if keepalive affects power consumption on client devices
+      settings.max_keepalive = 300; # 5 minutes
 
       listeners = [
         {
