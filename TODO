@@ -1,5 +1,4 @@
 # completed
-spotify
 signal
 zsh + spaceship
 wireshark
@@ -26,13 +25,15 @@ vim https://github.com/anordal/shellharden
 git pre-commit hooks https://github.com/cachix/pre-commit-hooks.nix
 connect to p2p NAT64 network https://p2p.nat64.dk
 tui disk image writer
+monitioring:
+  metrics collection
+  logging collection
 
 # Requires secret storage
 - autostart fractal - matrix client
 - pass
 - yubikey
 - gnupg
-- spotify
 - signal
 - steam compartment?
 - fractal?
