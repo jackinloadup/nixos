@@ -75,7 +75,8 @@ in {
       inputs.self.overlays.default
       inputs.self.overlays.kodi-wayland
       inputs.self.overlays.plymouth-no-gtk
-      inputs.self.overlays.pipewire-minimal
+      # meson.build:1:0: ERROR: Executables created by c compiler gcc are not runnable.
+      #inputs.self.overlays.pipewire-minimal
     ];
   };
 
