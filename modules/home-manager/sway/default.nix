@@ -214,16 +214,6 @@ in {
           #{ command = "${pkgs.nextcloud-client}/bin/nextcloud"; }
           #{ command = "${pkgs.keepassxc}/bin/keepassxc"; }
           #{ command = "${getExe pkgs.nwg-panel}"; }
-          {
-            command = let
-              timeouts = settings.timeouts;
-            in ''              ${getExe pkgs.swayidle} -w \
-                              timeout ${toString timeouts.screenLock} '${lockCmd}' \
-                              timeout ${toString timeouts.displayOff} 'swaymsg "output * dpms off"' \
-                              resume 'swaymsg "output * dpms on"' \
-                              before-sleep '${lockCmd}'
-            '';
-          }
           #{ command = "${config.programs.firefox.package}/bin/firefox"; }
           #{ command = "${pkgs.foot}/bin/foot --title weechat --app-id weechat weechat"; }
           #{ command = "${pkgs.slack}/bin/slack"; }
@@ -294,5 +284,22 @@ in {
        }
       ]
     '';
+    services.swayidle = {
+      enable = true;
+      timeouts = let
+        timeouts = settings.timeouts;
+      in [
+        { timeout = timeouts.screenLock; command = "${lockCmd}"; }
+        {
+          timeout = timeouts.displayOff;
+          command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+          resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+        }
+      ];
+      events = [
+        { event = "lock"; command = "${lockCmd}"; }
+        { event = "before-sleep"; command = "${lockCmd}"; }
+      ];
+    };
   };
 }
