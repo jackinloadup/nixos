@@ -19,6 +19,8 @@
   MBtoBytes = mb: mb * 1024 * 1024;
   minimumFreeSpace = MBtoBytes 100; # 100MB
   maximumFreeSpace = MBtoBytes 1024; # 1GB
+
+  repoRoot = toString ../../../.;
 in {
   config = {
     nix.settings = {
@@ -40,13 +42,17 @@ in {
     };
     # It seems like nixPath doesn't need to expose this if system is non
     # interactive. This seems to duplicate or extend nix.registry
-    nix.nixPath = let
-      path = toString ../../.;
-    in [
-      "dotfiles=${path}"
-      "repl=${path}/repl.nix"
-      "nixpkgs=${inputs.nixpkgs}" # used in nix-shell -p <pkg>
+    nix.nixPath = [
+      "nixpkgs=/run/current-system/nixpkgs"
+      "nixos-config=/run/current-system/nixos-config"
+      "repl=/run/current-system/nixos-config/repl.nix"
     ];
+
+    # This adds symlinks to /run/current-system
+    system.extraSystemBuilderCmds = ''
+      ln -sv ${pkgs.path} $out/nixpkgs
+      ln -sv ${repoRoot} $out/nixos-config
+    '';
 
     # Flake registries are a convenience feature that allows you to refer to
     # flakes using symbolic identifiers such as nixpkgs for example:
