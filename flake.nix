@@ -114,7 +114,7 @@
       # configuration.nix that will be read first
       nixosConfigurations = {
         reg = mkNixosSystem defaultPkgs "x86_64-linux" "reg";
-        riko = mkNixosSystem defaultPkgs "x86_64-linux" "riko";
+        riko = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "riko";
 
         marulk = mkNixosSystem defaultPkgs "x86_64-linux" "marulk";
         lyza = mkNixosSystem defaultPkgs "x86_64-linux" "lyza";
