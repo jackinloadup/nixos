@@ -28,6 +28,7 @@
     # Ensures that adguardhome doesn't stop until libvirtd has
     # This is simply to keep DNS running as long as possible if running on
     # a machine also running libvirtd.
-    systemd.services.libvirtd.after = ["adguardhome.service"];
+    systemd.services."adguardhome".before = ["libvirtd.service"];
+    #systemd.services.libvirtd.after = ["adguardhome.service"];
   };
 }
