@@ -16,7 +16,7 @@ in {
           device = "/dev/disk/by-partlabel/primary";
           preLVM = true;
           allowDiscards = true; # maybe insecure?? could hint at structure?
-          #  keyFile = "/etc/secrets/initrd/keyfile0.bin";
+          #  passwordFile = "/etc/secrets/initrd/keyfile0.bin";
         };
         #secrets = {
         #  # Create /mnt/etc/secrets/initrd directory and copy keys to it
