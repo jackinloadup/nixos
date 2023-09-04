@@ -1,7 +1,9 @@
 {...}: {
   config = {
     programs.ssh = {
-      controlPersist = "4h";
+      compression = true;
+
+      controlPersist = "30m";
       controlMaster = "auto";
       controlPath = "/run/user/%i/ssh-%r@%h:%p";
 
@@ -9,16 +11,33 @@
       forwardAgent = false; # don't forward the ssh agent (security risk)
 
       serverAliveCountMax = 3;
-      serverAliveInterval = 5;
+      serverAliveInterval = 30;
 
       #TCPKeepAlive = true;
-      hashKnownHosts = true;
+      hashKnownHosts = false; # Privacy concern
 
 
       matchBlocks = {
         "all" = {
           user = "lriutzel";
-
+          extraOptions = {
+            preferredAuthentications = "publickey,keyboard-interactive,password";
+          };
+        };
+        "*.compute.amazonaws.com" = {
+          forwardAgent = false;
+          extraOptions = {
+            strictHostKeyChecking = "no";
+            userKnownHostsFile = "/dev/null";
+          };
+        };
+        "github github.com" = {
+          hostname = "github.com";
+          user = "git";
+          forwardAgent = false;
+          extraOptions = {
+            preferredAuthentications = "publickey";
+          };
         };
       };
     };
