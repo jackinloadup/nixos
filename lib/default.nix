@@ -83,7 +83,7 @@ in rec {
       format = "install-iso";
       modules = [
         inputs.secrets.nixosModules.default
-        (rootPath + "/modules/machine/nix.nix")
+        (rootPath + "/modules/nixos/machine/nix.nix")
         ({
           pkgs,
           config,
