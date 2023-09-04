@@ -57,6 +57,8 @@ in {
     # mic noise removal
     #programs.noisetorch.enable = isFullSystem;
     programs.wireshark.enable = isFullSystem;
+    programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
+
 
     services.tor.enable = isFullSystem;
     services.tor.client.enable = isFullSystem;
