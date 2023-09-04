@@ -54,23 +54,22 @@ in {
     };
 
     systemd.user.services.kodi = {
-      enable = true;
-      description = "Kodi Media Center.";
-      serviceConfig = {
+      Unit = {
+        Description = "Kodi Media Center";
+      };
+
+      Install.WantedBy = ["graphical-session.target"];
+      Install.After = ["sway-session.target"];
+
+      Service = {
         Type = "simple";
-        ExecStart = ''          ${config.programs.kodi.package}/bin/kodi --lircdev /run/lirc/lircd
-                            --standalone & waitPID=$!
-        '';
-        WorkingDirectory = config.users.users.kodi.home;
+        ExecStart = ''${config.programs.kodi.package}/bin/kodi --lircdev /run/lirc/lircd --standalone & waitPID=$! '';
+        WorkingDirectory = config.home.homeDirectory;
         Restart = "always";
         PrivateTmp = "true";
         NoNewPrivileges = "true";
       };
-      #wantedBy = [ "default.target" ];
 
-      bindsTo = ["graphical-session.target"];
-      wants = ["graphical-session-pre.target"];
-      #after = ["graphical-session-pre.target"];
     };
   };
 }
