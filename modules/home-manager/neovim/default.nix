@@ -55,12 +55,14 @@ in
         vim-gitgutter # git status in the gutter
         vim-airline # like starship for status line
 
+
         # tmux
         (import ./vim-tmux-navigator.nix {pkgs = pkgs;}) #
 
         # Editor Features
         (import ./indentline.nix {pkgs = pkgs;}) # vscode-like pictograms to neovim built-in lsp
         vim-fugitive # A Git wrapper so awesome, it should be illegal
+        (import ./git-worktree.nix {pkgs = pkgs;}) # Navigate in git worktrees easily
         #vim-surround  # need to configure and don't use yet
 
         (import ./lspkind-nvim.nix {pkgs = pkgs;}) # vscode-like pictograms to neovim built-in lsp
