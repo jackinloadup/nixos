@@ -263,7 +263,6 @@ in {
           #freeoffice # office suite UNFREE
           #tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
           blender # 3D render
-          cawbird # twitter client
           speedcrunch # gui calculator
 
           ## Video
