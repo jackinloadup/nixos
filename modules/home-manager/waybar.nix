@@ -21,7 +21,7 @@ in {
   config = mkIf config.programs.waybar.enable {
     programs.waybar = {
       systemd = {
-        enable = false;
+        enable = true;
         #target = "sway-session.target"; # not available in HM 21.11
       };
       settings = [
@@ -30,7 +30,8 @@ in {
           layer = "top";
           position = "bottom";
           #tray = { spacing = 10; };
-          modules-center = ["sway/window"];
+          modules-center = [];
+          #modules-center = ["sway/window"];
           modules-left = ["sway/workspaces" "sway/mode"];
           modules-right = [
             "pulseaudio"
@@ -101,16 +102,7 @@ in {
         }
       ];
 
-      style = ''
-        ${readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
-
-        window#waybar {
-          background: #${config.lib.base16.theme.base00-hex};
-          opacity: 0.95;
-          border-top: 2px solid #${config.lib.base16.theme.base03-hex};
-          border-bottom: none;
-        }
-      '';
+      style = builtins.readFile ./waybar.css;
     };
   };
 }
