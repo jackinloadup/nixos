@@ -82,7 +82,8 @@ in {
       usbutils # an alternative could be busybox cope toybox
       hwloc # can show hardware topo with lstopo
       #unzip # duh
-      lftp
+      lftp # ftp client
+      terminal-colors # print all the terminal colors
 
       # unar is HUGE at 930mb
       #unar # An archive unpacker program GUI & TUI
@@ -122,6 +123,8 @@ in {
       cmatrix # Fun matrix animation
       nms # https://github.com/bartobri/no-more-secrets
       cava # Console-based Audio Visualizer for Alsa
+      nsnake # snake game
+      terminal-parrot # parrot in your terminal
 
       # k8s
       k9s # Kubernetes CLI To Manage Your Clusters In Style
