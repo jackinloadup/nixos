@@ -44,6 +44,9 @@ in {
     programs.waybar.enable = true;
     services.dunst.enable = true;
 
+    programs.zsh.loginExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
+    progams.bash.initExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
+
     home.packages = with pkgs;
       [
         #sway-contrib.grimshot
@@ -85,7 +88,8 @@ in {
         input = import ./input.nix;
         output = import ./output.nix;
         window = import ./window.nix;
-        bars = (import ./bars.nix {inherit config pkgs;}).bars;
+        bars = [];
+        #bars = (import ./bars.nix {inherit config pkgs;}).bars;
         colors = (import ./colors.nix {inherit config pkgs;}).colors;
 
         floating.criteria = [{class = "^Wine$";}];
