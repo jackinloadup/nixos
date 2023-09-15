@@ -229,7 +229,7 @@ in {
 
           #gnome.vinagre # VNC view another computer
           #fractal # matrix client
-          fractal-next # matrix client
+          #fractal-next # matrix client. isn't compiling
           nheko # matrix client
           #mumble # voice chat application
           signal-desktop # messaging client
@@ -256,6 +256,7 @@ in {
           # Media Management
           # filebot -get-subtitles --lang en -non-strict ./Season\ 03
           #filebot
+          handbrake
           mkvtoolnix
           mediaelch
 
@@ -266,7 +267,6 @@ in {
           speedcrunch # gui calculator
 
           ## Video
-          handbrake
           lbry
 
           ## Debugging
