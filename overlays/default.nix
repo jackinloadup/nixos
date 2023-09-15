@@ -14,6 +14,7 @@ in
     #};
     openrct2 = self.unstable.openrct2;
     obsidian = self.unstable.obsidian;
+    bark = self.unstable.bark;
     rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix {};
 
     # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
