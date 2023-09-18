@@ -136,4 +136,27 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
+
+  home-manager.sharedModules = [
+    { 
+      xdg.desktopEntries = {
+        switch-to-savi-audio = {
+          name = "Switch Audio to Savi";
+          exec = "${pkgs.pulseaudio}/bin/pactl set-default-sink alsa_output.usb-Plantronics_Savi_8220_008E6839CE254D13A0969E205B788648-01.analog-stereo";
+          terminal = false;
+          categories = [
+            "Utility"
+          ];
+        };
+        switch-to-desktop-audio = {
+          name = "Switch Audio to Desktop";
+          exec = "${pkgs.pulseaudio}/bin/pactl set-default-sink alsa_output.pci-0000_1f_00.3.analog-stereo";
+          terminal = false;
+          categories = [
+            "Utility"
+          ];
+        };
+      };
+    }
+  ];
 }
