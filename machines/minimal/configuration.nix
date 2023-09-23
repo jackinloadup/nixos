@@ -10,6 +10,7 @@ with inputs; let
   settings = import ../../settings;
 in {
   imports = [
+    (inputs.nixpkgs + "nixos/modules/profiles/minimal.nix")
     ./hardware-configuration.nix
   ];
 
@@ -45,15 +46,10 @@ in {
       umount = mkSetuidRoot "${lib.getBin pkgs.util-linux}/bin/umount";
     };
 
-  environment.noXlibs = mkDefault true;
   environment.defaultPackages = mkForce [];
 
   boot.enableContainers = false;
-  xdg.mime.enable = false;
-  xdg.icons.enable = false;
   xdg.menus.enable = false;
-  xdg.sounds.enable = false;
-  xdg.autostart.enable = false;
   powerManagement.cpuFreqGovernor = mkForce null;
 
   hardware.enableAllFirmware = mkForce false;
