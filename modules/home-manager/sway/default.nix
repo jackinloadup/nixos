@@ -64,6 +64,11 @@ in {
         xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
       ];
 
+    home.sessionVariables = {
+      # Hint to electron apps to use wayland
+      NIXOS_OZONE_WL = "1";
+    };
+
     # disabling for now due to i3. This could be started in commands but maybe systemd mod better?
     #services.flameshot.enable = true;
 
