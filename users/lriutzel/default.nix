@@ -277,6 +277,7 @@ in {
           brave
 
           warp # transfer files between computers gui
+          gnome.gnome-maps # map viewer
         ];
     };
 
