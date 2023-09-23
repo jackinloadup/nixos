@@ -131,11 +131,6 @@ in {
       home.username = username;
       home.homeDirectory = mkOverride 10 homeDir;
 
-      home.sessionVariables = {
-        NIXOS_CONFIG = "${homeDir}/Projects/dotfiles/flake.nix";
-        NIX_PATH = "nixos-config=${homeDir}/Projects/dotfiles/flake.nix:$NIX_PATH";
-      };
-
       programs.bash.enable = ifTui;
       programs.command-not-found.enable = !isFullSystem;
       programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
