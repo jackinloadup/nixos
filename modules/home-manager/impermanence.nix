@@ -69,10 +69,10 @@ in {
           #".cache/fontconfig"
           #".cache/vulnix"
         ]
-        ++ optionals nixosConfig.programs.chromium.enable [".cache/chromium"]
         ++ optionals nixosConfig.programs.steam.enable [".local/share/Steam"]
         ++ optionals nixosConfig.services.trezord.enable [".config/@trezor"]
         ++ optionals nixosConfig.services.pipewire.enable [".local/state/pipewire" ".local/state/wireplumber"]
+        ++ optionals config.programs.chromium.enable [".cache/chromium"]
         ++ optionals config.programs.neovim.enable [".local/share/nvim"]
         ++ optionals config.programs.direnv.enable [".local/share/direnv" ".cache/direnv"]
         ++ optionals config.programs.gpg.enable [".gnupg"]
