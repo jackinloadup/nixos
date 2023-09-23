@@ -65,6 +65,8 @@ in {
         dmidecode # Read DMI (SMBIOS)
         # builds cuda stuffs
         nvtop # A (h)top like task monitor for AMD, Intel and NVIDIA GPUs
+        libinput # input device debugging tool
+        evtest # input device debugging tool
 
         # Disk
         parted # a partition manipulation program
