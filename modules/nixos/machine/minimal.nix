@@ -7,6 +7,7 @@
   inherit (lib) mkIf mkDefault mkEnableOption;
   cfg = config.machine;
 in {
+  #(inputs.nixpkgs + "nixos/modules/profiles/minimal.nix")
   options.machine.minimal = mkEnableOption "Disable stuff not needed on minimal systems";
 
   config = mkIf cfg.minimal {
@@ -21,17 +22,5 @@ in {
     security.polkit.enable = mkDefault false;
 
     programs.bash.enableCompletion = mkDefault false;
-
-    ## Remove documentation
-    documentation.enable = mkDefault false;
-    documentation.nixos.enable = mkDefault false;
-    documentation.nixos.includeAllModules = mkDefault false; # default is mkDefault false just wanted to note
-    documentation.man.enable = mkDefault false;
-    documentation.info.enable = mkDefault false;
-    documentation.doc.enable = mkDefault false;
-
-    ## Disable udisks, sounds, …
-    services.udisks2.enable = mkDefault false;
-    xdg.sounds.enable = mkDefault false;
   };
 }
