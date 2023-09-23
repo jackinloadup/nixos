@@ -14,6 +14,10 @@ in {
   };
 
   config = mkIf (elem "sway" config.machine.windowManagers) {
+    environment.sessionVariables = {
+      # Hint to electron apps to use wayland
+      NIXOS_OZONE_WL = "1";
+    };
     programs.xwayland.enable = true;
 
     programs.sway = {
