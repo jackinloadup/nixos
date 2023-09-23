@@ -93,6 +93,7 @@ in {
     in {
       imports =
         [
+          ../../modules/home-manager/alacritty.nix
           ../../modules/home-manager/bash.nix
           ../../modules/home-manager/nix.nix
           ../../modules/home-manager/default.nix
@@ -113,7 +114,6 @@ in {
           ../../modules/home-manager/tui.nix
         ]
         ++ optionals ifGraphical [
-          ../../modules/home-manager/alacritty.nix
           ../../modules/home-manager/development.nix
           ../../modules/home-manager/graphical.nix
           ../../modules/home-manager/gpg.nix
