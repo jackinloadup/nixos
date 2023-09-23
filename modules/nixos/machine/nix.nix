@@ -49,6 +49,7 @@ in {
     ];
 
     # This adds symlinks to /run/current-system
+    # Also pulls in the flake repo onto the device
     system.extraSystemBuilderCmds = ''
       ln -sv ${pkgs.path} $out/nixpkgs
       ln -sv ${repoRoot} $out/nixos-config

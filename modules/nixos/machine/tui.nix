@@ -201,7 +201,7 @@ in {
     environment.shellAliases = {
       ".." = "cd ..";
       "ncdu" = "ncdu --color dark";
-      "nixos-current-repl" = "nix repl '<repl>'";
+      "nixos-current-repl" = "nix repl --file '<repl>'";
     };
 
     environment.etc = {

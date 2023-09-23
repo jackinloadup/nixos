@@ -45,7 +45,7 @@ in {
     services.dunst.enable = true;
 
     programs.zsh.loginExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
-    progams.bash.initExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
+    programs.bash.initExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
 
     home.packages = with pkgs;
       [
