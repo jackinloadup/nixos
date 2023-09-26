@@ -1,8 +1,8 @@
 {
-  inputs,
   lib,
   pkgs,
   config,
+  flake,
   ...
 }: let
   inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem;
@@ -19,8 +19,9 @@
   isFullSystem = elem hostname fullSystems;
   userEnabled = elem username config.machine.users;
 in {
+
   imports = [
-    inputs.nix-ld.nixosModules.nix-ld
+    flake.inputs.nix-ld.nixosModules.nix-ld
   ];
 
   # Make user available in user list
@@ -53,7 +54,20 @@ in {
     programs.chirp.enable = isFullSystem;
     programs.chromium.enable = isFullSystem;
     programs.sniffnet.enable = isFullSystem;
-    #programs.nix-ld.enable = isFullSystem;
+    programs.nix-ld.enable = isFullSystem;
+    #programs.nix-ld.dev.enable = isFullSystem; # dev = using flake vs nixpkgs
+    programs.nix-ld.libraries = [
+      pkgs.SDL2
+      pkgs.SDL2_image
+      pkgs.SDL2_sound
+      pkgs.SDL2_gfx
+      pkgs.SDL2_net
+      pkgs.SDL2_ttf
+      pkgs.gvfs
+      pkgs.dconf
+      pkgs.stdenv.cc.cc
+
+    ];
     # mic noise removal
     #programs.noisetorch.enable = isFullSystem;
     programs.wireshark.enable = isFullSystem;
@@ -75,11 +89,6 @@ in {
     environment.systemPackages = mkIf isFullSystem [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
     ];
-    environment.variables = mkIf isFullSystem {
-      # Supports inputs.nix-ld
-      NIX_LD_LIBRARY_PATH = lib.makeLibraryPath (config.systemd.packages ++ config.environment.systemPackages);
-      NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
-    };
 
     # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
     virtualisation.docker.enable = isFullSystem;
@@ -91,41 +100,24 @@ in {
     home-manager.users."${username}" = let
       homeDir = "/home/${username}";
     in {
-      imports =
-        [
-          ../../modules/home-manager/alacritty.nix
-          ../../modules/home-manager/bash.nix
-          ../../modules/home-manager/nix.nix
-          ../../modules/home-manager/default.nix
-          ../../modules/home-manager/dunst.nix
-          ../../modules/home-manager/firefox.nix
-          ../../modules/home-manager/foot.nix
-          ../../modules/home-manager/mpv.nix
-          ../../modules/home-manager/music.nix
-          ../../modules/home-manager/openrct2.nix
-          ../../modules/home-manager/zoom.nix
-          ../../modules/home-manager/zsh.nix
+      imports = [
+          flake.self.homeModules.common
           ./ssh.nix
-          inputs.secrets.homemanagerModules.lriutzel
-          inputs.nix-index-database.hmModules.nix-index
-          #inputs.nixvim.homeManagerModules.nixvim
+          flake.inputs.secrets.homemanagerModules.lriutzel
+          flake.inputs.nix-index-database.hmModules.nix-index
+          #flake.inputs.nixvim.homeManagerModules.nixvim
         ]
         ++ optionals ifTui [
-          ../../modules/home-manager/tui.nix
+          flake.self.homeModules.tui
         ]
         ++ optionals ifGraphical [
-          ../../modules/home-manager/development.nix
-          ../../modules/home-manager/graphical.nix
-          ../../modules/home-manager/gpg.nix
-          ../../modules/home-manager/i3.nix
-          ../../modules/home-manager/impermanence.nix
-          ../../modules/home-manager/neovim/default.nix
-          #../../modules/home-manager/nixvim/default.nix
-          ../../modules/home-manager/sway/default.nix
-          ../../modules/home-manager/syncthing.nix
-          ../../modules/home-manager/xorg.nix
+          flake.self.homeModules.gui
         ]
         ++ optionals isFullSystem [
+          ./bah.nix
+        ]
+        ++ optionals config.machine.impermanence [
+          flake.self.homeModules.impermanence
         ];
 
       home.username = username;
@@ -213,7 +205,7 @@ in {
           zathura # PDF / Document viewer
           # zeal # documentation browser
 
-          python39Packages.xdot # graphviz viewer
+          #python39Packages.xdot # graphviz viewer # erro with pycairio compile
           graphviz
 
           ## Spotify - disabling and using webui

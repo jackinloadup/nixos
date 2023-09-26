@@ -34,7 +34,7 @@
     value = importOverlay path inputs;
   };
   importModuleSet = name: path: {
-    name = name;
+    name = removeSuffix ".nix" name;
     value = import path;
   };
   importOverlay = path: args: (final: prev: (import path args) final prev);

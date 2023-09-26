@@ -10,7 +10,7 @@ with inputs; let
   settings = import ../../settings;
 in {
   imports = [
-    (inputs.nixpkgs + "nixos/modules/profiles/minimal.nix")
+    (inputs.nixpkgs + "/nixos/modules/profiles/minimal.nix")
     ./hardware-configuration.nix
   ];
 

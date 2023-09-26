@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  flake,
   ...
 }:
 # If extraOpts can be expressed in home-manager that
@@ -10,7 +11,9 @@
 let
   inherit (lib) mkIf mkEnableOption optionals;
 in {
-  imports = [];
+  imports = [
+    flake.inputs.impermanence.nixosModules.impermanence
+  ];
 
   options.machine.impermanence = mkEnableOption "Enable impermanence";
 

@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf concatStrings;
+  inherit (pkgs.lib) mkIf concatStrings;
 in {
   config = {
     programs.starship = mkIf config.programs.starship.enable {

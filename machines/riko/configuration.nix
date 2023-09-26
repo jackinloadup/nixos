@@ -1,11 +1,11 @@
 {
   self,
-  inputs,
   pkgs,
   lib,
+  flake,
   ...
 }:
-with inputs; let
+let
   inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
 in {
@@ -14,6 +14,8 @@ in {
     ./rtl_433.nix
     ./iwd.nix
   ];
+
+  boot.plymouth.enable = true;
   boot.initrd.verbose = false;
 
   hardware.bluetooth.enable = true;
@@ -58,9 +60,11 @@ in {
 
   nix.settings.max-jobs = mkDefault 4;
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   nixpkgs.overlays = [
-    inputs.self.overlays.default
-    #inputs.self.overlays.kodi-wayland
+    flake.inputs.self.overlays.default
+    #flake.inputs.self.overlays.kodi-wayland
   ];
   #fonts.fontconfig.dpi = 152;
 

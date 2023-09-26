@@ -1,19 +1,18 @@
 {
-  inputs,
+  flake,
   pkgs,
   config,
   lib,
-  nixosConfig,
   ...
 }: let
   inherit (lib) mkIf optionals;
   username = config.home.username;
 in {
   imports = [
-    (import "${inputs.impermanence}/home-manager.nix")
+    flake.inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
-  config = mkIf nixosConfig.machine.impermanence {
+  config = {
     home.persistence."/persist/home/${username}" = {
       directories =
         [
@@ -53,7 +52,6 @@ in {
           ".config/kvibes" # MediaElch
           ".config/OpenRCT2" # MediaElch
           ".cache/huggingface" # todo pull in from nixified-ai
-          #".cache/mozilla"
           #".config/unity3d" # game saves
           #".config/StardewValley"
           #".config/systemd"
@@ -69,14 +67,17 @@ in {
           #".cache/fontconfig"
           #".cache/vulnix"
         ]
-        ++ optionals nixosConfig.programs.steam.enable [".local/share/Steam"]
-        ++ optionals nixosConfig.services.trezord.enable [".config/@trezor"]
-        ++ optionals nixosConfig.services.pipewire.enable [".local/state/pipewire" ".local/state/wireplumber"]
+        #++ optionals nixosConfig.programs.steam.enable [".local/share/Steam"]
+        #++ optionals nixosConfig.services.trezord.enable [".config/@trezor"]
+        #++ optionals nixosConfig.services.pipewire.enable [".local/state/pipewire" ".local/state/wireplumber"]
+        ++ [".local/share/Steam"]
+        ++ [".config/@trezor"]
+        ++ [".local/state/pipewire" ".local/state/wireplumber"]
         ++ optionals config.programs.chromium.enable [".cache/chromium"]
         ++ optionals config.programs.neovim.enable [".local/share/nvim"]
         ++ optionals config.programs.direnv.enable [".local/share/direnv" ".cache/direnv"]
         ++ optionals config.programs.gpg.enable [".gnupg"]
-        ++ optionals config.programs.firefox.enable [".mozilla"]
+        ++ optionals config.programs.firefox.enable [".mozilla" ".cache/mozilla"]
         ++ optionals config.programs.thunderbird.enable [".thunderbird" ".cache/thunderbird"]
         ++ optionals config.programs.zoom-us.enable [".zoom"]
         ++ optionals config.programs.zsh.enable [".local/state/zsh"]
@@ -91,8 +92,9 @@ in {
           ".bash_history"
           ".local/state/z"
           #".screenrc"
-        ]
-        ++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
+          ".steam/registry.vdf"
+        ];
+        #++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
       allowOther = true;
     };
   };
