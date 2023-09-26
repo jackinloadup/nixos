@@ -12,7 +12,7 @@ in {
       # Change package to enable controller support
       # https://github.com/NixOS/nixpkgs/pull/52168
       # https://functor.tokyo/blog/2018-12-20-playstation-bluetooth-controller
-      package = pkgs.bluezFull;
+      package = pkgs.bluez;
       disabledPlugins = ["sap"]; # SIM Access Profile fails and isn't needed
       hsphfpd.enable = false; # Handled in Wireplumer
       settings = {

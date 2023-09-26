@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-  inputs,
+  flake,
   ...
 }: let
   inherit (lib) mkOption mkEnableOption mkDefault mkIf;
@@ -13,13 +13,12 @@
   ifGraphical = config.machine.sizeTarget > 1;
 in {
   imports = [
-    "${inputs.impermanence}/nixos.nix"
-    inputs.home-manager.nixosModules.home-manager
-    {
-      home-manager.extraSpecialArgs = {inherit inputs;};
-      home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "hm-backup";
-    }
+    #flake.inputs.home-manager.nixosModules.home-manager
+    #{
+    #  home-manager.extraSpecialArgs = {inherit inputs;};
+    #  home-manager.useUserPackages = true;
+    #  home-manager.backupFileExtension = "hm-backup";
+    #}
     ./adb.nix
     ./chirp.nix
     ./chromium.nix
@@ -92,11 +91,13 @@ in {
   };
 
   config = {
+    documentation.man.enable = false;
+
     # Allow unfree packages.
     nixpkgs.config.allowUnfree = true;
 
     # Let 'nixos-version --json' know the Git revision of this flake.
-    system.configurationRevision = mkIf (inputs.self ? rev) inputs.self.rev;
+    system.configurationRevision = mkIf (flake.inputs.self ? rev) flake.inputs.self.rev;
 
     users.mutableUsers = mkDefault false; # Users may only be added via nix config
 
@@ -190,6 +191,8 @@ in {
       opengl.enable = mkDefault ifGraphical;
       opengl.driSupport = mkDefault ifGraphical;
     };
+
+    security.pam.enableSSHAgentAuth = mkDefault false; # todo explore to see if it fixes the nixos-rebuld need for the ssh flag
 
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkDefault ifTui;

@@ -32,7 +32,7 @@ in {
         #vlock # tty/vtty locker
         # fasd # quick access to files and dir
 
-        exa # ls replacement
+        eza # ls replacement
         jq # json parsing
         tree # file/directory viewer in tree format
         ripgrep # grep alternative

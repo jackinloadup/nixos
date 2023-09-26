@@ -1,12 +1,12 @@
 {
   self,
-  inputs,
+  flake,
   pkgs,
   lib,
   ...
 }:
-with inputs; let
-  inherit (lib) mkForce;
+let
+  inherit (lib) mkForce getExe;
   settings = import ../../settings;
   debug = false;
 in {
@@ -45,6 +45,8 @@ in {
     ./switch-desk.nix
   ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   programs.steam.enable = true;
   programs.simula.enable = false;
 
@@ -54,38 +56,43 @@ in {
     enable = true;
     openFirewall = true;
   };
+
+  #services.k3s.enable = false;
+  #services.k3s.role = "server";
+  #services.k3s.clusterInit = true;
+
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
 
-  networking.firewall.allowedTCPPorts = [ 19999 ]; # netdata port;
-  services.netdata.enable = true; 
+  #networking.firewall.allowedTCPPorts = [ 19999 ]; # netdata port;
+  #services.netdata.enable = true; 
 
   services.pipewire.enable = true;
 
-  services.rtl_433 = {
-    enable = false;
-    package = pkgs.rtl_433-dev;
-    configText = ''
-      output json
-      output mqtt://mqtt.home.lucasr.com,user=mosquitto,pass=mosquitto,retain=0,events=rtl_433[/model][/id]
-      report_meta time:utc
-      frequency 915M
-      frequency 433.92M
-      convert si
-      hop_interval 60
-      gain 0
-    '';
-  };
+  #services.rtl_433 = {
+  #  enable = false;
+  #  package = pkgs.rtl_433-dev;
+  #  configText = ''
+  #    output json
+  #    output mqtt://mqtt.home.lucasr.com,user=mosquitto,pass=mosquitto,retain=0,events=rtl_433[/model][/id]
+  #    report_meta time:utc
+  #    frequency 915M
+  #    frequency 433.92M
+  #    convert si
+  #    hop_interval 60
+  #    gain 0
+  #  '';
+  #};
 
   #services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "lriutzel";
   services.xserver.displayManager.defaultSession = "sway";
   #services.xserver.displayManager.gdm.enable = true;
 
-  # xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
-  #     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
-  #services.xserver.desktopManager.gnome.enable = true;
-  #services.xserver.windowManager.i3.enable = true;
+  ## xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
+  ##     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
+  ##services.xserver.desktopManager.gnome.enable = true;
+  ##services.xserver.windowManager.i3.enable = true;
 
   machine = {
     users = [
@@ -113,14 +120,15 @@ in {
   nix.settings.max-jobs = lib.mkDefault 16;
 
   nixpkgs.overlays = [
-    inputs.nur.overlay
-    inputs.self.overlays.default
-    inputs.self.overlays.kodi-wayland
+    flake.inputs.nur.overlay
+    flake.inputs.self.overlays.default
+    flake.inputs.self.overlays.kodi-wayland
   ];
 
   networking.hostName = "reg";
   networking.bridges.br0.interfaces = ["eno1"];
   networking.interfaces.br0.useDHCP = true;
+  networking.enableIPv6 = false;
   virtualisation.libvirtd.allowedBridges = ["br0"];
 
   #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
@@ -151,6 +159,22 @@ in {
         switch-to-desktop-audio = {
           name = "Switch Audio to Desktop";
           exec = "${pkgs.pulseaudio}/bin/pactl set-default-sink alsa_output.pci-0000_1f_00.3.analog-stereo";
+          terminal = false;
+          categories = [
+            "Utility"
+          ];
+        };
+        monitor-light = {
+          name = "Monitor Light";
+          exec = "${getExe flake.inputs.scripts.packages.x86_64-linux.monitor-light}";
+          terminal = false;
+          categories = [
+            "Utility"
+          ];
+        };
+        monitor-dark = {
+          name = "Monitor Dark";
+          exec = "${getExe flake.inputs.scripts.packages.x86_64-linux.monitor-dark}";
           terminal = false;
           categories = [
             "Utility"

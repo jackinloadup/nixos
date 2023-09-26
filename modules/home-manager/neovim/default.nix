@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  nixosConfig,
   ...
 }: let
   inherit (lib) mkIf;

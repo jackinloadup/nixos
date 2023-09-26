@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-  inputs,
+  flake,
   ...
 }: let
   inherit (lib) mkIf mkDefault;
@@ -23,6 +23,9 @@
   repoRoot = toString ../../../.;
 in {
   config = {
+    nixpkgs.overlays = [
+      flake.inputs.nur.overlay
+    ];
     nix.settings = {
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -66,8 +69,8 @@ in {
           type = "indirect";
         };
       })
-      (inputs # Expose all flakes
-        // {pkgs = inputs.nixpkgs;}); # alias for convenience
+      (flake.inputs # Expose all flakes
+        // {pkgs = flake.inputs.nixpkgs;}); # alias for convenience
 
     # enable flakes
     # set the min free disk space.

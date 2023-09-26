@@ -1,5 +1,5 @@
 {
-  inputs,
+  flake,
   pkgs,
   config,
   lib,
@@ -7,13 +7,14 @@
   ...
 }: {
   config = {
-    nixpkgs.config.allowUnfree = true;
+    # doesn't work when home-manager.useGlobalPkgs is true
+    #nixpkgs.config.allowUnfree = true;
     # inherit the systems overlays
-    nixpkgs.overlays =
-      nixosConfig.nixpkgs.overlays
-      ++ [
-        inputs.nur.overlay
-      ];
+    #nixpkgs.overlays =
+    #  nixosConfig.nixpkgs.overlays
+    #  ++ [
+    #    flake.inputs.nur.overlay
+    #  ];
 
     # expose registry items that are relevant outside of nixos
     #nix.registry = nixosConfig.nix.registry;

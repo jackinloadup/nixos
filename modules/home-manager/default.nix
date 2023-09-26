@@ -1,22 +1,61 @@
+# flake-parts module
+{ self, ... }:
 {
-  inputs,
-  pkgs,
-  config,
-  lib,
-  nixosConfig,
-  ...
-}: let
-  inherit (lib) mkDefault;
-in {
-  imports = [];
-
-  config = {
-    # Home manager will have the same stateVersion as system
-    home.stateVersion = nixosConfig.system.stateVersion;
-
-    # enable management of XDG base directories
-    xdg.enable = mkDefault true;
-
-    programs.home-manager.enable = true;
+  flake = {
+    homeModules = {
+      common = {
+        imports = [
+          ./alacritty.nix
+          ./base16.nix
+          ./base.nix
+          ./dunst.nix
+          ./firefox.nix
+          ./foot.nix
+          ./gpg.nix
+          ./mpv.nix
+          ./music.nix
+          ./nix.nix
+          ./openrct2.nix
+          ./starship.nix
+          ./task-warrior
+          ./zoom.nix
+        ];
+      };
+      tui.imports = [
+          ./bash.nix
+          ./tui.nix
+          ./zsh.nix
+      ];
+      gui.imports = [
+          ./development.nix
+          ./graphical.nix
+          ./i3.nix
+          ./neovim
+          #./nixvim
+          ./sway
+          ./syncthing.nix
+          ./waybar.nix
+          ./xorg.nix
+      ];
+      impermanence.imports = [
+        ./impermanence.nix
+      ];
+      #common-linux = {
+      #  imports = [
+      #    self.homeModules.common
+      #    ./bash.nix
+      #    ./vscode-server.nix
+      #  ];
+      #};
+      #common-darwin = {
+      #  imports = [
+      #    self.homeModules.common
+      #    ./zsh.nix
+      #    ./bash.nix
+      #    # ./kitty.nix
+      #    # ./emacs.nix
+      #  ];
+      #};
+    };
   };
 }

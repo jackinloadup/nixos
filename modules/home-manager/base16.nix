@@ -1,15 +1,15 @@
 {
-  inputs,
   pkgs,
   config,
   lib,
   nixosConfig,
+  flake,
   ...
 }: let
   settings = import ../../settings;
 in {
   imports = [
-    inputs.base16.hmModule
+    flake.inputs.base16.hmModule
   ];
 
   config = {
