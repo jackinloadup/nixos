@@ -47,11 +47,11 @@ in {
           </fontconfig>
         '';
       };
-      fonts = with pkgs; [
+      packages = [
         # Nerdfonts is kinda heavy. We are cutting it down but still looks like it might be 4-10mb
-        (nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];})
-        lato
-        noto-fonts-emoji
+        (pkgs.nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];})
+        pkgs.lato
+        pkgs.noto-fonts-emoji
       ];
     };
   };
