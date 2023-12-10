@@ -1,7 +1,7 @@
 {lib, ...}: {
   imports = [
     ../../profiles/intel.nix
-    ../../profiles/disk-workstation.nix
+    ../../profiles/disk-workstation-2.nix
   ];
 
   config = {
@@ -9,5 +9,6 @@
     boot.loader.efi.canTouchEfiVariables = true;
     boot.extraModprobeConfig = "options snd-hda-intel enable_msi=1";
 
+    nixpkgs.hostPlatform = "x86_64-linux";
   };
 }

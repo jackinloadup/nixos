@@ -1,6 +1,6 @@
 {
   self,
-  inputs,
+  flake,
   pkgs,
   lib,
   ...
@@ -71,12 +71,13 @@ in {
 
   nixpkgs = {
     overlays = [
-      inputs.nur.overlay
-      inputs.self.overlays.default
-      inputs.self.overlays.kodi-wayland
-      inputs.self.overlays.plymouth-no-gtk
+      flake.inputs.nur.overlay
+      flake.inputs.self.overlays.default
+      flake.inputs.self.overlays.kodi-wayland
+      # failed to build
+      #flake.inputs.self.overlays.plymouth-no-gtk
       # meson.build:1:0: ERROR: Executables created by c compiler gcc are not runnable.
-      #inputs.self.overlays.pipewire-minimal
+      #flake.inputs.self.overlays.pipewire-minimal
     ];
   };
 

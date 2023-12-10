@@ -1,6 +1,6 @@
 {
   self,
-  inputs,
+  flake,
   pkgs,
   lib,
   ...
@@ -136,8 +136,8 @@ in {
 
   nixpkgs = {
     overlays = [
-      inputs.nur.overlay
-      inputs.self.overlays.default
+      flake.inputs.nur.overlay
+      flake.inputs.self.overlays.default
       #    inputs.self.overlays.plymouth-no-gtk
       #    inputs.self.overlays.pipewire-minimal
     ];
