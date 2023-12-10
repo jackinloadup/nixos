@@ -39,6 +39,7 @@ in {
             "noauto" # lazy mounting
             "noatime"
             "nodiratime"
+            "nolock"
             "x-systemd.automount" # lazy mounting
             "x-systemd.idle-timeout=${toString cfg.idleTimeout}" # disconnects after 10 minutes (i.e. 600 seconds)
             #"nfsvers=4.2" # likely not needed. Client already negotiates version starting from newest
