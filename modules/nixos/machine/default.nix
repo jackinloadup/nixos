@@ -39,6 +39,7 @@ in {
     ./sound.nix
     ./ssh.nix
     ./syncthing.nix
+    ./time.nix
     ./tui.nix
     ./minimal.nix
     ./nix.nix
