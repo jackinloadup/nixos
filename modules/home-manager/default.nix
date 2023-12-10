@@ -26,6 +26,7 @@
           ./tui.nix
           ./zsh.nix
       ];
+
       gui.imports = [
           ./development.nix
           ./graphical.nix

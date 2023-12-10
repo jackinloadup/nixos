@@ -2,14 +2,37 @@
 {
   config,
   pkgs,
-  nixosConfig,
   lib,
   inputs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf optionalString;
 in {
   config = mkIf config.programs.bash.enable {
-    programs.nix-index.enableBashIntegration = true;
+    programs.bash = {
+      historyFile = "~/.local/state/bash/history";
+      historyControl = [
+        "ignoredups"
+        "ignorespace"
+      ];
+      historyIgnore = ["l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit"];
+      initExtra =
+        ''
+          source ${config.lib.base16.templateFile {name = "shell";}}
+        ''
+        + optionalString config.programs.starship.enable ''
+          eval "$(starship init bash)"
+        '';
+      shellOptions = [
+        "dirspell"
+        "cdspell"
+        "histappend"
+        "cmdhist"
+        "checkwinsize"
+        "extglob"
+        "globstar"
+        "checkjobs"
+      ];
+    };
   };
 }
