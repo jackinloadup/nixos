@@ -101,9 +101,6 @@ in {
     #systemd.network.wait-online.anyInterface = true;
 
     boot = {
-      # can't add plymouth here due to the nixos implimentation not yet
-      # supporting zfs/luks encryption unlock
-      #plymouth.enable = true;
       initrd = {
         # It's possible for systemd to add or remove store paths and bins
         systemd.enable = true;
