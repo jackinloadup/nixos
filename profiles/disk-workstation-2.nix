@@ -1,6 +1,6 @@
 {
   lib,
-  inputs,
+  flake,
   pkgs,
   config,
   ...
@@ -25,7 +25,7 @@
 in {
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
-    inputs.disko.nixosModules.disko
+    flake.inputs.disko.nixosModules.disko
   ];
 
   config = {
@@ -59,14 +59,16 @@ in {
           inherit device;
           type = "disk";
           content = {
-            type = "table";
-            format = "gpt";
-            partitions = [
-              {
-                name = "ESP";
-                start = "1MiB";
-                end = "512MiB";
-                bootable = true;
+            type = "gpt";
+            partitions = {
+              boot = {
+                size = "1M";
+                type = "EF02"; # for grub MBR
+              };
+              esp = {
+                size = "512M";
+                #bootable = true;
+                type = "EF00";
                 content = {
                   type = "filesystem";
                   format = "vfat";
@@ -75,17 +77,16 @@ in {
                     "defaults"
                   ];
                 };
-              }
-              {
+              };
+              root = {
                 name = rootPartionName;
-                start = "512MiB";
-                end = "100%";
+                size = "100%";
                 content = {
                   type = "zfs";
                   pool = "${zfsPoolName}";
                 };
-              }
-            ];
+              };
+            };
           };
         };
       };

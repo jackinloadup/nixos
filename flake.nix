@@ -3,7 +3,7 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    #nixpkgs.url = github:nixos/nixpkgs/nixos-23.05;
+    nixpkgs-stable.url = github:nixos/nixpkgs/nixos-23.05;
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
     # explore prebuilt unfree packages
@@ -176,6 +176,22 @@
                 self.nixosModules.default
                 self.nixosModules.lriutzel
                 ./machines/lyza/configuration.nix
+              ];
+            };
+            kanye = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                self.nixosModules.criutzel
+                ./machines/kanye/configuration.nix
+              ];
+            };
+            jesus = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                self.nixosModules.criutzel
+                ./machines/jesus/configuration.nix
               ];
             };
             minimal = self.nixos-flake.lib.mkLinuxSystem {
