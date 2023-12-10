@@ -9,7 +9,12 @@
   inherit (lib.attrsets) genAttrs;
 in {
   config = mkIf config.programs.firefox.enable {
+    #nixpkgs.overlays = [
+    #  flake.inputs.nur.overlay
+    #];
+
     home.packages = [
+      pkgs.speechd # for speech synthesis
       pkgs.ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg
       #(makeDesktopItem { # convience alias to open a private window
       #  name = "firefox-private";
@@ -89,6 +94,44 @@ in {
             #ipfs-companion
             #javascript-restrictor
           ];
+
+          #search.engines = {
+          #  "Nix Packages" = {
+          #    urls = [{
+          #      template = "https://search.nixos.org/packages";
+          #      params = [
+          #        { name = "type"; value = "packages"; }
+          #        { name = "query"; value = "{searchTerms}"; }
+          #      ];
+          #    }];
+
+          #    icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          #    definedAliases = [ "@np" ];
+          #  };
+          #  "Nixos Options" = {
+          #    urls = [{
+          #      template = "https://search.nixos.org/options";
+          #      params = [
+          #        { name = "type"; value = "packages"; }
+          #        { name = "query"; value = "{searchTerms}"; }
+          #      ];
+          #    }];
+
+          #    icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          #    definedAliases = [ "@np" ];
+          #  };
+
+          #  "NixOS Wiki" = {
+          #    urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
+          #    iconUpdateURL = "https://nixos.wiki/favicon.png";
+          #    updateInterval = 24 * 60 * 60 * 1000; # every day
+          #    definedAliases = [ "@nw" ];
+          #  };
+
+          #  "Bing".metaData.hidden = true;
+          #  "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+          #  "Amazon".metaData.alias = "@a";
+          #};
 
           settings = {
             "browser.startup.blankWindow" = true;
