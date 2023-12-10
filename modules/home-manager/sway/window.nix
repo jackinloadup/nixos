@@ -5,7 +5,7 @@
   commands = [
     {
       command = "inhibit_idle fullscreen";
-      criteria.class = "firefox";
+      criteria.app_id = "firefox";
     }
     {
       command = "inhibit_idle fullscreen";
