@@ -1,5 +1,5 @@
 {
-  inputs,
+  flake,
   lib,
   pkgs,
   config,
@@ -7,7 +7,7 @@
 }: let
   inherit (lib) mkIf mkOption types;
   inherit (builtins) elem;
-  home-manager = inputs.home-manager;
+  home-manager = flake.inputs.home-manager;
 in {
   imports = [
   ];
@@ -35,8 +35,10 @@ in {
 
     home-manager.users.kodi = {
       imports = [
-        ../../modules/home-manager/default.nix
-        ../../modules/home-manager/nix.nix
+        flake.self.homeModules.common
+        flake.self.homeModules.tui
+        #../../modules/home-manager/default.nix
+        #../../modules/home-manager/nix.nix
         ./kodi.nix
         ./sway.nix
         #./i3.nix

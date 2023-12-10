@@ -152,17 +152,44 @@
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
+                self.nixosModules.criutzel
                 ./machines/riko/configuration.nix
+              ];
+            };
+            nat = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                self.nixosModules.kodi
+                ./machines/nat/configuration.nix
+              ];
+            };
+            marulk = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                ./machines/marulk/configuration.nix
+              ];
+            };
+            lyza = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                ./machines/lyza/configuration.nix
+              ];
+            };
+            minimal = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                ./machines/minimal/configuration.nix
               ];
             };
             #reg = mkNixosSystem defaultPkgs "x86_64-linux" "reg";
             #riko = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "riko";
-
-            marulk = mkNixosSystem defaultPkgs "x86_64-linux" "marulk";
-            lyza = mkNixosSystem defaultPkgs "x86_64-linux" "lyza";
-            nat = mkNixosSystem defaultPkgs "x86_64-linux" "nat";
-
-            minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
+            #nat = mkNixosSystem defaultPkgs "x86_64-linux" "nat";
+            #marulk = mkNixosSystem defaultPkgs "x86_64-linux" "marulk";
+            #lyza = mkNixosSystem defaultPkgs "x86_64-linux" "lyza";
+            #minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
           };
 
           #nixosModules = importDirOfModules "modules/nixos";
@@ -194,6 +221,7 @@
           packages = flattenTree {
             winbox = pkgs.wineApps.winbox;
             rtl_433-dev = pkgs.rtl_433-dev;
+            
           };
 
           apps = {

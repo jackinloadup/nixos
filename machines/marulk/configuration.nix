@@ -1,6 +1,6 @@
 {
   self,
-  inputs,
+  flake,
   pkgs,
   lib,
   ...
@@ -28,8 +28,9 @@ in {
 
   nix.settings.max-jobs = mkDefault 2;
 
+  nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.overlays = [
-    inputs.self.overlays.default
+    flake.inputs.self.overlays.default
   ];
 
   networking.hostName = "marulk";
