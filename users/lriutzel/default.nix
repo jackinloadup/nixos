@@ -112,6 +112,7 @@ in {
         ]
         ++ optionals ifGraphical [
           flake.self.homeModules.gui
+          ./gnome.nix
         ]
         ++ optionals isFullSystem [
           ./bah.nix
