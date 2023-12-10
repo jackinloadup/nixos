@@ -20,33 +20,6 @@ in {
     };
 
     programs = {
-      bash = {
-        enable = true;
-        historyFile = "~/.local/state/bash/history";
-        historyControl = [
-          "ignoredups"
-          "ignorespace"
-        ];
-        historyIgnore = ["l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit"];
-        initExtra =
-          ''
-            source ${config.lib.base16.templateFile {name = "shell";}}
-          ''
-          + optionalString config.programs.starship.enable ''
-            eval "$(starship init bash)"
-          '';
-        shellOptions = [
-          "dirspell"
-          "cdspell"
-          "histappend"
-          "cmdhist"
-          "checkwinsize"
-          "extglob"
-          "globstar"
-          "checkjobs"
-        ];
-      };
-
       htop.enable = true;
 
       readline = {
