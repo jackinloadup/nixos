@@ -19,6 +19,8 @@ in {
       #unityhub # Game development tool
       nurl # Generate Nix fetcher calls from repository URLs
       # zeal-qt6 # offline documentation browser
+      fx # command-line JSON viewer
+      fq # for binary formats - tool, language and decoders for working with binary and text formats
     ];
 
   home.file.".gdbinit".text = ''
