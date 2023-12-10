@@ -60,6 +60,7 @@ in {
     services.sshguard = {
       enable = mkDefault true;
       detection_time = 3600;
+      attack_threshold = 50; # 5 failed attempts. 10 per;
     };
   };
 }
