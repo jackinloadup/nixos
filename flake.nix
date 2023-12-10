@@ -94,7 +94,7 @@
     nixvim.url = github:pta2002/nixvim;
 
     # Devshell
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.url = github:numtide/treefmt-nix;
   };
 
   outputs = {self, ...} @ inputs: 
