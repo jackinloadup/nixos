@@ -14,10 +14,17 @@ in {
       _Z_DATA = "${config.home.homeDirectory}/.local/state/z";
     };
 
-    programs.nix-index.enableZshIntegration = true;
+    # Needed for vars like XGD_STATE_HOME
+    xdg.enable = mkDefault true;
+
 
     programs.zsh = {
       enableAutosuggestions = mkDefault true;
+      enableCompletion = mkDefault true;
+      syntaxHighlighting.enable = mkDefault true;
+      #enableVteIntegration = mkDefault true; # adds 300mb
+      defaultKeymap = "viins";
+      historySubstringSearch.enable = true;
 
       initExtra =
         ''
@@ -25,6 +32,15 @@ in {
             echo -ne "\033]0; $(basename "$PWD") \007"
           }
           precmd_functions+=(set_win_title)
+
+          ## https://discourse.nixos.org/t/nix-flamegraph-or-profiling-tool/33333/2
+          #function nixFunctionCalls {
+          #  local WORKDIR=$(mktemp -d /tmp/nix-fun-calls-XXXXX)
+          #  nix-instantiate --trace-function-calls "$1" -A "$2" 2> $WORKDIR/nix-function-calls.trace 1>/dev/null
+          #  ~/nixgits/nix/contrib/stack-collapse.py $WORKDIR/nix-function-calls.trace > $WORKDIR/nix-function-calls.folded
+          #  nix-shell -p flamegraph --run "flamegraph.pl $WORKDIR/nix-function-calls.folded > $WORKDIR/nix-function-calls.svg"
+          #  echo "$WORKDIR/nix-function-calls.svg"
+          #}
 
         ''
         + optionalString config.programs.starship.enable ''
@@ -35,6 +51,9 @@ in {
       shellAliases = nixosConfig.environment.shellAliases;
 
       loginExtra = ''
+        alias -s txt=nvim
+        alias -s py=nvim
+        alias -s json=jq
       '';
 
       shellGlobalAliases = {
