@@ -9,9 +9,9 @@ in {
   config = mkIf (!config.boot.initrd.verbose) {
     boot = {
       # heard on matrix that timeout should be able to be 0 and still
-      # be interupted via firmware buffered input. I didn't experience this yet.
-      # setting to 1 to allow capture for now
-      loader.timeout = mkDefault 1;
+      # be interupted via firmware buffered input. Got it to work. Pressed
+      # delete repeatedly and it stopped the boot.
+      loader.timeout = mkDefault 0;
       # Quiet durring boot
       #initrd.verbose = false;
 
@@ -24,7 +24,8 @@ in {
       # 5 = NOTICE
       # 6 = INFO
       # 7 = DEBUG
-      consoleLogLevel = 4;
+      consoleLogLevel = mkDefault 4;
+      # zero didn't remove tty on shutdown
 
       # Parameters prefixed with "rd." will be read when systemd-udevd is used in an initrd,
       # those without will be processed both in the initrd and on the host.
@@ -41,6 +42,27 @@ in {
         "systemd.show_status=auto"
         #"rd.systemd.show_status=auto"
       ];
+
+      plymouth = {
+        enable = mkDefault true;
+        themePackages = [ pkgs.adi1090x-plymouth-themes ];
+        # I thought this might be delaying the boot but after
+        # going back to basic it was pretty much the same
+        #theme = "deus_ex"; 
+        theme = mkDefault "colorful";
+        # spaces are underscore
+        # abstract-rings
+        # blockchain
+        # black-hud "turning on"
+        # cross-hud "turning off"
+        # connect
+        # cross-hud
+        # Deus Ex
+        # Hexagon Dots Alt
+        # Hexa Retro # both might like
+        # rings
+        # Seal 3
+      };
     };
   };
 }
