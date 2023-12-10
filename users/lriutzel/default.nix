@@ -74,8 +74,8 @@ in {
     programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
 
 
-    services.tor.enable = isFullSystem;
-    services.tor.client.enable = isFullSystem;
+    services.tor.enable = mkDefault isFullSystem;
+    services.tor.client.enable = mkDefault isFullSystem;
     services.trezord.enable = isFullSystem;
 
     hardware.logitech.wireless.enable = isFullSystem;
