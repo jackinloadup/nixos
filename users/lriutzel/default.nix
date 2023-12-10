@@ -50,7 +50,7 @@ in {
     };
 
     programs.adb.enable = isFullSystem;
-    programs.command-not-found.enable = !isFullSystem;
+    programs.command-not-found.enable = isFullSystem;
     programs.chirp.enable = isFullSystem;
     programs.chromium.enable = isFullSystem;
     programs.sniffnet.enable = isFullSystem;
