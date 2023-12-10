@@ -1,16 +1,28 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
-  inherit (lib) mkForce;
   homeDir = config.home.homeDirectory;
 in {
   config = lib.mkIf config.services.syncthing.enable {
+    xdg.desktopEntries.syncthing = {
+      name = "Syncthing";
+      genericName = "Syncthing";
+      comment = "Open Syncthing in a browser";
+      exec = "${pkgs.systemd}/bin/systemd-cat --identifier=syncthing-browser ${config.programs.chromium.package}/bin/chromium --app=http://localhost:8384";
+      icon = "${pkgs.breeze-icons}/share/icons/breeze-dark/apps/48/syncthing.svg";
+      terminal = false;
+      categories = [
+        "Utility"
+      ];
+    };
+
     services.syncthing = {
       extraOptions = [
-        "--config=${homeDir}/.config/syncthing"
-        "--data=${homeDir}/.local/share/syncthing"
+        "--config=${config.xdg.configHome}/syncthing"
+        "--data=${config.xdg.dataHome}/syncthing"
       ];
     };
   };
