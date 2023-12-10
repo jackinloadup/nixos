@@ -41,7 +41,7 @@ in {
           ".local/share/invokeai" # todo pull in from nixified-ai
           ".local/state/bash"
           ".config/discord"
-          ".config/dconf"
+          ".config/dconf" # setting is at the system level programs.dconf.enable
           ".config/libreoffice"
           ".config/github-copilot"
           ".config/nwg-panel"
@@ -73,7 +73,7 @@ in {
         ++ [".local/share/Steam"]
         ++ [".config/@trezor"]
         ++ [".local/state/pipewire" ".local/state/wireplumber"]
-        ++ optionals config.programs.chromium.enable [".cache/chromium"]
+        ++ optionals config.programs.chromium.enable [".config/chromium" ".cache/chromium"]
         ++ optionals config.programs.neovim.enable [".local/share/nvim"]
         ++ optionals config.programs.direnv.enable [".local/share/direnv" ".cache/direnv"]
         ++ optionals config.programs.gpg.enable [".gnupg"]

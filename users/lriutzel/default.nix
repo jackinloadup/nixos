@@ -117,7 +117,7 @@ in {
           ./bah.nix
         ]
         ++ optionals config.machine.impermanence [
-          flake.self.homeModules.impermanence
+          ./impermanence.nix
         ];
 
       home.username = username;
