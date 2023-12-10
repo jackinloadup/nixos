@@ -8,16 +8,27 @@
   ifGraphical = config.machine.sizeTarget > 1;
 in {
   config = mkIf config.hardware.bluetooth.enable {
+    # this is likely only needed on interactive computers?
+    # https://github.com/bluez/bluez/issues/319#issuecomment-1795890729
+    boot.kernelParams = [
+      "btusb.enable_autosuspend=n" # Possible fix for bluetooth not connecting
+    ];
+
     hardware.bluetooth = {
       # Change package to enable controller support
       # https://github.com/NixOS/nixpkgs/pull/52168
       # https://functor.tokyo/blog/2018-12-20-playstation-bluetooth-controller
       package = pkgs.bluez;
-      disabledPlugins = ["sap"]; # SIM Access Profile fails and isn't needed
+      disabledPlugins = [
+        "sap" # SIM Access Profile fails and isn't needed
+        "vcp" # these three were failing to init
+        "mcp"
+        "bap"
+      ];
       hsphfpd.enable = false; # Handled in Wireplumer
       settings = {
         General = {
-          FastConnectable = "true";
+          FastConnectable = "true"; # This seems to be the magic sauce
           JustWorksRepairing = "always";
           #MultiProfile = "multiple";
           DiscoverableTimeout = 0;
