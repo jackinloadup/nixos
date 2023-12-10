@@ -168,7 +168,7 @@ in {
       #};
       #
       #
-      xdg.desktopEntries = {
+      xdg.desktopEntries = mkIf ifGraphical {
         mindforger = {
           name = "MindForger";
           genericName = "Personal knowledge management application";
