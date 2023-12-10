@@ -72,6 +72,7 @@ in {
               mode = "u=rwx,g=rx,o=";
             }
           ]
+          ++ optionals config.services.chrony.enable ["/var/lib/chrony"]
           ++ optionals config.services.kubo.enable [ # ipfs
             config.services.kubo.dataDir
           ]
