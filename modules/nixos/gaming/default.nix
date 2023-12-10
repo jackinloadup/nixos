@@ -33,7 +33,7 @@ in {
       prismlauncher # minecraft
       #supertuxkart # alt mario cart
       warsow # Multiplayer FPS game
-      cool-retro-term
+      #cool-retro-term
       gamehub
       nethack # Rogue-like game
       #mindustry
