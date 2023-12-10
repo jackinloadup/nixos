@@ -9,6 +9,11 @@ in
       config.allowUnfree = true;
     };
 
+    stable = import inputs.nixpkgs-stable {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+    };
+
     #home-assistant = self.unstable.home-assistant.override {
     #  extraPackages = py: with py; [ psycopg2 librouteros ];
     #};
@@ -16,6 +21,9 @@ in
     obsidian = self.unstable.obsidian;
     bark = self.unstable.bark;
     rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix {};
+
+    # update in unstable broke b/c of schema version mismatch in config file
+    adguardhome = self.stable.adguardhome;
 
     # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
     mfc9130cwlpr = (super.callPackage ../packages/mfc9130cw.nix {}).driver;

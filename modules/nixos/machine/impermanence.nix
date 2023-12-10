@@ -78,6 +78,15 @@ in {
           ++ optionals config.services.fwupd.enable [
             "/var/lib/fwup"
           ]
+          ++ optionals config.services.home-assistant.enable [
+            config.services.home-assistant.configDir
+          ]
+          ++ optionals config.services.hydra.enable [
+            "/var/lib/hydra"
+          ]
+          ++ optionals config.services.mosquitto.enable [
+            config.services.mosquitto.dataDir
+          ]
           ++ optionals config.services.jellyfin.enable [
             "/var/lib/jellyfin"
           ]
@@ -87,11 +96,11 @@ in {
           ++ optionals config.services.pgadmin.enable [
             "/var/lib/private/pgadmin"
           ]
-          ++ optionals config.services.hydra.enable [
-            "/var/lib/hydra"
-          ]
           ++ optionals config.services.syncthing.enable [
             config.services.syncthing.dataDir
+          ]
+          ++ optionals config.services.zigbee2mqtt.enable [
+            config.services.zigbee2mqtt.dataDir
           ]
           ++ optionals config.networking.wireless.iwd.enable [
             "/var/lib/iwd"
