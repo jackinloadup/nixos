@@ -31,18 +31,18 @@ in {
     security.polkit.enable = lib.mkForce true; # needed for virt-manager?
 
     # might only apply to libvirt
-    environment.systemPackages = with pkgs;
+    environment.systemPackages =
       [
         # if system is minimal
-        virt-top
-        usbutils # for lsusb
+        pkgs.virt-top
+        pkgs.usbutils # for lsusb
       ]
       ++ optionals ifTui [
-        qemu
+        pkgs.qemu
       ]
       ++ optionals ifGraphical [
-        virt-manager # includes virt-install which maybe we want in cli?
-        spice-gtk
+        pkgs.virt-manager # includes virt-install which maybe we want in cli?
+        pkgs.spice-gtk
       ];
 
     users.users = addExtraGroups normalUsers ["libvirtd"];
