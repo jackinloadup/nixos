@@ -13,6 +13,7 @@
       openFirewall = true;
       extraArgs = ["--no-etc-hosts"];
       settings = {
+        #schema_version = 20;
         bind_port = 80; # Web gui
         bind_host = "10.16.1.2";
         dns = {
