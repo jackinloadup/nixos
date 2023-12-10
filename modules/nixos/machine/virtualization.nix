@@ -12,10 +12,10 @@
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
   config = mkIf config.virtualisation.libvirtd.enable {
-    boot.kernelModules = ["kvm-amd" "kvm-intel"];
-
     virtualisation.spiceUSBRedirection.enable = true;
     virtualisation.libvirtd = {
+      onShutdown = "shutdown";
+      parallelShutdown = 5;
       qemu = {
         ovmf.enable = true;
         swtpm.enable = true;
@@ -24,6 +24,7 @@ in {
         '';
       };
     };
+    systemd.services.libvirt-guests.environment.SHUTDOWN_TIMEOUT = "30";
 
     # TODO added nested flag
     #boot.extraModprobeConfig = "options kvm_intel nested=1";

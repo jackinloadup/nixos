@@ -13,6 +13,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
+    ./home-assistant.nix
   ];
 
     #-----------------------------------
@@ -70,18 +71,26 @@ in {
   boot.initrd.verbose = !isUserFacing;
 
   hardware.bluetooth.enable = isUserFacing;
-  hardware.rtl-sdr.enable = true;
+  #hardware.rtl-sdr.enable = false;
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
+
+  # doesn't seem to work
+  #services.create_ap.enable = true;
+  #services.create_ap.settings = {
+  #  INTERNET_IFACE = "enp1s0";
+  #  SSID = "ArtSpot";
+  #  WIFI_IFACE = "wlan0";
+  #};
 
   services.k3s.enable = false;
   services.k3s.role = "server";
   services.k3s.clusterInit = true;
 
   services.pipewire.enable = isUserFacing;
-  services.tor.enable = true;
-  services.tor.client.enable = true;
+  services.tor.enable = mkForce true;
+  services.tor.client.enable = mkForce true;
 
   #services.xserver.displayManager.autoLogin.user = "lriutzel";
   #services.xserver.displayManager.defaultSession = "sway";
