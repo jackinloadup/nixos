@@ -6,83 +6,106 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault getBin;
   settings = import ../../settings;
   ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
   dconf.settings = {
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+      screensaver = [ "<Super>Delete" ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Super>Return";
+      command = "${pkgs.gnome-console}/bin/kgx";
+      name = "Launch Terminal";
+    };
+    "org/gnome/settings-daemon/plugins/power" = {
+      idle-dim = true;
+      power-button-action = "suspend";
+      sleep-inactive-ac-type = "nothing";
+      sleep-inactive-battery-timeout = 1200;
+      sleep-inactive-battery-type = "suspend";
+    };
     "org/gnome/shell" = {
       always-show-log-out = true; # Always show logout
-      favorite-apps = [
-        "firefox.desktop"
-        "neovim.desktop"
-        "org.gnome.Terminal.desktop"
-        "spotify.desktop"
-        "virt-manager.desktop"
-        "org.gnome.Nautilus.desktop"
-      ];
       disable-user-extensions = false;
-
-      # `gnome-extensions list` for a list
-      enabled-extensions = [
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "trayIconsReloaded@selfmade.pl"
-        "Vitals@CoreCoding.com"
-        "dash-to-panel@jderose9.github.com"
-        "sound-output-device-chooser@kgshank.net"
-        "space-bar@luchrioh"
-      ];
     };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+      clock-format = "12h";
+      clock-show-date = true;
+      clock-show-seconds = false;
+      clock-show-weekday = true;
+      enable-animations = mkDefault true;
       enable-hot-corners = false;
+      #font-antialiasing = "grayscale";
+      #font-hinting = "slight";
+      #gtk-im-module = "ibus";
+      locate-pointer = false;
+      show-battery-percentage = true;
+      toolkit-accessibility = false;
     };
-    "org/gnome/desktop/wm/preferences" = {
-      workspace-names = ["Main"];
+    "org/gnome/desktop/peripherals/keyboard" = {
+      numlock-state = false;
     };
-    #"org/gnome/desktop/background" = {
-    #  picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-l.png";
-    #  picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+    "org/gnome/desktop/peripherals/mouse" = {
+      accel-profile = "default";
+      left-handed = false;
+      natural-scroll = false;
+      speed = 0.75;
+    };
+    "org/gnome/desktop/peripherals/touchpad" = {
+      #click-method = "fingers";
+      disable-while-typing = true;
+      edge-scrolling-enabled = false;
+      natural-scroll = false;
+      send-events = "enabled";
+      speed = 0.5;
+      tap-to-click = false;
+      two-finger-scrolling-enabled = true;
+    };
+    "org/gnome/desktop/sound" = {
+      allow-volume-above-100-percent = true;
+      event-sounds = true;
+    };
+    "org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
+      background-color = "rgb(23,20,33)";
+      font = "Monospace 16";
+      foreground-color = "rgb(208,207,204)";
+      use-system-font = false;
+      use-theme-colors = false;
+    };
+    #"org/gnome/desktop/wm/preferences" = {
+    #  workspace-names = ["Main"];
     #};
-    #"org/gnome/desktop/screensaver" = {
-    #  picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
-    #  primary-color = "#3465a4";
-    #  secondary-color = "#000000";
-    #};
-    "org/gnome/nautilus/icon-view" = {
-      default-zoom-level = "standard";
+    "org/gnome/desktop/screensaver" = {
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.png";
+      primary-color = "#3465a4";
+      secondary-color = "#000000";
     };
+    #"org/gnome/nautilus/icon-view" = {
+    #  default-zoom-level = "standard";
+    #};
 
-    "org/gnome/nautilus/preferences" = {
-      default-folder-viewer = "icon-view";
-      default-sort-order = "type";
-      search-filter-time-type = "last_modified";
-      search-view = "list-view";
-    };
+    #"org/gnome/nautilus/preferences" = {
+    #  default-folder-viewer = "icon-view";
+    #  default-sort-order = "type";
+    #  search-filter-time-type = "last_modified";
+    #  search-view = "list-view";
+    #};
     #"org/gnome/desktop/input-sources" = {
     #  current = "uint32 0";
     #  sources = [(mkTuple ["xkb" "br"]) (mkTuple ["xkb" "us"])];
     #  xkb-options = [ "terminate:ctrl_alt_bksp" ];
     #};
-    "org/gnome/desktop/peripherals/keyboard" = {
-      numlock-state = false;
-    };
-    "org/gnome/desktop/privacy" = {
-      disable-microphone = true;
-      report-technical-problems = false;
-    };
+    #"org/gnome/desktop/privacy" = {
+    #  disable-microphone = true;
+    #  report-technical-problems = false;
+    #};
     "org/gnome/system/location" = {
       enabled = false;
     };
-    "org/gnome/desktop/periphereals/touchpad" = {
-      tap-to-click = false;
-      disable-while-typing = false;
-      two-finger-scrolling-enabled = true;
-      speed = 0.20;
-    };
-    "org/gnome/desktop/peripherals/mouse".speed = 0.20;
-    # Don't suspend on power
-    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
   };
 
   home.pointerCursor = {
@@ -114,7 +137,7 @@ in {
 
     # Shows in nemo
     gtk3.bookmarks = [
-      "sftp://truenas/mnt/ Gumdrop-NAS"
+      #"sftp://truenas/mnt/ Gumdrop-NAS"
     ];
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
@@ -123,6 +146,11 @@ in {
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
   };
 
   home.packages = with pkgs;
@@ -155,8 +183,9 @@ in {
 
       xfce.thunar # File manager
       #pantheon.elementary-files
-      cinnamon.nemo # File manager
+      #cinnamon.nemo # File manager
       #flameshot
+      gnome.nautilus
       gnome.gnome-disk-utility
       #calibre # ebook tool,  assist with kindle
       #obsidian # Markdown information archive
@@ -198,6 +227,8 @@ in {
   };
 
   xdg = {
+    # enable management of XDG base directories
+    enable = mkDefault ifGraphical;
     userDirs.enable = mkDefault ifGraphical;
 
     mimeApps = {
@@ -211,7 +242,8 @@ in {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "writer.desktop";
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "calc.desktop";
 
-        "inode/directory" = "nemo.desktop";
+        "inode/directory" = "nautilus.desktop";
+        #"inode/directory" = "nemo.desktop";
       };
     };
   };

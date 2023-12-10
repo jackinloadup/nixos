@@ -21,6 +21,7 @@ in {
       pkgs.gnome.adwaita-icon-theme
       pkgs.gnome.gnome-session
       pkgs.gnome.gnome-tweaks
+      pkgs.gnome.dconf-editor
     ];
 
     environment.gnome.excludePackages = [
@@ -28,7 +29,7 @@ in {
       pkgs.gnome-photos
       pkgs.gnome.gnome-music
       pkgs.gnome.gnome-terminal
-      pkgs.gnome.gedit
+      #pkgs.gnome.gedit
       pkgs.epiphany
       pkgs.evince
       pkgs.gnome.gnome-characters

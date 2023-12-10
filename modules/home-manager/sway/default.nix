@@ -265,7 +265,15 @@ in {
       '';
     };
 
-    home.file."${config.xdg.configHome}/nwg-bar/bar.json".text = ''      [
+    home.file."${config.xdg.configHome}/nwg-bar/bar.json".text = let
+      gdmSwitchUser = if nixosConfig.services.xserver.displayManager.gdm.enable then ''
+          ,{
+            "label": "Switch User",
+            "exec": "${pkgs.gnome.gdm}/bin/gdmflexiserver",
+            "icon": "${pkgs.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-switch-user.svg"
+          }
+        '' else "";
+    in ''      [
        {
          "label": "Lock",
          "exec": "${lockCmd}",
@@ -291,6 +299,7 @@ in {
          "exec": "systemctl -i poweroff",
          "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-shutdown.svg"
        }
+       ${gdmSwitchUser}
       ]
     '';
     services.swayidle = {
