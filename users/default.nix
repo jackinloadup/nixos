@@ -5,6 +5,7 @@
   flake = {
     nixosModules = {
       lriutzel.imports = [ ./lriutzel ];
+      criutzel.imports = [ ./criutzel ];
       kodi.imports = [ ./kodi ];
     };
   };
