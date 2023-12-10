@@ -57,24 +57,11 @@ in {
       example = 0;
       description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Tui 2=Graphical 3=Full";
     };
-    debugTools = mkOption {
-      type = listOf enum ["hardware" "network" "os" "fs" "tui" "gui"];
-      default = [];
-      example = ["hardware" "network" "os" "fs" "tui" "gui"];
-      description = "The category of debug tools to be install";
-    };
-    includeDocs = mkEnableOption "Should documentation be installed?";
     users = mkOption {
       type = listOf (enum []);
       default = [];
       example = ["john" "jane" "liljohn"];
       description = "What users will be loaded onto the machine";
-    };
-    defaultUser = mkOption {
-      type = nullOr str;
-      default = null;
-      example = "whodis"; # ?
-      description = "Declare if there is a user who should be considered the default user. Enables things like autologin";
     };
     displayManager = mkOption {
       type = nullOr (enum []);
