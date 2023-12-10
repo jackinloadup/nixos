@@ -37,9 +37,6 @@
           ./waybar.nix
           ./xorg.nix
       ];
-      impermanence.imports = [
-        ./impermanence.nix
-      ];
       #common-linux = {
       #  imports = [
       #    self.homeModules.common
