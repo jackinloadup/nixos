@@ -166,7 +166,7 @@
                 self.nixosModules.default
                 self.nixosModules.lriutzel
                 self.nixosModules.criutzel
-                ./machines/reg/configuration.nix
+                ./machines/zen/configuration.nix
               ];
             };
             # Personal laptop
