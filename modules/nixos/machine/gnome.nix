@@ -14,7 +14,7 @@ in {
     # gnome has its own power management tool
     services.tlp.enable = mkForce false;
 
-    services.xserver.displayManager.job.logToJournal = true;
+    services.displayManager.logToJournal = true;
 
     # add if icon theme isn't a thing yet
     environment.systemPackages = [

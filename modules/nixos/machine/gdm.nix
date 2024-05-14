@@ -11,15 +11,16 @@ in {
   imports = [];
 
   config = mkIf config.services.xserver.displayManager.gdm.enable {
-    programs.dconf.enable = true;
+    #programs.dconf.enable = true;
 
     # gnome has its own power management tool
     services.tlp.enable = mkForce false;
 
     services.xserver.enable = true;
-    services.xserver.autorun = true;
-    services.xserver.displayManager.lightdm.enable = false;
-    services.xserver.displayManager.gdm.wayland = true;
+    programs.xwayland.enable = true;
+    #services.xserver.autorun = true;
+    #services.xserver.displayManager.lightdm.enable = false;
+    #services.xserver.displayManager.gdm.wayland = true;
     services.xserver.displayManager.gdm.settings = {
       greeter = {
         #IncludeAll = true;
@@ -32,6 +33,9 @@ in {
       background-size='cover'
       background-color='#e51fab'
     '';
+
+    #systemd.services."getty@tty1".enable = false;
+    #systemd.services."autovt@tty1".enable = false;
 
     # https://discourse.nixos.org/t/unable-to-change-background-in-gdm/33563/5
     nixpkgs = {

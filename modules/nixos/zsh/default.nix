@@ -76,6 +76,9 @@ in
     #  starship
     #];
 
+    environment.pathsToLink = [ "/share/zsh" ];
+    environment.shells = [ pkgs.zsh ];
+
     programs.zsh = {
       enable = true;
 

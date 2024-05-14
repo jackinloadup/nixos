@@ -47,8 +47,6 @@ in {
     sizeTarget = 1;
     minimal = true;
     tui = false;
-    #displayManager = "gdm";
-    windowManagers = [];
     kernel = {
       rebootAfterPanic = mkForce 10;
       panicOnOOM = mkForce true;

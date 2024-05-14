@@ -18,7 +18,7 @@ in {
   #boot.plymouth.themePackages = [ pkgs.adi1090x-plymouth-themes ];
   #boot.plymouth.theme = "colorful";
 
-  ## plymouth alternative themes 
+  ## plymouth alternative themes
   # colorful
   # colorful-loop
   # colorful-hud
@@ -50,9 +50,6 @@ in {
     lowLevelXF86keys.enable = true;
     gaming = true;
     impermanence = true;
-    #displayManager = "greetd";
-    windowManagers = [];
-    #windowManagers = ["gnome"];
   };
 
   gumdrop = {

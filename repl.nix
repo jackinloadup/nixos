@@ -3,7 +3,7 @@ let
   nixpkgs = import <nixpkgs> {};
 in
   {inherit flake;}
-  // flake
+  #// flake
   // builtins
   // nixpkgs
   // nixpkgs.lib

@@ -1,6 +1,6 @@
 {...}: {
   config = {
-    services.syncthing.devices.reg = {
+    services.syncthing.settings.devices.reg = {
       addresses = [
         "tcp4://reg.home.lucasr.com"
         "tcp4://10.16.1.11:51820"

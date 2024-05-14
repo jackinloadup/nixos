@@ -9,6 +9,7 @@
 in {
   imports = [];
 
+  # TODO refactor into config.boot.kernel*(something)
   options.machine.kernel = {
     rebootAfterPanic = mkOption {
       type = with types; nullOr int;

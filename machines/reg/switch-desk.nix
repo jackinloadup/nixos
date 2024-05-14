@@ -35,39 +35,50 @@
     fi
 
     if [ "$1" == "desk" ]; then
-        swaymsg -s $SWAYSOCK "output DP-2 enable, output DP-1 disable"
+        swaymsg -s $SWAYSOCK "output DP-5 enable, output DP-1 disable"
         exit 0
     fi
 
     if [ "$1" == "altwork" ]; then
-        swaymsg -s $SWAYSOCK "output DP-1 enable, output DP-2 disable"
+        swaymsg -s $SWAYSOCK "output DP-1 enable, output DP-5 disable"
         bluetoothctl connect E0:EB:40:F1:95:21
         exit 0
     fi
   '';
+
+  package = pkgs.stdenv.mkDerivation {
+     name = "switch-desktop";
+     builder = script;
+  };
 in {
   config = {
-    xdg.desktopEntries = {
-      switch-to-desk = {
-        name = "Desk";
-        genericName = "Change to Desk";
-        comment = "Change to Desk";
-        exec = "${script} desk";
-        terminal = false;
-        categories = [
-          "Utility"
-        ];
-      };
-      switch-to-altwork = {
-        name = "Altwork";
-        genericName = "Change to Altwork";
-        comment = "Change to Altwork";
-        exec = "${script} altwork";
-        terminal = false;
-        categories = [
-          "Utility"
-        ];
-      };
-    };
+    home-manager.sharedModules = [
+      {
+        #home.packages = [ script ];
+
+        xdg.desktopEntries = {
+          switch-to-desk = {
+            name = "Desk";
+            genericName = "Change to Desk";
+            comment = "Change to Desk";
+            exec = "${script} desk";
+            terminal = false;
+            categories = [
+              "Utility"
+            ];
+          };
+          switch-to-altwork = {
+            name = "Altwork";
+            genericName = "Change to Altwork";
+            comment = "Change to Altwork";
+            exec = "${script} altwork";
+            terminal = false;
+            categories = [
+              "Utility"
+            ];
+          };
+        };
+      }
+    ];
   };
 }

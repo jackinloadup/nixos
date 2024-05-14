@@ -75,9 +75,9 @@ in {
             us-east-1 = "va";
             us-west-1 = "utah";
           };
-          profile_aliases = {
-            CompanyGroupFrobozzOnCallAccess = "Frobozz";
-          };
+          #profile_aliases = {
+          #  CompanyGroupFrobozzOnCallAccess = "Frobozz";
+          #};
         };
       };
     };

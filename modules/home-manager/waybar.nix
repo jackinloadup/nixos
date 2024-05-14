@@ -5,7 +5,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf getExe;
   inherit (builtins) readFile;
   settings = import ../../settings;
   host = nixosConfig.networking.hostName;
@@ -22,7 +22,7 @@ in {
     programs.waybar = {
       systemd = {
         enable = true;
-        #target = "sway-session.target"; # not available in HM 21.11
+        target = mkIf config.wayland.windowManager.sway.enable "sway-session.target"; # not available in HM 21.11
       };
       settings = [
         {
@@ -34,6 +34,7 @@ in {
           #modules-center = ["sway/window"];
           modules-left = ["sway/workspaces" "sway/mode"];
           modules-right = [
+            "custom/pkgwatt"
             "pulseaudio"
             "network"
             "cpu"
@@ -43,7 +44,19 @@ in {
             "clock"
             "tray"
           ];
-          modules = {
+          "custom/pkgwatt" = {
+            format = "{}W";
+            max-length = 8;
+            interval = 15;
+            exec = pkgs.writeShellScript "pkgs-watts" ''
+              CPU=$(sudo ${getExe nixosConfig.boot.kernelPackages.turbostat} --Summary --quiet --show PkgWatt --num_iterations 1 | sed -n 2p)
+              OTHER=$(${getExe pkgs.lm_sensors} | grep W | awk '{print $2}' | paste -sd+ | bc)
+              ALL=$(echo "$CPU+$OTHER" | bc)
+              printf "$ALL\n"
+              exit 0
+            '';
+          };
+          #modules = {
             battery = mkIf hasBattery {
               format = "{capacity}% {icon}";
               format-alt = "{time} {icon}";
@@ -98,7 +111,7 @@ in {
               format = "{temperatureC}°C {icon}";
               format-icons = ["" "" ""];
             };
-          };
+          #};
         }
       ];
 

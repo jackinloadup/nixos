@@ -9,9 +9,9 @@ in {
   config = mkIf config.services.xserver.windowManager.i3.enable {
     programs.dconf.enable = true;
 
+    services.libinput.enable = true;
     services.xserver = {
       enable = true;
-      libinput.enable = true;
       displayManager.startx.enable = true;
       desktopManager.xterm.enable = false;
 

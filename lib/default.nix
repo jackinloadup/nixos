@@ -40,7 +40,7 @@
   importOverlay = path: args: (final: prev: (import path args) final prev);
   filesInDir = dir: attrNames (readDir (toPath rootPath + "/${dir}"));
 
-  specialArgs = {inherit inputs;};
+  specialArgs = {flake = { inherit inputs;}; };
 in rec {
   importDirOfOverlays = dir:
     listToAttrs (

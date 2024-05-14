@@ -20,6 +20,7 @@
     #nix.registry = nixosConfig.nix.registry;
 
     #nix.package = pkgs.nix;
+    #nix.package = pkgs.nixVersions.nix_2_20;
     nix.extraOptions = ''
       experimental-features = nix-command flakes
       auto-optimise-store = true

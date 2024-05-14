@@ -23,6 +23,9 @@
   repoRoot = toString ../../../.;
 in {
   config = {
+    # Allow unfree packages.
+    nixpkgs.config.allowUnfree = true;
+
     nixpkgs.overlays = [
       flake.inputs.nur.overlay
     ];
@@ -38,6 +41,8 @@ in {
 
     # Enable extra-builtins-file option for nix
     #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
+    nix.package = pkgs.nixVersions.nix_2_20;
+
     nix.gc = {
       automatic = ifTui;
       dates = "weekly";

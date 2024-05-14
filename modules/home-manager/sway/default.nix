@@ -30,6 +30,7 @@
 
     ${getExe pkgs.swaylock} -f -i $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/background.jpg
   '';
+  #${getExe pkgs.swaylock} -f -i /run/current-system/sw/share/backgrounds/gnome/keys-d.webp
   lockCmd = (pkgs.writeScript "lock" lockScriptSrc).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });
@@ -47,21 +48,20 @@ in {
     programs.zsh.loginExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
     programs.bash.initExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
 
-    home.packages = with pkgs;
-      [
-        #sway-contrib.grimshot
-        wl-clipboard
-        #mako
-        #dmenu
-        ddcutil
-        gopsuinfo
+    home.packages = [
+        #pkgs.sway-contrib.grimshot
+        pkgs.wl-clipboard
+        #pkgs.mako
+        #pkgs.dmenu
+        pkgs.ddcutil
+        pkgs.gopsuinfo
 
         #gksu # gui for root privilages # needed for zenmap # gone in unstable
       ]
       ++ optionals config.wayland.windowManager.sway.xwayland [
         # enable  xhost si:localuser:root
         # disable xhost -si:localuser:root
-        xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
+        pkgs.xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
       ];
 
     home.sessionVariables = {
@@ -74,6 +74,7 @@ in {
 
     wayland.windowManager.sway = {
       package = null; # don't override system-installed one
+      systemd.enable = true;
       wrapperFeatures.gtk = true;
 
       config = {
@@ -86,7 +87,8 @@ in {
 
         fonts = fontConf;
 
-        terminal = "TERM=${footTERM} ${termCmd}";
+        #terminal = "TERM=${footTERM} ${termCmd}";
+        terminal = "TERM=kitty kitty";
 
         workspaceAutoBackAndForth = true;
 
@@ -99,6 +101,7 @@ in {
 
         floating.criteria = [{class = "^Wine$";}];
 
+        #menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
         menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
 
         keybindings = let
@@ -107,54 +110,55 @@ in {
         in
           {
             "${mod}+Return" = "exec ${terminal}";
+            "${mod}+Shift+Return" = "exec kitty";
 
             "${mod}+Shift+q" = "kill";
             "${mod}+space" = "exec ${menu}";
 
-            "${mod}+${left}" = "focus left";
-            "${mod}+${down}" = "focus down";
-            "${mod}+${up}" = "focus up";
-            "${mod}+${right}" = "focus right";
+            #"${mod}+${left}" = "focus left";
+            #"${mod}+${down}" = "focus down";
+            #"${mod}+${up}" = "focus up";
+            #"${mod}+${right}" = "focus right";
 
-            "${mod}+Left" = "focus left";
-            "${mod}+Down" = "focus down";
-            "${mod}+Up" = "focus up";
-            "${mod}+Right" = "focus right";
+            #"${mod}+Left" = "focus left";
+            #"${mod}+Down" = "focus down";
+            #"${mod}+Up" = "focus up";
+            #"${mod}+Right" = "focus right";
 
-            "${mod}+Shift+${left}" = "move left";
-            "${mod}+Shift+${down}" = "move down";
-            "${mod}+Shift+${up}" = "move up";
-            "${mod}+Shift+${right}" = "move right";
+            #"${mod}+Shift+${left}" = "move left";
+            #"${mod}+Shift+${down}" = "move down";
+            #"${mod}+Shift+${up}" = "move up";
+            #"${mod}+Shift+${right}" = "move right";
 
-            "${mod}+Shift+Left" = "move workspace to output left";
-            "${mod}+Shift+Up" = "move workspace to output up";
-            "${mod}+Shift+Down" = "move workspace to output down";
-            "${mod}+Shift+Right" = "move workspace to output right";
+            #"${mod}+Shift+Left" = "move workspace to output left";
+            #"${mod}+Shift+Up" = "move workspace to output up";
+            #"${mod}+Shift+Down" = "move workspace to output down";
+            #"${mod}+Shift+Right" = "move workspace to output right";
 
             "${mod}+Shift+space" = "floating toggle, sticky toggle";
             #"${mod}+space" = "focus mode_toggle";
 
-            "${mod}+1" = "workspace number 1";
-            "${mod}+2" = "workspace number 2";
-            "${mod}+3" = "workspace number 3";
-            "${mod}+4" = "workspace number 4";
-            "${mod}+5" = "workspace number 5";
-            "${mod}+6" = "workspace number 6";
-            "${mod}+7" = "workspace number 7";
-            "${mod}+8" = "workspace number 8";
-            "${mod}+9" = "workspace number 9";
-            "${mod}+0" = "workspace number 10";
+            #"${mod}+1" = "workspace number 1";
+            #"${mod}+2" = "workspace number 2";
+            #"${mod}+3" = "workspace number 3";
+            #"${mod}+4" = "workspace number 4";
+            #"${mod}+5" = "workspace number 5";
+            #"${mod}+6" = "workspace number 6";
+            #"${mod}+7" = "workspace number 7";
+            #"${mod}+8" = "workspace number 8";
+            #"${mod}+9" = "workspace number 9";
+            #"${mod}+0" = "workspace number 10";
 
-            "${mod}+Shift+1" = "move container to workspace number 1";
-            "${mod}+Shift+2" = "move container to workspace number 2";
-            "${mod}+Shift+3" = "move container to workspace number 3";
-            "${mod}+Shift+4" = "move container to workspace number 4";
-            "${mod}+Shift+5" = "move container to workspace number 5";
-            "${mod}+Shift+6" = "move container to workspace number 6";
-            "${mod}+Shift+7" = "move container to workspace number 7";
-            "${mod}+Shift+8" = "move container to workspace number 8";
-            "${mod}+Shift+9" = "move container to workspace number 9";
-            "${mod}+Shift+0" = "move container to workspace number 10";
+            #"${mod}+Shift+1" = "move container to workspace number 1";
+            #"${mod}+Shift+2" = "move container to workspace number 2";
+            #"${mod}+Shift+3" = "move container to workspace number 3";
+            #"${mod}+Shift+4" = "move container to workspace number 4";
+            #"${mod}+Shift+5" = "move container to workspace number 5";
+            #"${mod}+Shift+6" = "move container to workspace number 6";
+            #"${mod}+Shift+7" = "move container to workspace number 7";
+            #"${mod}+Shift+8" = "move container to workspace number 8";
+            #"${mod}+Shift+9" = "move container to workspace number 9";
+            #"${mod}+Shift+0" = "move container to workspace number 10";
 
             "${mod}+g" = "split h";
             "${mod}+v" = "split v";
@@ -302,6 +306,14 @@ in {
        ${gdmSwitchUser}
       ]
     '';
+
+    #programs.swaylock.settings = {
+    #  show-failed-attempts = true;
+    #  daemonize = true;
+    #  image = "${fbk-blurred}";
+    #  scaling = "fill";
+    #};
+
     services.swayidle = {
       enable = true;
       timeouts = let

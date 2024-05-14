@@ -6,6 +6,8 @@
 }: let
   inherit (lib) mkIf;
 in {
+  # Repo with lots of radio stations
+  # https://github.com/junguler/m3u-radio-music-playlists.git
   config = mkIf config.services.mopidy.enable {
     home.packages = with pkgs; [
       ncmpcpp

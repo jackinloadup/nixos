@@ -27,13 +27,25 @@ in {
             family = font.mono.family;
             style = font.mono.style;
           };
+          bold = {
+            family = font.mono.family;
+            style = "Bold";
+          };
+          italic = {
+            family = font.mono.family;
+            style = "Italic";
+          };
+          bold_italic = {
+            family = font.mono.family;
+            style = "Bold Italic";
+          };
           size = font.size;
         };
 
         cursor = with config.lib.base16.theme; {
           style = "Underline";
-          text = "0x${base00-hex}";
-          cursor = "0x${base05-hex}";
+          #text = "0x${base00-hex}";
+          #cursor = "0x${base05-hex}";
         };
 
         colors = with config.lib.base16.theme; {

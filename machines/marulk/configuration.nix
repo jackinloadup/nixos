@@ -23,7 +23,6 @@ in {
     sizeTarget = 1;
     home-assistant = true;
     tui = true;
-    windowManagers = [];
   };
 
   nix.settings.max-jobs = mkDefault 2;
@@ -64,7 +63,7 @@ in {
   #  ];
   #};
   services.jellyfin = {
-    enable = true;
+    enable = false;
     openFirewall = true;
   };
   services.nextcloud.enable = true;

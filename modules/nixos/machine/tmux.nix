@@ -32,6 +32,9 @@ in {
         # set the message display-time to 4s
         set-option -g display-time 4000
 
+        # set scrollback - Can affect memory usage
+        set-option -g history-limit 5000
+
         # C-b + C-b will go to the last window
         bind-key C-b last-window
 

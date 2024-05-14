@@ -5,23 +5,26 @@
   flake,
   ...
 }: let
-  inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem;
+  inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem getExe;
   inherit (lib.types) listOf enum;
 
   cfg = config.machine;
   ifTui = cfg.sizeTarget > 0;
   ifGraphical = cfg.sizeTarget > 1;
   ifFull = cfg.sizeTarget > 2;
-  settings = import ./settings.nix;
-  username = "lriutzel";
   fullSystems = ["reg" "riko"];
   hostname = config.networking.hostName;
   isFullSystem = elem hostname fullSystems;
   userEnabled = elem username config.machine.users;
+
+  first_and_last = "Lucas Riutzel";
+  email = "lriutzel@gmail.com";
+  username = "lriutzel";
 in {
 
   imports = [
     flake.inputs.nix-ld.nixosModules.nix-ld
+    ./nix-ld.nix
   ];
 
   # Make user available in user list
@@ -31,9 +34,26 @@ in {
 
   config = mkIf userEnabled {
     nix.settings.trusted-users = [username];
+    #
+    #environment.systemPackages = [
+    #  # From https://www.nyx.chaotic.cx/
+    #  #
+    #  # Input Leap is software that mimics the functionality of a KVM switch,
+    #  # which historically would allow you to use a single keyboard and mouse
+    #  # to control multiple computers by physically turning a dial on the box
+    #  # to switch the machine you're controlling at any given moment. Input
+    #  # Leap does this in software, allowing you to tell it which machine to
+    #  # control by moving your mouse to the edge of the screen, or by using a
+    #  # keypress to switch focus to a different system.
+    #  #
+    #  # https://github.com/input-leap/input-leap
+    #  #input-leap #
+    #];
 
     users.users."${username}" = {
+      description = first_and_last;
       shell = pkgs.zsh;
+      useDefaultShell = false; # used with  users.defaultUserShell
       isNormalUser = true;
       extraGroups = [
         "wheel"
@@ -53,25 +73,10 @@ in {
     programs.command-not-found.enable = isFullSystem;
     programs.chirp.enable = isFullSystem;
     programs.chromium.enable = isFullSystem;
-    programs.sniffnet.enable = isFullSystem;
-    programs.nix-ld.enable = isFullSystem;
-    #programs.nix-ld.dev.enable = isFullSystem; # dev = using flake vs nixpkgs
-    programs.nix-ld.libraries = [
-      pkgs.SDL2
-      pkgs.SDL2_image
-      pkgs.SDL2_sound
-      pkgs.SDL2_gfx
-      pkgs.SDL2_net
-      pkgs.SDL2_ttf
-      pkgs.gvfs
-      pkgs.dconf
-      pkgs.stdenv.cc.cc
-
-    ];
-    # mic noise removal
-    #programs.noisetorch.enable = isFullSystem;
+    #programs.sniffnet.enable = isFullSystem;
+    #programs.nix-ld.enable = isFullSystem;
+    programs.nix-ld.enable = true;
     programs.wireshark.enable = isFullSystem;
-    programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
 
 
     services.tor.enable = mkDefault isFullSystem;
@@ -81,14 +86,27 @@ in {
     hardware.logitech.wireless.enable = isFullSystem;
     hardware.logitech.wireless.enableGraphical = isFullSystem;
     hardware.keyboard.qmk.enable = isFullSystem;
-    hardware.rtl-sdr.enable = isFullSystem;
+    #hardware.rtl-sdr.enable = isFullSystem;
     hardware.solo2.enable = isFullSystem;
     hardware.yubikey.enable = isFullSystem;
 
-    environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
+    #environment.etc."nixos/flake.nix".source = "/home/${username}/Projects/dotfiles/flake.nix";
     environment.systemPackages = mkIf isFullSystem [
       #nix-plugins # Collection of miscellaneous plugins for the nix expression language
     ];
+    #environment.pathsToLink = [
+    #  "${pkgs.gnome.gnome-backgrounds}" # Backgrounds for GNOME used in sway. Needs to be set at system level
+    #];
+
+    security.sudo.extraRules = [{
+      users = [ "lriutzel" ];
+      commands = [
+        {
+          command = "${getExe config.boot.kernelPackages.turbostat} --Summary --quiet --show PkgWatt --num_iterations 1";
+          options = [ "SETENV" "NOPASSWD" ];
+        }
+      ];
+    }];
 
     # explore virtualisation.kvmgt.enable for intel gpu sharing into vm
     virtualisation.docker.enable = isFullSystem;
@@ -105,17 +123,18 @@ in {
           ./ssh.nix
           flake.inputs.secrets.homemanagerModules.lriutzel
           flake.inputs.nix-index-database.hmModules.nix-index
-          #flake.inputs.nixvim.homeManagerModules.nixvim
         ]
         ++ optionals ifTui [
           flake.self.homeModules.tui
         ]
         ++ optionals ifGraphical [
           flake.self.homeModules.gui
+          flake.self.homeModules.video-editor
           ./gnome.nix
+          ./hyprland.nix
         ]
         ++ optionals isFullSystem [
-          ./bah.nix
+          #./bah.nix
         ]
         ++ optionals config.machine.impermanence [
           ./impermanence.nix
@@ -123,26 +142,40 @@ in {
 
       home.username = username;
       home.homeDirectory = mkOverride 10 homeDir;
+      #programs.waybar.settings."custom/pkgwatt" = {
+      #  format = "{} Watts";
+      #  max-length = 7;
+      #  interval = 10;
+      #  exec = pkgs.writeShellScript "pkgs-watts" ''
+      #    sudo turbostat --Summary --quiet --show PkgWatt --num_iterations 1 | sed -n 2p
+      #  '';
+      #};
 
-      programs.bash.enable = ifTui;
-      programs.command-not-found.enable = !isFullSystem;
+      programs.awscli.enable = isFullSystem;
+      # pretty sure this is disable because useDefaultShell = false; doesn't
+      # resolve some issue I was having
+      #programs.bash.enable = ifTui;
+      # The 'programs.command-not-found.enable' option is mutually exclusive
+      # with the 'programs.nix-index.enableBashIntegration' option.
+      #programs.command-not-found.enable = isFullSystem;
       programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
-      programs.neovim.enable = true;
+      #programs.neovim.enable = true;
+
+      # mic noise removal
+      #programs.noisetorch.enable = isFullSystem;
       programs.nix-index.enable = isFullSystem;
+      #programs.nix-index.enableBashIntegration = config.programs.bash.enable;
+      programs.nix-index.enableZshIntegration = config.programs.zsh.enable;
       programs.nix-index-database.comma.enable = isFullSystem;
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
       programs.fzf.enable = ifTui;
-      programs.obs-studio = {
-        enable = isFullSystem;
-        plugins = [
-          pkgs.obs-studio-plugins.wlrobs
-          pkgs.obs-studio-plugins.obs-multi-rtmp
-        ];
-      };
       programs.openrct2.enable = isFullSystem;
       programs.ssh.enable = true;
+      # following agent line is for nixos not home-manager
+      # is the agent needed anyway with services.gpg-agent?
+      #programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
       programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
       programs.thunderbird.enable = isFullSystem; # Email client
       programs.thunderbird.profiles = {
@@ -150,13 +183,13 @@ in {
           isDefault = true;
         };
       };
-      programs.zoom-us.enable = isFullSystem;
+      programs.zoom-us.enable = false; # not using this anymore, YAY!
       programs.zsh.enable = ifTui;
 
       services.gpg-agent.enable = isFullSystem;
       services.mopidy.enable = isFullSystem;
       services.syncthing.enable = isFullSystem;
-      wayland.windowManager.sway.enable = isFullSystem;
+
 
       #programs.rbw = {
       #  enable = true;
@@ -186,28 +219,20 @@ in {
         };
       };
 
-      home.packages = with pkgs;
-        []
+      home.packages = []
         ++ optionals ifGraphical [
-          # TUI tools but loading if graphical
-          mqttui # mqtt tui
+          pkgs.magic-wormhole-rs # Get things from one computer to another, safely.
+          #flake.inputs.scripts.packages.x86_64-linux.disk-burnin
 
-          # markdown tools
-          mdcat # tui viewer
-          mdp # markdown presentation
-          mdr # tui viewer
-          # mdv # tui viewer not in nixpkgs yet
-          magic-wormhole-rs # Get things from one computer to another, safely.
+          pkgs.bc
+          #pkgs.pipexec # a neat tool to help with named pipes
         ]
         ++ optionals isFullSystem [
-          emulsion # mimimal linux image viewer built in rust
-          imv # minimal image viewer
-          tor-browser-bundle-bin
-          zathura # PDF / Document viewer
-          # zeal # documentation browser
-
-          #python39Packages.xdot # graphviz viewer # erro with pycairio compile
-          graphviz
+          pkgs.emulsion # mimimal linux image viewer built in rust
+          pkgs.imv # minimal image viewer
+          pkgs.tor-browser-bundle-bin
+          pkgs.zathura # PDF / Document viewer
+          # pkgs.zeal # documentation browser
 
           ## Spotify - disabling and using webui
           #spotify-tui # spotifyd ui
@@ -215,110 +240,128 @@ in {
           ## NonFree
           #spotify
 
-          #gnome.vinagre # VNC view another computer
-          #fractal # matrix client
-          #fractal-next # matrix client. isn't compiling
-          nheko # matrix client
+          #pkgs.gnome.vinagre # VNC view another computer
+          #pkgs.fractal # matrix client
+          #pkgs.fractal-next # matrix client. isn't compiling
+          pkgs.nheko # matrix client
           #mumble # voice chat application
-          signal-desktop # messaging client
+          pkgs.signal-desktop # messaging client
 
           ## Task/notes
-          mindforger
+          pkgs.mindforger
 
-          kodi-wayland
+          pkgs.kodi-wayland
 
-          gnome.file-roller # Archive manager
+          pkgs.gnome.file-roller # Archive manager
+          pkgs.sysbench # benchmarking tool
         ]
         ++ optionals isFullSystem [
+          flake.inputs.scripts.packages.x86_64-linux.rebuild
           #helvum # pipewire patchbay # failing to build
-          easyeffects # Audio effects
+          pkgs.easyeffects # Audio effects
 
+          pkgs.kitty
           # crypto
-          trezorctl
-          trezor_agent
-          #trezor-suite # wasn't building
-          #exodus # Cryptowallet
-          #electron-cash # BCH walle
-          libfido2 # interact with fido2 tokens
+          pkgs.trezorctl
+          pkgs.trezor_agent
+          #pkgs.trezor-suite # wasn't building
+          #pkgs.exodus # Cryptowallet
+          #pkgs.electron-cash # BCH walle
+          pkgs.libfido2 # interact with fido2 tokens
 
           # Media Management
           # filebot -get-subtitles --lang en -non-strict ./Season\ 03
-          #filebot
-          handbrake
-          mkvtoolnix
-          mediaelch
+          #pkgs.filebot
+          pkgs.mediaelch
 
 
-          #freeoffice # office suite UNFREE
-          #tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
-          blender # 3D render
-          speedcrunch # gui calculator
+          pkgs.qownnotes # markdown
+          #pkgs.freeoffice # office suite UNFREE
+          #pkgs.tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
+          pkgs.speedcrunch # gui calculator
 
           ## Video
-          lbry
+          pkgs.lbry
 
           ## Debugging
-          wireshark
-          gparted
-          nmapsi4 # QT frontend for nmap
+          pkgs.wireshark
+          pkgs.gparted
+          pkgs.nmapsi4 # QT frontend for nmap
 
           ## Wine Apps
-          wineApps.winbox
+          #pkgs.wineApps.winbox
+          pkgs.winbox # Mikrotik RouterOS GUI
           #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
 
           # alt browser with ipfs builtin
-          brave
+          pkgs.brave
 
-          warp # transfer files between computers gui
-          gnome.gnome-maps # map viewer
+          pkgs.warp # transfer files between computers gui
+          pkgs.gnome.gnome-maps # map viewer
 
-          #unzip # duh
-          lftp # ftp client
-          terminal-colors # print all the terminal colors
+          #pkgs.unzip # duh
+          pkgs.lftp # ftp client
+          pkgs.terminal-colors # print all the terminal colors
 
           # unar is HUGE at 930mb
-          #unar # An archive unpacker program GUI & TUI
-          units
+          #pkgs.unar # An archive unpacker program GUI & TUI
+          pkgs.units
 
-          sad # tool to search and replace
-          jless # json viewer
-          tealdeer # $tldr strace
-          nota # fancy cli calculator
-          #bitwarden-cli
-          python39Packages.youtube-dl # there is an alt youtube-dl-lite
-          xdg-utils # for xdg-open
-          xdg-user-dirs # command to get the path to Downloads/Pictures/ect
+          pkgs.sad # tool to search and replace
+          pkgs.jless # json viewer
+          pkgs.tealdeer # $tldr strace
+          pkgs.nota # fancy cli calculator
+          #pkgs.bitwarden-cli
+          pkgs.python39Packages.youtube-dl # there is an alt youtube-dl-lite
+          pkgs.xdg-utils # for xdg-open
+          pkgs.xdg-user-dirs # command to get the path to Downloads/Pictures/ect
           #nur.repos.ambroisie.comma # like nix-shell but more convinient
-          nixos-shell
+          pkgs.nixos-shell
+          #  attribute 'default' missing
+          #flake.inputs.nix-inspect.packages.default
 
           ## spreadsheet stuffs
-          sc-im
-          visidata
+          #pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
+          pkgs.visidata
 
-          # TUI to GUI helpers
-          bfs # breadth-first version of the UNIX find command. might be faster than fd?
-          broot # tree directory viewer
-          #dragon-drop # in unstable its maybe xdragon
+          pkgs.# TUI to GUI helpers
+          pkgs.bfs # breadth-first version of the UNIX find command. might be faster than fd?
+          pkgs.broot # tree directory viewer
+          #pkgs.dragon-drop # in unstable its maybe xdragon
           ## networking
-          nethogs
-          ngrep
+          pkgs.nethogs
+          pkgs.ngrep
           ## fast adds chromium
           #fast-cli # bandwidth test through fast.com
-          nmap
+          pkgs.nmap
 
           ## Audio
-          playerctl # TUI
+          pkgs.playerctl # TUI
 
           # Fun
-          asciiquarium # Fun aquarium animation
-          cmatrix # Fun matrix animation
-          nms # https://github.com/bartobri/no-more-secrets
-          cava # Console-based Audio Visualizer for Alsa
-          nsnake # snake game
-          terminal-parrot # parrot in your terminal
+          pkgs.asciiquarium # Fun aquarium animation
+          pkgs.cmatrix # Fun matrix animation
+          pkgs.nms # https://github.com/bartobri/no-more-secrets
+          pkgs.cava # Console-based Audio Visualizer for Alsa
+          pkgs.nsnake # snake game
+          pkgs.terminal-parrot # parrot in your terminal
 
           # k8s
-          k9s # Kubernetes CLI To Manage Your Clusters In Style
+          pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
+
+          # benchmarking
+          pkgs.geekbench # benchmarking tool
+          pkgs.cpu-x # cpu info
+          pkgs.lm_sensors
+
+          pkgs.android-tools
+          pkgs.android-udev-rules
+
+          pkgs.textsnatcher #  com.github.rajsolai.textsnatcher maybe make alias
+          pkgs.super-productivity
+
+          pkgs.libsForQt5.marble # map / globe viewer
+          pkgs.stellarium # planetarium
         ];
     };
 

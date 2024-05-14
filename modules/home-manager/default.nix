@@ -1,5 +1,9 @@
 # flake-parts module
-{ self, ... }:
+{
+  self,
+  inputs,
+  ...
+}:
 {
   flake = {
     homeModules = {
@@ -25,18 +29,23 @@
           ./bash.nix
           ./tui.nix
           ./zsh.nix
+          inputs.nixvim.homeManagerModules.nixvim
       ];
 
       gui.imports = [
           ./development.nix
           ./graphical.nix
           ./i3.nix
-          ./neovim
-          #./nixvim
+          #./neovim
+          ./nixvim
           ./sway
           ./syncthing.nix
           ./waybar.nix
           ./xorg.nix
+      ];
+
+      video-editor.imports = [
+        ./video-editor.nix
       ];
       #common-linux = {
       #  imports = [
