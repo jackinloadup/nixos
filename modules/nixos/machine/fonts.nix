@@ -10,7 +10,11 @@
   ifGraphical = config.machine.sizeTarget > 1;
 in {
   config = with settings.theme.font; {
-    console.font = mkIf ifTui console;
+    #console.font = mkIf ifTui console;
+    console.packages = [ pkgs.terminus_font ];
+    console.font = "ter-v12n";
+      ## High-DPI console.
+      #console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
     fonts = mkIf ifGraphical {
       fontconfig = {
         enable = mkDefault true;

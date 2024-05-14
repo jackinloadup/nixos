@@ -22,7 +22,7 @@ in {
         pv # progress meter
 
         #vim # text editor
-        neovim # text editor
+        #neovim # text editor
         fswatch # file change monitor
 
         git # source code manager
@@ -44,7 +44,7 @@ in {
         bat # cat alternative
         viu # terminal image viewer
         lesspipe
-        reptyr # Reparent a running program to a new terminal
+        #reptyr # Reparent a running program to a new terminal # stopped building 2/25/24
 
         ## compression tools
         unzip
@@ -60,11 +60,11 @@ in {
         # Debug
         ## hardware
         pciutils
-        powertop # debug power usage andbattery draw
+        powertop # debug power usage and battery draw
         lshw # list hardware
         dmidecode # Read DMI (SMBIOS)
         # builds cuda stuffs
-        nvtop # A (h)top like task monitor for AMD, Intel and NVIDIA GPUs
+        #nvtop # A (h)top like task monitor for AMD, Intel and NVIDIA GPUs
         libinput # input device debugging tool
         evtest # input device debugging tool
 
@@ -88,6 +88,7 @@ in {
         ## files
         lsof # list open files
         ncdu # ncurses disk usage viewer
+        dust # disk usage viewer kinda, not sold over ncdu
         file # determine file type
         fd # find alternative
         btrfs-progs
@@ -175,7 +176,7 @@ in {
       };
     };
 
-    # interups `nix store ping` and some ssh sessions when in 
+    # interups `nix store ping` and some ssh sessions when in
     #   environment.sessionVariables
     # might need to be interactive only.
     # less.envVariables is worse than environment.sessionVariables

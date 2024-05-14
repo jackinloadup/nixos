@@ -51,8 +51,8 @@ in {
       set_volume_mute = "${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
       set_volume_up = "${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
       set_volume_down = "${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
-      notify_current_volume = "${dunstify} \"Volume\" -h int:value:`${current_volume}`";
-      notify_muted = "${dunstify} \"Volume Muted\" -t 0 -h int:value:0";
+      notify_current_volume = "${dunstify} \"Volume\" -h int:value:`${current_volume}` --urgency low --icon audio-speakers &";
+      notify_muted = "${dunstify} \"Volume Muted\" -t 0 -h int:value:0 --urgency low --icon audio-speakers &";
     in {
       enable = true;
       bindings = []

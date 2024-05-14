@@ -41,7 +41,6 @@ in {
         #font-hinting = "slight";
         #gtk-im-module = "ibus";
         locate-pointer = false;
-        show-battery-percentage = true;
         toolkit-accessibility = false;
       };
     };

@@ -35,6 +35,7 @@ in {
     ./locale.nix
     ./ly.nix
     ./docker.nix
+    ./sddm.nix
     ./sway.nix
     ./sound.nix
     ./ssh.nix
@@ -64,26 +65,9 @@ in {
       example = ["john" "jane" "liljohn"];
       description = "What users will be loaded onto the machine";
     };
-    displayManager = mkOption {
-      type = nullOr (enum []);
-      default = null;
-      example = ["gdm" "lightdm" "ly"];
-      description = "Application which manages the physical user seat";
-    };
-    windowManagers = mkOption {
-      type = nullOr (listOf (enum []));
-      default = null;
-      example = "gnome";
-      description = "Available window manager environments. ex: Gnome KDE XFCE";
-    };
   };
 
   config = {
-    documentation.man.enable = false;
-
-    # Allow unfree packages.
-    nixpkgs.config.allowUnfree = true;
-
     # Let 'nixos-version --json' know the Git revision of this flake.
     system.configurationRevision = mkIf (flake.inputs.self ? rev) flake.inputs.self.rev;
 
@@ -99,12 +83,11 @@ in {
       panicOnHungTaskTimeout = mkDefault 120;
     };
 
-    #systemd.network.wait-online.anyInterface = true;
-
     boot = {
       initrd = {
         # It's possible for systemd to add or remove store paths and bins
         systemd.enable = true;
+        # TODO pull into profile or something
         availableKernelModules = mkIf ifTui [
           "xhci_pci"
           "nvme"
@@ -122,7 +105,7 @@ in {
       loader.systemd-boot = {
         enable = mkDefault true;
         memtest86.enable = mkDefault ifTui; # show memtest
-        configurationLimit = mkDefault 5;
+        configurationLimit = mkDefault 20;
         consoleMode = mkDefault "auto";
       };
 
@@ -135,12 +118,11 @@ in {
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
-    environment.systemPackages = with pkgs;
-      mkIf ifTui [
+    environment.systemPackages = mkIf ifTui [
         #nix-plugins # Collection of miscellaneous plugins for the nix expression language
 
-        fuse3
-        libva-utils
+        pkgs.fuse3
+        pkgs.libva-utils
       ];
 
     powerManagement = {
@@ -175,9 +157,17 @@ in {
 
       opengl.enable = mkDefault ifGraphical;
       opengl.driSupport = mkDefault ifGraphical;
+      opengl.driSupport32Bit = mkDefault ifGraphical;
     };
 
-    security.pam.enableSSHAgentAuth = mkDefault false; # todo explore to see if it fixes the nixos-rebuld need for the ssh flag
+    home-manager.backupFileExtension = "backup";
+
+    security.pam.sshAgentAuth.enable = mkDefault true; # todo explore to see if it fixes the nixos-rebuld need for the ssh flag
+    #security.pam.services.sudo.unixAuth = false;
+    security.pam.services.sudo.sshAgentAuth = true;
+
+    #security.pam.services.polkit-1.unixAuth = false;
+    security.pam.services.polkit-1.sshAgentAuth = true;
 
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkDefault ifTui;
@@ -200,6 +190,8 @@ in {
     # Enable network discovery
     #services.avahi.enable = true;
     #services.avahi.nssmdns = true;
+
+    systemd.network.wait-online.anyInterface = true;
 
     # show IP in login screen
     # https://github.com/NixOS/nixpkgs/issues/63322

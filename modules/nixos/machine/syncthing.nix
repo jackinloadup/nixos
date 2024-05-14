@@ -21,10 +21,12 @@ in {
       networking.firewall.allowedTCPPorts = [22000];
       networking.firewall.allowedUDPPorts = [21027];
 
-      networking.interfaces.lo.ipv4.addresses = [{
-        address = "127.0.0.3";
-        prefixLength = 8;
-      }];
+      # Jan 01 15:57:57 reg network-addresses-lo-start[1763]: adding address 127.0.0.3/8... 'ip addr add 127.0.0.3/8 dev lo' failed: Error: ipv4: Address already assigned.
+
+      #networking.interfaces.lo.ipv4.addresses = [{
+      #  address = "127.0.0.3";
+      #  prefixLength = 8;
+      #}];
     };
     #// mkIf config.services.syncthing.enable {
     #  networking.extraHosts = ''

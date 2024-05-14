@@ -21,26 +21,15 @@ in {
     programs.fuse.userAllowOther = true;
 
     environment.persistence = {
-      "/persist/etc" = {
+      "/persist" = {
         hideMounts = true;
         directories =
           [
           ]
           ++ optionals config.networking.networkmanager.enable [
             "/etc/NetworkManager/system-connections"
-          ];
-        files = [
-          "/etc/machine-id"
-          {
-            file = "/etc/nix/id_rsa";
-            parentDirectory = {mode = "u=rwx,g=rx,o=rx";};
-          }
-        ];
-      };
-      "/persist/lib" = {
-        hideMounts = true;
-        directories =
-          [
+          ]
+          ++ [
             # The /var/lib/nixos directory contains the uid and gid map for
             # entities without a static id. Not persisting them means your user
             # and group ids could change between reboots
@@ -112,7 +101,13 @@ in {
           ++ optionals config.virtualisation.waydroid.enable [
             "/var/lib/waydroid"
           ];
-        files = [];
+        files = [
+          #"/etc/machine-id"
+          {
+            file = "/etc/nix/id_rsa";
+            parentDirectory = {mode = "u=rwx,g=rx,o=rx";};
+          }
+        ];
       };
     };
   };

@@ -50,7 +50,8 @@
         style = "Regular";
       };
       mono = {
-        family = "DroidSansMono Nerd Font Mono";
+        #family = "DroidSansMono Nerd Font Mono";
+        family = "DroidSansMNerdFontMono";
         style = "Regular";
       };
       emoji = {

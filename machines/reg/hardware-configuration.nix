@@ -1,18 +1,26 @@
-{pkgs, ...}: {
-  imports = [];
+{pkgs, flake, config, ...}: {
+  imports = [
+    ../../profiles/disk-workstation-2.nix
+    ../../profiles/amd.nix
+    #flake.inputs.chaotic.nixosModules.default
+  ];
 
-  config = {
-    # Possible fix for bluetooth not connecting
-    boot.kernelParams = ["btusb.enable_autosuspend=n"];
+  config = rec {
+    boot.kernelParams = [
+      "video=DP-8:3840x2160@60" # 4k 60hz
+      "video=DP-2:3440x1440@60" # LG 34UM95 144p ultrawide 60hz
+    ];
 
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    boot.kernelModules = ["kvm-amd"];
+    #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    boot.zfs.package = pkgs.zfs_unstable;
+    #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_8;
+    #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod"];
-    boot.initrd.kernelModules = ["kvm-amd"];
     boot.loader.efi.canTouchEfiVariables = true;
 
-    boot.initrd.supportedFilesystems = ["btrfs"];
-    boot.supportedFilesystems = ["btrfs"];
+    #boot.initrd.supportedFilesystems = ["btrfs"];
+    #boot.supportedFilesystems = ["btrfs"];
     # We have a lot of ram. We can wait a bit before we think we need to swap.
     # does this even matter if I don't have swap attached?
     boot.kernel.sysctl."vm.swappiness" = 5;
@@ -22,61 +30,12 @@
     boot.tmp.tmpfsSize = "75%";
 
     programs.fuse.userAllowOther = true;
-    services.btrfs.autoScrub.enable = true;
-    services.btrfs.autoScrub.fileSystems = ["/dev/disk/by-label/nixos"];
+    #services.btrfs.autoScrub.enable = true;
+    #services.btrfs.autoScrub.fileSystems = ["/dev/disk/by-label/nixos"];
 
-    hardware.opengl.extraPackages = with pkgs; [
-      radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
-      radeon-profile
-    ];
+    networking.hostId = "3182e8f0";
 
-    fileSystems = let
-      btrfs = subvol: {
-        device = "/dev/disk/by-label/nixos";
-        fsType = "btrfs";
-        options = [
-          "subvol=${subvol}"
-          "compress=zstd"
-          "autodefrag"
-          "noatime"
-          "x-gvfs-hide"
-        ];
-        neededForBoot = true;
-      };
-    in {
-      "/" = {
-        device = "none";
-        fsType = "tmpfs";
-        options = [
-          "defaults"
-          "size=2G"
-          "mode=755"
-          "noatime"
-          "x-gvfs-hide"
-        ];
-      };
-
-      "/boot" = {
-        device = "/dev/disk/by-label/efi";
-        fsType = "vfat";
-        options = [
-          "defaults"
-          "x-gvfs-hide"
-          "noatime"
-        ];
-      };
-
-      # look into added  a reserve space?
-      "/nix" = btrfs "nix";
-      # mnt per user instead. which i think makes quite a bit of sense for future
-      # potential on account limits ect
-      # say limit user so they can't fill the computer completely
-      "/persist/home" = btrfs "home";
-      "/persist/etc" = btrfs "etc";
-      "/persist/root" = btrfs "root";
-      "/persist/lib" = btrfs "persist";
-      "/var/log" = btrfs "log";
-
+    fileSystems = {
       "/mnt/storage" = {
         device = "/dev/disk/by-label/storage";
         fsType = "ext4";

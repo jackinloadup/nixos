@@ -22,7 +22,6 @@ in {
     sizeTarget = 0;
     encryptedRoot = false;
     lowLevelXF86keys.enable = false;
-    windowManagers = [];
     minimal = true;
   };
 

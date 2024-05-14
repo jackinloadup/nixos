@@ -21,8 +21,7 @@ in {
       home = "${mountPoint}/lib";
       datadir = "${mountPoint}/data";
 
-      globalProfiles = false;
-      enableBrokenCiphersForSSE = false;
+      #globalProfiles = false; # does not exist anymore
 
       caching = {
         redis = true;
@@ -42,9 +41,9 @@ in {
       config = {
         defaultPhoneRegion = "US";
 
-        dbhost = "postgres.home.lucasr.com";
+        dbhost = "postgres.home.lucasr.com:5432";
         dbname = currentDatabase;
-        dbport = 5432;
+        #dbport = 5432; #no longer has effect
         dbtype = "pgsql"; # sqlite, pgsql, mysql
         #dbpassFile = "";
         #dbtableprefix

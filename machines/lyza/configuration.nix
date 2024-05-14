@@ -71,7 +71,6 @@ in {
   boot.initrd.verbose = !isUserFacing;
 
   hardware.bluetooth.enable = isUserFacing;
-  #hardware.rtl-sdr.enable = false;
 
   security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
@@ -119,7 +118,6 @@ in {
     users = mkDefault [
       "lriutzel"
     ];
-    windowManagers = [];
     sizeTarget = 1;
     minimal = false;
     tui = true;

@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption mkOption mkMerge mkForce types;
+  inherit (lib) mkIf mkEnableOption mkOption mkMerge mkForce types optional;
   cfg = config.gumdrop.storageServer;
   settings = import ../../../settings;
   address = "truenas.home.lucasr.com";
@@ -21,14 +21,16 @@ in {
     };
     media = mkEnableOption "Mount media share";
     roms = mkEnableOption "mount roms share";
+    home = mkEnableOption "mount home share";
     software = mkEnableOption "mount software share";
   };
 
   config = let
     mount = {
       name,
+      path,
       mount ? "gumdrop/${name}",
-      remoteMount ? "storage/${name}",
+      remoteMount ? "storage/${path}"
     }:
       if cfg.${name}
       then {
@@ -51,11 +53,19 @@ in {
     mkIf cfg.enable {
       # https://nixos.wiki/wiki/NFS
       fileSystems = mkMerge [
-        (mount {name = "media";})
-        (mount {name = "roms";})
+        (mount {name = "media"; path = "media";})
+        (mount {name = "roms"; path = "roms";})
+        (mount {name = "home"; path = "backed-up/home";})
       ];
 
       # This service isn't needed for NFSv4. Needed pre v4
       services.rpcbind.enable = mkForce false;
+
+      home-manager.sharedModules = [{
+        gtk.gtk3.bookmarks = [ ]
+        ++ optional cfg.media "file:///mnt/gumdrop/media Media"
+        ++ optional cfg.roms "file:///mnt/gumdrop/roms Roms"
+        ++ optional cfg.home "file:///mnt/gumdrop/home Backup Home";
+      }];
     };
 }

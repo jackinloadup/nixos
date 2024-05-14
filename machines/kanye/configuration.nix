@@ -11,7 +11,8 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    ./change-logitec-suspend.nix
+    # worked though
+  #  ./change-logitec-suspend.nix
     ./iwd.nix
   ];
 
@@ -19,7 +20,7 @@ in {
   #boot.plymouth.themePackages = [ pkgs.adi1090x-plymouth-themes ];
   #boot.plymouth.theme = "colorful";
 
-  ## plymouth alternative themes 
+  ## plymouth alternative themes
   # colorful
   # colorful-loop
   # colorful-hud
@@ -33,6 +34,8 @@ in {
 
   hardware.bluetooth.enable = true;
   hardware.yubikey.enable = mkDefault true;
+  hardware.logitech.wireless.enable = mkDefault true;
+  hardware.logitech.wireless.enableGraphical = mkDefault true;
 
   services.pipewire.enable = true;
 
@@ -51,9 +54,6 @@ in {
     lowLevelXF86keys.enable = true;
     gaming = true;
     impermanence = true;
-    #displayManager = "greetd";
-    windowManagers = [];
-    #windowManagers = ["gnome"];
   };
 
   gumdrop = {

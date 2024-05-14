@@ -19,7 +19,7 @@ in {
 
 
     programs.zsh = {
-      enableAutosuggestions = mkDefault true;
+      autosuggestion.enable = mkDefault true;
       enableCompletion = mkDefault true;
       syntaxHighlighting.enable = mkDefault true;
       #enableVteIntegration = mkDefault true; # adds 300mb

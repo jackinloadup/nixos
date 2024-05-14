@@ -11,12 +11,10 @@
         ./botamusique
         ./browsers
         ./dnsmasq
-        ./gaming
         ./gumdrop
+        ./../../insecure-packages.nix
         ./postgres
         ./solo2
-        ./steam
-        ./theme
         ./unattended
         ./vault
         ./yubikey
@@ -37,6 +35,16 @@
         ./nextcloud
       ];
 
+      tui.imports = [
+
+      ];
+
+      gui.imports = [
+        ./steam
+        ./theme
+        ./gaming
+      ];
+
       #darwin.imports = [
       #];
 
@@ -53,6 +61,8 @@
         inputs.self.nixosModules.common
         inputs.self.nixosModules.linux
         inputs.self.nixosModules.home-manager
+        inputs.self.nixosModules.tui
+        inputs.self.nixosModules.gui
         #self.nixosModules.my-home
         #./self-ide.nix
         #./ssh-authorize.nix

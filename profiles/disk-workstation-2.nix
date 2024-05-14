@@ -17,7 +17,7 @@
   ##   $ disko-create --disk=sd=/dev/sdb
   ##
   hostname = config.networking.hostName;
-  device = "/dev/sda"; # TODO change per host
+  device = "/dev/nvme0n1"; # TODO change per host
   zfsPoolName = "zroot_${hostname}";
   rootPartionName = "nixos_${hostname}";
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;

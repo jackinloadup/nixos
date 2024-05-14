@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkDefault mkForce;
   cfg = config.machine;
   settings = import ../../../settings;
 in {
@@ -15,6 +15,14 @@ in {
   options.machine.gaming = mkEnableOption "Enable extra options only needed for gaming";
 
   config = mkIf cfg.gaming {
+    programs.steam.enable = true;
+
+    # Look into https://www.nyx.chaotic.cx/
+    # yuzu-early-access_git  # experimental Nintendo Switch emulator
+    networking.firewall.allowedTCPPorts = [
+      #25565 # minecraft not all ports
+    ];
+
     environment.systemPackages = with pkgs; [
       #monado
       #lighthouse-steamvr
@@ -46,9 +54,18 @@ in {
       modules = [pkgs.xorg.xf86inputjoystick];
     };
 
-    qt.enable = true;
-    qt.platformTheme = "gtk2";
-    qt.style = "gtk2";
+    qt.enable = mkDefault true;
+    qt.platformTheme = mkDefault "gnome";
+    qt.style = mkDefault "adwaita-dark";
+
+    home-manager.sharedModules = [
+      {
+        qt.enable = mkForce true;
+        qt.platformTheme.name = mkForce "adwaita";
+        qt.style.name = mkForce "adwaita-dark";
+        qt.style.package = mkForce pkgs.adwaita-qt;
+      }
+    ];
 
     # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
     #services.pipewire = {

@@ -1,5 +1,6 @@
 {
-  "*".bg = ''~/Pictures/background.jpg fill'';
+  #"*".bg = ''~/Pictures/background.jpg fill'';
+
 }
 #  (if hostName == "sirius" then {
 #    "Unknown LCD QHD 1 110503_3" = {

@@ -13,9 +13,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      zoom-us
-      pulseaudio # zoom uses pactl
+    home.packages = [
+      pkgs.zoom-us
+      pkgs.pulseaudio # zoom uses pactl
     ];
 
     wayland.windowManager.sway.config.window.commands = [

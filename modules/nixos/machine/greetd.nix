@@ -10,11 +10,9 @@
 in {
   imports = [];
 
-  options.machine.displayManager = mkOption {
-    type = with types; nullOr (enum ["greetd"]);
-  };
 
-  config = mkIf (config.machine.displayManager == "greetd") {
+  #config = mkIf (config.machine.displayManager == "greetd") {
+  config = mkIf false {
     # keep systemd startup logs on tty1
     boot.kernelParams = ["console=tty1"];
 

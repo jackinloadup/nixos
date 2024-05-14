@@ -4,35 +4,35 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkOption types;
+  inherit (lib) mkIf mkOption types mkDefault;
   inherit (builtins) elem;
 in {
   imports = [];
 
-  options.machine.windowManagers = mkOption {
-    type = with types; nullOr (listOf (enum ["sway"]));
-  };
-
-  config = mkIf (elem "sway" config.machine.windowManagers) {
-    environment.sessionVariables = {
-      # Hint to electron apps to use wayland
-      NIXOS_OZONE_WL = "1";
-    };
-    programs.xwayland.enable = true;
+  #config = mkIf (elem "sway" config.machine.windowManagers) {
+  config = mkIf config.programs.sway.enable {
+ #   environment.sessionVariables = {
+ #     # Hint to electron apps to use wayland
+ #     NIXOS_OZONE_WL = "1";
+ #   };
+    # I think this comes for free when enabling programs.sway.enable
+    #programs.xwayland.enable = mkDefault true;
 
     programs.sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-      extraPackages = with pkgs; [
-        swaylock
-        swayidle
+      #package = pkgs.stable.sway;
+      wrapperFeatures.gtk = mkDefault true;
+      extraPackages = [
+        pkgs.swaylock
+        pkgs.swayidle
 
-        wev
-        wdisplays
-        wlr-randr
+        pkgs.wev
+        pkgs.wdisplays
+        pkgs.wlr-randr
 
-        bemenu
-        j4-dmenu-desktop
+        pkgs.bemenu
+        pkgs.j4-dmenu-desktop
+
+        pkgs.vulkan-validation-layers
 
         # nheko, mindforger
         #qt5.qtwayland # make conditional?
@@ -57,24 +57,27 @@ in {
       '';
     };
 
+    #services.seatd.enable = true;
+
     xdg = {
       portal = {
-        enable = true;
+        enable = mkDefault true;
         extraPortals = mkIf (!config.services.xserver.desktopManager.gnome.enable) [
-          pkgs.xdg-desktop-portal-gtk
+          pkgs.xdg-desktop-portal-gtk # Desktop integration portals for sandboxed apps
+          pkgs.xdg-desktop-portal-shana # A filechooser portal backend for any desktop environment
         ];
         wlr = {
-          enable = true;
-          #settings = {
-          #  screencast = {
-          #    output_name = "HDMI-A-1";
-          #    max_fps = 30;
-          #    exec_before = "disable_notifications.sh";
-          #    exec_after = "enable_notifications.sh";
-          #    chooser_type = "simple";
-          #    chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-          #  };
-          #};
+          enable = mkDefault true;
+          settings = {
+            screencast = {
+            #  OUTPUT_NAME = "HDMI-A-1";
+            #  MAX_FPS = 30;
+            #  exec_before = "disable_notifications.sh";
+            #  exec_after = "enable_notifications.sh";
+              chooser_type = "simple";
+              chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+            };
+          };
         };
       };
     };

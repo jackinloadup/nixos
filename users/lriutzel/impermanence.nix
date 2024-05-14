@@ -86,14 +86,14 @@ in {
           ".config/syncthing"
         ];
 
-      files =
-        [
-          ".lftp/rc"
-          ".bash_history"
-          ".local/state/z"
-          #".screenrc"
-          ".steam/registry.vdf"
-        ];
+      #files =
+      #  [
+      #    ".lftp/rc"
+      #    ".bash_history"
+      #    ".local/state/z"
+      #    #".screenrc"
+      #    ".steam/registry.vdf"
+      #  ];
         #++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
       allowOther = true;
     };

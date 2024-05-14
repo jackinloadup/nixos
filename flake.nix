@@ -3,79 +3,87 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs-stable.url = github:nixos/nixpkgs/nixos-23.05;
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-    nixpkgs-unstable.url = github:nixos/nixpkgs/nixos-unstable;
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+
     # explore prebuilt unfree packages
-    #nixpkgs-unfree.url = github:numtide/nixos-unfree;
+    #nixpkgs-unfree.url = "github:numtide/nixos-unfree";
+
+    nix-inspect.url = "github:bluskript/nix-inspect";
+
+
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     # Nix User Repository: User contributed nix packages
-    nur.url = github:nix-community/NUR;
+    nur.url = "github:nix-community/NUR";
 
     # Simplify Nix Flakes with the module system
-    flake-parts.url = github:hercules-ci/flake-parts;
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     # Pure Nix flake utility functions
-    flake-utils.url = github:numtide/flake-utils;
+    flake-utils.url = "github:numtide/flake-utils";
 
     # Use Nix flakes without any fluff
     flake-utils-plus = {
-      url = github:gytis-ivaskevicius/flake-utils-plus;
+      url = "github:gytis-ivaskevicius/flake-utils-plus";
       inputs.flake-utils.follows = "flake-utils";
     };
 
     # A collection of NixOS modules covering hardware quirks
-    nixos-hardware.url = github:NixOS/nixos-hardware/master;
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # Modules to help handle persistent state on systems with ephemeral root storage
-    impermanence.url = github:nix-community/impermanence;
+    impermanence.url = "github:nix-community/impermanence";
 
     # Manage a user environment using Nix
     home-manager = {
-      #url = github:nix-community/home-manager/release-23.05;
-      url = github:nix-community/home-manager;
+      #url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # color library for theming
     base16 = {
-      url = github:alukardbf/base16-nix;
+      url = "github:alukardbf/base16-nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils-plus.follows = "flake-utils-plus";
     };
 
     # Take NixOS configuration, and generate outputs for different target formats
     nixos-generators = {
-      url = github:nix-community/nixos-generators;
+      url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Takes the NixOS module system and makes it work for disk partitioning as well
     disko = {
-      url = github:nix-community/disko;
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixd.url = github:nix-community/nixd;
+    #nixd.url = "github:nix-community/nixd";
 
     # Run unpatched dynamic binaries on NixOS
     nix-ld = {
-      url = github:Mic92/nix-ld;
+      url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-index-database = {
-      url = github:Mic92/nix-index-database;
+      url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-flake.url = github:srid/nixos-flake;
+    nixos-flake.url = "github:srid/nixos-flake";
 
     # Fuse filesystem that returns symlinks to executables based on the PATH of
     # the requesting process. This is useful to execute shebangs on NixOS that
     # assume hard coded locations in locations like /bin or /usr/bin etc.
     envfs = {
-      url = github:Mic92/envfs;
+      url = "github:Mic92/envfs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -91,13 +99,16 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    nixvim.url = github:pta2002/nixvim;
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Devshell
-    treefmt-nix.url = github:numtide/treefmt-nix;
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
-  outputs = {self, ...} @ inputs: 
+  outputs = {self, ...} @ inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs; } {
       systems = [
         #"i686-linux"
@@ -141,6 +152,7 @@
           # nixosConfiguratons. Host configurations need a file called
           # configuration.nix that will be read first
           nixosConfigurations = {
+            # Personal Desktop
             reg = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -148,6 +160,16 @@
                 ./machines/reg/configuration.nix
               ];
             };
+            # Wife Desktop
+            zen = self.nixos-flake.lib.mkLinuxSystem {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                self.nixosModules.criutzel
+                ./machines/reg/configuration.nix
+              ];
+            };
+            # Personal laptop
             riko = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -156,6 +178,7 @@
                 ./machines/riko/configuration.nix
               ];
             };
+            # TV box
             nat = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -164,6 +187,7 @@
                 ./machines/nat/configuration.nix
               ];
             };
+            # home server
             marulk = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -171,6 +195,7 @@
                 ./machines/marulk/configuration.nix
               ];
             };
+            # home server
             lyza = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -178,6 +203,7 @@
                 ./machines/lyza/configuration.nix
               ];
             };
+            # Christine newer laptop
             kanye = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -186,6 +212,7 @@
                 ./machines/kanye/configuration.nix
               ];
             };
+            # Christine micro server
             jesus = self.nixos-flake.lib.mkLinuxSystem {
               imports = [
                 self.nixosModules.default
@@ -237,7 +264,7 @@
           packages = flattenTree {
             winbox = pkgs.wineApps.winbox;
             rtl_433-dev = pkgs.rtl_433-dev;
-            
+
           };
 
           apps = {
@@ -247,6 +274,7 @@
         })
         // {
           #packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
+          packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "zen";
           templates = {
             shell = {
               path = ./templates/shell;

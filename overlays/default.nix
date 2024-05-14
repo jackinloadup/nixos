@@ -24,6 +24,8 @@ in
 
     # update in unstable broke b/c of schema version mismatch in config file
     adguardhome = self.stable.adguardhome;
+    #j4-dmenu-desktop = self.stable.j4-dmenu-desktop;
+    snes9x-gtk = self.stable.snes9x-gtk;
 
     # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
     mfc9130cwlpr = (super.callPackage ../packages/mfc9130cw.nix {}).driver;

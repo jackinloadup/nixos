@@ -55,6 +55,7 @@ in {
     environment.systemPackages = with pkgs; [
       libcec
       htop
+      bark
       #kodi-retroarch-advanced-launchers
       #retroarchFull
       #sixpair # usb pair playstation controllers

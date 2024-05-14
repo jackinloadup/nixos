@@ -2,6 +2,7 @@
   imports = [
     ../../profiles/intel.nix
     ../../profiles/disk-laptop-1.nix
+    ../../profiles/mobile-device.nix
   ];
 
   config = {
