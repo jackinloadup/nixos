@@ -8,10 +8,10 @@
 in {
   config = mkIf config.services.postgresql.enable {
     # Open port to nextwork
-    networking.firewall.allowedTCPPorts = [config.services.postgresql.port];
+    networking.firewall.allowedTCPPorts = [config.services.postgresql.settings.port];
 
     services.postgresql = {
-      package = pkgs.postgresql_15;
+      package = pkgs.postgresql_16;
       #extraPlugins = with pkgs.postgresql_15.pkgs; [ postgis pg_repack ];
       enableTCPIP = true;
       #authentication = pkgs.lib.mkOverride 10 ''

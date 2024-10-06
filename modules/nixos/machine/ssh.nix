@@ -49,18 +49,26 @@ in {
       # ssh-keyscan HOST
       knownHosts = {
         "github.com" = {
-          hostNames = [
-            "github.com"
-          ];
+          hostNames = [ "github.com" ];
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
         };
+        #"nixos-install-iso" = {
+        #  hostNames = [ "10.16.1.???"];
+        #  publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGgUJ/VnKHrTmGA+v6Ig49iObL9lKK5h9Uq1vu0Dxgk";
+        #};
       };
     };
 
     services.sshguard = {
       enable = mkDefault true;
       detection_time = 3600;
-      attack_threshold = 50; # 5 failed attempts. 10 per;
+      attack_threshold = 50; # 5 failed attempts. ~10 per;
+      whitelist = [ "10.16.0.0/8" ];
     };
+    home-manager.sharedModules = [ {
+      # a proxy forwarding Bluetooth MIDI controls via MPRIS2
+      # to control media players.
+      services.mpris-proxy.enable = true;
+    }];
   };
 }

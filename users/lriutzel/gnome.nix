@@ -10,6 +10,7 @@ in {
           "kdenlive.desktop"
           "obs.desktop"
           "signal-desktop.desktop"
+          "org.kde.kdenlive"
         ];
 
         # `gnome-extensions list` for a list

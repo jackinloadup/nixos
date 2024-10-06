@@ -1,12 +1,22 @@
 {
-  inputs,
+  flake,
   pkgs,
   config,
+  device ? "/dev/nvme0n1",
   ...
-}: {
+}:
+# simple error checking to ensure garbage isn't passed in
+#assert lib.asserts.assertOneOf "device" device [
+#  "bar"
+#  "baz"
+#  "/dev/*"
+#  # other valid choices ...
+#];
+
+{
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
-    inputs.disko.nixosModules.disko
+    flake.inputs.disko.nixosModules.disko
   ];
 
   config = {
@@ -19,9 +29,9 @@
 
     disko.devices = {
       disk = {
-        sd = {
+        main = {
           type = "disk";
-          device = "/dev/vda";
+          device = device;
           content = {
             type = "table";
             format = "gpt";

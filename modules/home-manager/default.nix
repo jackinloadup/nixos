@@ -35,6 +35,7 @@
       gui.imports = [
           ./development.nix
           ./graphical.nix
+          ./satellite-images.nix
           ./i3.nix
           #./neovim
           ./nixvim

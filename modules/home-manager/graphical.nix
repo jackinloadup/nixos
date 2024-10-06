@@ -194,9 +194,13 @@ in {
 
         ## Audio
         pavucontrol # GUI volume source/sink manager
+        pwvucontrol # GUI volume source/sink manager pipewire
+
 
         ## Fun
         cavalier
+
+        usbview # GUI for usb devices
       ];
 
     programs.chromium.enable = true;

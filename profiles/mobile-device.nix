@@ -1,7 +1,12 @@
 {
+  inputs,
   pkgs,
   ...
 }: {
+  imports = [
+    #inputs.nixos-hardware.nixosModules.common-pc-laptop # currently being placesd per machine
+  ];
+
   config = {
     hardware.brillo.enable = true; # userspace brightness control for users in video group
 
@@ -15,7 +20,6 @@
     #services.logind.lidSwitch = "hibernate";
 
     services.acpid = {
-      enable = true;
       handlers = {
         ac-power = {
           action = ''

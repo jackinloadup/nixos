@@ -107,6 +107,7 @@ in {
         memtest86.enable = mkDefault ifTui; # show memtest
         configurationLimit = mkDefault 20;
         consoleMode = mkDefault "auto";
+        netbootxyz.enable = true;
       };
 
       # Imporved networking
@@ -137,7 +138,7 @@ in {
         wifi = {
           #enable = true;  # Enables wireless support via wpa_supplicant.
           powersave = true; # Enable wifi powersaving. Not exactly sure if this is working
-          macAddress = "random";
+          macAddress = mkDefault "random";
         };
       };
       dhcpcd.wait = mkDefault "background";
@@ -162,6 +163,9 @@ in {
 
     home-manager.backupFileExtension = "backup";
 
+
+    programs.dconf.enable = mkDefault ifGraphical;
+
     security.pam.sshAgentAuth.enable = mkDefault true; # todo explore to see if it fixes the nixos-rebuld need for the ssh flag
     #security.pam.services.sudo.unixAuth = false;
     security.pam.services.sudo.sshAgentAuth = true;
@@ -169,10 +173,11 @@ in {
     #security.pam.services.polkit-1.unixAuth = false;
     security.pam.services.polkit-1.sshAgentAuth = true;
 
+    # users who are smart can be trusted?
+    security.sudo.wheelNeedsPassword = false;
+
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkDefault ifTui;
-
-    programs.dconf.enable = mkDefault ifGraphical;
 
     services.gvfs.enable = mkDefault ifGraphical;
     # For user-space mounting things like smb:// and ssh:// in thunar etc. Dbus
@@ -180,7 +185,9 @@ in {
     #services.gvfs.package = lib.mkForce pkgs.gnome3.gvfs;
     services.gvfs.package = mkDefault pkgs.gvfs;
 
-    services.xserver.desktopManager.xterm.enable = false;
+    services.xserver.desktopManager.xterm.enable = mkDefault false;
+
+    services.ddccontrol.enable = true;
 
     services.journald.extraConfig = ''
       SystemMaxUse=100M
@@ -188,10 +195,29 @@ in {
     '';
 
     # Enable network discovery
-    #services.avahi.enable = true;
-    #services.avahi.nssmdns = true;
+    services.avahi = {
+      enable = mkDefault ifGraphical;
+    # resolve .local names
+      nssmdns4 = true;
+      openFirewall = true;
+      publish.enable = true;
+      ipv4 = true;
+      ipv6 = false;
+    };
+
+    services.printing.enable = mkDefault ifGraphical;
+    programs.system-config-printer.enable = mkDefault ifGraphical;
+    services.system-config-printer.enable = mkDefault ifGraphical;
 
     systemd.network.wait-online.anyInterface = true;
+
+    # A way to somewhat mimic normal linux systems. Could help random
+    # bashscripts work
+    # When implimented I didn't actually need this. I saw it on youtube and
+    # thought it might be useful    services.avahi.enable
+    systemd.tmpfiles.rules = [
+      "L+ /usr/local/bin - - - - /run/current-system/sw/bin"
+    ];
 
     # show IP in login screen
     # https://github.com/NixOS/nixpkgs/issues/63322

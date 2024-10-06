@@ -3,11 +3,19 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+
+    nix-software-center = {
+      url = "github:snowfallorg/nix-software-center";
+      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixos-appstream-data.inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixos-appstream-data.inputs.flake-utils.follows = "flake-utils";
+
+    };
 
     # explore prebuilt unfree packages
     #nixpkgs-unfree.url = "github:numtide/nixos-unfree";
@@ -40,8 +48,8 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      #url = "github:nix-community/home-manager/release-23.05";
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
+      #url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -77,7 +85,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-flake.url = "github:srid/nixos-flake";
+    nixos-unified.url = "github:srid/nixos-unified";
 
     # Fuse filesystem that returns symlinks to executables based on the PATH of
     # the requesting process. This is useful to execute shebangs on NixOS that
@@ -100,7 +108,7 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -117,7 +125,7 @@
       ];
       imports = [
         inputs.treefmt-nix.flakeModule
-        inputs.nixos-flake.flakeModule
+        inputs.nixos-unified.flakeModule
         ./modules/nixos
         ./modules/home-manager
         ./users
@@ -153,7 +161,7 @@
           # configuration.nix that will be read first
           nixosConfigurations = {
             # Personal Desktop
-            reg = self.nixos-flake.lib.mkLinuxSystem {
+            reg = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -161,7 +169,7 @@
               ];
             };
             # Wife Desktop
-            zen = self.nixos-flake.lib.mkLinuxSystem {
+            zen = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -170,7 +178,7 @@
               ];
             };
             # Personal laptop
-            riko = self.nixos-flake.lib.mkLinuxSystem {
+            riko = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -179,7 +187,7 @@
               ];
             };
             # TV box
-            nat = self.nixos-flake.lib.mkLinuxSystem {
+            nat = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -188,7 +196,7 @@
               ];
             };
             # home server
-            marulk = self.nixos-flake.lib.mkLinuxSystem {
+            marulk = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -196,7 +204,7 @@
               ];
             };
             # home server
-            lyza = self.nixos-flake.lib.mkLinuxSystem {
+            lyza = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -204,7 +212,7 @@
               ];
             };
             # Christine newer laptop
-            kanye = self.nixos-flake.lib.mkLinuxSystem {
+            kanye = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -213,7 +221,7 @@
               ];
             };
             # Christine micro server
-            jesus = self.nixos-flake.lib.mkLinuxSystem {
+            jesus = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzel
@@ -221,7 +229,7 @@
                 ./machines/jesus/configuration.nix
               ];
             };
-            minimal = self.nixos-flake.lib.mkLinuxSystem {
+            minimal = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
                 ./machines/minimal/configuration.nix
@@ -273,8 +281,8 @@
           };
         })
         // {
-          #packages.x86_64-linux.sd-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
-          packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "zen";
+          packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
+          #packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "zen";
           templates = {
             shell = {
               path = ./templates/shell;
@@ -284,7 +292,7 @@
         };
 
       perSystem = { self', system, pkgs, lib, config, inputs', ... }: {
-        nixos-flake.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" "nixos-flake" ];
+        nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" "nixos-unified" ];
 
         treefmt.config = {
           projectRootFile = "flake.nix";

@@ -43,6 +43,7 @@
         ./steam
         ./theme
         ./gaming
+        ./control-monitor-backlight.nix
       ];
 
       #darwin.imports = [
@@ -60,7 +61,7 @@
       default.imports = [
         inputs.self.nixosModules.common
         inputs.self.nixosModules.linux
-        inputs.self.nixosModules.home-manager
+        #inputs.self.nixosModules.home-manager
         inputs.self.nixosModules.tui
         inputs.self.nixosModules.gui
         #self.nixosModules.my-home

@@ -3,6 +3,8 @@
   flake,
   pkgs,
   config,
+  device ? "/dev/nvme0n1",
+  isEncrypted ? false,
   ...
 }: let
   inherit (lib) mkIf mkDefault;
@@ -16,10 +18,8 @@
   ## disko-create should have an ability to override disks by name:
   ##   $ disko-create --disk=sd=/dev/sdb
   ##
-  hostname = config.networking.hostName;
-  device = "/dev/nvme0n1"; # TODO change per host
-  zfsPoolName = "zroot_${hostname}";
-  rootPartionName = "nixos_${hostname}";
+  zfsPoolName = "zroot";
+  rootPartionName = "nixos";
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
 in {
@@ -40,9 +40,11 @@ in {
 
     services.zfs.autoScrub.enable = true;
     boot.zfs.forceImportRoot = true;
-    boot.zfs.package = pkgs.zfs_unstable;
+    boot.zfs.package = mkDefault pkgs.zfs_unstable;
 
+    #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
     boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    #boot.kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_8;
 
     # Added due to issue with kernel panics after suspend.
     # I suspect this is due to zfs.
@@ -109,7 +111,7 @@ in {
             ashift = "12";
             autotrim = "on";
           };
-          postCreateHook = ''
+          postCreateHook = mkIf isEncrypted ''
             zfs set keylocation="prompt" ${zfsPoolName};
           '';
           rootFsOptions = {
@@ -117,11 +119,11 @@ in {
             compression = "zstd";
             #"com.sun:auto-snapshot" = "false";
 
-            encryption = "on";
             acltype = "posixacl";
+            encryption = mkIf isEncrypted "on";
             # insert via secrets
-            keylocation = "file:///tmp/disk.key";
-            keyformat = "passphrase";
+            keylocation = mkIf isEncrypted "file:///tmp/disk.key";
+            keyformat = mkIf isEncrypted "passphrase";
 
             mountpoint = "none";
             canmount = "off";
@@ -156,7 +158,9 @@ in {
             "local/root" =
               filesystem "/"
               // {
-                postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
+                postCreateHook = ''
+                  zfs snapshot ${zfsPoolName}/local/root@blank
+                '';
                 options.mountpoint = "legacy";
               };
           };
@@ -166,5 +170,11 @@ in {
 
     fileSystems."/persist/etc".neededForBoot = true;
     fileSystems."/persist/lib".neededForBoot = true;
+
+    #virtualisation = {
+    #  vmVariant = {
+    #    disko.devices.zpool."zroot".rootFsOptions.keylocation = false;
+    #  };
+    #};
   };
 }

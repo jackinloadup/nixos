@@ -18,6 +18,9 @@ in {
     #    };
     #  }];
     #};
+    environment.systemPackages = [
+      pkgs.virt-manager
+    ];
 
     # Allow communication with zigbee
     users.users.lriutzel.extraGroups = ["dialout"];

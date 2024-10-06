@@ -44,6 +44,9 @@ in {
         };
         menu = menu;
 
+        workspaceAutoBackAndForth = true;
+        window.hideEdgeBorders = "smart";
+
         #keybindings = lib.mkOptionDefault {
         keybindings = let
           mod = "Mod4";

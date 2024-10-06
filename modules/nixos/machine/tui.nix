@@ -84,6 +84,7 @@ in {
         iotop # simple top-like I/O monitor
         input-utils # lsinput
         nmon # performance stats monitor
+        i2c-tools # some tools also exist in toy/busybox
 
         ## files
         lsof # list open files

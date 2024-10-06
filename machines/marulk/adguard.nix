@@ -1,4 +1,7 @@
-{...}: {
+{ config, lib, ...}:
+let
+  inherit (lib) mkDefault;
+in {
   config = {
     networking.firewall.allowedTCPPorts = [53];
     networking.firewall.allowedUDPPorts = [53];
@@ -12,10 +15,10 @@
       # opens port
       openFirewall = true;
       extraArgs = ["--no-etc-hosts"];
+      port = 8001; # Web gui
+      host = "10.16.1.2";
       settings = {
         #schema_version = 20;
-        bind_port = 80; # Web gui
-        bind_host = "10.16.1.2";
         dns = {
           #allowed_clients = "10.16.0.0/8";
           edns_client_subnet = {
@@ -31,5 +34,16 @@
     # a machine also running libvirtd.
     systemd.services."adguardhome".before = ["libvirtd.service"];
     #systemd.services.libvirtd.after = ["adguardhome.service"];
+
+    services.nginx = {
+      virtualHosts = {
+        "adguard.home.lucasr.com" = {
+          locations."/" = {
+            proxyPass = "http://${config.services.adguardhome.host}:${toString config.services.adguardhome.port}/";
+            proxyWebsockets = true;
+          };
+        };
+      };
+    };
   };
 }

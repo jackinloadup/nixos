@@ -11,7 +11,9 @@ in {
       # heard on matrix that timeout should be able to be 0 and still
       # be interupted via firmware buffered input. Got it to work. Pressed
       # delete repeatedly and it stopped the boot.
-      loader.timeout = mkDefault 0;
+      #
+      # Placing at 10 seconds for all machines at the moment
+      loader.timeout = mkDefault 10;
       # Quiet durring boot
       #initrd.verbose = false;
 
@@ -48,7 +50,7 @@ in {
         themePackages = [ pkgs.adi1090x-plymouth-themes ];
         # I thought this might be delaying the boot but after
         # going back to basic it was pretty much the same
-        #theme = "deus_ex"; 
+        #theme = "deus_ex";
         theme = mkDefault "colorful";
         # spaces are underscore
         # abstract-rings

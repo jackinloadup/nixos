@@ -23,17 +23,121 @@
     else "foot";
   termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
+  background = "${config.xdg.cacheHome}/satellite-images/goes-east/current.jpg";
 
-  lockSwayIdle = ''exec ${getBin pkgs.procps}/bin/pkill -SIGUSR1 swayidle'';
-  lockScriptSrc = ''
-    #!/usr/bin/env bash
 
-    ${getExe pkgs.swaylock} -f -i $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/background.jpg
-  '';
   #${getExe pkgs.swaylock} -f -i /run/current-system/sw/share/backgrounds/gnome/keys-d.webp
-  lockCmd = (pkgs.writeScript "lock" lockScriptSrc).overrideAttrs (old: {
-    buildCommand = "${old.buildCommand}\n patchShebangs $out";
-  });
+  triggerLock = pkgs.writeShellApplication {
+    name = "lock-wm";
+    runtimeInputs = [ pkgs.procps ];
+    text = ''pkill -SIGUSR1 swayidle'';
+  };
+
+  lockCmd = pkgs.writeShellApplication {
+    name = "lock";
+    runtimeInputs = [
+      pkgs.hyprland
+      pkgs.sway
+      pkgs.swaylock
+      pkgs.fd
+    ];
+    text = ''
+      main () {
+
+        hyprland &
+        sway &
+      }
+
+      hyprland () {
+        if hyprctl instances; then
+          swaylock -f -i ${background}
+        fi
+      }
+
+      sway () {
+        SWAYSOCK=$(fd sway-ipc /run/user/$UID/ -1)
+
+        if [[ -n "$SWAYSOCK" ]]; then
+          swaylock -f -i ${background}
+        fi
+      }
+
+      main "$@"
+    '';
+  };
+
+  displayOnOffCmd =  pkgs.writeShellApplication {
+    name = "displayOnOffCmd";
+
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.sway
+      pkgs.hyprland
+      pkgs.fd
+    ];
+
+    # TODO on mobile devices we are missing images while sleeping
+    text = ''
+      set -o xtrace
+
+      usage () {
+          echo >&2 "Usage: $0 off/on"
+      }
+
+      main () {
+        [[ "$1" = "on" ]] && STATE="ON"
+        [[ "$1" = "off" ]] && STATE="OFF"
+
+        if [ "$1" = "--help" ]; then
+          usage
+          exit 0
+        fi
+
+        hyprland &
+        sway &
+
+        wait
+      }
+
+      hyprland () {
+        if hyprctl instances 1>/dev/null 2>/dev/null; then
+          echo "Hyprland"
+          if [[ "$STATE" = "ON" ]]; then
+            hyprctl dispatch dpms on
+            echo "request display on"
+          else
+            #sleep 5 # if SIGUSR1 triggers this and lock. wait for the lock first
+            hyprctl dispatch dpms off
+            echo "request display off"
+            #sleep 5 # if SIGUSR1 triggers this and lock. wait for the lock first
+            #hyprctl dispatch dpms off
+            #echo "request display off"
+          fi
+        fi
+      }
+
+      sway () {
+        SWAYSOCK=$(fd sway-ipc /run/user/$UID/ -1)
+
+        if [[ -n "$SWAYSOCK" ]]; then
+          echo "Sway"
+          if [[ "$STATE" = "ON" ]]; then
+            swaymsg "output * dpms on"
+            echo "request display on"
+          else
+            sleep 5 # if SIGUSR1 triggers this and lock. wait for the lock first
+            swaymsg "output * dpms off"
+            echo "request display off"
+            sleep 5 # if SIGUSR1 triggers this and lock. wait for the lock first
+            swaymsg "output * dpms off"
+            echo "request display off"
+          fi
+        fi
+      }
+
+      main "$@"
+    '';
+  };
 in {
   imports = [
     ../waybar.nix
@@ -57,6 +161,7 @@ in {
         pkgs.gopsuinfo
 
         #gksu # gui for root privilages # needed for zenmap # gone in unstable
+        triggerLock
       ]
       ++ optionals config.wayland.windowManager.sway.xwayland [
         # enable  xhost si:localuser:root
@@ -176,7 +281,7 @@ in {
 
             "${mod}+r" = "mode resize";
 
-            "${mod}+Shift+Delete" = lockSwayIdle;
+            "${mod}+Shift+Delete" = ''exec ${getExe triggerLock}'';
             #"${mod}+k" = "exec ${pkgs.mako}/bin/makoctl dismiss";
             #"${mod}+Shift+k" = "exec ${pkgs.mako}/bin/makoctl dismiss -a";
 
@@ -319,16 +424,18 @@ in {
       timeouts = let
         timeouts = settings.timeouts;
       in [
-        { timeout = timeouts.screenLock; command = "${lockCmd}"; }
+        { timeout = timeouts.screenLock; command = "${getExe lockCmd}"; }
         {
           timeout = timeouts.displayOff;
-          command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
-          resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+          #command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+          command = ''${getExe displayOnOffCmd} off'';
+          #resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+          resumeCommand = ''${getExe displayOnOffCmd} on'';
         }
       ];
       events = [
-        { event = "lock"; command = "${lockCmd}"; }
-        { event = "before-sleep"; command = "${lockCmd}"; }
+        { event = "lock"; command = "${getExe lockCmd}"; }
+        { event = "before-sleep"; command = "${getExe lockCmd}"; }
       ];
     };
   };

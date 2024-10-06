@@ -28,6 +28,15 @@ in {
     {
       wayland.windowManager.sway.enable = config.programs.sway.enable;
       wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
+      services.satellite-images.enable = true;
+
+      programs.wpaperd = {
+        enable = true;
+        settings.default = {
+          #path = "${config.xdg.cacheHome}/satellite-images/goes-east/current";
+          path = "~/.cache/satellite-images/goes-east/current.jpg";
+        };
+      };
     }
   ];
 
@@ -37,17 +46,18 @@ in {
   programs.sway.enable = true;
   programs.steam.enable = true;
 
+  services.fprintd.enable = true;
   services.kubo.enable = true;
   services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
   services.pipewire.enable = true;
 
-  services.displayManager.enable = true; # enable systemd’s display-manager service
-  services.displayManager.sddm.enable = true;
+  #services.displayManager.enable = true; # enable systemd’s display-manager service
+  #services.displayManager.sddm.enable = true;
 
  # services.xserver.displayManager.autoLogin.enable = true;
  # services.xserver.displayManager.autoLogin.user = "lriutzel";
  # services.xserver.displayManager.defaultSession = "sway";
-  #services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
 
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.windowManager.i3.enable = true;
@@ -66,7 +76,7 @@ in {
 
   gumdrop = {
     printerScanner = true;
-    storageServer.enable = true;
+    storageServer.enable = false;
     storageServer.media = true;
     storageServer.roms = true;
   };
@@ -75,7 +85,8 @@ in {
 
   networking.hostName = "riko";
 
-  nix.settings.max-jobs = mkDefault 4;
+  # update to nixos-unified is setting this to auto
+  #nix.settings.max-jobs = mkDefault 4;
 
   nixpkgs.hostPlatform = "x86_64-linux";
 

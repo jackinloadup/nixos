@@ -13,8 +13,8 @@ let
 in {
   imports = [
   #  ./change-logitec-suspend.nix
-    ./control-monitor-backlight.nix
     ./hardware-configuration.nix
+    ./usb-switch-monitor-input.nix
     #./rename-pipewire-sinks.nix # isn't working and caused build error on
     #unstable eventually
     ./monitor-setup.nix
@@ -63,6 +63,19 @@ in {
 
     programs.simula.enable = false;
     programs.sway.enable = true;
+
+    #services.mullvad-vpn.enable = true;
+    #services.mullvad-vpn.package = pkgs.mullvad-vpn; # install version with GUI
+
+    # required for mullvad
+    #services.resolved = {
+    #  enable = true;
+    #  dnssec = "true";
+    #  domains = [ "~." ];
+    #  fallbackDns = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
+    #  dnsovertls = "true";
+    #};
+
 
     #nixpkgs.config.rocmSupport = true;
     nixpkgs.hostPlatform = "x86_64-linux";
@@ -121,13 +134,13 @@ in {
     #  '';
     #};
 
-    services.displayManager.enable = true; # enable systemd’s display-manager service
-    services.displayManager.sddm.enable = true;
+    #services.displayManager.enable = true; # enable systemd’s display-manager service
+    #services.displayManager.sddm.enable = true;
     #services.displayManager.autoLogin.enable = false;
     #services.displayManager.autoLogin.user = "lriutzel";
     #services.xserver.displayManager.defaultSession = "sway";
     # Login Manager
-    #services.xserver.displayManager.gdm.enable = true;
+    services.xserver.displayManager.gdm.enable = true;
     #services.xserver.enable = true;
     #services.xserver.displayManager.lightdm.enable = true;
     security.polkit.enable = true;
@@ -142,17 +155,22 @@ in {
     services.xserver.desktopManager.gnome.enable = true;
     services.xserver.windowManager.i3.enable = true;
 
-    #system.autoUpgrade = {
-    #  enable = true;
-    #  flake = flake.self.outPath;
-    #  flags = [
-    #    "--update-input"
-    #    "nixpkgs"
-    #    "-L"
-    #  ];
-    #  dates = "09:00";
-    #  randomizedDelaySec = "45min";
-    #};
+    system.autoUpgrade = {
+      enable = true;
+      flake = flake.self.outPath;
+      flags = [
+        "--update-input"
+        "nixpkgs"
+        "-L"
+      ];
+      dates = "21:15";
+      randomizedDelaySec = "45min";
+    };
+
+    systemd.services.domainname = {
+      startLimitIntervalSec = 30;
+      startLimitBurst = 5;
+    };
 
     xdg.portal.enable = true;
     environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
@@ -196,7 +214,7 @@ in {
       storageServer.roms = true;
       storageServer.home = true;
     };
-    nix.settings.max-jobs = lib.mkDefault 16;
+    #nix.settings.max-jobs = lib.mkDefault 16;
 
     nixpkgs.overlays = [
       flake.inputs.nur.overlay
@@ -244,6 +262,19 @@ in {
       {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
+
+        services.satellite-images.enable = true;
+
+        programs.wpaperd = {
+          enable = true;
+          settings.default = {
+            path = "~/.cache/satellite-images";
+            sorting = "ascending";
+            transition-time = "1000";
+            duration = "42ms"; # 24fps?
+            mode = "center";
+          };
+        };
       }
       {
         xdg.desktopEntries = {

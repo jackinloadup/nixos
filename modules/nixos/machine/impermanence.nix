@@ -86,6 +86,9 @@ in {
           ++ optionals config.services.pgadmin.enable [
             "/var/lib/private/pgadmin"
           ]
+          ++ optionals config.services.sshguard.enable [
+            "/var/lib/sshguard"
+          ]
           ++ optionals config.services.syncthing.enable [
             config.services.syncthing.dataDir
           ]
@@ -110,5 +113,23 @@ in {
         ];
       };
     };
+
+    # works to force dir to exist!!
+    systemd.tmpfiles.rules = [
+      "d /persist/home/lriutzel 0700 lriutzel users"
+      "d /persist/home/criutzel 0700 criutzel users"
+    ]
+    ++ optionals config.services.syncthing.enable [
+      "d ${config.services.syncthing.dataDir} 0755 ${config.services.syncthing.user} ${config.services.syncthing.group}"
+    ]
+    ++ optionals config.services.home-assistant.enable [
+      "d ${config.services.home-assistant.configDir} 0755 hass hass"
+    ]
+    ++ optionals config.services.mosquitto.enable [
+      "d ${config.services.mosquitto.dataDir} 0755 mosquitto mosquitto"
+    ]
+    ++ optionals config.services.zigbee2mqtt.enable [
+      "d ${config.services.zigbee2mqtt.dataDir} 0755 zigbee2mqtt zigbee2mqtt"
+    ];
   };
 }

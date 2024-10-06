@@ -32,16 +32,23 @@ in {
     nix.settings = {
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
       ];
       trusted-users = ["root"];
       auto-optimise-store = mkDefault ifTui;
-      substituters = [ "https://aseipp-nix-cache.global.ssl.fastly.net" ];
+      substituters = [
+        "https://aseipp-nix-cache.global.ssl.fastly.net"
+        "https://hyprland.cachix.org"
+      ];
     };
 
     # Enable extra-builtins-file option for nix
     #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
+
+
     nix.package = pkgs.nixVersions.nix_2_20;
+    #nix.package = pkgs.nixVersions.latest;
 
     nix.gc = {
       automatic = ifTui;
@@ -58,9 +65,10 @@ in {
 
     # This adds symlinks to /run/current-system
     # Also pulls in the flake repo onto the device
+    # removed the following line to see if that would change build times
+    # ln -sv ${repoRoot} $out/nixos-config
     system.extraSystemBuilderCmds = ''
       ln -sv ${pkgs.path} $out/nixpkgs
-      ln -sv ${repoRoot} $out/nixos-config
     '';
 
     # Flake registries are a convenience feature that allows you to refer to
@@ -98,6 +106,7 @@ in {
     nix.buildMachines = mkIf (!isReg) [
       {
         hostName = "reg";
+        sshUser = "lriutzel";
         system = "x86_64-linux";
         protocol = "ssh-ng";
         maxJobs = 16;

@@ -15,7 +15,7 @@
 * {
   border: none;
   border-radius: 0;
-  font-family: Source Code Pro Medium, Arial, sans-serif;
+  font-family: FiraCode Nerd Font, sans-serif;
   font-size: 13px;
   min-height: 0;
 }
@@ -47,6 +47,15 @@ window#waybar.hidden { opacity: 0.2; }
   box-shadow: inherit;
   border-bottom: 3px solid @hover;
   text-shadow: inherit;
+}
+
+#workspaces button.visible {
+  background-color: @blue;
+  color: @bgcolor;
+}
+
+#workspaces button.active {
+  background-color: @green;
 }
 
 #workspaces button.focused {
