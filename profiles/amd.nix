@@ -3,7 +3,7 @@
 in {
   boot = {
     initrd.kernelModules = ["kvm-amd" "amdgpu"];
-    kernelModules = ["kvm-amd" "amdgpu"];
+    kernelModules = ["kvm-amd" "amdgpu" "amd_gpio" ];
     #kernelParams = [
     #  #"nosgx" # remove "SGX disable by BIOS" message on boot
     #  #"intel_iommu=on"
@@ -50,6 +50,7 @@ in {
   };
 
 
+  # some of these could be placed into home-manager?
   environment.systemPackages = [
     pkgs.ryzenadj
     pkgs.zenstates

@@ -9,10 +9,10 @@
 let
   inherit (lib) mkForce mkDefault getExe;
   settings = import ../../settings;
-  debug = false;
+  debug = true;
 in {
   imports = [
-  #  ./change-logitec-suspend.nix
+    ./change-logitec-suspend.nix
     #./control-monitor-backlight.nix
     ./hardware-configuration.nix
     #./rename-pipewire-sinks.nix # isn't working and caused build error on
@@ -114,14 +114,15 @@ in {
     #  '';
     #};
 
-    services.displayManager.enable = true; # enable systemd’s display-manager service
-    services.displayManager.sddm.enable = true;
-    #services.displayManager.autoLogin.enable = false;
-    #services.displayManager.autoLogin.user = "lriutzel";
-    #services.xserver.displayManager.defaultSession = "sway";
+    #services.displayManager.enable = true; # enable systemd’s display-manager service
+    #services.displayManager.sddm.enable = true;
+    #services.displayManager.sddm.enableHidpi = false;
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "criutzel";
+    services.xserver.displayManager.defaultSession = "gnome";
     # Login Manager
-    #services.xserver.displayManager.gdm.enable = true;
-    #services.xserver.enable = true;
+    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.enable = true;
     #services.xserver.displayManager.lightdm.enable = true;
     security.polkit.enable = true;
 
@@ -134,6 +135,19 @@ in {
     ##     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
     services.xserver.desktopManager.gnome.enable = true;
     #services.xserver.windowManager.i3.enable = true;
+    home-manager.users.criutzel = {
+      imports = [
+        #../../users/criutzel/impermanence.nix
+      ];
+    };
+    environment.persistence = {
+      "/persist" = {
+        hideMounts = true;
+        directories = [
+          "/home/criutzel"
+        ];
+      };
+    };
 
     #system.autoUpgrade = {
     #  enable = true;
@@ -187,7 +201,7 @@ in {
       storageServer.enable = true;
       storageServer.media = true;
       storageServer.roms = true;
-      storageServer.home = true;
+      storageServer.home = false;
     };
     nix.settings.max-jobs = lib.mkDefault 16;
 
@@ -211,10 +225,10 @@ in {
     ];
 
     networking.hostName = "zen";
-    networking.bridges.br0.interfaces = ["eno1"];
-    networking.interfaces.br0.useDHCP = true;
+    #networking.bridges.br0.interfaces = ["eno1"];
+    #networking.interfaces.br0.useDHCP = true;
     networking.enableIPv6 = false;
-    virtualisation.libvirtd.allowedBridges = ["br0"];
+    #virtualisation.libvirtd.allowedBridges = ["br0"];
 
     #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
     #networking.firewall.allowedUDPPorts = [ 8000 ];

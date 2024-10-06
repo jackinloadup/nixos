@@ -225,15 +225,16 @@
       plugins = {
         barbar.enable = true;
 
-        cmp-treesitter.enable = true;
-        cmp-path.enable = true;
-        cmp-spell.enable = true;
-        cmp-nvim-lua.enable = true;
-        cmp-nvim-lsp.enable = true;
-        cmp_luasnip.enable = true;
-        cmp-dap.enable = true; # not sure how dap is integrated and used
+        #cmp-treesitter.enable = true;
+        #cmp-path.enable = true;
+        #cmp-spell.enable = true;
+        #cmp-nvim-lua.enable = true;
+        ##cmp-nvim-lsp.enable = true;
+        #cmp_luasnip.enable = true;
+        ##cmp-dap.enable = true; # not sure how dap is integrated and used
 
-        copilot-cmp.enable = true;
+        #copilot-cmp.enable = true;
+        #cmp-ai.enable = true;
         comment.enable = true;
 
         fugitive.enable = true;
@@ -255,6 +256,7 @@
             rust-analyzer = {
               enable = true;
               installCargo = true;
+              installRustc = true;
             };
             lua-ls.enable = true;
             tsserver.enable = true; # typescript

@@ -3,6 +3,14 @@
   # - check how out of sync the clock is
   #   - maybe ssh already does this?
   config = {
+    # What is sslh?
+    #
+    # sslh accepts connections in HTTP, HTTPS, SSH, OpenVPN, tinc, XMPP, or any
+    # other protocol that can be tested using a regular expression, on the same
+    # port. This makes it possible to connect to any of these servers on port
+    # 443 while still serving HTTPS on that port.
+    #services.sslh.enable = ?;
+
     programs.ssh = {
       compression = true;
 
@@ -18,9 +26,10 @@
 
       #TCPKeepAlive = true;
       hashKnownHosts = false; # Privacy concern
-      #extraConfig = ''
-      #  PermitLocalCommand yes
-      #'';
+      extraConfig = ''
+        ConnectTimeout 5
+      '';
+        #PermitLocalCommand yes
 
 
       matchBlocks = {

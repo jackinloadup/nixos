@@ -2,6 +2,7 @@
   imports = [
     ../../profiles/disk-workstation-2.nix
     ../../profiles/amd.nix
+    ../../profiles/pro-art-7800x3d.nix
     #flake.inputs.chaotic.nixosModules.default
   ];
 
@@ -11,13 +12,6 @@
       "video=DP-2:3440x1440@60" # LG 34UM95 144p ultrawide 60hz
     ];
 
-    #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    boot.zfs.package = pkgs.zfs_unstable;
-    #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_8;
-    #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod"];
-    boot.loader.efi.canTouchEfiVariables = true;
 
     #boot.initrd.supportedFilesystems = ["btrfs"];
     #boot.supportedFilesystems = ["btrfs"];

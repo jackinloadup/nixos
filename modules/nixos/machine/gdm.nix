@@ -34,8 +34,9 @@ in {
       background-color='#e51fab'
     '';
 
-    #systemd.services."getty@tty1".enable = false;
-    #systemd.services."autovt@tty1".enable = false;
+    # fixed issue where user would be pulled back to the login screen
+    systemd.services."getty@tty1".enable = false;
+    systemd.services."autovt@tty1".enable = false;
 
     # https://discourse.nixos.org/t/unable-to-change-background-in-gdm/33563/5
     nixpkgs = {

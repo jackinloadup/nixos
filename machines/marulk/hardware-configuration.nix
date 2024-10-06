@@ -1,30 +1,17 @@
-{...}: {
+{flake, pkgs, config, lib, ...}: {
   imports = [
-    ../../profiles/intel.nix
+    ../../profiles/lenovo-m715q.nix
+    #../../profiles/disk-workstation-3.nix
+    (import ../../profiles/disk-workstation-3.nix {
+      inherit flake pkgs config lib;
+      device = "/dev/nvme0n1";
+      isEncrypted = false;
+    })
   ];
 
   config = {
-    boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
-    boot.loader.efi.efiSysMountPoint = "/boot/EFI";
-    boot.loader.efi.canTouchEfiVariables = true;
 
-    fileSystems."/boot/EFI" = {
-      device = "/dev/disk/by-label/boot";
-      fsType = "vfat";
-      options = ["defaults" "x-gvfs-hide"];
-    };
+    networking.hostId = "070ac4e0";
 
-    fileSystems."/" = {
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
-      options = ["defaults" "x-gvfs-hide"];
-    };
-
-    swapDevices = [
-      {
-        device = "/var/swapfile";
-        size = 2048;
-      } # this big for hibernation 2Gb~
-    ];
   };
 }

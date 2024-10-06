@@ -12,7 +12,7 @@ in {
     #programs.bash.enable = true;
 
     programs.htop.enable = true;
-    home.file."${config.xdg.configHome}/htop/htoprc".source = ./htoprc;
+    #home.file."${config.xdg.configHome}/htop/htoprc".source = ./htoprc;
     #xdg.configFile = {
     #  source = ./htoprc;
     #  target = "htop/hotprc";

@@ -22,7 +22,7 @@ in {
     services.gpg-agent = {
       enableExtraSocket = false;
       enableScDaemon = false;
-      enableSshSupport = false;
+      enableSshSupport = true;
       defaultCacheTtl = minsToSecs 10;
       defaultCacheTtlSsh = minsToSecs 60;
       maxCacheTtl = hoursToSecs 1; # 1 hour

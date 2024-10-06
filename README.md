@@ -21,7 +21,7 @@ Personal home lab nixos setup exposed as a flake.
       - Copy layout over: `scp ./profile/disks/disko-laptop-1.nix#TBD <target>:/tmp/disko-config.nix`
       - Find disk name: `sudo fdisk -l`
       - Place disk in device variable `vim /tmp/disk-config.nix`
-   - Create temp file with the password which will be applied to the disk 
+   - Create temp file with the password which will be applied to the disk
       - `vim /tmp/disk.key`
    - Perform the format
       - `sudo nix run github:nix-community/disko -- --mode disko /tmp/disko-config.nix`
@@ -34,7 +34,20 @@ Personal home lab nixos setup exposed as a flake.
         services.openssh.enable = true;
         services.openssh.settings.PermitRootLogin = "yes";
       ```
+
 - reboot
 - Apply machine config from local/donar/build machine
   - `NIX_SSHOPTS="-t" nixos-rebuild boot --flake ~/Projects/nixos-config/master#jesus --target-host root@jesus`
+
+
+# Install 2.0
+- (new machine) boot PXE nixos-iso
+- (new machine) set password for nixos user `passwd`
+- (new machine) get ip `ip addr`
+- (new machines) check disk `lsblk`
+- (existing machine) add disk encryption key into /tmp/disk.key
+- (existing machine) nix run github:nix-community/nixos-anywhere -- --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --disk-encryption-keys /tmp/disk.key /tmp/disk.key nixos@10.16.1.159
+
+## test with vm. Must comment out or disable all encryption due to vm-test not supporting disk key transfer
+- (existing machine) nix run github:nix-community/nixos-anywhere -- --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --vm-test
 

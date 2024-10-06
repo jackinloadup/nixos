@@ -32,9 +32,15 @@ in {
           JustWorksRepairing = "always";
           #MultiProfile = "multiple";
           DiscoverableTimeout = 0;
+
+          # Allows showing battery of bluetooth devices
           # Enables D-Bus experimental interfaces
           # Possible values: true or false
           #Experimental = true
+
+          # Unsure if the following location is valid for this setting
+          # or what can be in this setting
+          Enable = "Source,Sink,Headset,Gateway,Control,Socket,Media";
 
           # Enables kernel experimental features, alternatively a list of UUIDs
           # can be given.

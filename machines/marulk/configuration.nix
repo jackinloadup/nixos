@@ -12,11 +12,11 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    ./nebula-lighthouse.nix
+    #./nebula-lighthouse.nix
     ./adguard.nix
   ];
 
-  boot.initrd.verbose = false;
+  boot.initrd.verbose = true;
 
   machine = {
     users = [ "lriutzel" ];
@@ -25,16 +25,15 @@ in {
     tui = true;
   };
 
-  nix.settings.max-jobs = mkDefault 2;
+  #nix.settings.max-jobs = mkDefault 8;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.overlays = [
     flake.inputs.self.overlays.default
   ];
 
   networking.hostName = "marulk";
   networking.networkmanager.enable = mkForce false;
-  networking.bridges.br0.interfaces = ["enp1s0"];
+  networking.bridges.br0.interfaces = ["enp1s0f0"];
   networking.interfaces.br0.useDHCP = true;
 
   networking.dhcpcd = {

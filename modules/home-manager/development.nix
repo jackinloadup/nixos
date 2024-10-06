@@ -25,6 +25,7 @@ in {
 
       #python39Packages.xdot # graphviz viewer # erro with pycairio compile
       pkgs.graphviz
+      pkgs.rustscan # faster than nmap port scanner
 
       #    # TUI tools but loading if graphical
       #    mqttui # mqtt tui

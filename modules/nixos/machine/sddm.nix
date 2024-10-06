@@ -11,7 +11,9 @@ in {
     programs.xwayland.enable = true;
     #services.xserver.autorun = true;
     services.xserver.displayManager.lightdm.enable = false;
+    environment.systemPackages = [ pkgs.catppuccin-sddm-corners ];
     services.displayManager.sddm = {
+      theme = "catppuccin-sddm-corners";
       wayland = {
         enable = true;
         compositor = "kwin";

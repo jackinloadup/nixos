@@ -70,12 +70,15 @@ in {
     };
 
     programs.adb.enable = isFullSystem;
+    programs.appimage.enable = isFullSystem;
+    programs.appimage.binfmt = true;
+    #programs.captive-browser.enable = isFullSystem;
     programs.command-not-found.enable = isFullSystem;
     programs.chirp.enable = isFullSystem;
     programs.chromium.enable = isFullSystem;
     #programs.sniffnet.enable = isFullSystem;
     #programs.nix-ld.enable = isFullSystem;
-    programs.nix-ld.enable = true;
+    #programs.nix-ld.enable = true;
     programs.wireshark.enable = isFullSystem;
 
 
@@ -228,6 +231,7 @@ in {
           #pkgs.pipexec # a neat tool to help with named pipes
         ]
         ++ optionals isFullSystem [
+          pkgs.krusader # Norton/Total Commander clone for KDE
           pkgs.emulsion # mimimal linux image viewer built in rust
           pkgs.imv # minimal image viewer
           pkgs.tor-browser-bundle-bin
@@ -243,7 +247,7 @@ in {
           #pkgs.gnome.vinagre # VNC view another computer
           #pkgs.fractal # matrix client
           #pkgs.fractal-next # matrix client. isn't compiling
-          pkgs.nheko # matrix client
+          #pkgs.nheko # matrix client
           #mumble # voice chat application
           pkgs.signal-desktop # messaging client
 
@@ -254,8 +258,12 @@ in {
 
           pkgs.gnome.file-roller # Archive manager
           pkgs.sysbench # benchmarking tool
+
+          # nvd diff /nix/var/nix/profiles/system-{296,297}-link
+          pkgs.nvd # nix tool to diff
         ]
         ++ optionals isFullSystem [
+          flake.inputs.nix-software-center.packages.x86_64-linux.nix-software-center
           flake.inputs.scripts.packages.x86_64-linux.rebuild
           #helvum # pipewire patchbay # failing to build
           pkgs.easyeffects # Audio effects
@@ -311,8 +319,8 @@ in {
           pkgs.jless # json viewer
           pkgs.tealdeer # $tldr strace
           pkgs.nota # fancy cli calculator
-          #pkgs.bitwarden-cli
-          pkgs.python39Packages.youtube-dl # there is an alt youtube-dl-lite
+          pkgs.bitwarden-cli
+          pkgs.yt-dlp # there is an alt youtube-dl-lite
           pkgs.xdg-utils # for xdg-open
           pkgs.xdg-user-dirs # command to get the path to Downloads/Pictures/ect
           #nur.repos.ambroisie.comma # like nix-shell but more convinient
@@ -324,7 +332,7 @@ in {
           #pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
           pkgs.visidata
 
-          pkgs.# TUI to GUI helpers
+          # TUI to GUI helpers
           pkgs.bfs # breadth-first version of the UNIX find command. might be faster than fd?
           pkgs.broot # tree directory viewer
           #pkgs.dragon-drop # in unstable its maybe xdragon
@@ -345,6 +353,7 @@ in {
           pkgs.cava # Console-based Audio Visualizer for Alsa
           pkgs.nsnake # snake game
           pkgs.terminal-parrot # parrot in your terminal
+          pkgs.pipes-rs # pipes terminal screensaver
 
           # k8s
           pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
@@ -362,6 +371,8 @@ in {
 
           pkgs.libsForQt5.marble # map / globe viewer
           pkgs.stellarium # planetarium
+
+          pkgs.anytype # distributed p2p local-first
         ];
     };
 

@@ -32,7 +32,11 @@ in {
           #tray = { spacing = 10; };
           modules-center = [];
           #modules-center = ["sway/window"];
-          modules-left = ["sway/workspaces" "sway/mode"];
+          modules-left = [
+            "hyprland/workspaces"
+            "sway/workspaces"
+            "sway/mode"
+          ];
           modules-right = [
             "custom/pkgwatt"
             "pulseaudio"
@@ -44,6 +48,16 @@ in {
             "clock"
             "tray"
           ];
+          "hyprland/workspaces" = {
+            "format" = "{icon}";
+            "on-scroll-up" = "hyprctl dispatch workspace e+1";
+            "on-scroll-down" = "hyprctl dispatch workspace e-1";
+            "on-click" = "activate";
+          };
+          "hyprland/window" = {
+            "max-length" = 200;
+            "separate-outputs" = true;
+          };
           "custom/pkgwatt" = {
             format = "{}W";
             max-length = 8;

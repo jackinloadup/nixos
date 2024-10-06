@@ -10,6 +10,7 @@
         "filezilla.desktop"
         "signal-desktop.desktop"
         "simple-scan.desktop"
+        "org.kde.kdenlive"
       ];
 
       # `gnome-extensions list` for a list
@@ -25,9 +26,12 @@
         #  "space-bar@luchrioh"
       ];
     };
-    "org/gnome/desktop/background" = {
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/pills-d.webp";
-      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/pills-d.webp";
+    "org/gnome/desktop/background" = let
+      #file = "file:///run/current-system/sw/share/backgrounds/gnome/pills-d.webp";
+      file = "file:///persist/home/criutzel/Pictures/wallpaper/heyastrovoi.jpg";
+    in{
+      picture-uri = file;
+      picture-uri-dark = file;
     };
     "org/gnome/simple-scan" = {
       document-type = "photo";
@@ -38,7 +42,7 @@
     };
   };
   gtk.gtk3.bookmarks = [
-    "sftp://truenas.home.lucasr.com/mnt/storage Gumdrop-NAS"
+    #"sftp://truenas.home.lucasr.com/mnt/storage Gumdrop-NAS"
     "ssh://seed.tac0bell.com:2222/home/user/Downloads Seedbox"
   ];
 

@@ -6,18 +6,19 @@
 }: let
   inherit (lib) mkIf mkForce;
   mountPoint = "/mnt/nextcloud";
-  currentDatabase = "nextcloud26";
+  currentDatabase = "nextcloud29";
 in {
   config = mkIf config.services.nextcloud.enable {
     networking.firewall.allowedTCPPorts = [80 443];
 
     services.nextcloud = {
-      package = pkgs.nextcloud26;
+      package = pkgs.nextcloud29;
       #extraApps = with pkgs.nextcloud26Packages.apps; {
       #  inherit mail news contacts;
       #};
 
-      hostName = "nextcloud.home.lucasr.com";
+      hostName = "nextcloud.lucasr.com";
+      https = true;
       home = "${mountPoint}/lib";
       datadir = "${mountPoint}/data";
 
@@ -27,7 +28,9 @@ in {
         redis = true;
         apcu = true;
       };
-      extraOptions = {
+      settings = {
+        default_phone_region = "US";
+
         redis = {
           host = "/run/redis-nextcloud/redis.sock";
           port = 0;
@@ -39,15 +42,14 @@ in {
         };
       };
       config = {
-        defaultPhoneRegion = "US";
 
         dbhost = "postgres.home.lucasr.com:5432";
+        #dbhost = "127.0.0.1:5432";
         dbname = currentDatabase;
-        #dbport = 5432; #no longer has effect
         dbtype = "pgsql"; # sqlite, pgsql, mysql
         #dbpassFile = "";
         #dbtableprefix
-        adminuser = "root";
+        adminuser = "lriutzel";
         objectstore.s3 = {
           enable = false;
           bucket = "bucketname";
@@ -116,23 +118,32 @@ in {
       after = ["postgresql.service" "mnt-nextcloud.mount"];
     };
 
+    # response to depriciation
+    # https://nixos.org/manual/nixos/stable/#module-postgresql
+    # https://stackoverflow.com/questions/22483555/postgresql-give-all-permissions-to-a-user-on-a-postgresql-database
+    #systemd.services.postgresql.postStart = lib.mkAfter ''
+    #  $PSQL service1 -c 'GRANT ALL PRIVILEGES ON DATABASE "nextcloud26" TO "nextcloud"'
+    #  $PSQL service1 -c 'GRANT ALL PRIVILEGES ON DATABAES "postgres" TO "nextcloud"'
+    #'';
+
     services.postgresql = {
       enable = true;
-      ensureDatabases = ["nextcloud26"];
+      ensureDatabases = [ currentDatabase ];
       ensureUsers = [
         {
           name = "nextcloud";
-          ensurePermissions."DATABASE \"nextcloud26\"" = "ALL PRIVILEGES";
-          ensurePermissions."DATABASE \"postgres\"" = "ALL PRIVILEGES";
+          # Depriciated
+          #ensurePermissions."database.nextcloud26" = "ALL PRIVILEGES";
+          #ensurePermissions."database.postgres" = "ALL PRIVILEGES";
         }
       ];
       # allowing whole subnet as marulk uses dhcp
       authentication = ''
-        host nextcloud26 nextcloud 10.16.1.0/24 md5
+        host ${currentDatabase} nextcloud 10.16.1.0/24 md5
         host postgres nextcloud 10.16.1.0/24 md5
       '';
     };
-    services.postgresqlBackup.databases = ["nextcloud26"];
+    services.postgresqlBackup.databases = [ currentDatabase ];
     #services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
     #  addSSL = true;
     #  enableACME = true;
@@ -141,5 +152,19 @@ in {
     #  defaults.email = "lriutzel@gmail.com";
     #  acceptTerms = true;
     #};
+
+    services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+      forceSSL = true;
+      enableACME = true;
+    };
+
+    security.acme = {
+      acceptTerms = true;
+      certs = {
+        ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
+      };
+    };
   };
+
+
 }

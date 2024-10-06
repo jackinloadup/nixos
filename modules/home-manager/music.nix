@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
 in {
   # Repo with lots of radio stations
   # https://github.com/junguler/m3u-radio-music-playlists.git
@@ -12,6 +12,9 @@ in {
     home.packages = with pkgs; [
       ncmpcpp
     ];
+
+    services.mpris-proxy.enable = true;
+
 
     services.mopidy = {
       extensionPackages = [

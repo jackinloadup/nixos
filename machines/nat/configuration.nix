@@ -25,7 +25,6 @@ in {
   ];
   boot.plymouth.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
   services.fwupd.enable = mkForce false;
   services.getty = {
     autologinUser = "kodi";
