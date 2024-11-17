@@ -138,7 +138,6 @@ in {
         #"$mod, 7, workspace, 07"
         #"$mod, 8, workspace, 08"
         #"$mod, 9, workspace, 09"
-        "$mod, 0, workspace, 10"
         "$mod, F1, workspace, 11"
         "$mod, F2, workspace, 12"
         "$mod, F3, workspace, 13"

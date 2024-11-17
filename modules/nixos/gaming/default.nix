@@ -27,7 +27,7 @@ in {
       #monado
       #lighthouse-steamvr
       libgdiplus
-      gnome.adwaita-icon-theme
+      adwaita-icon-theme
 
       # SNES
       snes9x-gtk

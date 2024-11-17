@@ -7,7 +7,6 @@
   inherit (lib) mkIf mkEnableOption;
 in {
   config = mkIf config.services.pipewire.enable {
-    sound.enable = false; # Enables ALSA. Conflicts with pipewire?
     security.rtkit.enable = true; # Allows pipewire to run "realtime"
     hardware.pulseaudio.enable = false; # Disable pulseaudio
 

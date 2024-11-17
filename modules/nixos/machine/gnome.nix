@@ -18,28 +18,28 @@ in {
 
     # add if icon theme isn't a thing yet
     environment.systemPackages = [
-      pkgs.gnome.adwaita-icon-theme
-      pkgs.gnome.gnome-session
-      pkgs.gnome.gnome-tweaks
-      pkgs.gnome.dconf-editor
+      pkgs.adwaita-icon-theme
+      pkgs.gnome-session
+      pkgs.gnome-tweaks
+      pkgs.dconf-editor
     ];
 
     environment.gnome.excludePackages = [
-      pkgs.gnome.cheese
+      pkgs.cheese
       pkgs.gnome-photos
-      pkgs.gnome.gnome-music
-      pkgs.gnome.gnome-terminal
+      pkgs.gnome-music
+      pkgs.gnome-terminal
       #pkgs.gnome.gedit
       pkgs.epiphany
       pkgs.evince
-      pkgs.gnome.gnome-characters
-      pkgs.gnome.totem
-      pkgs.gnome.tali
-      pkgs.gnome.iagno
-      pkgs.gnome.hitori
-      pkgs.gnome.atomix
+      pkgs.gnome-characters
+      pkgs.totem
+      pkgs.tali
+      pkgs.iagno
+      pkgs.hitori
+      pkgs.atomix
       pkgs.gnome-tour
-      pkgs.gnome.geary
+      pkgs.geary
     ];
   };
 }

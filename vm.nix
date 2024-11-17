@@ -17,7 +17,7 @@ in {
   # show IP in login screen
   # https://github.com/NixOS/nixpkgs/issues/63322
   environment.etc."issue.d/ip.issue".text = "\\4\n";
-  networking.dhcpcd.runHook = "${pkgs.utillinux}/bin/agetty --reload";
+  networking.dhcpcd.runHook = "${pkgs.util-linux}/bin/agetty --reload";
 
   #services.openssh.enable = true;
   virtualisation = {

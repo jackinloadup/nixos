@@ -32,10 +32,8 @@ in {
     # Enable backlight control
     programs.light.enable = true;
 
-    sound.mediaKeys.enable = mkDefault false; # uses alsa amixer by default
 
     # Enable if minimal setup. Dont use for Gnome/KDE/Xfce
-    #sound.mediaKeys.enable = true; # uses alsa amixer by default
     services.actkbd = let
       user_run = "/run/user/${toString settings.user.uid}";
       dbus = "DBUS_SESSION_BUS_ADDRESS=unix:path=${user_run}/bus";

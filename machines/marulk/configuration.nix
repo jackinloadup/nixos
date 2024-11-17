@@ -14,6 +14,7 @@ in {
     ./hardware-configuration.nix
     #./nebula-lighthouse.nix
     ./adguard.nix
+    ./wg-vpn.nix
   ];
 
   boot.initrd.verbose = true;
@@ -66,6 +67,36 @@ in {
     openFirewall = true;
   };
   services.nextcloud.enable = true;
+
+  # wireguard-tools
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+
+  #networking.bridges.br0.interfaces = ["enp1s0f0"];
+  #services.wg-access-server = {
+  #  enable = true;
+  #  settings = {
+  #    loglevel = "info";
+  #    storage = "sqlite3:///var/lib/wg-access-server/db.sqlite3";
+  #    externalHost = "home.lucasr.com";
+  #    dns = {
+  #      enabled = true;
+  #      upstream = [
+  #        "10.16.0.2"
+  #      ];
+  #    };
+  #    vpn = {
+  #      gatewayInterface = "br0";
+  #      cidr = "10.44.0.0/24";
+  #      cidrv6 = "0"; # disable
+  #      clientIsolation = false;
+  #      allowedIPs = [
+  #        "0.0.0.0/0"
+  #        #"10.16.1.0/24"
+  #      ];
+  #    };
+  #  };
+  #};
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
