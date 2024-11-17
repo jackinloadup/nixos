@@ -15,6 +15,7 @@ in {
     ./monitor-setup.nix
     ./rtl_433.nix
     ./iwd.nix
+    ./wg-vpn.nix
   ];
 
   boot.plymouth.enable = true;

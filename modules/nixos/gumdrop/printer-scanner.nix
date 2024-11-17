@@ -20,13 +20,15 @@ in {
   options.gumdrop.printerScanner = mkEnableOption "Setup using the printer and scanner";
 
   config = mkIf config.gumdrop.printerScanner {
-    environment.systemPackages = with pkgs; [
-      gnome.simple-scan
-    ];
+    environment.systemPackages = [ pkgs.simple-scan ];
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
-    services.printing.drivers = with pkgs; [cups-filters mfc9130cwlpr mfc9130cwcupswrapper];
+    services.printing.drivers = [
+      pkgs.cups-filters
+      pkgs.mfc9130cwlpr
+      pkgs.mfc9130cwcupswrapper
+    ];
 
     services.colord.enable = true;
 

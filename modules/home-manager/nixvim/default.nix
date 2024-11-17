@@ -253,16 +253,16 @@
           enable = true;
           servers = {
             nixd.enable = true;
-            rust-analyzer = {
+            rust_analyzer = {
               enable = true;
               installCargo = true;
               installRustc = true;
             };
-            lua-ls.enable = true;
-            tsserver.enable = true; # typescript
-            html.enable = true;
-            cssls.enable = true;
-            pyright.enable = true;
+            lua_ls.enable = true;
+            ts_ls.enable = true; # typescript
+            html.enable = false; # failing
+            cssls.enable = false; # failing
+            pyright.enable = false;
           };
         };
 
@@ -285,6 +285,7 @@
         nix.enable = true;
         nvim-autopairs.enable = true;
 
+        web-devicons.enable = true;
         telescope = {
           enable = true;
           settings = {
@@ -301,16 +302,18 @@
         };
 
         tmux-navigator.enable = true;
-        rust-tools.enable = true;
+        #rustaceanvim.enable = true;
 
         treesitter = {
           enable = true;
           nixvimInjections = true;
           folding = false;
-          indent = true;
           nixGrammars = true;
-          ensureInstalled = "all";
-          incrementalSelection.enable = true;
+          settings = {
+            ensure_installed = "all";
+            indent.enable = true;
+            incremental_selection.enable = true;
+          };
         };
 
         treesitter-refactor = {

@@ -68,7 +68,7 @@ in {
         pkgs.bottles # wine gui
 
         pkgs.flatpak
-        pkgs.gnome.gnome-software
+        pkgs.gnome-software
 
         pkgs.mpv # video player
         pkgs.vlc # video player

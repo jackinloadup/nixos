@@ -23,5 +23,6 @@ in {
 
   environment.systemPackages = [
     pkgs.intel-gpu-tools # intel_gpu_top and others
+    pkgs.nvtopPackages.intel
   ];
 }
