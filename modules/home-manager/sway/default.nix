@@ -24,6 +24,7 @@
   termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
   background = "${config.xdg.cacheHome}/satellite-images/goes-east/current.jpg";
+  background_backup = "/run/current-system/sw/share/backgrounds/gnome/keys-d.webp";
 
 
   #${getExe pkgs.swaylock} -f -i /run/current-system/sw/share/backgrounds/gnome/keys-d.webp
@@ -43,22 +44,35 @@
     ];
     text = ''
       main () {
+        BG=
+        if [ -L "${background}" ]; then
+          LINK_PATH=$(readlink "${background}")
+          if [ -e "$LINK_PATH" ]; then
+            BG="${background}"
+          else
+            BG="${background_backup}"
+          fi
+        else
+          BG="${background_backup}"
+        fi
 
-        hyprland &
-        sway &
+        hyprland "$BG" &
+        sway "$BG" &
       }
 
       hyprland () {
+        BG="$1"
         if hyprctl instances; then
-          swaylock -f -i ${background}
+          swaylock -f -i "$BG"
         fi
       }
 
       sway () {
+        BG="$1"
         SWAYSOCK=$(fd sway-ipc /run/user/$UID/ -1)
 
         if [[ -n "$SWAYSOCK" ]]; then
-          swaylock -f -i ${background}
+          swaylock -f -i "$BG"
         fi
       }
 
@@ -378,7 +392,7 @@ in {
       gdmSwitchUser = if nixosConfig.services.xserver.displayManager.gdm.enable then ''
           ,{
             "label": "Switch User",
-            "exec": "${pkgs.gnome.gdm}/bin/gdmflexiserver",
+            "exec": "${pkgs.gdm}/bin/gdmflexiserver",
             "icon": "${pkgs.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-switch-user.svg"
           }
         '' else "";

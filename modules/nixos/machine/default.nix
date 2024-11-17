@@ -138,6 +138,7 @@ in {
         wifi = {
           #enable = true;  # Enables wireless support via wpa_supplicant.
           powersave = true; # Enable wifi powersaving. Not exactly sure if this is working
+          # random not good for servers
           macAddress = mkDefault "random";
         };
       };
@@ -156,9 +157,10 @@ in {
       enableAllFirmware = mkDefault config.nixpkgs.config.allowUnfree;
       enableRedistributableFirmware = mkDefault config.nixpkgs.config.allowUnfree;
 
-      opengl.enable = mkDefault ifGraphical;
-      opengl.driSupport = mkDefault ifGraphical;
-      opengl.driSupport32Bit = mkDefault ifGraphical;
+      graphics.enable = mkDefault ifGraphical;
+      # antiquated in 24.11
+      #opengl.driSupport = mkDefault ifGraphical;
+      #opengl.driSupport32Bit = mkDefault ifGraphical;
     };
 
     home-manager.backupFileExtension = "backup";
@@ -222,7 +224,7 @@ in {
     # show IP in login screen
     # https://github.com/NixOS/nixpkgs/issues/63322
     environment.etc."issue.d/ip.issue".text = "\\4\n";
-    networking.dhcpcd.runHook = "${pkgs.utillinux}/bin/agetty --reload";
+    networking.dhcpcd.runHook = "${pkgs.util-linux}/bin/agetty --reload";
 
     # explore multi level compression
     zramSwap = {

@@ -332,7 +332,8 @@ in {
         };
 
         exec-once = [
-          "${pkgs.wpaperd}/bin/wpaperd -d"
+          "${pkgs.mpvpaper}/bin/mpvpaper  --auto-stop --auto-pause --mpv-options \"no-audio loop\" DP-5 ~/.cache/satellite-images/goes-east/output.mp4"
+          #"${pkgs.wpaperd}/bin/wpaperd -d"
           #"${swayidleCommand}/bin/swayidle"
         ];
 

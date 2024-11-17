@@ -114,8 +114,8 @@ in {
   hardware = {
     bluetooth.enable = true;
     bluetooth.settings.General.Name = "Entertainment";
-    opengl.enable = mkForce true;
-    opengl.driSupport = mkForce true;
+    graphics.enable = mkForce true;
+    graphics.driSupport = mkForce true;
   };
 
   networking = {

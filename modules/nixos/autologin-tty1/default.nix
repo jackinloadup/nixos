@@ -41,7 +41,7 @@ in {
         wantedBy = ["autologin-tty1.target"];
         serviceConfig = {
           ExecStart = concatStringsSep " " [
-            "@${pkgs.utillinux}/sbin/agetty"
+            "@${pkgs.util-linux}/sbin/agetty"
             "agetty --login-program ${pkgs.shadow}/bin/login"
             "--autologin ${cfg.user} --noclear %I $TERM"
           ];
@@ -56,7 +56,7 @@ in {
         after = ["multi-user.target"];
         wantedBy = ["autologin-tty1.target"];
         serviceConfig = {
-          ExecStart = "${pkgs.utillinux}/sbin/dmesg -n 1";
+          ExecStart = "${pkgs.util-linux}/sbin/dmesg -n 1";
           Type = "oneshot";
         };
       };

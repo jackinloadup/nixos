@@ -82,7 +82,7 @@ in {
 
         ## io
         iotop # simple top-like I/O monitor
-        input-utils # lsinput
+        #input-utils # lsinput - error: The input-utils package was dropped since it was unmaintained
         nmon # performance stats monitor
         i2c-tools # some tools also exist in toy/busybox
 

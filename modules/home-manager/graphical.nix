@@ -187,13 +187,13 @@ in {
         #pantheon.elementary-files
         #cinnamon.nemo # File manager
         #flameshot
-        gnome.nautilus
-        gnome.gnome-disk-utility
+        nautilus
+        gnome-disk-utility
         #calibre # ebook tool,  assist with kindle
         #obsidian # Markdown information archive
 
         ## Audio
-        pavucontrol # GUI volume source/sink manager
+        #pavucontrol # GUI volume source/sink manager
         pwvucontrol # GUI volume source/sink manager pipewire
 
 

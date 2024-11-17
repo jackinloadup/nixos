@@ -31,9 +31,10 @@ in {
   #};
 
   #hardware.opengl.driSupport32Bit = true;
-  hardware.opengl = {
-    driSupport = true;
-    driSupport32Bit = true;
+  hardware.graphics = {
+    # antiquated in 24.11
+    #driSupport = true;
+    #driSupport32Bit = true;
 
     extraPackages = [
       pkgs.amdvlk
@@ -56,6 +57,7 @@ in {
     pkgs.zenstates
     pkgs.radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
     pkgs.radeon-profile
+    pkgs.nvtopPackages.amd
   ];
 }
 

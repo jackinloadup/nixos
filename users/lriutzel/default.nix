@@ -256,7 +256,7 @@ in {
 
           pkgs.kodi-wayland
 
-          pkgs.gnome.file-roller # Archive manager
+          pkgs.file-roller # Archive manager
           pkgs.sysbench # benchmarking tool
 
           # nvd diff /nix/var/nix/profiles/system-{296,297}-link
@@ -305,7 +305,7 @@ in {
           pkgs.brave
 
           pkgs.warp # transfer files between computers gui
-          pkgs.gnome.gnome-maps # map viewer
+          pkgs.gnome-maps # map viewer
 
           #pkgs.unzip # duh
           pkgs.lftp # ftp client

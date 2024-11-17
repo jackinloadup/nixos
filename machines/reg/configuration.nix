@@ -264,6 +264,7 @@ in {
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
 
         services.satellite-images.enable = true;
+        services.satellite-images.generateTimelapse = true;
 
         programs.wpaperd = {
           enable = true;

@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption genAttrs optionals attrNames;
+  inherit (lib) mkIf mkForce mkEnableOption genAttrs optionals attrNames;
   cfg = config.machine;
   ifTui = cfg.sizeTarget > 0;
   ifGraphical = cfg.sizeTarget > 1;
@@ -24,12 +24,13 @@ in {
         '';
       };
     };
-    systemd.services.libvirt-guests.environment.SHUTDOWN_TIMEOUT = "30";
+    # default is 300 (5 min)
+    systemd.services.libvirt-guests.environment.SHUTDOWN_TIMEOUT = mkForce "30";
 
     # TODO added nested flag
     #boot.extraModprobeConfig = "options kvm_intel nested=1";
 
-    security.polkit.enable = lib.mkForce true; # needed for virt-manager?
+    security.polkit.enable = mkForce true; # needed for virt-manager?
 
     # might only apply to libvirt
     environment.systemPackages =
