@@ -350,7 +350,7 @@ in {
           pkgs.asciiquarium # Fun aquarium animation
           pkgs.cmatrix # Fun matrix animation
           pkgs.nms # https://github.com/bartobri/no-more-secrets
-          pkgs.cava # Console-based Audio Visualizer for Alsa
+          #pkgs.cava # Console-based Audio Visualizer for Alsa # build failure
           pkgs.nsnake # snake game
           pkgs.terminal-parrot # parrot in your terminal
           pkgs.pipes-rs # pipes terminal screensaver
