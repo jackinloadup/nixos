@@ -47,8 +47,8 @@ in {
     #plugin-files = ${pkgs.nix-plugins.override { nix = config.nix.package; }}/lib/nix/plugins/libnix-extra-builtins.so
 
 
-    nix.package = pkgs.nixVersions.nix_2_20;
-    #nix.package = pkgs.nixVersions.latest;
+    #nix.package = pkgs.nixVersions.nix_2_20;
+    nix.package = pkgs.nixVersions.latest;
 
     nix.gc = {
       automatic = ifTui;
