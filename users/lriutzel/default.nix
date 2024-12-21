@@ -80,6 +80,11 @@ in {
     #programs.nix-ld.enable = isFullSystem;
     #programs.nix-ld.enable = true;
     programs.wireshark.enable = isFullSystem;
+    services.udev = mkIf isFullSystem {
+      extraRules = ''
+        SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
+      '';
+    };
 
 
     services.tor.enable = mkDefault isFullSystem;
@@ -342,6 +347,7 @@ in {
           ## fast adds chromium
           #fast-cli # bandwidth test through fast.com
           pkgs.nmap
+          pkgs.television # blazingly fast general purpose fuzzy finder
 
           ## Audio
           pkgs.playerctl # TUI

@@ -304,14 +304,14 @@ in {
             contrast = 1.05;
             brightness = 1.2;
           };
-          drop_shadow = true;
-          shadow_range = 5;
-          shadow_render_power = 2;
-          shadow_offset = "3 3";
-          "col.shadow" = "0x99000000";
-          "col.shadow_inactive" = "0x55000000";
+          #drop_shadow = true;
+          #shadow_range = 5;
+          #shadow_render_power = 2;
+          #shadow_offset = "3 3";
+          #"col.shadow" = "0x99000000";
+          #"col.shadow_inactive" = "0x55000000";
           active_opacity = 1;
-          inactive_opacity = 0.87;
+          inactive_opacity = 1;
           fullscreen_opacity = 1.0;
         };
 
@@ -332,7 +332,7 @@ in {
         };
 
         exec-once = [
-          "${pkgs.mpvpaper}/bin/mpvpaper  --auto-stop --auto-pause --mpv-options \"no-audio loop\" DP-5 ~/.cache/satellite-images/goes-east/output.mp4"
+          #"${pkgs.mpvpaper}/bin/mpvpaper  --auto-stop --auto-pause --mpv-options \"no-audio loop\" DP-5 ~/.cache/satellite-images/goes-east/output.mp4"
           #"${pkgs.wpaperd}/bin/wpaperd -d"
           #"${swayidleCommand}/bin/swayidle"
         ];
@@ -346,9 +346,9 @@ in {
           };
         };
 
-        master = {
-          no_gaps_when_only = true;
-        };
+#        master = {
+#          no_gaps_when_only = true;
+#        };
 
         misc.disable_hyprland_logo = true;
         misc.disable_splash_rendering = true;

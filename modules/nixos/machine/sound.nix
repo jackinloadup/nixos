@@ -12,7 +12,7 @@ in {
 
     # Enable pipewire https://nixos.wiki/wiki/PipeWire
     services.pipewire = {
-      alsa.enable = false;
+      alsa.enable = true; # clone hero
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;

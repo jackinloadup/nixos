@@ -35,7 +35,9 @@ in {
         enable = true;
         settings.default = {
           #path = "${config.xdg.cacheHome}/satellite-images/goes-east/current";
-          path = "~/.cache/satellite-images/goes-east/current.jpg";
+          #path = "~/.cache/satellite-images/goes-east/current.jpg";
+          path = "~/Pictures/Wallpapers/nature";
+          duration = "30m";
         };
       };
     }

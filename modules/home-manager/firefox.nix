@@ -10,7 +10,7 @@
 in {
   config = mkIf config.programs.firefox.enable {
     #nixpkgs.overlays = [
-    #  flake.inputs.nur.overlay
+    #  flake.inputs.nur.overlays.default
     #];
 
     home.packages = [

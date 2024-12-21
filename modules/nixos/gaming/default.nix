@@ -48,6 +48,7 @@ in {
       gltron
 
       discord
+      clonehero
     ];
 
     services.xserver = {

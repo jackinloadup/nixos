@@ -217,7 +217,7 @@ in {
     #nix.settings.max-jobs = lib.mkDefault 16;
 
     nixpkgs.overlays = [
-      flake.inputs.nur.overlay
+      flake.inputs.nur.overlays.default
       flake.inputs.self.overlays.default
       flake.inputs.self.overlays.kodi-wayland
       # Math libraries for AMD CPUs
@@ -263,8 +263,8 @@ in {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
 
-        services.satellite-images.enable = true;
-        services.satellite-images.generateTimelapse = true;
+        services.satellite-images.enable = false;
+        services.satellite-images.generateTimelapse = false;
 
         programs.wpaperd = {
           enable = true;

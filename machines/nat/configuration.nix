@@ -68,7 +68,7 @@ in {
 
   nixpkgs = {
     overlays = [
-      flake.inputs.nur.overlay
+      flake.inputs.nur.overlays.default
       flake.inputs.self.overlays.default
       flake.inputs.self.overlays.kodi-wayland
       # failed to build

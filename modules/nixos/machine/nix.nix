@@ -27,7 +27,7 @@ in {
     nixpkgs.config.allowUnfree = true;
 
     nixpkgs.overlays = [
-      flake.inputs.nur.overlay
+      flake.inputs.nur.overlays.default
     ];
     nix.settings = {
       trusted-public-keys = [

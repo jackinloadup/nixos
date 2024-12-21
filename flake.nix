@@ -3,10 +3,10 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
@@ -49,8 +49,8 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      #url = "github:nix-community/home-manager/release-24.05";
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.11";
+      #url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

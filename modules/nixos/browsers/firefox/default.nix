@@ -86,7 +86,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      # nixpkgs.overlays = [ inputs.nur.overlay ];
+      # nixpkgs.overlays = [ inputs.nur.overlays.default ];
       #user.packages = with pkgs; [
       #  firefoxWrapped
       #  (makeDesktopItem {

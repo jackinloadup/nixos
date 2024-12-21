@@ -198,7 +198,7 @@ in {
 
 
         ## Fun
-        cavalier
+        # cavalier # build failure
 
         usbview # GUI for usb devices
       ];
