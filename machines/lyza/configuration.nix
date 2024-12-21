@@ -14,6 +14,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./home-assistant.nix
+    ./wg-vpn.nix
   ];
 
     ##-----------------------------------
@@ -138,11 +139,11 @@ in {
   #  storageServer.roms = true;
   #};
 
-  nix.settings.max-jobs = mkDefault 8;
+  #nix.settings.max-jobs = mkDefault 8;
 
   nixpkgs = {
     overlays = [
-      flake.inputs.nur.overlay
+      flake.inputs.nur.overlays.default
       flake.inputs.self.overlays.default
       #    inputs.self.overlays.plymouth-no-gtk
       #    inputs.self.overlays.pipewire-minimal

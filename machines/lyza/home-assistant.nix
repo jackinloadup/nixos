@@ -34,7 +34,7 @@ in {
           time_zone = "America/Chicago";
           auth_providers = [
             { type = "trusted_networks";
-              trusted_networks = [ "10.16.1.0/24" "192.168.88.0/24"];
+              trusted_networks = [ "10.16.1.0/24" "192.168.1.0/24"];
               allow_bypass_login = true;
             }
             { type = "homeassistant"; }

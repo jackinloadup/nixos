@@ -47,15 +47,14 @@
           {
             name = "riko";
             publicKey = "hMalIs+gw/ooiFVjHBzysS6Wn1ZTC9AOKnSCyOEvVQc=";
-            # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
             allowedIPs = [ "10.100.0.3/32" ];
           }
-          #{ # John Doe
-          #  publicKey = "{john doe's public key}";
-          #  allowedIPs = [ "10.100.0.3/32" ];
-          #}
+          {
+            name = "lyza";
+            publicKey = "439vHIw45W3VpVm1OllB6QN85VSUnIKT3RGWzRuzLSE=";
+            allowedIPs = [ "10.100.0.4/32" ];
+          }
         ];
-
       };
     };
   };

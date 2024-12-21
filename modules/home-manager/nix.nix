@@ -13,7 +13,7 @@
     #nixpkgs.overlays =
     #  nixosConfig.nixpkgs.overlays
     #  ++ [
-    #    flake.inputs.nur.overlay
+    #    flake.inputs.nur.overlays.default
     #  ];
 
     # expose registry items that are relevant outside of nixos
