@@ -161,6 +161,10 @@ in {
       # antiquated in 24.11
       #opengl.driSupport = mkDefault ifGraphical;
       #opengl.driSupport32Bit = mkDefault ifGraphical;
+
+# look into this more
+# saw this on "Exploring AMD Error Correction RAS Engineering - Level1Techs"
+      rasdaemon.enable = false;
     };
 
     home-manager.backupFileExtension = "backup";

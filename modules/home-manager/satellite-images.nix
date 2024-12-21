@@ -60,8 +60,11 @@ let
 
       # Symlink the most current file for individual use
       ln -sfn "$NEWEST_FILE" "$OUTDIR/current.jpg"
+
     '';
   };
+      #convert "$input" -resize "${width}x${height}^" -gravity center -crop "${width}x${height}+0+0" $output
+      #3440x1440
 
   createTimelapseScript =  pkgs.writeShellApplication {
     name = "satellite-image-timelapse";

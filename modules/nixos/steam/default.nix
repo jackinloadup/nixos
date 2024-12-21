@@ -16,7 +16,7 @@ in {
     };
     environment.systemPackages = [
       pkgs.steam-run
-      pkgs.BeatSaberModManager
+      #pkgs.BeatSaberModManager
       #pkgs.mangohud # fps hud
       #pkgs.protonup # install newer versions of proton with additional patches
       # home.sessionVariables = {

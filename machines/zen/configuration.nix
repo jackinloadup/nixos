@@ -206,7 +206,7 @@ in {
     nix.settings.max-jobs = lib.mkDefault 16;
 
     nixpkgs.overlays = [
-      flake.inputs.nur.overlay
+      flake.inputs.nur.overlays.default
       flake.inputs.self.overlays.default
       flake.inputs.self.overlays.kodi-wayland
       # Math libraries for AMD CPUs
