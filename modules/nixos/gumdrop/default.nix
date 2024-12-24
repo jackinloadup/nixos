@@ -11,6 +11,7 @@ in {
     ./printer-scanner.nix
     ./pihole.nix
     ./storage-server.nix
+    ./vpn.nix
   ];
 
   config = {
