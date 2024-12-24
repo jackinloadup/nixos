@@ -213,6 +213,10 @@ in {
       storageServer.media = true;
       storageServer.roms = true;
       storageServer.home = true;
+
+      vpn.server.endpoint = "home.lucasr.com:51820";
+      vpn.client.enable = true;
+      vpn.client.ip = "10.100.0.11/24";
     };
     #nix.settings.max-jobs = lib.mkDefault 16;
 

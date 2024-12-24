@@ -37,7 +37,7 @@ in {
     #  network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
     #  systemd.network.enable = true;
     #  systemd.network.wait-online.enable = true;
-    #  systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
+#  systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
     #  systemd.extraBin = {
     #    ip = "${pkgs.iproute2}/bin/ip";
     #    #ps = "${pkgs.procps}/bin/ps";
@@ -132,12 +132,16 @@ in {
     };
   };
 
-  #gumdrop = {
+  gumdrop = {
   #  printerScanner = false;
   #  storageServer.enable = false;
   #  storageServer.media = true;
   #  storageServer.roms = true;
-  #};
+
+    vpn.server.endpoint = "home.lucasr.com:51820";
+    vpn.client.enable = true;
+    vpn.client.ip = "10.100.0.4/24";
+  };
 
   #nix.settings.max-jobs = mkDefault 8;
 
