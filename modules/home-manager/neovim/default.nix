@@ -18,13 +18,13 @@ in
       NVIM_TUI_ENABLE_TRUE_COLOR = 1;
     };
 
-    home.packages = with pkgs; [
-      graphviz
+    home.packages = [
+      pkgs.graphviz
 
       # Language Servers
-      rnix-lsp # Nix
-      rust-analyzer # Rust
-      sumneko-lua-language-server # Lua
+      pkgs.rnix-lsp # Nix
+      pkgs.rust-analyzer # Rust
+      pkgs.sumneko-lua-language-server # Lua
     ];
 
     programs.neovim = {
