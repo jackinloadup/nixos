@@ -32,6 +32,7 @@
             dynamicEndpointRefreshSeconds = 5;
             publicKey = "KrWVR+VV04OOmt63FOeqx9UKE4en20lDl6pGieLQSj0=";
             allowedIPs = [ "10.16.1.0/24" "10.100.0.0/24" ];
+            persistentKeepalive = 30;  # seconds; Due to being behind NAT
           }
           #{ # John Doe
           #  publicKey = "{john doe's public key}";
