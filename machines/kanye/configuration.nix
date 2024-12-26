@@ -61,6 +61,10 @@ in {
     storageServer.enable = true;
     storageServer.media = true;
     storageServer.roms = true;
+
+    vpn.server.endpoint = "home.lucasr.com:51820";
+    vpn.client.enable = true;
+    vpn.client.ip = "10.100.0.5/24";
   };
 
   powerManagement.cpuFreqGovernor = "powersave";
