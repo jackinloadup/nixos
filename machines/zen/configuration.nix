@@ -203,7 +203,7 @@ in {
       storageServer.roms = true;
       storageServer.home = false;
     };
-    nix.settings.max-jobs = lib.mkDefault 16;
+    #nix.settings.max-jobs = lib.mkDefault 16;
 
     nixpkgs.overlays = [
       flake.inputs.nur.overlays.default

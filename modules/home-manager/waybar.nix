@@ -5,7 +5,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf getExe;
+  inherit (lib) mkIf getExe optionals;
   inherit (builtins) readFile;
   settings = import ../../settings;
   host = nixosConfig.networking.hostName;
@@ -22,7 +22,11 @@ in {
     programs.waybar = {
       systemd = {
         enable = true;
-        target = mkIf config.wayland.windowManager.sway.enable "sway-session.target"; # not available in HM 21.11
+        target = mkIf config.wayland.windowManager.sway.enable "sway-session.target";
+          #target = []
+          #++ optionals config.wayland.windowManager.sway.enable [ "sway-session.target" ]
+          #++ optionals config.wayland.windowManager.hyprland.enable [ "hyprland-session.target" ];
+
       };
       settings = [
         {
