@@ -1,4 +1,4 @@
-{lib, ...}:
+{lib, pkgs, ...}:
 let
   inherit (lib) mkForce;
 in {
@@ -8,6 +8,7 @@ in {
     # machine isn't physically moving. Keep same dhcp issued address
     networking.networkmanager.wifi.macAddress = mkForce "permanent";
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    boot.kernelPackages = pkgs.linuxPackages_zen;
     #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
     #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   };

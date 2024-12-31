@@ -27,6 +27,8 @@ in {
       tui = true;
     };
 
+    gumdrop.vpn.server.enable = true;
+
     #nix.settings.max-jobs = mkDefault 8;
 
     nixpkgs.overlays = [
@@ -64,15 +66,23 @@ in {
     #  ];
     #};
     services.jellyfin = {
-      enable = false;
-      openFirewall = true;
+      enable = true;
+      openFirewall = false; # handle http via nginx
     };
+    # tcp is handled via nginx
+    networking.firewall.allowedUDPPorts = [
+      1900
+      7359
+    ];
+    services.nginx.virtualHosts."jellyfin.home.lucasr.com".locations."/" = {
+      proxyPass = "http://localhost:8096/";
+      proxyWebsockets = true;
+    };
+
     services.nextcloud.enable = true;
 
     # wireguard-tools
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-
-    gumdrop.vpn.server.enable = true;
 
     #networking.bridges.br0.interfaces = ["enp1s0f0"];
     #services.wg-access-server = {

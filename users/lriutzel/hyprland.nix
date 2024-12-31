@@ -172,12 +172,12 @@ in {
           animation = [
             "border, 1, 1, liner"
             "borderangle, 1, 30, liner, loop"
-            "fade, 1, 5, default"
-            "windows, 1, 5, wind, slide"
-            "windowsIn, 1, 5, easeOutQuart, popin"
-            "windowsOut, 1, 5, winOut, slide"
-            "windowsMove, 1, 5, wind, slide"
-            "workspaces, 1, 5, md3_decel"
+            "fade, 1, 3, default"
+            "windows, 1, 3, wind, slide"
+            "windowsIn, 1, 3, easeOutQuart, popin"
+            "windowsOut, 1, 3, winOut, slide"
+            "windowsMove, 1, 3, wind, slide"
+            "workspaces, 1, 3, md3_decel"
 
             #"border,1,10,md3_decel"
             #"fade,1,10,md3_decel"

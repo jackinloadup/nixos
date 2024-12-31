@@ -68,6 +68,7 @@ in {
     # removed the following line to see if that would change build times
     # ln -sv ${repoRoot} $out/nixos-config
     system.extraSystemBuilderCmds = ''
+      ln -sv ${repoRoot} $out/nixos-config
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 

@@ -72,8 +72,6 @@ in {
   networking.hostId = "aa0431f3";
   networking.hostName = "kanye";
 
-  nix.settings.max-jobs = mkDefault 4;
-
   nixpkgs.hostPlatform = "x86_64-linux";
 
   nixpkgs.overlays = [

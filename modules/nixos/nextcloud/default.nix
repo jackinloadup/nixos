@@ -50,6 +50,7 @@ in {
         #dbpassFile = "";
         #dbtableprefix
         adminuser = "lriutzel";
+        #adminpassFile = "/etc/nextcloud-admin-pass";
         objectstore.s3 = {
           enable = false;
           bucket = "bucketname";
@@ -153,17 +154,17 @@ in {
     #  acceptTerms = true;
     #};
 
-    services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
-      forceSSL = true;
-      enableACME = true;
-    };
+    #services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+    #  forceSSL = true;
+    #  enableACME = true;
+    #};
 
-    security.acme = {
-      acceptTerms = true;
-      certs = {
-        ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
-      };
-    };
+    #security.acme = {
+    #  acceptTerms = true;
+    #  certs = {
+    #    ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
+    #  };
+    #};
   };
 
 

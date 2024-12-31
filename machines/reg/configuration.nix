@@ -54,6 +54,7 @@ in {
     hardware.logitech.wireless.enable = mkDefault true;
     hardware.logitech.wireless.enableGraphical = mkDefault true;
 
+    services.bpftune.enable = true;
     services.hardware.bolt.enable = true;
 
     powerManagement.cpuFreqGovernor = mkForce "performance";
