@@ -35,15 +35,9 @@ in {
     systemd.services."adguardhome".before = ["libvirtd.service"];
     #systemd.services.libvirtd.after = ["adguardhome.service"];
 
-    services.nginx = {
-      virtualHosts = {
-        "adguard.home.lucasr.com" = {
-          locations."/" = {
-            proxyPass = "http://${config.services.adguardhome.host}:${toString config.services.adguardhome.port}/";
-            proxyWebsockets = true;
-          };
-        };
-      };
+    services.nginx.virtualHosts."adguard.home.lucasr.com".locations."/" = {
+      proxyPass = "http://${config.services.adguardhome.host}:${toString config.services.adguardhome.port}/";
+      proxyWebsockets = true;
     };
   };
 }

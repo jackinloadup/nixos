@@ -1,5 +1,5 @@
 { pkgs, config, lib, ...}: let
-  inherit (lib) mkEnableOption mkIf types mkOption optional;
+  inherit (lib) mkEnableOption mkIf types mkOption optionals optionalAttrs;
 in {
   # Makes a hub and spoke vpn
   options.gumdrop.vpn = {
@@ -33,12 +33,12 @@ in {
     networking.firewall = {
       allowedTCPPorts = mkIf cfg.server.enable [ 53 ];
       allowedUDPPorts = [ 51820 ]
-        ++ optional cfg.server.enable [ 53 ];
+        ++ optionals cfg.server.enable [ 53 ];
     };
 
     networking.wireguard.enable = cfg.server.enable || cfg.client.enable;
     networking.wireguard.interfaces = {}
-      // mkIf cfg.server.enable {
+      // optionalAttrs cfg.server.enable {
         # "wg0" is the network interface name. You can name the interface arbitrarily.
         wg0 = {
           # Determines the IP address and subnet of the server's end of the tunnel interface.
@@ -63,6 +63,7 @@ in {
             { # Feel free to give a meaning full name
               name = "lucas-phone";
               # Public key of the peer (not a file path).
+              #publicKey = "Pk4PfIDAhuctWOBHjUu8RvLQUb8TWGQmtv+x0iDLW1E=";
               publicKey = "4bJ3FxfAWkfr8dbNWLHdh7fIcavtt/EbTKo/1q4C5Fs=";
               # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
               allowedIPs = [ "10.100.0.2/32" ];
@@ -78,6 +79,26 @@ in {
               allowedIPs = [ "10.100.0.4/32" ];
             }
             {
+              name = "kanye";
+              publicKey = "85q15pyFUBdt1UTE5BLklvy9uKknXdWVQWTge1Vy1nk=";
+              allowedIPs = [ "10.100.0.5/32" ];
+            }
+            {
+              name = "zen";
+              publicKey = "5zadvDWL6pMIlqYI7dVrrAXFxVqHDRvJo6u+LQ0WpSQ=";
+              allowedIPs = [ "10.100.0.6/32" ];
+            }
+            {
+              name = "christine-phone";
+              publicKey = "TkkSJLCOTB6/qoWh5hZzyZEtyswsRftFLjcTvKo1RBc=";
+              allowedIPs = [ "10.100.0.7/32" ];
+            }
+            {
+              name = "timberlake";
+              publicKey = "TSIU47c//x361/fxl1fxZ3cpSWbH7G06jt/FVqfYpRM=";
+              allowedIPs = [ "10.100.0.8/32" ];
+            }
+            {
               name = "reg";
               publicKey = "ycZ424QpGCSIVswLUk2EweH+Z7sTc33dH0B0AER4pgc=";
               allowedIPs = [ "10.100.0.11/32" ];
@@ -86,7 +107,7 @@ in {
 
         };
       }
-      // mkIf cfg.client.enable {
+      // optionalAttrs cfg.client.enable {
         # "wg0" is the network interface name. You can name the interface arbitrarily.
         wg0 = {
           # Determines the IP address and subnet of the server's end of the tunnel interface.
@@ -121,6 +142,10 @@ in {
           "/lucas-phone/10.100.0.2"
           "/riko/10.100.0.3"
           "/lyza/10.100.0.4"
+          "/kanye/10.100.0.5"
+          "/zen/10.100.0.6"
+          "/christine-phone/10.100.0.7"
+          "/timberlake/10.100.0.8"
           "/reg/10.100.0.11"
         ];
         #};

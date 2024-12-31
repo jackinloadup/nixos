@@ -205,7 +205,7 @@
                 ./machines/marulk/configuration.nix
               ];
             };
-            # home server
+            # Server at studio location
             lyza = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
@@ -229,6 +229,14 @@
                 self.nixosModules.lriutzel
                 self.nixosModules.criutzel
                 ./machines/jesus/configuration.nix
+              ];
+            };
+            # Server at timberlake location
+            timberlake = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
+              imports = [
+                self.nixosModules.default
+                self.nixosModules.lriutzel
+                ./machines/timberlake/configuration.nix
               ];
             };
             minimal = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
