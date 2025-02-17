@@ -29,6 +29,7 @@ in {
         "networkmanager"
         "ipfs"
         "plugdev"
+        "adbusers"
       ];
     };
 
@@ -36,6 +37,8 @@ in {
     hardware.logitech.wireless.enableGraphical = mkDefault true;
     hardware.solo2.enable = mkDefault true;
     hardware.yubikey.enable = mkDefault true;
+
+    programs.adb.enable = true;
 
     services.flatpak.enable = true;
 

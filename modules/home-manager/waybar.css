@@ -12,16 +12,49 @@
 @define-color green #8fbcbb;
 @define-color blue #88c0d0;
 
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+
+@keyframes blink-warning {
+    70% {
+        color: white;
+    }
+
+    to {
+        color: white;
+        background-color: orange;
+    }
+}
+
+@keyframes blink-critical {
+    70% {
+      color: white;
+    }
+
+    to {
+        color: white;
+        background-color: red;
+    }
+}
+
+
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+
 * {
   border: none;
   border-radius: 0;
   font-family: FiraCode Nerd Font, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 300;
   min-height: 0;
 }
 
 window#waybar {
-  background: @theme_base_color;
+  /*background: @theme_base_color; */
+  background: rgba(75, 75, 75, 0.75);
   border-bottom: 1px solid @unfocused_borders;
   /*
 background-color: @bgcolor;
@@ -98,4 +131,19 @@ window#waybar.hidden { opacity: 0.2; }
 #pulseaudio.muted,
 #temperature.critical {
   color: @critical;
+}
+#battery {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.warning.discharging {
+    animation-name: blink-warning;
+    animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+    animation-name: blink-critical;
+    animation-duration: 2s;
 }

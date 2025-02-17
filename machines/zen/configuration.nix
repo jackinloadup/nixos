@@ -55,7 +55,7 @@ in {
     programs.hyprland.xwayland.enable = true;
 
     programs.simula.enable = false;
-    programs.sway.enable = true;
+    programs.sway.enable = false;
 
     #nixpkgs.config.rocmSupport = true;
     nixpkgs.hostPlatform = "x86_64-linux";

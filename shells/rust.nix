@@ -1,49 +1,59 @@
 {pkgs ? import <nixpkgs> {}}:
-# look into for the future in rust projects
-# https://github.com/mdevlamynck/nix-flake-templates/blob/master/bevy/flake.nix
-with pkgs;
-  mkShell rec {
-    name = "rust";
-    nativeBuildInputs = [
-      pkgconfig
-      llvmPackages_latest.bintools # To use lld linker
-      llvmPackages_latest.lld
-      llvmPackages_latest.llvm
-    ];
-    buildInputs = [
-      zlib.out
-      rustup
-      rustfmt
-      cargo-outdated
-      xorriso
-      grub2
-      qemu
-      python3
+  let
+    lib = pkgs.lib;
+    overrides = (builtins.fromTOML (builtins.readFile ./rust-toolchain.toml));
+    libPath = with pkgs; lib.makeLibraryPath [
+      # load external libraries that you need in your rust project here
+      pkgs.zlib.out
+      pkgs.rustup
+      pkgs.rustfmt
+      pkgs.cargo-outdated
+      pkgs.xorriso
+      pkgs.grub2
+      pkgs.qemu
+      pkgs.python3
 
-      vulkan-tools
-      vulkan-headers
-      vulkan-loader
-      vulkan-validation-layers
+      pkgs.vulkan-tools
+      pkgs.vulkan-headers
+      pkgs.vulkan-loader
+      pkgs.vulkan-validation-layers
 
       # added for bevy
-      udev
-      alsaLib
+      pkgs.udev
+      pkgs.alsa-lib
       #xlibsWrapper
-      xorg.libXcursor
-      xorg.libXrandr
-      xorg.libXi # To use x11 feature
-      libGL
-      libxkbcommon
-      wayland # To use wayland feature
+      pkgs.xorg.libXcursor
+      pkgs.xorg.libXrandr
+      pkgs.xorg.libXi # To use x11 feature
+      pkgs.libGL
+      pkgs.libxkbcommon
+      pkgs.wayland # To use wayland feature
 
-      bcc # added for nhealth, not needed if moved to native rust solution which now exits "aya"
+      pkgs.bcc # added for nhealth, not needed if moved to native rust solution which now exits "aya"
 
-      heaptrack # memory debugging
+      pkgs.heaptrack # memory debugging
     ];
-    LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
-    RUSTC_VERSION = lib.readFile ./rust-toolchain;
+in
+# look into for the future in rust projects
+# https://github.com/mdevlamynck/nix-flake-templates/blob/master/bevy/flake.nix
+  pkgs.mkShell rec {
+    name = "rust";
+    #nativeBuildInputs = [
+    #  #pkgs.pkgconfig
+    #  #pkgs.llvmPackages_latest.bintools # To use lld linker
+    #  #pkgs.llvmPackages_latest.lld
+    #  #pkgs.llvmPackages_latest.llvm
+    #];
+    buildInputs = [
+      pkgs.clang
+      # Replace llvmPackages with llvmPackages_X, where X is the latest LLVM version (at the time of writing, 16)
+      pkgs.llvmPackages.bintools
+      pkgs.rustup
+    ];
+    LD_LIBRARY_PATH = libPath;
+    RUSTC_VERSION = overrides.toolchain.channel;
     # https://github.com/rust-lang/rust-bindgen#environment-variables
-    LIBCLANG_PATH = lib.makeLibraryPath [llvmPackages_latest.libclang.lib];
+    LIBCLANG_PATH = lib.makeLibraryPath [pkgs.llvmPackages_latest.libclang.lib];
     #HISTFILE=toString ./.history;
     shellHook = ''
       export PATH=$PATH:~/.cargo/bin
@@ -53,14 +63,14 @@ with pkgs;
     # NOTE: libvmi pulls in xen. xen-4.10 is marked insecure. need new version
     # https://github.com/NixOS/nixpull/121513
     RUSTFLAGS = builtins.map (a: ''-L ${a}/lib'') [
-      (libvmi.override {xenSupport = false;})
+      (pkgs.libvmi.override {xenSupport = false;})
     ];
     # Add libvmi, glibc, clang, glib headers to bindgen search path
     BINDGEN_EXTRA_CLANG_ARGS =
       # Includes with normal include path
       (builtins.map (a: ''-I"${a}/include"'') [
-        (libvmi.override {xenSupport = false;})
-        glibc.dev
+        (pkgs.libvmi.override {xenSupport = false;})
+        pkgs.glibc.dev
       ])
       # Includes with special directory paths
       ++ [

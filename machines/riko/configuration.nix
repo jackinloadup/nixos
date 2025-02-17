@@ -46,7 +46,7 @@ in {
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
 
-    programs.sway.enable = true;
+    programs.sway.enable = false;
     programs.steam.enable = true;
 
     services.fprintd.enable = true;
@@ -57,9 +57,10 @@ in {
     #services.displayManager.enable = true; # enable systemd’s display-manager service
     #services.displayManager.sddm.enable = true;
 
- #   services.xserver.displayManager.autoLogin.enable = true;
- #   services.xserver.displayManager.autoLogin.user = "lriutzel";
- #   services.xserver.displayManager.defaultSession = "sway";
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "lriutzel";
+    services.displayManager.defaultSession = "hyprland";
+
     services.xserver.displayManager.gdm.enable = true;
 
     services.xserver.desktopManager.gnome.enable = true;
@@ -75,11 +76,10 @@ in {
       lowLevelXF86keys.enable = true;
       gaming = true;
     };
-    #programs.sway.enable = true;
 
     gumdrop = {
       printerScanner = true;
-      storageServer.enable = false;
+      storageServer.enable = true;
       storageServer.media = true;
       storageServer.roms = true;
 

@@ -46,6 +46,7 @@ in {
     ./nix.nix
     ./virtualization.nix
     ./magic-key.nix
+    ./wayland.nix
   ];
 
   ## TODO disable user mutab
@@ -178,6 +179,15 @@ in {
 
     #security.pam.services.polkit-1.unixAuth = false;
     security.pam.services.polkit-1.sshAgentAuth = true;
+    security.pam.services.login.sshAgentAuth = true;
+    security.pam.services.hyprlock = {
+      # text = "auth include system-auth";
+      text = "auth include login";
+      #fprintAuth = if hostName == "xps" then true else false;
+      enableGnomeKeyring = true;
+      sshAgentAuth = true;
+    };
+
 
     # users who are smart can be trusted?
     security.sudo.wheelNeedsPassword = false;

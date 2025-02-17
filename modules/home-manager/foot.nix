@@ -32,7 +32,7 @@ in {
         main = {
           term = "xterm-256color";
 
-          font = "monospace:size=${toString (settings.theme.font.size - 2)}";
+          font = "monospace:size=${toString (settings.theme.font.size - 4)}";
           dpi-aware = true;
         };
 

@@ -6,7 +6,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf concatStrings mkDefault optionalString;
+  inherit (lib) mkIf concatStrings mkForce mkDefault optionalString;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
 in {
   config = mkIf config.programs.zsh.enable {
@@ -19,9 +19,9 @@ in {
 
 
     programs.zsh = {
-      autosuggestion.enable = mkDefault true;
+      autosuggestion.enable = mkDefault false;
       enableCompletion = mkDefault true;
-      syntaxHighlighting.enable = mkDefault true;
+      syntaxHighlighting.enable = mkDefault false;
       #enableVteIntegration = mkDefault true; # adds 300mb
       defaultKeymap = "viins";
       historySubstringSearch.enable = true;
