@@ -12,7 +12,7 @@
 
   home = {
     domain = "home.lucasr.com";
-    name = "Starbase";
+    name = "Gumdrop";
     latitude = "36.629727";
     longitude = "-93.216178";
     elevation = 70; # in meters = 230ft
@@ -41,6 +41,10 @@
     };
     borderWidth = 2;
     font = {
+      size = 12;
+
+      console = "Lat2-Terminus16";
+
       serif = {
         family = "DejaVu Serif";
         style = "Regular";
@@ -58,8 +62,6 @@
         family = "Noto Color Emoji";
         style = "Regular";
       };
-      console = "Lat2-Terminus16";
-      size = 10;
     };
     base16 = {
       scheme = "gruvbox";

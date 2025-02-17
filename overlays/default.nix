@@ -17,6 +17,7 @@ in
     #home-assistant = self.unstable.home-assistant.override {
     #  extraPackages = py: with py; [ psycopg2 librouteros ];
     #};
+    waytrogen = self.unstable.waytrogen;
     openrct2 = self.unstable.openrct2;
     obsidian = self.unstable.obsidian;
     bark = self.unstable.bark;

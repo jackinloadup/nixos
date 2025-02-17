@@ -52,11 +52,11 @@ in {
   in
     mkIf cfg.enable {
       ## https://nixos.wiki/wiki/NFS
-      #fileSystems = mkMerge [
-      #  (mount {name = "media"; path = "media";})
-      #  (mount {name = "roms"; path = "roms";})
-      #  (mount {name = "home"; path = "backed-up/home";})
-      #];
+      fileSystems = mkMerge [
+        (mount {name = "media"; path = "media";})
+        (mount {name = "roms"; path = "roms";})
+        (mount {name = "home"; path = "backed-up/home";})
+      ];
 
       # This service isn't needed for NFSv4. Needed pre v4
       services.rpcbind.enable = mkForce false;

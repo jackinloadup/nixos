@@ -13,7 +13,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    ./home-assistant.nix
+    #./home-assistant.nix
   ];
 
     boot.initrd = {
@@ -39,7 +39,7 @@ in {
     users = mkDefault [
       "lriutzel"
     ];
-    sizeTarget = 1; # was 1
+    sizeTarget = 2; # was 1
     minimal = false;
     tui = true;
     impermanence = mkDefault true;

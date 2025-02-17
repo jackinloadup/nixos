@@ -20,7 +20,6 @@ in {
     programs.xwayland.enable = true;
     #services.xserver.autorun = true;
     #services.xserver.displayManager.lightdm.enable = false;
-    #services.xserver.displayManager.gdm.wayland = true;
     services.xserver.displayManager.gdm.settings = {
       greeter = {
         #IncludeAll = true;

@@ -33,6 +33,7 @@
         ./rtl_433
         ./simula
         ./nextcloud
+        ./media
       ];
 
       tui.imports = [

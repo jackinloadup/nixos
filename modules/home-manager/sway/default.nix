@@ -163,6 +163,7 @@ in {
     programs.waybar.enable = true;
     services.dunst.enable = true;
 
+    # This makes login take 3 seconds
     programs.zsh.loginExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
     programs.bash.initExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
 

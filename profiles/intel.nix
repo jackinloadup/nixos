@@ -14,7 +14,7 @@ in {
     ];
     extraModprobeConfig = "options snd-hda-intel enable_msi=1";
   };
-  services.xserver.videoDrivers = ["intel"];
+  services.xserver.videoDrivers = ["modesetting"];
 
   # forgot what this was for
   nixpkgs.config.packageOverrides = pkgs: {

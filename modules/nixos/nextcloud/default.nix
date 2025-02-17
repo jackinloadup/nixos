@@ -19,6 +19,20 @@ in {
 
       hostName = "nextcloud.lucasr.com";
       https = true;
+      autoUpdateApps.enable = true;
+      extraAppsEnable = true;
+      extraApps = with config.services.nextcloud.package.packages.apps; {
+        # List of apps we want to install and are already packaged in
+        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
+        inherit calendar contacts notes onlyoffice tasks cookbook qownnotesapi;
+        # Custom app example.
+#        socialsharing_telegram = pkgs.fetchNextcloudApp rec {
+#          url =
+#            "https://github.com/nextcloud-releases/socialsharing/releases/download/v3.0.1/socialsharing_telegram-v3.0.1.tar.gz";
+#          license = "agpl3";
+#          sha256 = "sha256-8XyOslMmzxmX2QsVzYzIJKNw6rVWJ7uDhU1jaKJ0Q8k=";
+#        };
+      };
       home = "${mountPoint}/lib";
       datadir = "${mountPoint}/data";
 
@@ -29,6 +43,8 @@ in {
         apcu = true;
       };
       settings = {
+        trusted_proxies = ["127.0.0.1/32" "10.16.1.0/24" "10.100.0.0/24"];
+        csrf.optout = [ "/Nextcloud-android/" ];
         default_phone_region = "US";
 
         redis = {
@@ -49,7 +65,7 @@ in {
         dbtype = "pgsql"; # sqlite, pgsql, mysql
         #dbpassFile = "";
         #dbtableprefix
-        adminuser = "lriutzel";
+        adminuser = "root";
         #adminpassFile = "/etc/nextcloud-admin-pass";
         objectstore.s3 = {
           enable = false;
@@ -65,6 +81,12 @@ in {
           #secretFile = "/var/nextcloud-objectstore-s3-secret";
         };
       };
+
+      # Suggested by Nextcloud's health check.
+      phpOptions."opcache.interned_strings_buffer" = "16";
+      phpOptions."opcache.revalidate_freq" = "60";
+      phpOptions."opcache.jit" = "1255";
+      phpOptions."opcache.jit_buffer_size" = "8M";
     };
 
     services.redis.servers.nextcloud = {
@@ -142,9 +164,16 @@ in {
       authentication = ''
         host ${currentDatabase} nextcloud 10.16.1.0/24 md5
         host postgres nextcloud 10.16.1.0/24 md5
+        host postgres nextcloud 127.0.0.1/32 md5
       '';
     };
     services.postgresqlBackup.databases = [ currentDatabase ];
+        # Nightly database backups.
+    #postgresqlBackup = {
+    #  enable = true;
+    #  startAt = "*-*-* 01:15:00";
+    #};
+
     #services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
     #  addSSL = true;
     #  enableACME = true;
@@ -154,17 +183,25 @@ in {
     #  acceptTerms = true;
     #};
 
-    #services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
-    #  forceSSL = true;
-    #  enableACME = true;
-    #};
+    services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+      extraConfig = ''
+        fastcgi_connect_timeout 10m;
+        fastcgi_read_timeout 10m;
+        fastcgi_send_timeout 10m;
+      '';
 
-    #security.acme = {
+    };
+
+    security.acme = {
     #  acceptTerms = true;
-    #  certs = {
-    #    ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
-    #  };
-    #};
+      certs = {
+        ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
+      };
+    };
+
   };
 
 

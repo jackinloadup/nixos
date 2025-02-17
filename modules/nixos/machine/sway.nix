@@ -18,6 +18,9 @@ in {
     # I think this comes for free when enabling programs.sway.enable
     #programs.xwayland.enable = mkDefault true;
 
+    #services.seatd.enable = true;
+
+
     programs.sway = {
       #package = pkgs.stable.sway;
       wrapperFeatures.gtk = mkDefault true;
@@ -25,17 +28,8 @@ in {
         pkgs.swaylock
         pkgs.swayidle
 
-        pkgs.wev
-        pkgs.wdisplays
-        pkgs.wlr-randr
-
         pkgs.bemenu
         pkgs.j4-dmenu-desktop
-
-        pkgs.vulkan-validation-layers
-
-        # nheko, mindforger
-        #qt5.qtwayland # make conditional?
       ];
 
       extraSessionCommands = ''
@@ -56,8 +50,6 @@ in {
         export GTK_USE_PORTAL=1
       '';
     };
-
-    #services.seatd.enable = true;
 
     xdg = {
       portal = {

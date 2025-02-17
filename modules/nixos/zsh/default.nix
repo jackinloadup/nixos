@@ -83,7 +83,7 @@ in
       enable = true;
 
       syntaxHighlighting = {
-        enable = true;
+        enable = false;
         highlighters = [
           "main"
           "brackets"

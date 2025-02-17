@@ -72,6 +72,13 @@ in {
 
   hardware.bluetooth.enable = isUserFacing;
 
+  services.esphome = {
+    enable = true;
+    address = "0.0.0.0";
+    openFirewall = true;
+  };
+
+
   services.fwupd.enable = mkForce true;
 
   # doesn't seem to work
@@ -85,6 +92,7 @@ in {
   services.k3s.enable = false;
   services.k3s.role = "server";
   services.k3s.clusterInit = true;
+
 
   services.pipewire.enable = isUserFacing;
   #services.tor.enable = mkForce true;
@@ -108,7 +116,7 @@ in {
   #};
 
   # Play with TPM. Hope to have ssh host key come from tpm.
-  #security.tpm2.enable = true;
+  security.tpm2.enable = false;
   #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
   #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
   #users.users.lriutzel.extraGroups = [ "tss" ];  # tss group has access to TPM devices
@@ -179,6 +187,7 @@ in {
 
       networking.interfaces = mkForce {
         eth0.useDHCP = true;
+        enp1s0f0.useDHCP = true;
       };
     };
 

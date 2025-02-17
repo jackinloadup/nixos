@@ -35,6 +35,7 @@ in {
       #    mdp # markdown presentation
       #    mdr # tui viewer
       #    # mdv # tui viewer not in nixpkgs yet
+      #pkgs.mr # multi repo
     ];
 
   home.file.".gdbinit".text = ''
@@ -58,6 +59,8 @@ in {
       init.defaultBranch = "master";
       color.ui = true;
       core.editor = "nvim";
+      #credential.helper = "store --file ~/.git-credentials";
+      credential.helper = "store";
       merge.conflictStyle = "diff3";
       merge.guitool = "nvimdiff";
       merge.tool = "vimdiff";
@@ -72,9 +75,13 @@ in {
       #protocol.keybase.allow = "always";
       #credential.helper = "store --file ~/.git-credentials";
       rebase.autosquash = true;
+      url = {
+        "git@github.com:".insteadOf = "https://github.com/";
+      };
     };
 
     aliases = {
+      viz = "log --all --decorate --oneline --graph";
       # list commits in a tree
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
       # list branches and their last commit time
