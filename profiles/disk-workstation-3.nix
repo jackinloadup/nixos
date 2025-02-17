@@ -40,10 +40,10 @@ in {
 
     services.zfs.autoScrub.enable = true;
     boot.zfs.forceImportRoot = true;
-    boot.zfs.package = mkDefault pkgs.zfs_unstable;
+    #boot.zfs.package = mkDefault pkgs.zfs_unstable;
 
     #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
-    boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     #boot.kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_8;
 
     # Added due to issue with kernel panics after suspend.

@@ -4,8 +4,9 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf getBin getExe optionals;
+  inherit (lib) mkIf mkDefault getBin getExe optionals;
   termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
+  #termCmd = "${getExe pkgs.kitty}";
   left = "h";
   down = "j";
   up = "k";
@@ -14,121 +15,168 @@ in {
   config = let
     menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
   in {
-    #xdg.configFile."wpaperd/config.toml".source = pkgs.writeText "config.toml" ''
-    #  [default]
-    #  path = "$HOME/$XDG_CACHE_HOME/satellite-images"
-    #'';
-
-    #programs.wpaperd = {
-    #  enable = true;
-    #  settings = {
-    #    default  = {
-    #      #path = "${config.xdg.cacheHome}/satellite-images";
-    #      #path = "$XDG_CACHE_HOME/satellite-images";
-    #      # commenting out due to single image vs dir
-    #      # path = "~/Pictures/background.jpg"
-    #      #sorting = "random"
-    #      #apply-shadow = false
-    #    };
-
-    #  };
-    #};
-
     home.packages = [
-      pkgs.wpaperd # for wpaperctl next/previous
+      pkgs.hyprlock
     ];
 
-    #services.hypridle = {
-    #  enable = true;
-    #  settings = {
-    #    general = {
-    #       after_sleep_cmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
-    #       ignore_dbus_inhibit = false;
-    #       lock_cmd = "hyprlock";
-    #     };
+    programs.foot.enable = true;
+    programs.foot.server.enable = true;
 
-    #     listener = [
-    #       {
-    #         timeout = 900;
-    #         on-timeout = "hyprlock";
+    # currently controlled per host :-(
+    programs.wpaperd = {
+      #enable = mkDefault true;
+      settings = {
+        default  = {
+          #path = "${config.xdg.cacheHome}/satellite-images";
+          #path = "$XDG_CACHE_HOME/satellite-images";
+          # commenting out due to single image vs dir
 
-    #      #lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
-    #       }
-    #       {
-    #         timeout = 1200;
-    #         on-timeout = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off";
-    #         on-resume = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
-    #       }
-    #     ];
-    #  };
-    #};
+          #path = "~/Pictures/Wallpapers";
+          #sorting = "random";
+          #duration = "5m";
+          #apply-shadow = false
+        };
+
+      };
+    };
+    programs.waybar.enable = true;
+
+    # Clamshell mode references available in MatthiasBenaets/modules/desktops/hyprland.nix
+#    home.file = {
+#      ".config/hypr/script/clamshell.sh" = let
+#        lid = "LID";
+#        mainMonitor = "eDP-1";
+#      in {
+#        text = ''
+#          #!/bin/sh
+#
+#          if grep open /proc/acpi/button/lid/${lid}/state; then
+#            ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, 1920x1080, 0x0, 1"
+#          else
+#            if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
+#              ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, disable"
+#            else
+#              ${pkgs.hyprlock}/bin/hyprlock
+#              ${pkgs.systemd}/bin/systemctl suspend
+#            fi
+#          fi
+#        '';
+#        executable = true;
+#      };
+#    };
+
+    services.hypridle = {
+      enable = true;
+      settings = {
+        general = {
+           after_sleep_cmd = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
+           ignore_dbus_inhibit = false;
+           lock_cmd = "hyprlock";
+         };
+
+         listener = [
+           {
+             timeout = 900;
+             on-timeout = "hyprlock";
+
+             #lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
+           }
+           {
+             timeout = 1200;
+             on-timeout = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms off";
+             on-resume = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
+           }
+         ];
+      };
+    };
 
     #security.pam.services.hyprlock = {
     #  text = "auth include system-auth";
     #  fprintAuth = false;
     #};
 
-    #programs.hyprlock = {
-    #  enable = true;
-    #  general = {
-    #    hide_cursor = true;
-    #    no_fade_in = false;
-    #    disable_loading_bar = true;
-    #    grace = 0;
-    #  };
-    #  backgrounds = [{
-    #    monitor = "";
-    #    path = "Pictures/background.jpg";
-    #    color = "rgba(25, 20, 20, 1.0)";
-    #    blur_passes = 1;
-    #    blur_size = 0;
-    #    brightness = 0.2;
-    #  }];
-    #  input-fields = [
-    #    {
-    #      monitor = "";
-    #      size = {
-    #        width = 250;
-    #        height = 60;
-    #      };
-    #      outline_thickness = 2;
-    #      dots_size = 0.2;
-    #      dots_spacing = 0.2;
-    #      dots_center = true;
-    #      outer_color = "rgba(0, 0, 0, 0)";
-    #      inner_color = "rgba(0, 0, 0, 0.5)";
-    #      font_color = "rgb(200, 200, 200)";
-    #      fade_on_empty = false;
-    #      placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
-    #      hide_input = false;
-    #      position = {
-    #        x = 0;
-    #        y = -120;
-    #      };
-    #      halign = "center";
-    #      valign = "center";
-    #    }
-    #  ];
-    #  labels = [
-    #    {
-    #      monitor = "";
-    #      text = "$TIME";
-    #      font_size = 120;
-    #      position = {
-    #        x = 0;
-    #        y = 80;
-    #      };
-    #      valign = "center";
-    #      halign = "center";
-    #    }
-    #  ];
-    #};
+    programs.hyprlock = {
+      enable = true;
+      settings = {
+        general = {
+          hide_cursor = true;
+          no_fade_in = false;
+          disable_loading_bar = true;
+          grace = 5;
+        };
+        background = [{
+        #  monitor = "";
+          path = "/home/lriutzel/Pictures/background.jpg";
+        #  color = "rgba(25, 20, 20, 1.0)";
+        #  blur_passes = 1;
+        #  blur_size = 0;
+        #  brightness = 0.2;
+        }];
+        input-field = [
+          { # Password Field
+            monitor = "";
+            size = "200,60";
+            outline_thickness = 2;
+            dots_size = 0.2;
+            dots_spacing = 0.2;
+            dots_center = true;
+            outer_color = "rgba(0, 0, 0, 0)";
+            inner_color = "rgba(0, 0, 0, 0.5)";
+            font_color = "rgb(200, 200, 200)";
+            fade_on_empty = true;
+            placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
+            hide_input = false;
+            position = "0,-120";
+            halign = "center";
+            valign = "center";
+          }
+        ];
+        label = [
+          { # Time
+            monitor = "";
+            text = ''cmd[update:1000] echo "<span>$(date +"%I:%M")</span>"'';
+            color = "rgba(216, 222, 233, .85)";
+            #text = "$TIME12";
+            font_size = 120;
+            position = "0, -240";
+            valign = "center";
+            halign = "center";
+          }
+          { # Day-Month-Date
+            monitor = "";
+            text = ''cmd[update:1000] echo -e "$(date +"%A, %B %d")"'';
+            color = "rgba(216, 222, 233, .85)";
+            font_size = 32;
+            #font_family = "SF Pro Display Bold";
+            position = "0, -100";
+            halign = "center";
+            valign = "center";
+          }
+        ];
+
+        shape = { # Blurred box
+          monitor = "";
+          size = "320, 55";
+          color = "rgba(255, 255, 255, 0.1)";
+          rounding = -1;
+          border_size = 0;
+          border_color = "rgba(255, 255, 255, 1)";
+          rotate = 0;
+          xray = false; # if true, make a "hole" in the background (rectangle of specified size, no rotation)
+          position = "34, -190";
+          halign = "center";
+          valign = "center";
+        };
+      };
+    };
 
 
     wayland.windowManager.hyprland = {
       plugins = [ pkgs.hyprlandPlugins.hy3 ];
 
       extraConfig = ''
+        monitor = , preferred, auto, 1
+
         bind=$mod,escape,submap,(p)oweroff, (s)uspend, (h)ibernate, (r)eboot, (l)ogout
         submap=(p)oweroff, (s)uspend, (h)ibernate, (r)eboot, (l)ogout
 
@@ -194,9 +242,9 @@ in {
         };
 
         #"$mod" = "SUPER";
-        "$terminal" = "${pkgs.foot}/bin/foot";
+        "$terminal" = "${termCmd}";
         bind = [
-          "$mod, Return, exec, ${pkgs.foot}/bin/foot"
+          "$mod, Return, exec, ${termCmd}"
           "$mod SHIFT, q, hy3:killactive"
           "$mod, Space, exec, ${menu}"
           "$mod SHIFT, Space, togglefloating"
@@ -277,22 +325,38 @@ in {
           allow_workspace_cycles = true;
         };
 
+        windowrulev2 = [
+          "float,title:^(Volume Control)$"
+          "keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$"
+          "noborder,class:^(firefox)$,title:^(Picture-in-Picture)$"
+          "float, title:^(Picture-in-Picture)$"
+          "size 24% 24%, title:(Picture-in-Picture)"
+          "move 75% 75%, title:(Picture-in-Picture)"
+          "pin, title:^(Picture-in-Picture)$"
+          "float, title:^(Firefox)$"
+          "size 24% 24%, title:(Firefox)"
+          "move 74% 74%, title:(Firefox)"
+          "pin, title:^(Firefox)$"
+          "opacity 0.9, class:^(kitty)"
+          "tile,initialTitle:^WPS.*"
+        ];
+
         gestures = {
           workspace_swipe = true;
         };
 
         general = {
           layout = "hy3";
-          border_size = 0;
-          gaps_in = 8;
-          gaps_out = 16;
+          border_size = 1;
+          gaps_in = 16;
+          gaps_out = 32;
           resize_on_border = true;
-          "col.active_border" = "0xf0f000aa";
-          "col.inactive_border" = "0x00000000";
+          "col.active_border" = "0x99f000aa";
+          "col.inactive_border" = "0x66000000";
         };
 
         decoration = {
-          rounding = 12;
+          rounding = 16;
           blur = {
             enabled = true;
             size = 3;
@@ -333,7 +397,7 @@ in {
 
         exec-once = [
           #"${pkgs.mpvpaper}/bin/mpvpaper  --auto-stop --auto-pause --mpv-options \"no-audio loop\" DP-5 ~/.cache/satellite-images/goes-east/output.mp4"
-          #"${pkgs.wpaperd}/bin/wpaperd -d"
+          "${pkgs.wpaperd}/bin/wpaperd --daemon"
           #"${swayidleCommand}/bin/swayidle"
         ];
 

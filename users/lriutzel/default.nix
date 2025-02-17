@@ -23,8 +23,8 @@
 in {
 
   imports = [
-    flake.inputs.nix-ld.nixosModules.nix-ld
-    ./nix-ld.nix
+    #flake.inputs.nix-ld.nixosModules.nix-ld
+    #./nix-ld.nix
   ];
 
   # Make user available in user list
@@ -34,7 +34,7 @@ in {
 
   config = mkIf userEnabled {
     nix.settings.trusted-users = [username];
-    #
+
     #environment.systemPackages = [
     #  # From https://www.nyx.chaotic.cx/
     #  #
@@ -64,6 +64,7 @@ in {
         "wireshark"
         "dialout" # needed for flashing serial devices ttyUSB0
         "ipfs"
+        "adbusers"
         #dip netdev plugdev
         # cdrom floppy
       ];
@@ -150,6 +151,8 @@ in {
 
       home.username = username;
       home.homeDirectory = mkOverride 10 homeDir;
+
+#home.persistence."/persist/home/${username}".enable = ifGraphical;
       #programs.waybar.settings."custom/pkgwatt" = {
       #  format = "{} Watts";
       #  max-length = 7;
@@ -185,7 +188,7 @@ in {
       # is the agent needed anyway with services.gpg-agent?
       #programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
       programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
-      programs.thunderbird.enable = isFullSystem; # Email client
+      programs.thunderbird.enable = false; #isFullSystem; # Email client
       programs.thunderbird.profiles = {
         lriutzel = {
           isDefault = true;
@@ -263,6 +266,7 @@ in {
 
           pkgs.file-roller # Archive manager
           pkgs.sysbench # benchmarking tool
+          pkgs.postgresql # for psql to maintain nextcloud. Should be in shell
 
           # nvd diff /nix/var/nix/profiles/system-{296,297}-link
           pkgs.nvd # nix tool to diff
@@ -272,6 +276,7 @@ in {
           flake.inputs.scripts.packages.x86_64-linux.rebuild
           #helvum # pipewire patchbay # failing to build
           pkgs.easyeffects # Audio effects
+          pkgs.mumble
 
           pkgs.kitty
           # crypto
@@ -334,7 +339,7 @@ in {
           #flake.inputs.nix-inspect.packages.default
 
           ## spreadsheet stuffs
-          #pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
+          pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
           pkgs.visidata
 
           # TUI to GUI helpers
@@ -368,9 +373,6 @@ in {
           pkgs.geekbench # benchmarking tool
           pkgs.cpu-x # cpu info
           pkgs.lm_sensors
-
-          pkgs.android-tools
-          pkgs.android-udev-rules
 
           pkgs.textsnatcher #  com.github.rajsolai.textsnatcher maybe make alias
           pkgs.super-productivity

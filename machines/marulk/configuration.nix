@@ -14,6 +14,7 @@ in {
     ./hardware-configuration.nix
     #./nebula-lighthouse.nix
     ./adguard.nix
+    ./murmur.nix
   ];
 
   config = {
@@ -28,6 +29,10 @@ in {
     };
 
     gumdrop.vpn.server.enable = true;
+    gumdrop.storageServer.enable = true;
+    gumdrop.storageServer.media = true;
+
+    services.media-services.enable = true;
 
     #nix.settings.max-jobs = mkDefault 8;
 
@@ -74,18 +79,35 @@ in {
       1900
       7359
     ];
-    services.nginx.virtualHosts."jellyfin.home.lucasr.com".locations."/" = {
-      proxyPass = "http://localhost:8096/";
-      proxyWebsockets = true;
+    services.nginx.virtualHosts."jellyfin.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://localhost:8096/";
+        proxyWebsockets = true;
+      };
+    };
+    services.nginx.virtualHosts."ha.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://homeassistant.home.lucasr.com:8123/";
+        proxyWebsockets = true;
+      };
     };
 
     services.nextcloud.enable = true;
+
 
     # wireguard-tools
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
     #networking.bridges.br0.interfaces = ["enp1s0f0"];
-    #services.wg-access-server = {
+    #s]ervices.wg-access-server = {
     #  enable = true;
     #  settings = {
     #    loglevel = "info";

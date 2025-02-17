@@ -7,6 +7,8 @@
 }: let
   inherit (lib) mkIf optionals;
   username = config.home.username;
+  cfg = config.machine;
+  ifGraphical = cfg.sizeTarget > 1;
 in {
   imports = [
     flake.inputs.impermanence.nixosModules.home-manager.impermanence
@@ -14,6 +16,7 @@ in {
 
   config = {
     home.persistence."/persist/home/${username}" = {
+      enable = ifGraphical;
       directories =
         [
           "Downloads"

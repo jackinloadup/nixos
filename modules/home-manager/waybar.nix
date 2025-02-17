@@ -22,7 +22,7 @@ in {
     programs.waybar = {
       systemd = {
         enable = true;
-        target = mkIf config.wayland.windowManager.sway.enable "sway-session.target";
+        target = mkIf config.wayland.windowManager.hyprland.enable "hyprland-session.target";
           #target = []
           #++ optionals config.wayland.windowManager.sway.enable [ "sway-session.target" ]
           #++ optionals config.wayland.windowManager.hyprland.enable [ "hyprland-session.target" ];
@@ -32,25 +32,32 @@ in {
         {
           height = 30;
           layer = "top";
-          position = "bottom";
+          position = "top";
           #tray = { spacing = 10; };
-          modules-center = [];
-          #modules-center = ["sway/window"];
           modules-left = [
+            "mpris"
+            #"mpd"
+          ];
+
+          #modules-center = ["sway/window"];
+          modules-center = [
             "hyprland/workspaces"
             "sway/workspaces"
             "sway/mode"
           ];
           modules-right = [
             "custom/pkgwatt"
-            "pulseaudio"
+            #"pulseaudio"
+            "wireplumber"
             "network"
-            "cpu"
-            "memory"
-            "temperature"
+            #"cpu"
+            #"memory"
+            #"temperature"
+            "gamemode"
             (mkIf hasBattery "battery")
-            "clock"
             "tray"
+            "clock"
+            "custom/quit"
           ];
           "hyprland/workspaces" = {
             "format" = "{icon}";
@@ -62,6 +69,20 @@ in {
             "max-length" = 200;
             "separate-outputs" = true;
           };
+          "group/power" = {
+            "orientation" = "vertical";
+            "drawer" = {
+                "transition-duration" = 500;
+                "children-class" = "not-power";
+                "transition-left-to-right" = true;
+            };
+            "modules" = [
+                "custom/power" # // First element is the "group leader" and won't ever be hidden
+                "custom/quit"
+                "custom/lock"
+                "custom/reboot"
+            ];
+           };
           "custom/pkgwatt" = {
             format = "{}W";
             max-length = 8;
@@ -74,6 +95,26 @@ in {
               exit 0
             '';
           };
+           "custom/quit" = {
+               "format" = "󰗼 ";
+               "tooltip" = false;
+               "on-click" = "hyprctl dispatch exit";
+           };
+           "custom/lock" = {
+               "format" = "󰍁 ";
+               "tooltip" = false;
+               "on-click" = "hyprlock";
+           };
+           "custom/reboot" = {
+               "format" = "󰜉 ";
+               "tooltip" = false;
+               "on-click" = "reboot";
+           };
+           "custom/power" = {
+               "format" = "   ";
+               "tooltip" = false;
+               "on-click" = "poweroff";
+           };
           #modules = {
             battery = mkIf hasBattery {
               format = "{capacity}% {icon}";
@@ -99,11 +140,16 @@ in {
             memory = {format = "{}% ";};
             network = {
               interval = 1;
+              format = "{ifname}";
               format-alt = "{ifname}: {ipaddr}/{cidr}";
-              format-disconnected = "Disconnected ⚠";
-              format-ethernet = "{ifname}: {ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
-              format-linked = "{ifname} (No IP) ";
+              format-disconnected = "";
+              format-ethernet = "{ifname}: {ipaddr}/{cidr} ";
+              format-linked = "{ifname} (No IP) 󰌙";
               format-wifi = "{essid} ({signalStrength}%) ";
+              tooltip-format = "{ifname} via {gwaddr} 󰊗";
+              tooltip-format-wifi = "{ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
+              tooltip-format-ethernet = "{ipaddr}/{cidr} 󰊗  up: {bandwidthUpBits} down: {bandwidthDownBits}";
+              tooltip-format-disconnected = "Disconnected 󰌙";
             };
             pulseaudio = {
               format = "{volume}% {icon} {format_source}";

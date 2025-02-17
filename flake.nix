@@ -77,8 +77,8 @@
 
     # Run unpatched dynamic binaries on NixOS
     nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-index-database = {

@@ -46,6 +46,8 @@ in {
 
     boot.initrd.verbose = debug;
     boot.plymouth.enable = !debug;
+    boot.plymouth.themePackages = mkForce [ pkgs.catppuccin-plymouth ];
+    boot.plymouth.theme = mkForce "catppuccin-macchiato";
 
     # dragon, doesn't look too good in tty only works in pty
     environment.etc.issue.source = mkForce ./issue-banner;
@@ -63,7 +65,7 @@ in {
     programs.hyprland.xwayland.enable = true;
 
     programs.simula.enable = false;
-    programs.sway.enable = true;
+    programs.sway.enable = false;
 
     #services.mullvad-vpn.enable = true;
     #services.mullvad-vpn.package = pkgs.mullvad-vpn; # install version with GUI
@@ -274,11 +276,14 @@ in {
         programs.wpaperd = {
           enable = true;
           settings.default = {
-            path = "~/.cache/satellite-images";
-            sorting = "ascending";
-            transition-time = "1000";
-            duration = "42ms"; # 24fps?
-            mode = "center";
+            #path = "~/.cache/satellite-images";
+            #sorting = "ascending";
+            #transition-time = "1000";
+            #duration = "42ms"; # 24fps?
+            #mode = "center";
+            path = "~/Pictures/Wallpapers";
+            sorting = "random";
+            duration = "5m";
           };
         };
       }

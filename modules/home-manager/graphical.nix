@@ -155,52 +155,52 @@ in {
       platformTheme.name = mkDefault "adwaita-dark";
     };
 
-    home.packages = with pkgs;
-      [
-        drm_info # Small cli utility to dump info about DRM devices
+    home.packages = [
+        pkgs.drm_info # Small cli utility to dump info about DRM devices
 
-        gnomeExtensions.user-themes
-        gnomeExtensions.tray-icons-reloaded
-        gnomeExtensions.vitals
-        gnomeExtensions.dash-to-panel
-        gnomeExtensions.sound-output-device-chooser
-        gnomeExtensions.space-bar
+        pkgs.gnomeExtensions.user-themes
+        pkgs.gnomeExtensions.tray-icons-reloaded
+        pkgs.gnomeExtensions.vitals
+        pkgs.gnomeExtensions.dash-to-panel
+        pkgs.gnomeExtensions.sound-output-device-chooser
+        pkgs.gnomeExtensions.space-bar
 
-        gtk-engine-murrine # Unable to locate theme engine in module_path: "murrine"
-        clearlooks-phenix
+        pkgs.gtk-engine-murrine # Unable to locate theme engine in module_path: "murrine"
+        pkgs.clearlooks-phenix
       ]
       ++ lib.optionals ifGraphical [
         #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
         # GUI
         # ---------------------------------------
-        libreoffice # Office suite
-        libnotify # for notify-send
+        pkgs.libreoffice # Office suite
+        pkgs.libnotify # for notify-send
         # darktile # alternative PTY to try out. GPU + go
 
         # Spelling
-        hunspell
-        hunspellDicts.en_US-large
-        hyphen
+        pkgs.hunspell
+        pkgs.hunspellDicts.en_US-large
+        pkgs.hyphen
 
-        xfce.thunar # File manager
+        pkgs.xfce.thunar # File manager
         #pantheon.elementary-files
         #cinnamon.nemo # File manager
-        #flameshot
-        nautilus
-        gnome-disk-utility
+        #pkgs.flameshot
+        pkgs.nautilus
+        pkgs.ffmpegthumbnailer # Video preview in file manager
+        pkgs.gnome-disk-utility
         #calibre # ebook tool,  assist with kindle
         #obsidian # Markdown information archive
 
         ## Audio
         #pavucontrol # GUI volume source/sink manager
-        pwvucontrol # GUI volume source/sink manager pipewire
+        pkgs.pwvucontrol # GUI volume source/sink manager pipewire
 
 
         ## Fun
         # cavalier # build failure
 
-        usbview # GUI for usb devices
+        pkgs.usbview # GUI for usb devices
       ];
 
     programs.chromium.enable = true;

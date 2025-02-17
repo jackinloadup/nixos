@@ -37,7 +37,7 @@ in {
     #driSupport32Bit = true;
 
     extraPackages = [
-      pkgs.amdvlk
+      #pkgs.amdvlk # causing large black border around gnome apps
       #pkgs.rocm-opencl-icd
       #pkgs.rocm-opencl-runtime
       # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
