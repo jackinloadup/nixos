@@ -18,7 +18,7 @@ in {
       startWhenNeeded = mkDefault true;
 
       settings = {
-        PermitRootLogin = "yes";
+        PermitRootLogin = "prohibit-password";
         PasswordAuthentication = false;
         # disable insecure ciphers and macs
         Ciphers = [
@@ -40,9 +40,13 @@ in {
       };
 
       extraConfig = ''
+
         # don't allow system accounts to login
         # possibly change this to a new group like ssh_login
-        AllowGroups users
+        #
+        # Added root to allow remote nix builders
+        AllowGroups users root
+
         PermitEmptyPasswords no
       '';
 
