@@ -32,7 +32,7 @@ in {
     gumdrop.storageServer.enable = true;
     gumdrop.storageServer.media = true;
 
-    services.media-services.enable = true;
+    services.media-services.enable = false;
 
     #nix.settings.max-jobs = mkDefault 8;
 
