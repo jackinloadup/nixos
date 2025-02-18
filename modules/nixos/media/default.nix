@@ -38,7 +38,8 @@ in {
         # Set-up media group
         users.users.media = {
           isNormalUser = false;
-          extraGroups = [ "media" ];
+          isSystemUser = true;
+          group = "media";
         };
         # Set-up media group
         users.groups.media = { };
@@ -49,12 +50,12 @@ in {
         ];
 
         # download series
-        services.sonarr = {
-          enable = true;
-          group = "media";
-          user = "media";
-          dataDir = "/var/lib/sonarr";
-        };
+#        services.sonarr = {
+#          enable = true;
+#          group = "media";
+#          user = "media";
+#          dataDir = "/var/lib/sonarr";
+#        };
 
           # download movies
         services.radarr = {
@@ -67,8 +68,8 @@ in {
           # better indexer apis
         services.prowlarr = {
           enable = true;
-          group = "media";
-          user = "media";
+#group = "media";
+#          user = "media";
         };
 
 #        services.jellyseerr = {
@@ -84,13 +85,8 @@ in {
         services.lidarr = {
           enable = true;
           user = "media";
-          groups = "media";
+          group = "media";
           dataDir = "/var/lib/lidarr";
-        };
-
-        services.jellyseer = {
-          enable = true;
-          port = 5055;
         };
 
         #permown."/media/arr" = {

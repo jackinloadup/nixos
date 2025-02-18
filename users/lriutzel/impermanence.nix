@@ -3,11 +3,12 @@
   pkgs,
   config,
   lib,
+  nixosConfig,
   ...
 }: let
   inherit (lib) mkIf optionals;
   username = config.home.username;
-  cfg = config.machine;
+  cfg = nixosConfig.machine;
   ifGraphical = cfg.sizeTarget > 1;
 in {
   imports = [
