@@ -12,7 +12,7 @@
   ifTui = cfg.sizeTarget > 0;
   ifGraphical = cfg.sizeTarget > 1;
   ifFull = cfg.sizeTarget > 2;
-  fullSystems = ["reg" "riko"];
+  fullSystems = ["reg" "riko" "zen" "kanye"];
   hostname = config.networking.hostName;
   isFullSystem = elem hostname fullSystems;
   userEnabled = elem username config.machine.users;
