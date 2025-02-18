@@ -139,9 +139,9 @@ in {
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
     #services.displayManager.sddm.enable = true;
-    #services.displayManager.autoLogin.enable = false;
-    #services.displayManager.autoLogin.user = "lriutzel";
-    #services.xserver.displayManager.defaultSession = "sway";
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "lriutzel";
+    services.displayManager.defaultSession = "hyprland";
     # Login Manager
     services.xserver.displayManager.gdm.enable = true;
     #services.xserver.enable = true;
