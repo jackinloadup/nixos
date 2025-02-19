@@ -1357,11 +1357,11 @@
         "ragenix": "ragenix"
       },
       "locked": {
-        "lastModified": 1739938553,
-        "narHash": "sha256-jH7qadHromA0PeugKaSl6m2ywR1qQiullRQ4BiqPPpU=",
+        "lastModified": 1739989109,
+        "narHash": "sha256-6Qyg9TT64kqbxqpTHYhtRwaYKTpoUVANvaKrNKF0/Rk=",
         "ref": "refs/heads/master",
-        "rev": "abf31b1fec714608bd76427e0b055de8f7c5d298",
-        "revCount": 15,
+        "rev": "88871b901d8ff05ec5897108a08077cb92307f80",
+        "revCount": 16,
         "type": "git",
         "url": "file:///home/lriutzel/Projects/secrets"
       },
