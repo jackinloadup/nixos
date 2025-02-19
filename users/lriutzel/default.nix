@@ -65,6 +65,7 @@ in {
         "dialout" # needed for flashing serial devices ttyUSB0
         "ipfs"
         "adbusers"
+        #"libvirtd"
         #dip netdev plugdev
         # cdrom floppy
       ];
