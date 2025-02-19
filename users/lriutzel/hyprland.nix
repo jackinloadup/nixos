@@ -154,19 +154,19 @@ in {
           }
         ];
 
-        shape = { # Blurred box
-          monitor = "";
-          size = "320, 55";
-          color = "rgba(255, 255, 255, 0.1)";
-          rounding = -1;
-          border_size = 0;
-          border_color = "rgba(255, 255, 255, 1)";
-          rotate = 0;
-          xray = false; # if true, make a "hole" in the background (rectangle of specified size, no rotation)
-          position = "34, -190";
-          halign = "center";
-          valign = "center";
-        };
+        #shape = { # Blurred box
+        #  monitor = "";
+        #  size = "320, 480";
+        #  color = "rgba(255, 255, 255, 0.3)";
+        #  rounding = 30;
+        #  border_size = 0;
+        #  border_color = "rgba(255, 255, 255, 1)";
+        #  rotate = 0;
+        #  xray = false; # if true, make a "hole" in the background (rectangle of specified size, no rotation)
+        #  position = "-60, -90";
+        #  halign = "center";
+        #  valign = "center";
+        #};
       };
     };
 
