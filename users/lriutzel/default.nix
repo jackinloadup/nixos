@@ -187,7 +187,8 @@ in {
       programs.ssh.enable = true;
       # following agent line is for nixos not home-manager
       # is the agent needed anyway with services.gpg-agent?
-      #programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
+      # yes, gpg-agent doesn't support resident keys. at least not the solo2.
+      programs.ssh.startAgent = true; # replace with home-manager services.ssh-agent.enable after 23.11
       programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
       programs.thunderbird.enable = false; #isFullSystem; # Email client
       programs.thunderbird.profiles = {
@@ -198,7 +199,9 @@ in {
       programs.zoom-us.enable = false; # not using this anymore, YAY!
       programs.zsh.enable = ifTui;
 
-      services.gpg-agent.enable = isFullSystem;
+      # per https://github.com/solokeys/solo2/discussions/108#discussioncomment-12253610
+      # gpg doesn't support resident keys
+      #services.gpg-agent.enable = isFullSystem;
       services.mopidy.enable = isFullSystem;
       services.syncthing.enable = isFullSystem;
 
