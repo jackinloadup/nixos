@@ -5,7 +5,7 @@
   flake,
   ...
 }: let
-  inherit (lib) mkIf mkDefault;
+  inherit (lib) mkIf mkDefault optionals;
   inherit (builtins) elem hasAttr;
 
   sizeTarget =
@@ -107,8 +107,8 @@ in {
     #nix.distributedBuilds = (!isBuilder);
     nix.distributedBuilds = true;
 
-    nix.buildMachines = mkIf (!isBuilder) [
-      {
+    nix.buildMachines = []
+      ++ optionals (hostname != "reg") [{
         hostName = "reg";
         sshUser = "lriutzel";
         system = "x86_64-linux";
@@ -120,8 +120,8 @@ in {
           "nixos-test"
           "kvm"
         ];
-      }
-      {
+      }]
+      ++ optionals (hostname != "zen") [{
         hostName = "zen";
         sshUser = "lriutzel";
         system = "x86_64-linux";
@@ -133,8 +133,7 @@ in {
           "nixos-test"
           "kvm"
         ];
-      }
-    ];
+      }];
 
     nix.sshServe = mkIf isBuilder {
       enable = true;
