@@ -99,11 +99,9 @@ in {
     # up to 1Gb
     nix.extraOptions = ''
       experimental-features = nix-command flakes
-      auto-optimise-store = true
 
       min-free = ${toString minimumFreeSpace}
       max-free = ${toString maximumFreeSpace}
-      builders-use-substitutes = true
     '';
 
     #nix.distributedBuilds = (!isBuilder);
