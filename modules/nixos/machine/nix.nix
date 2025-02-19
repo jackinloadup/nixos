@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) mkIf mkDefault;
-  inherit (builtins) hasAttr;
+  inherit (builtins) elem hasAttr;
 
   sizeTarget =
     if (hasAttr "machine" config)
@@ -14,7 +14,10 @@
     else 0;
 
   ifTui = sizeTarget > 0;
-  isReg = config.networking.hostName == "reg";
+
+  builders = [ "reg" "zen" ];
+  hostname = config.networking.hostName;
+  isBuilder = elem hostname builders;
 
   MBtoBytes = mb: mb * 1024 * 1024;
   minimumFreeSpace = MBtoBytes 100; # 100MB
@@ -35,8 +38,9 @@ in {
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
       ];
-      trusted-users = ["root"];
+      trusted-users = [ "root" "@wheel" ];
       auto-optimise-store = mkDefault ifTui;
+      builders-use-substitutes = true;
       substituters = [
         "https://aseipp-nix-cache.global.ssl.fastly.net"
         "https://hyprland.cachix.org"
@@ -102,9 +106,10 @@ in {
       builders-use-substitutes = true
     '';
 
-    nix.distributedBuilds = (!isReg);
+    #nix.distributedBuilds = (!isBuilder);
+    nix.distributedBuilds = true;
 
-    nix.buildMachines = mkIf (!isReg) [
+    nix.buildMachines = mkIf (!isBuilder) [
       {
         hostName = "reg";
         sshUser = "lriutzel";
@@ -118,7 +123,27 @@ in {
           "kvm"
         ];
       }
+      {
+        hostName = "zen";
+        sshUser = "lriutzel";
+        system = "x86_64-linux";
+        protocol = "ssh-ng";
+        maxJobs = 16;
+        speedFactor = 3;
+        supportedFeatures = [
+          "big-parallel"
+          "nixos-test"
+          "kvm"
+        ];
+      }
     ];
+
+    nix.sshServe = mkIf isBuilder {
+      enable = true;
+      protocol = "ssh-ng";
+      write = false; # maybe in the future?
+      # keys = []; # in secrets
+    };
 
   };
 }
