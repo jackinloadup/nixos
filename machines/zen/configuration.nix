@@ -119,7 +119,7 @@ in {
     #services.displayManager.sddm.enableHidpi = false;
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "criutzel";
-    services.xserver.displayManager.defaultSession = "gnome";
+    services.displayManager.defaultSession = "gnome";
     # Login Manager
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.enable = true;
