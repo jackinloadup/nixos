@@ -18,9 +18,12 @@ in {
     #    };
     #  }];
     #};
-    environment.systemPackages = [
-      pkgs.virt-manager
-    ];
+
+    # disabling due to pulling in gtk, also in another virt file. Maybe this was needed for
+    # virt-install?
+    #environment.systemPackages = [
+    #  pkgs.virt-manager
+    #];
 
     # Allow communication with zigbee
     users.users.lriutzel.extraGroups = ["dialout"];

@@ -52,11 +52,12 @@ in {
 
 
   # some of these could be placed into home-manager?
+  # disabled because this is added onto servers which don't' need them
   environment.systemPackages = [
-    pkgs.ryzenadj
-    pkgs.zenstates
+    #pkgs.ryzenadj # not in use
+    #pkgs.zenstates # not in use
     pkgs.radeontop #  Top for amd cards. Could maybe be placed somewhere else? debug only if possible?
-    pkgs.radeon-profile
+    #pkgs.radeon-profile # gui - need to figure out how to grant correct permissions
     pkgs.nvtopPackages.amd
   ];
 }
