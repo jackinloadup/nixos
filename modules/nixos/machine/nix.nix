@@ -63,8 +63,8 @@ in {
     # interactive. This seems to duplicate or extend nix.registry
     nix.nixPath = [
       "nixpkgs=/run/current-system/nixpkgs"
-      "nixos-config=/run/current-system/nixos-config"
-      "repl=/run/current-system/nixos-config/repl.nix"
+      "flake=/run/current-system/flake"
+      "repl=/run/current-system/flake/repl.nix"
     ];
 
     # This adds symlinks to /run/current-system
@@ -72,7 +72,7 @@ in {
     # removed the following line to see if that would change build times
     # ln -sv ${repoRoot} $out/nixos-config
     system.extraSystemBuilderCmds = ''
-      ln -sv ${repoRoot} $out/nixos-config
+      ln -sv ${repoRoot} $out/flake
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 
