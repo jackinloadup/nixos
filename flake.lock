@@ -992,11 +992,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1739758141,
-        "narHash": "sha256-uq6A2L7o1/tR6VfmYhZWoVAwb3gTy7j4Jx30MIrH0rE=",
+        "lastModified": 1739923778,
+        "narHash": "sha256-BqUY8tz0AQ4to2Z4+uaKczh81zsGZSYxjgvtw+fvIfM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c618e28f70257593de75a7044438efc1c1fc0791",
+        "rev": "36864ed72f234b9540da4cf7a0c49e351d30d3f1",
         "type": "github"
       },
       "original": {
@@ -1357,11 +1357,11 @@
         "ragenix": "ragenix"
       },
       "locked": {
-        "lastModified": 1739989109,
-        "narHash": "sha256-6Qyg9TT64kqbxqpTHYhtRwaYKTpoUVANvaKrNKF0/Rk=",
+        "lastModified": 1740093059,
+        "narHash": "sha256-FajnMdm9czOLrojZXXgw1WNMUz/eOp+nCmkg3ApTFpA=",
         "ref": "refs/heads/master",
-        "rev": "88871b901d8ff05ec5897108a08077cb92307f80",
-        "revCount": 16,
+        "rev": "6414f4f95c8b4422191ebf8b8f33ae3b06101506",
+        "revCount": 17,
         "type": "git",
         "url": "file:///home/lriutzel/Projects/secrets"
       },

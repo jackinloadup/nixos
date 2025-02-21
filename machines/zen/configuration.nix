@@ -201,7 +201,7 @@ in {
       storageServer.enable = true;
       storageServer.media = true;
       storageServer.roms = true;
-      storageServer.home = false;
+      storageServer.family = true;
     };
     #nix.settings.max-jobs = lib.mkDefault 16;
 
