@@ -136,6 +136,7 @@ in {
     #    gain 0
     #  '';
     #};
+    services.media-services.enable = true;
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
     #services.displayManager.sddm.enable = true;
@@ -215,7 +216,7 @@ in {
       storageServer.enable = true;
       storageServer.media = true;
       storageServer.roms = true;
-      storageServer.home = true;
+      storageServer.backup = true;
 
       vpn.server.endpoint = "home.lucasr.com:51820";
       vpn.client.enable = true;
