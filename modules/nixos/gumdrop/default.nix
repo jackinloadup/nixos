@@ -10,6 +10,7 @@ in {
   imports = [
     ./printer-scanner.nix
     ./pihole.nix
+    ./scanned-document-handling.nix
     ./storage-server.nix
     ./vpn.nix
   ];
