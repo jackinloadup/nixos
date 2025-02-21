@@ -84,7 +84,7 @@ in {
             ];
            };
           "custom/pkgwatt" = {
-            format = "{}W";
+            format = "{}W ";
             max-length = 8;
             interval = 15;
             exec = pkgs.writeShellScript "pkgs-watts" ''
@@ -143,11 +143,12 @@ in {
               format = "{ifname}";
               format-alt = "{ifname}: {ipaddr}/{cidr}";
               format-disconnected = "";
-              format-ethernet = "{ifname}: {ipaddr}/{cidr} ";
+              format-ethernet = "";
+              #format-ethernet = "{ifname}: {ipaddr}/{cidr} ";
               format-linked = "{ifname} (No IP) 󰌙";
-              format-wifi = "{essid} ({signalStrength}%) ";
+              format-wifi = "{essid} ";
               tooltip-format = "{ifname} via {gwaddr} 󰊗";
-              tooltip-format-wifi = "{ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
+              tooltip-format-wifi = " ({signalStrength}%) {ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
               tooltip-format-ethernet = "{ipaddr}/{cidr} 󰊗  up: {bandwidthUpBits} down: {bandwidthDownBits}";
               tooltip-format-disconnected = "Disconnected 󰌙";
             };
