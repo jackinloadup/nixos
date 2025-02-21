@@ -3,6 +3,7 @@
   flake,
   pkgs,
   lib,
+  config,
   ...
 }:
 # Machine runs DNS and home-assistant vm
@@ -31,6 +32,7 @@ in {
     gumdrop.vpn.server.enable = true;
     gumdrop.storageServer.enable = true;
     gumdrop.storageServer.media = true;
+    gumdrop.scanned-document-handling.enable = true;
 
     services.media-services.enable = false;
 
@@ -44,6 +46,7 @@ in {
     networking.networkmanager.enable = mkForce false;
     networking.bridges.br0.interfaces = ["enp1s0f0"];
     networking.interfaces.br0.useDHCP = true;
+
 
     networking.dhcpcd = {
       #wait = "ipv4";
@@ -96,6 +99,16 @@ in {
 
       locations."/" = {
         proxyPass = "http://homeassistant.home.lucasr.com:8123/";
+        proxyWebsockets = true;
+      };
+    };
+    services.nginx.virtualHosts."paperless.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://localhost:${toString config.services.paperless.port}/";
         proxyWebsockets = true;
       };
     };
