@@ -37,7 +37,7 @@ in {
         tree # file/directory viewer in tree format
         ripgrep # grep alternative
         rsync
-        pass # password manager
+        # pass # password manager # not in use atm
         lf # file manager
         #  highlight # highlight files for previews
         #  poppler_utils # for pdf2text
