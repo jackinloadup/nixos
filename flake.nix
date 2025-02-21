@@ -316,6 +316,9 @@
             #pkgs.sops
             #pkgs.ssh-to-age
           ];
+          packages = [
+            #pkgs.
+          ];
         };
 
         formatter = config.treefmt.build.wrapper;
