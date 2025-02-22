@@ -11,8 +11,10 @@ in {
 
     # TODO: make services here depend on mount
 
+    gumdrop.storageServer.backup = true;
     gumdrop.storageServer.printerScanShare = true;
 
+    #TODO must define gid and uid
     users.users.serviceftp = {
       isSystemUser = true;
       group = "serviceftp";
@@ -29,6 +31,7 @@ in {
 
     #systemd.tmpfiles.rules = [ "d /var/ftp 2770 vsftpd vsftpd - -" ];
 
+    # printer-scanner-share.home.lucasr.com in mikrotik dns points to this
     services.vsftpd = {
       enable = true;
 
@@ -58,9 +61,26 @@ in {
 
     services.paperless = {
       enable = true;
+      address = "127.0.0.1";
+      #address = "paperless.home.lucasr.com";
       mediaDir = "/mnt/gumdrop/backup/paperless";
       consumptionDir = "/mnt/gumdrop/printerScanShare";
+      #exporter = {
+      #  enable = true;
+      #  #directory = "/mnt/gumdrop/backup/paperless";
+      #  settings = {
+      #    compare-checksums = true;
+      #    delete = true;
+      #    no-color = true;
+      #    no-progress-bar = true;
+      #  };
+      #};
       settings = {
+        PAPERLESS_ALLOWED_HOSTS = "paperless.home.lucasr.com,localhost";
+        PAPERLESS_CSRF_TRUSTED_ORIGINS =
+          "https://paperless.home.lucasr.com,http://localhost";
+        PAPERLESS_CORS_ALLOWED_HOSTS =
+          "https://paperless.home.lucasr.com,http://localhost";
         PAPERLESS_CONSUMER_IGNORE_PATTERN = [
           ".DS_STORE/*"
           "desktop.ini"
