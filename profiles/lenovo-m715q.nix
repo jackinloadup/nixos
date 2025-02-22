@@ -14,6 +14,10 @@ in {
     #boot.kernelModules = [ "kvm-amd" "amd_gpio" ];
     boot.kernelModules = [ "kvm-amd" ];
 
+    # Play with TPM. Hope to have ssh host key come from tpm.
+    # Hangs on boot causes 1:30 delay
+    security.tpm2.enable = false;
+
     # machine isn't physically moving. Keep same dhcp issued address
     networking.networkmanager.wifi.macAddress = mkForce "permanent";
 
