@@ -82,7 +82,7 @@ in {
              #lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
            }
            {
-             timeout = 1200;
+             timeout = 960;
              on-timeout = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms off";
              on-resume = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
            }
