@@ -35,7 +35,7 @@ in {
     systemd.services."adguardhome".before = ["libvirtd.service"];
     #systemd.services.libvirtd.after = ["adguardhome.service"];
 
-    services.nginx.virtualHosts."adguard.home.lucasr.com" = {
+    services.nginx.virtualHosts."dns.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
       acmeRoot = null; # Use DNS Challenege
