@@ -25,17 +25,17 @@ in {
         hideMounts = true;
         directories =
           [
-          ]
-          ++ optionals config.networking.networkmanager.enable [
-            "/etc/NetworkManager/system-connections"
-          ]
-          ++ [
             # The /var/lib/nixos directory contains the uid and gid map for
             # entities without a static id. Not persisting them means your user
             # and group ids could change between reboots
             # https://github.com/nix-community/impermanence/pull/114
             "/var/lib/nixos"
+
+            "/var/lib/systemd/timers"
             #"/var/log"
+          ]
+          ++ optionals config.networking.networkmanager.enable [
+            "/etc/NetworkManager/system-connections"
           ]
           ++ optionals config.systemd.coredump.enable [
             "/var/lib/systemd/coredump"
@@ -52,6 +52,12 @@ in {
           ]
           ++ optionals config.services.blueman.enable [
             "/var/lib/blueman"
+          ]
+          ++ optionals config.services.open-webui.enable  [
+            "/var/lib/private/open-webui"
+          ]
+          ++ optionals config.services.ollama.enable  [
+            "/var/lib/private/ollama"
           ]
           ++ optionals config.services.colord.enable [
             {
