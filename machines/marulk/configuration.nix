@@ -102,14 +102,27 @@ in {
         proxyWebsockets = true;
       };
     };
+    services.nginx.virtualHosts."chat.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://reg.home.lucasr.com:${toString config.services.paperless.port}/";
+        proxyWebsockets = true;
+      };
+    };
     services.nginx.virtualHosts."paperless.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
       acmeRoot = null; # Use DNS Challenege
 
       locations."/" = {
-        proxyPass = "http://localhost:${toString config.services.paperless.port}/";
+        proxyPass = "http://127.0.0.1:${toString config.services.paperless.port}/";
         proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header Host localhost;
+        '';
       };
     };
 
