@@ -192,6 +192,14 @@ in {
     # users who are smart can be trusted?
     security.sudo.wheelNeedsPassword = false;
 
+    # Fuse filesystem that returns symlinks to executables based on the PATH of
+    # the requesting process. This is useful to execute shebangs on NixOS that
+    # assume hard coded locations in locations like /bin or /usr/bin etc.
+    #
+    # I don't have a direct need, but this should help when encountering an
+    # application not prepared for NixOS
+    services.envfs.enable = ifGraphical;
+
     ## Enable updating firmware via the command line.
     services.fwupd.enable = mkDefault ifTui;
 
