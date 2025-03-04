@@ -23,6 +23,10 @@ in {
   boot.plymouth.enable = isUserFacing;
   boot.initrd.verbose = !isUserFacing;
 
+  #boot.initrd.network.tor.enable = true;
+  #boot.initrd.network.ntpd.enable = true;
+  #boot.initrd.network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
+
   hardware.bluetooth.enable = isUserFacing;
 
   services.fwupd.enable = mkForce true;
