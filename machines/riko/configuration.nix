@@ -29,7 +29,7 @@ in {
       {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
-        services.satellite-images.enable = true;
+        services.satellite-images.enable = false;
 
         programs.wpaperd = {
           enable = true;
