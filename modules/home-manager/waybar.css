@@ -55,11 +55,12 @@
 window#waybar {
   /*background: @theme_base_color; */
   background: rgba(75, 75, 75, 0.75);
-  border-bottom: 1px solid @unfocused_borders;
   /*
+  border-bottom: 1px solid @unfocused_borders;
 background-color: @bgcolor;
   border-bottom: 3px solid rgba(66, 65, 74, 0.5);
 */
+  padding: 0 5px;
   color: @fgcolor;
   transition-property: background-color;
   transition-duration: .5s;
