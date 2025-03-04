@@ -2,7 +2,13 @@
   config = {
     #programs.nix-ld.dev.enable = isFullSystem; # dev = using flake vs nixpkgs
     # TODO when possible pull from programs.myapp.package
+
+    # https://fzakaria.com/2025/02/27/nix-pragmatism-nix-ld-and-envfs
+    # nix-ld has been helpful but I'm not sure what libraries really need to be
+    # loaded.
     programs.nix-ld.libraries = [
+      pkgs.stdenv.cc.cc
+
       pkgs.SDL2
       pkgs.SDL2_image
       pkgs.SDL2_sound
@@ -17,7 +23,6 @@
       pkgs.libgcc
       pkgs.steam
       #pkgs.zstd
-      pkgs.stdenv.cc.cc
       pkgs.libcef
       pkgs.rocmPackages.clr # for AMD only. TODO
 
