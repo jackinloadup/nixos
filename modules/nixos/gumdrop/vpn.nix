@@ -138,15 +138,15 @@ in {
         domain = "home.lucasr.com";
         expand-hosts = true;
         address = [
-          "/marulk/10.100.0.1"
+          "/marulk/10.100.0.1" # server
           "/lucas-phone/10.100.0.2"
-          "/riko/10.100.0.3"
-          "/lyza/10.100.0.4"
+          "/riko/10.100.0.3" # Christine's laptop
+          "/lyza/10.100.0.4" # Christine's studio
           "/kanye/10.100.0.5"
-          "/zen/10.100.0.6"
+          "/zen/10.100.0.6" # Christine Desktop
           "/christine-phone/10.100.0.7"
           "/timberlake/10.100.0.8"
-          "/reg/10.100.0.11"
+          "/reg/10.100.0.11" # Desktop
         ];
         #};
       };
