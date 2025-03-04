@@ -77,6 +77,7 @@ in {
               name = "lyza";
               publicKey = "439vHIw45W3VpVm1OllB6QN85VSUnIKT3RGWzRuzLSE=";
               allowedIPs = [ "10.100.0.4/32" ];
+              persistentKeepalive = 25; # this might need to be on the client side
             }
             {
               name = "kanye";
