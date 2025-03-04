@@ -56,7 +56,6 @@ in {
     delta.enable = true;
 
     extraConfig = {
-      init.defaultBranch = "master";
       color.ui = true;
       core.editor = "nvim";
       #credential.helper = "store --file ~/.git-credentials";
