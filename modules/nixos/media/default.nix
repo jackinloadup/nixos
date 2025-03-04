@@ -30,7 +30,7 @@ in {
       privateNetwork = true;
       hostBridge = "br0";
 #hostAddress = "10.16.100.10";
-      localAddress = "192.168.100.11";
+      localAddress = "10.16.1.10";
       #hostAddress6 = "fc00::1";
       #localAddress6 = "fc00::2";
 
@@ -115,6 +115,7 @@ in {
   };
 
     # proxy interfaces
+    services.nginx.enable = true;
     services.nginx.virtualHosts = {
       "radarr.${config.networking.hostName}.home.lucasr.com" = {
         serverAliases = [ "radarr.ingolf-wagner.de" ];
