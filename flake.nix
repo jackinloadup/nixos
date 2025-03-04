@@ -88,15 +88,7 @@
 
     nixos-unified.url = "github:srid/nixos-unified";
 
-    # Fuse filesystem that returns symlinks to executables based on the PATH of
-    # the requesting process. This is useful to execute shebangs on NixOS that
-    # assume hard coded locations in locations like /bin or /usr/bin etc.
-    envfs = {
-      url = "github:Mic92/envfs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    secrets = {
+   secrets = {
       url = "/home/lriutzel/Projects/secrets";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
