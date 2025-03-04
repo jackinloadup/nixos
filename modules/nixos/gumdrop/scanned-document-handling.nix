@@ -92,6 +92,11 @@ in {
         };
       };
     };
+
+    #services.tika = {
+    #  enable = true;
+    #};
+
   };
 
 }
