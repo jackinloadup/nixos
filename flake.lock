@@ -1313,11 +1313,11 @@
         "ragenix": "ragenix"
       },
       "locked": {
-        "lastModified": 1741123762,
-        "narHash": "sha256-mHS9r4Ca/0UUgxQzHZGpEb7K0q1cDZeyH15i1j9g4b4=",
+        "lastModified": 1741123847,
+        "narHash": "sha256-66qOFe3df5XpjECJdtFYgTSmBw8hm5aP1xADhZDfF9c=",
         "ref": "refs/heads/master",
-        "rev": "70a0ef2abd6721b36b82376913b6353987504fb2",
-        "revCount": 21,
+        "rev": "5c9f6cdc2286ebb1d0688a20f82589b4dbc57ee7",
+        "revCount": 22,
         "type": "git",
         "url": "file:///home/lriutzel/Projects/secrets"
       },
