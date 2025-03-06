@@ -14,6 +14,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./home-assistant.nix
+    ./frigate.nix
   ];
 
     ##-----------------------------------
