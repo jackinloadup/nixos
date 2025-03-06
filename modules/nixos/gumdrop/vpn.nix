@@ -77,7 +77,7 @@ in {
               name = "lyza";
               publicKey = "439vHIw45W3VpVm1OllB6QN85VSUnIKT3RGWzRuzLSE=";
               allowedIPs = [ "10.100.0.4/32" ];
-              persistentKeepalive = 25; # this might need to be on the client side
+              persistentKeepalive = 25;
             }
             {
               name = "kanye";
@@ -124,6 +124,7 @@ in {
               dynamicEndpointRefreshSeconds = 5;
               publicKey = "KrWVR+VV04OOmt63FOeqx9UKE4en20lDl6pGieLQSj0=";
               allowedIPs = [ "10.100.0.0/24" ];
+              persistentKeepalive = 25;
             }
           ];
         };
