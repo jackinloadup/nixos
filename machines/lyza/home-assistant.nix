@@ -124,6 +124,11 @@ in {
           password = "mosquitto";
         };
         advanced = {
+          log_output = [ "console" ];
+          log_level = "warn";
+
+          last_seen = "ISO_8601_local";
+
           # Optional: ZigBee pan ID (default: shown below)
           # Setting pan_id: GENERATE will make Zigbee2MQTT generate a new panID on next startup
           #pan_id =  "0x1a62";
