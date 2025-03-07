@@ -32,6 +32,10 @@ in {
     nixpkgs.overlays = [
       flake.inputs.nur.overlays.default
     ];
+
+    # disable nix-channel cmd and it's state files
+    nix.channel.enable = false;
+
     nix.settings = {
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -59,6 +63,7 @@ in {
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
+
     # It seems like nixPath doesn't need to expose this if system is non
     # interactive. This seems to duplicate or extend nix.registry
     nix.nixPath = [
@@ -76,19 +81,25 @@ in {
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 
+    # TODO explore disabling global registry items from  `nix registry list`
+
     # Flake registries are a convenience feature that allows you to refer to
     # flakes using symbolic identifiers such as nixpkgs for example:
     #   `nix shell nixpkgs#hello-world`
-    nix.registry =
-      lib.mapAttrs (id: flake: {
-        inherit flake;
-        from = {
-          inherit id;
-          type = "indirect";
-        };
-      })
-      (flake.inputs # Expose all flakes
-        // {pkgs = flake.inputs.nixpkgs;}); # alias for convenience
+    nix.registry.nixpkgs.flake = flake.inputs.nixpkgs;
+    nix.registry.nixpkgs-unstable.flake = flake.inputs.nixpkgs-unstable;
+      # nix.registry =
+      #   lib.mapAttrs (id: flake: {
+      #     inherit flake;
+      #     from = {
+      #       inherit id;
+      #       type = "indirect";
+      #     };
+      #   })
+      #   ({nixpkgs = flake.inputs.nixpkgs;}
+      #     // {nixpkgs-unstable = flake.inputs.nixpkgs-unstable;} ); # alias for convenience
+      # #(flake.inputs # Expose all flakes
+      # #    // {pkgs = flake.inputs.nixpkgs;}); # alias for convenience
 
     # enable flakes
     # set the min free disk space.
