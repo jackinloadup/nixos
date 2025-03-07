@@ -760,7 +760,7 @@
       "inputs": {
         "nixos-appstream-data": "nixos-appstream-data",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ],
         "utils": "utils"
       },

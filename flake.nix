@@ -12,7 +12,7 @@
 
     nix-software-center = {
       url = "github:snowfallorg/nix-software-center";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
       #inputs.nixos-appstream-data.inputs.nixpkgs.follows = "nixpkgs";
       #inputs.nixos-appstream-data.inputs.flake-utils.follows = "flake-utils";
 
@@ -272,13 +272,11 @@
           # Custom packages added via the overlay are selectively added here, to
           # allow using them from other flakes that import this one.
           packages = flattenTree {
-            winbox = pkgs.wineApps.winbox;
             rtl_433-dev = pkgs.rtl_433-dev;
 
           };
 
           apps = {
-            winbox = mkApp {drv = packages.winbox;};
             rtl_433-dev = mkApp {drv = packages.rtl_433-dev;};
           };
         })

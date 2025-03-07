@@ -34,7 +34,6 @@ in
 
     wrapWine = super.callPackage ../packages/wineWrap.nix {};
     wineApps = {
-      winbox = super.callPackage ../packages/winbox.nix {};
       polyhub = super.callPackage ../packages/polyhub.nix {};
     };
     zoom-us = self.unstable.zoom-us;
