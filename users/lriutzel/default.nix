@@ -310,7 +310,6 @@ in {
           pkgs.nmapsi4 # QT frontend for nmap
 
           ## Wine Apps
-          #pkgs.wineApps.winbox
           pkgs.winbox # Mikrotik RouterOS GUI
           #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
 
