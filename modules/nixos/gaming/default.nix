@@ -26,29 +26,13 @@ in {
     environment.systemPackages = with pkgs; [
       #monado
       #lighthouse-steamvr
-      libgdiplus
-      adwaita-icon-theme
 
-      # SNES
-      snes9x-gtk
+      # don't know why these were needed
+      #libgdiplus
+      #adwaita-icon-theme
 
       # xorg stuff
       xorg.xhost # for `xhost si:localuser:root`
-
-      #nur.repos.dukzcry.gamescope
-      #retroarch
-      #retroarchFull
-      prismlauncher # minecraft
-      #supertuxkart # alt mario cart
-      #warsow # Multiplayer FPS game
-      #cool-retro-term
-      gamehub
-      nethack # Rogue-like game
-      #mindustry
-      gltron
-
-      discord
-      clonehero
     ];
 
     services.xserver = {
@@ -61,6 +45,31 @@ in {
 
     home-manager.sharedModules = [
       {
+        home.packages = [
+          #nur.repos.dukzcry.gamescope
+
+          (pkgs.retroarch.override {
+            cores = with pkgs.libretro; [
+              mrboom # bomberman clone
+            ];
+          })
+          #retroarchFull
+          pkgs.prismlauncher # minecraft
+          #supertuxkart # alt mario cart
+          #warsow # Multiplayer FPS game
+          #cool-retro-term
+          pkgs.gamehub
+          pkgs.nethack # Rogue-like game
+          #mindustry
+          pkgs.gltron
+
+          pkgs.discord
+          pkgs.clonehero
+
+          # SNES
+          pkgs.snes9x-gtk
+        ];
+
         qt.enable = mkForce true;
         qt.platformTheme.name = mkForce "adwaita";
         qt.style.name = mkForce "adwaita-dark";
@@ -69,6 +78,8 @@ in {
     ];
 
     # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
+    # Never had an actual latency issue
+    #
     #services.pipewire = {
     #  config.pipewire = {
     #    "context.properties" = {
