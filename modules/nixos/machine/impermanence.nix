@@ -137,5 +137,22 @@ in {
     ++ optionals config.services.zigbee2mqtt.enable [
       "d ${config.services.zigbee2mqtt.dataDir} 0755 zigbee2mqtt zigbee2mqtt"
     ];
+
+    # Trying to hide home-manager impermanence mounts
+    #
+    # Didn't work but keeping for reference. Maybe could work? From research
+    # udisks can't affect fuse because it isn't a piece of hardware?
+    #
+    # Alternate solution: don't use home-manager impermanence, instead use nixos
+    # module. Not ideal but from what I can tell. Fuse itself doesn't support
+    # adding the mount hints we need to hide it. Tried/trying to add the
+    # hints/attributes via another method.
+    # https://github.com/nix-community/impermanence/issues/127
+    #
+    #services.udev.extraRules = ''
+    #  # Hide bind mounts
+    #  ACTION=="add", KERNEL=="fuse, SUBSYSTEM=="misc", ATTR{hint-ignore}=="udisks2", ENV{UDISKS_IGNORE}="1"
+    #'';
+
   };
 }
