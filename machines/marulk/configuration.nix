@@ -73,6 +73,11 @@ in {
     #    }
     #  ];
     #};
+    services.audiobookshelf = {
+      enable = true;
+      openFirewall = false; # handle http via nginx
+    };
+
     services.jellyfin = {
       enable = true;
       openFirewall = false; # handle http via nginx
@@ -110,6 +115,19 @@ in {
       locations."/" = {
         proxyPass = "http://reg.home.lucasr.com:${toString config.services.paperless.port}/";
         proxyWebsockets = true;
+      };
+    };
+    services.nginx.virtualHosts."audiobookshelf.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS challenege
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}/";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header Host localhost;
+        '';
       };
     };
     services.nginx.virtualHosts."paperless.home.lucasr.com" = {
