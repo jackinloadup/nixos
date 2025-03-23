@@ -24,7 +24,7 @@
     nix-inspect.url = "github:bluskript/nix-inspect";
 
 
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    #chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     # Nix User Repository: User contributed nix packages
     nur.url = "github:nix-community/NUR";
@@ -108,6 +108,15 @@
 
     # Devshell
     treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    # AMD microcode updates
+    #
+    # AMD only provides microcodes to linux-firmware for certain server-grade
+    # CPUs. For consumer CPUs, updates are distributed through BIOS releases by
+    # motherboard and laptop manufacturers, which can be inconsistent, delayed,
+    # or even discontinued over time. This flake ensures you have the latest
+    # microcodes directly on NixOS, without depending on BIOS updates.
+    ucodenix.url = "github:e-tho/ucodenix";
   };
 
   outputs = {self, ...} @ inputs:
