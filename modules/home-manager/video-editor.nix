@@ -12,6 +12,7 @@ in {
   ];
 
   config = {
+     # If kdenlive give more grief, maybe look into distrobox
      services.flatpak.enable = mkDefault true;
      services.flatpak.packages = [
        #{ appId = "com.brave.Browser"; origin = "flathub";  }
