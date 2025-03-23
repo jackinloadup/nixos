@@ -14,6 +14,16 @@ in
       config.allowUnfree = true;
     };
 
+    # All for 8BitDuo support. TODO remove - 2-25
+    # https://github.com/libretro/retroarch-joypad-autoconfig/pull/1224
+    retroarch-joypad-autoconfig = super.retroarch-joypad-autoconfig.overrideAttrs {
+      src = super.fetchFromGitHub {
+        owner = "JonSnow88";
+        repo = "retroarch-joypad-autoconfig";
+        rev = "1861d153e5d14cbd4f7ab60495a75cd631005ef5";
+        hash = "sha256-xwro/YXl5g520YLF6WLpgaLkCgU58vpmF2kgxd5EL78=";
+      };
+    };
     #home-assistant = self.unstable.home-assistant.override {
     #  extraPackages = py: with py; [ psycopg2 librouteros ];
     #};
