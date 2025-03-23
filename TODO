@@ -1,5 +1,4 @@
 # completed
-signal
 zsh + spaceship
 wireshark
 migrate laptop
@@ -9,45 +8,38 @@ option to enable docker.
 vm system like qemu or w/e
 
 # partial
-build plan to migrate desktop
 steam compartment?
 kexec reboot
 yubikey
 gamescope - SteamOS session compositing window manager - https://github.com/Plagman/gamescope
 
 # proposed
-gnupg
-clamav - OnAccessScan
-wfvm https://git.m-labs.hk/M-Labs/wfvm
-quickemu
-tpm remote attestation
-vim https://github.com/anordal/shellharden
-git pre-commit hooks https://github.com/cachix/pre-commit-hooks.nix
-connect to p2p NAT64 network https://p2p.nat64.dk
-tui disk image writer
+- gnupg
+- clamav - OnAccessScan
+- wfvm https://git.m-labs.hk/M-Labs/wfvm
+- quickemu
+- tpm remote attestation
+- vim https://github.com/anordal/shellharden
+- git pre-commit hooks https://github.com/cachix/pre-commit-hooks.nix
+- connect to p2p NAT64 network https://p2p.nat64.dk
+- tui disk image writer
+- custom kernel that cuts out cruft like support for sandards or subsystems the computer will never need
+- explore kernelshark debug tool
+- possible to customize bios with tool like AMI Firmware Update linux (like amibcp?)
+- uefi tools and isos to keep on me.
+- pkgs.netdata - Real-time performance monitoring tool
 monitioring:
   metrics collection
   logging collection
 
 # Requires secret storage
 - autostart fractal - matrix client
-- pass
 - yubikey
 - gnupg
 - signal
 - steam compartment?
 - fractal?
-- custom kernel that cuts out cruft like support for sandards or subsystems the computer will never need
-- explore kernelshark debug tool
-- possible to customize bios with tool like AMI Firmware Update linux (like amibcp?)
-- uefi tools and isos to keep on me.
-- pkgs.netdata - Real-time performance monitoring tool
 
-
-# to autostart possibly
- - fractal
- - irc client
- - signal
 
 TinyCoreLinux or similar as a alt boot?
 vm system like qemu or w/e
@@ -78,8 +70,6 @@ mpd
 profile-sync-daemon
 
 kms glsl shader boot experience like plymouth?
-
-look into wayfire vs sway. animations look neat
 
 + hybernation
 
