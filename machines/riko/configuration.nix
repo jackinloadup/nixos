@@ -24,7 +24,6 @@ in {
     hardware.bluetooth.enable = true;
     hardware.yubikey.enable = true;
 
-
     home-manager.sharedModules = [
       {
         wayland.windowManager.sway.enable = config.programs.sway.enable;

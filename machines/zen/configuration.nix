@@ -21,20 +21,8 @@ in {
   ];
 
   config = {
+    environment.systemPackages = [ ];
 
-    #boot.kernelPackages = pkgs.linuxPackages_cachyos;
-    environment.systemPackages = [
-      #pkgs.scx
-      #pkgs.cpufrequtils
-    ];
-
-    # Not being used. disabling due to other issues
-    #boot.binfmt.emulatedSystems = [
-    #  "wasm32-wasi"
-    #  #"i686-embedded"
-    #  "x86_64-windows"
-    #  "aarch64-linux"
-    #];
     boot.crashDump.enable = false; # Causes kernel build
 
     boot.initrd.network.enable = true;
@@ -44,6 +32,7 @@ in {
     boot.plymouth.enable = !debug;
 
     hardware.bluetooth.enable = true;
+    hardware.bluetooth.powerOnBoot = true;
     hardware.logitech.wireless.enable = mkDefault true;
     hardware.logitech.wireless.enableGraphical = mkDefault true;
 
@@ -57,41 +46,7 @@ in {
     programs.simula.enable = false;
     programs.sway.enable = false;
 
-    #nixpkgs.config.rocmSupport = true;
     nixpkgs.hostPlatform = "x86_64-linux";
-
-    #services.hydra.enable = true;
-    services.jellyfin = {
-      enable = false;
-      openFirewall = true;
-    };
-
-    #services.k3s.enable = false;
-    #services.k3s.role = "server";
-    #services.k3s.clusterInit = true;
-
-    services.kubo = {
-      enable = false;
-      startWhenNeeded = true;
-      autoMount = true;
-      enableGC = true;
-      settings = {
-        Datastore = {
-          StorageMax = "100GB";
-        };
-        Discovery = {
-          MDNS.Enabled = true;
-         #Swarm.AddrFilters = null;
-        };
-        Addresses.API = "/ip4/127.0.0.1/tcp/5001";
-        Experimental.FilestoreEnabled = true;
-        Experimental.Libp2pStreamMounting = true;
-        Reprovider.Interval = "1h";
-        Swarm.ConnMgr.GracePeriod = "60s";
-        Swarm.RelayClient.Enabled = true;
-      };
-      extraFlags = [ "--enable-pubsub-experiment" ];
-    };
 
     #networking.firewall.allowedTCPPorts = [ 19999 ]; # netdata port;
     #services.netdata.enable = true;
@@ -99,24 +54,8 @@ in {
     services.flatpak.enable = true;
     services.pipewire.enable = true;
 
-    #services.rtl_433 = {
-    #  enable = false;
-    #  package = pkgs.rtl_433-dev;
-    #  configText = ''
-    #    output json
-    #    output mqtt://mqtt.home.lucasr.com,user=mosquitto,pass=mosquitto,retain=0,events=rtl_433[/model][/id]
-    #    report_meta time:utc
-    #    frequency 915M
-    #    frequency 433.92M
-    #    convert si
-    #    hop_interval 60
-    #    gain 0
-    #  '';
-    #};
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
-    #services.displayManager.sddm.enable = true;
-    #services.displayManager.sddm.enableHidpi = false;
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "criutzel";
     services.displayManager.defaultSession = "gnome";
@@ -126,15 +65,11 @@ in {
     #services.xserver.displayManager.lightdm.enable = true;
     security.polkit.enable = true;
 
-    #services.desktopManager.plasma6.enable = true;
-    #services.xserver.desktopManager.plasma5.enable = true;
-    #programs.ssh.askPassword = mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
-    #programs.ssh.askPassword = mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
 
     ## xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
     ##     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
     services.xserver.desktopManager.gnome.enable = true;
-    #services.xserver.windowManager.i3.enable = true;
+
     home-manager.users.criutzel = {
       imports = [
         #../../users/criutzel/impermanence.nix
@@ -229,13 +164,7 @@ in {
     ];
 
     networking.hostName = "zen";
-    #networking.bridges.br0.interfaces = ["eno1"];
-    #networking.interfaces.br0.useDHCP = true;
     networking.enableIPv6 = false;
-    #virtualisation.libvirtd.allowedBridges = ["br0"];
-
-    #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
-    #networking.firewall.allowedUDPPorts = [ 8000 ];
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
