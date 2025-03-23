@@ -61,7 +61,7 @@ in {
     nix.gc = {
       automatic = ifTui;
       dates = "weekly";
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 90d";
     };
 
     # It seems like nixPath doesn't need to expose this if system is non
@@ -114,6 +114,20 @@ in {
       min-free = ${toString minimumFreeSpace}
       max-free = ${toString maximumFreeSpace}
     '';
+
+    # Example to pass access tokens to nix. Like github or other forge keys
+    #nix = {
+    #  extraOptions = ''
+    #    extra-access-tokens = github.com=github_pat_XYZ
+    #  OR include a file with it inside
+    #    !include ${config.sops.secrets.nixAccessTokens.path}
+    #  '';
+    #};
+
+    #sops.secrets.nixAccessTokens = {
+    #  mode = "0440";
+    #  group = config.users.groups.keys.name;
+    #};
 
     #nix.distributedBuilds = (!isBuilder);
     nix.distributedBuilds = true;
