@@ -18,6 +18,8 @@ in {
   config = {
     home.persistence."/persist/home/${username}" = {
       enable = ifGraphical;
+      allowOther = true;
+
       directories =
         [
           "Downloads"
@@ -99,7 +101,6 @@ in {
       #    ".steam/registry.vdf"
       #  ];
         #++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
-      allowOther = true;
     };
   };
 }
