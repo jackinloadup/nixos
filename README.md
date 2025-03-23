@@ -41,7 +41,7 @@ Personal home lab nixos setup exposed as a flake.
 
 
 # Install 2.0
-- (new machine) boot PXE nixos-iso
+- (new machine) boot PXE nixos-iso or usb
 - (new machine) set password for nixos user `passwd`
 - (new machine) get ip `ip addr`
 - (new machines) check disk `lsblk`
