@@ -103,7 +103,7 @@ in {
       "lriutzel"
     ];
     sizeTarget = 1; # was 1
-    minimal = false;
+    minimal = true;
     tui = true;
     impermanence = mkDefault true;
     lowLevelXF86keys.enable = isUserFacing;
