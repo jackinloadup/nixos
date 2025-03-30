@@ -31,7 +31,7 @@ in {
     boot.plymouth.enable = !debug;
 
     hardware.bluetooth.enable = true;
-    hardware.bluetooth.powerOnBoot = true;
+    hardware.bluetooth.powerOnBoot = true; # already default
     hardware.logitech.wireless.enable = mkDefault true;
     hardware.logitech.wireless.enableGraphical = mkDefault true;
 
