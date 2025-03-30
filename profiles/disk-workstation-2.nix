@@ -131,7 +131,9 @@ in {
             normalization = "formD";
             relatime = "on";
           };
+
           #mountpoint = "/persist";
+          mountOptions = [ "x-gvfs-hide" ]; # didn't seem to work
 
           datasets = let
             unmountable = {
