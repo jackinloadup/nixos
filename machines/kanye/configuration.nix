@@ -11,8 +11,6 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    # worked though
-  #  ./change-logitec-suspend.nix
     ./iwd.nix
   ];
 

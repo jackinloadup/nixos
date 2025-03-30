@@ -12,7 +12,6 @@ let
   debug = false;
 in {
   imports = [
-  #  ./change-logitec-suspend.nix
     ./hardware-configuration.nix
     ./usb-switch-monitor-input.nix
     #./rename-pipewire-sinks.nix # isn't working and caused build error on
