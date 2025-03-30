@@ -4,12 +4,17 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkForce;
+  inherit (lib) mkIf;
   mountPoint = "/mnt/nextcloud";
   currentDatabase = "nextcloud29";
 in {
   config = mkIf config.services.nextcloud.enable {
     networking.firewall.allowedTCPPorts = [80 443];
+
+    services.onlyoffice = {
+      enable = true;
+      hostname = "onlyoffice.lucasr.com";
+    };
 
     services.nextcloud = {
       package = pkgs.nextcloud29;
