@@ -14,6 +14,8 @@ in
       config.allowUnfree = true;
     };
 
+    frigate = self.unstable.frigate;
+
     # All for 8BitDuo support. TODO remove - 2-25
     # https://github.com/libretro/retroarch-joypad-autoconfig/pull/1224
     retroarch-joypad-autoconfig = super.retroarch-joypad-autoconfig.overrideAttrs {
