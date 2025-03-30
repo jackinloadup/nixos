@@ -117,7 +117,7 @@ in {
     # proxy interfaces
     services.nginx.enable = true;
     services.nginx.virtualHosts = {
-      "radarr.${config.networking.hostName}.home.lucasr.com" = {
+      "radarr.lucasr.com" = {
         serverAliases = [ "radarr.ingolf-wagner.de" ];
         extraConfig = ''
           allow ${subnet};
@@ -128,7 +128,7 @@ in {
           proxyWebsockets = true;
         };
       };
-      "sonarr.${config.networking.hostName}.home.lucasr.com" = {
+      "sonarr.lucasr.com" = {
         serverAliases = [ "sonarr.ingolf-wagner.de" ];
         extraConfig = ''
           allow ${subnet};
@@ -139,7 +139,7 @@ in {
           proxyWebsockets = true;
         };
       };
-      "prowlarr.${config.networking.hostName}.home.lucasr.com" = {
+      "prowlarr.lucasr.com" = {
         extraConfig = ''
           allow ${subnet};
           deny all;
@@ -149,7 +149,7 @@ in {
           proxyWebsockets = true;
         };
       };
-      "jellyseerr.${config.networking.hostName}.home.lucasr.com" = {
+      "jellyseerr.lucasr.com" = {
         extraConfig = ''
           allow ${subnet};
           deny all;
