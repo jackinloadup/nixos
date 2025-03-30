@@ -12,8 +12,14 @@ in {
 
   config = mkIf cfg.minimal {
     # Unsure if the following takes up space
-    boot.enableContainers = mkDefault false;
-    fonts.fontconfig.enable = mkDefault false;
+    #boot.enableContainers = mkDefault false;
+    #fonts.fontconfig.enable = mkDefault false;
+
+    documentation.enable = false;
+    documentation.doc.enable = false;
+    documentation.man.enable = false;
+    documentation.info.enable = false;
+    documentation.nixos.enable = false;
 
     # Remove unnessisary vpn plugins mostly
     networking.networkmanager.plugins = mkDefault [];
