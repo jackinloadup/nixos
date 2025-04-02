@@ -36,12 +36,6 @@ in {
 
     services.media-services.enable = false;
 
-    #nix.settings.max-jobs = mkDefault 8;
-
-    nixpkgs.overlays = [
-      flake.inputs.self.overlays.default
-    ];
-
     networking.hostName = "marulk";
     networking.networkmanager.enable = mkForce false;
     networking.bridges.br0.interfaces = ["enp1s0f0"];

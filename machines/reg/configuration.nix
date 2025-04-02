@@ -239,26 +239,6 @@ in {
       vpn.client.enable = true;
       vpn.client.ip = "10.100.0.11/24";
     };
-    #nix.settings.max-jobs = lib.mkDefault 16;
-
-    nixpkgs.overlays = [
-      flake.inputs.nur.overlays.default
-      flake.inputs.self.overlays.default
-      flake.inputs.self.overlays.kodi-wayland
-      # Math libraries for AMD CPUs
-      # causes rebuilds, ran into a lot of failed python tests
-      #(self: super:
-      #  {
-      #    blas = super.blas.override {
-      #      blasProvider = self.amd-blis;
-      #    };
-      #
-      #    lapack = super.lapack.override {
-      #      lapackProvider = self.amd-libflame;
-      #    };
-      #  }
-      #)
-    ];
 
     networking.hostName = "reg";
     networking.bridges.br0.interfaces = ["eno1"];
