@@ -72,10 +72,6 @@ in {
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  nixpkgs.overlays = [
-    flake.inputs.self.overlays.default
-    #flake.inputs.self.overlays.kodi-wayland
-  ];
   #fonts.fontconfig.dpi = 152;
 
   services.logind.lidSwitch = "suspend-then-hibernate";

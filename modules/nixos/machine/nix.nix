@@ -31,6 +31,8 @@ in {
 
     nixpkgs.overlays = [
       flake.inputs.nur.overlays.default
+      flake.inputs.self.overlays.default
+      flake.inputs.self.overlays.kodi-wayland
     ];
 
     # disable nix-channel cmd and it's state files

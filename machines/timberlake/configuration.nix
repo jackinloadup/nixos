@@ -70,17 +70,6 @@ in {
       vpn.client.ip = "10.100.0.8/24";
     };
 
-    #nix.settings.max-jobs = mkDefault 8;
-
-    nixpkgs = {
-      overlays = [
-        #flake.inputs.nur.overlays.default
-        flake.inputs.self.overlays.default
-        #    inputs.self.overlays.plymouth-no-gtk
-        #    inputs.self.overlays.pipewire-minimal
-      ];
-    };
-
     virtualisation = rec {
       vmVariant = {
         networking.hostName = mkForce "timberlake-vm";
