@@ -31,11 +31,6 @@
       } # this big for hibernation 2Gb~
     ];
 
-    nix.settings.max-jobs = mkDefault 2;
-
     nixpkgs.hostPlatform = "x86_64-linux";
-    nixpkgs.overlays = [
-      flake.inputs.self.overlays.default
-    ];
   };
 }

@@ -61,23 +61,6 @@ in {
     storageServer.roms = true;
   };
 
-  nix.settings.max-jobs = mkDefault 2;
-  #nix.nixPath = [
-  #  "nixpkgs=${pkgs.nixpkgs}"
-  #];
-
-  nixpkgs = {
-    overlays = [
-      flake.inputs.nur.overlays.default
-      flake.inputs.self.overlays.default
-      flake.inputs.self.overlays.kodi-wayland
-      # failed to build
-      #flake.inputs.self.overlays.plymouth-no-gtk
-      # meson.build:1:0: ERROR: Executables created by c compiler gcc are not runnable.
-      #flake.inputs.self.overlays.pipewire-minimal
-    ];
-  };
-
   virtualisation = rec {
     vmVariant = {
       networking.hostName = mkForce "natvm";

@@ -127,13 +127,6 @@ in {
     vpn.client.ip = "10.100.0.4/24";
   };
 
-  #nix.settings.max-jobs = mkDefault 8;
-
-  nixpkgs.overlays = [
-    flake.inputs.nur.overlays.default
-    flake.inputs.self.overlays.default
-  ];
-
   networking = {
     hostName = "lyza";
     hostId = "1a81f97a";
