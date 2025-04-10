@@ -45,8 +45,9 @@ Personal home lab nixos setup exposed as a flake.
 - (new machine) set password for nixos user `passwd`
 - (new machine) get ip `ip addr`
 - (new machines) check disk `lsblk`
+- (new machines) install keys `curl "https://github.com/jackinloadup.keys" > ~/.ssh/authorized_keys`
 - (existing machine) add disk encryption key into /tmp/disk.key
-- (existing machine) nix run github:nix-community/nixos-anywhere -- --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --disk-encryption-keys /tmp/disk.key /tmp/disk.key nixos@10.16.1.159
+- (existing machine) nix run github:nix-community/nixos-anywhere -- --build-on local --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --disk-encryption-keys /tmp/disk.key /tmp/disk.key nixos@10.16.1.159
 
 ## test with vm. Must comment out or disable all encryption due to vm-test not supporting disk key transfer
 - (existing machine) nix run github:nix-community/nixos-anywhere -- --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --vm-test
