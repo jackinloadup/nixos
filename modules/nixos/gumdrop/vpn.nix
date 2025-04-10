@@ -100,6 +100,11 @@ in {
               allowedIPs = [ "10.100.0.8/32" ];
             }
             {
+              name = "nat";
+              publicKey = "LFhXpxrDepNzAqVwcbvEpqDKlIUDaHyIG4t9mIsz6mk=";
+              allowedIPs = [ "10.100.0.9/32" ];
+            }
+            {
               name = "reg";
               publicKey = "ycZ424QpGCSIVswLUk2EweH+Z7sTc33dH0B0AER4pgc=";
               allowedIPs = [ "10.100.0.11/32" ];
