@@ -204,7 +204,6 @@ in {
       services.mopidy.enable = isFullSystem;
       services.syncthing.enable = isFullSystem;
 
-
       #programs.rbw = {
       #  enable = true;
       #  settings = {
