@@ -105,6 +105,11 @@ in {
               allowedIPs = [ "10.100.0.9/32" ];
             }
             {
+              name = "christine-ipad";
+              publicKey = "RHhV4nC7YrM/iTJmUda56JumWCiyVfkQ2Yc17qJI6ws=";
+              allowedIPs = [ "10.100.0.10/32" ];
+            }
+            {
               name = "reg";
               publicKey = "ycZ424QpGCSIVswLUk2EweH+Z7sTc33dH0B0AER4pgc=";
               allowedIPs = [ "10.100.0.11/32" ];
@@ -153,9 +158,10 @@ in {
           "/zen/10.100.0.6" # Christine Desktop
           "/christine-phone/10.100.0.7"
           "/timberlake/10.100.0.8"
+          "/nat/10.100.0.9" # Nathan Kodi
+          "/christine-ipad/10.100.0.10"
           "/reg/10.100.0.11" # Desktop
         ];
-        #};
       };
     };
   };
