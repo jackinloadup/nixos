@@ -21,7 +21,11 @@ in {
     documentation.info.enable = false;
     documentation.nixos.enable = false;
 
+
+
     # Remove unnessisary vpn plugins mostly
+    # I don't think this is having the impact I expect
+    # Still see openvpn and other things
     networking.networkmanager.plugins = mkDefault [];
 
     # This may be undesirable if Nix commands are not going to be run on the
@@ -31,9 +35,18 @@ in {
     nixpkgs.flake.setNixPath = mkDefault false;
     nixpkgs.flake.setFlakeRegistry = mkDefault false;
 
+    programs.bash.completion.enable = mkDefault false;
+    programs.command-not-found.enable = mkDefault false;
+
+    #environment.noXlibs = mkDefault true;
+
     ## Remove polkit. It depends on spidermonkey !
     security.polkit.enable = mkDefault false;
 
-    programs.bash.enableCompletion = mkDefault false;
+    services.nixosManual.enable = mkDefault false;
+
+    #sound.enable = mkDefault false;
+
+
   };
 }
