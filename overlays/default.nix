@@ -14,7 +14,10 @@ in
       config.allowUnfree = true;
     };
 
-    frigate = self.unstable.frigate;
+    # module no updated with package, breaking stats
+    #https://github.com/NixOS/nixpkgs/issues/391383
+    #
+    #frigate = self.unstable.frigate;
 
     # All for 8BitDuo support. TODO remove - 2-25
     # https://github.com/libretro/retroarch-joypad-autoconfig/pull/1224
