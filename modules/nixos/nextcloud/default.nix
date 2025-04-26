@@ -6,18 +6,18 @@
 }: let
   inherit (lib) mkIf;
   mountPoint = "/mnt/nextcloud";
-  currentDatabase = "nextcloud29";
+  currentDatabase = "nextcloud31";
 in {
   config = mkIf config.services.nextcloud.enable {
     networking.firewall.allowedTCPPorts = [80 443];
 
     services.onlyoffice = {
-      enable = true;
+      enable = false;
       hostname = "onlyoffice.lucasr.com";
     };
 
     services.nextcloud = {
-      package = pkgs.nextcloud29;
+      package = pkgs.nextcloud31;
       #extraApps = with pkgs.nextcloud26Packages.apps; {
       #  inherit mail news contacts;
       #};
@@ -29,7 +29,8 @@ in {
       extraApps = with config.services.nextcloud.package.packages.apps; {
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit calendar contacts notes onlyoffice tasks cookbook qownnotesapi;
+        inherit calendar contacts notes tasks cookbook qownnotesapi;
+# onlyoffice
         # Custom app example.
 #        socialsharing_telegram = pkgs.fetchNextcloudApp rec {
 #          url =
@@ -56,12 +57,50 @@ in {
           host = "/run/redis-nextcloud/redis.sock";
           port = 0;
         };
+
         memcache = {
           local = "\\OC\\Memcache\\Redis";
           distributed = "\\OC\\Memcache\\Redis";
           locking = "\\OC\\Memcache\\Redis";
         };
+
+        preview_ffmpeg_path = lib.getExe pkgs.ffmpeg;
+
+        memories = {
+          "exiftool" = lib.getExe pkgs.exiftool;
+          "ffmpeg_path" = lib.getExe' pkgs.ffmpeg "ffmpeg";
+          "ffprobe_path" = lib.getExe' pkgs.ffmpeg "ffprobe";
+          "vod.ffmpeg" = lib.getExe' pkgs.ffmpeg "ffmpeg";
+          "vod.ffprobe" = lib.getExe' pkgs.ffmpeg "ffprobe";
+        };
+
+        recognize = {
+          nice_binary = lib.getExe' pkgs.coreutils "nice";
+        };
+
+        enabledPreviewProviders = [
+          #"OC\\Preview\\OpenDocument"
+          "OC\\Preview\\MarkDown"
+
+          #"OC\\Preview\\Krita"
+
+          "OC\\Preview\\BMP"
+          "OC\\Preview\\GIF"
+          "OC\\Preview\\JPEG"
+          "OC\\Preview\\MP3"
+          "OC\\Preview\\PNG"
+          "OC\\Preview\\TXT"
+          "OC\\Preview\\XBitmap"
+          "OC\\Preview\\HEIC"
+
+          "OC\\Preview\\AVI"
+          "OC\\Preview\\MKV"
+          "OC\\Preview\\Movie"
+          "OC\\Preview\\MP4"
+          "OC\\Preview\\PDF"
+        ];
       };
+
       config = {
 
         dbhost = "postgres.home.lucasr.com:5432";
@@ -206,8 +245,5 @@ in {
         ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
       };
     };
-
   };
-
-
 }
