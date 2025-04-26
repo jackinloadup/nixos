@@ -52,12 +52,12 @@ in {
     # dragon, doesn't look too good in tty only works in pty
     environment.etc.issue.source = mkForce ./issue-banner;
 
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth.enable = false;
     hardware.logitech.wireless.enable = mkDefault true;
     hardware.logitech.wireless.enableGraphical = mkDefault true;
 
     services.bpftune.enable = true;
-    services.hardware.bolt.enable = true;
+    services.hardware.bolt.enable = true; # thunderbolt
 
     powerManagement.cpuFreqGovernor = mkForce "performance";
 
@@ -84,10 +84,6 @@ in {
     nixpkgs.hostPlatform = "x86_64-linux";
 
     #services.hydra.enable = true;
-    services.jellyfin = {
-      enable = false;
-      openFirewall = true;
-    };
 
     #services.k3s.enable = false;
     #services.k3s.role = "server";
@@ -245,9 +241,6 @@ in {
     networking.interfaces.br0.useDHCP = true;
     networking.enableIPv6 = false;
     virtualisation.libvirtd.allowedBridges = ["br0"];
-
-    #networking.firewall.allowedTCPPorts = [ 8000 ]; # What is port 8000 for?
-    #networking.firewall.allowedUDPPorts = [ 8000 ];
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
