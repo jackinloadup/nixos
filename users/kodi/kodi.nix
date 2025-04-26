@@ -15,7 +15,7 @@ in {
   config = {
     programs.kodi = {
       enable = true;
-      package = pkgs.kodi-wayland;
+      #package = pkgs.kodi-wayland;
       #addonSettings = {
       #  "service.xbmc.versioncheck".versioncheck_enable = "false";
       #};
@@ -58,7 +58,7 @@ in {
         Description = "Kodi Media Center";
       };
 
-      Install.WantedBy = ["graphical-session.target"];
+      #Install.WantedBy = ["graphical-session.target"];
       Install.After = ["sway-session.target"];
 
       Service = {
