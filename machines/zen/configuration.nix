@@ -9,7 +9,7 @@
 let
   inherit (lib) mkForce mkDefault getExe;
   settings = import ../../settings;
-  debug = true;
+  debug = false;
 in {
   imports = [
     #./control-monitor-backlight.nix
@@ -20,10 +20,6 @@ in {
   ];
 
   config = {
-    environment.systemPackages = [ ];
-
-    boot.crashDump.enable = false; # Causes kernel build
-
     boot.initrd.network.enable = true;
     boot.initrd.systemd.network.enable = true;
 
@@ -31,7 +27,6 @@ in {
     boot.plymouth.enable = !debug;
 
     hardware.bluetooth.enable = true;
-    hardware.bluetooth.powerOnBoot = true; # already default
     hardware.logitech.wireless.enable = mkDefault true;
     hardware.logitech.wireless.enableGraphical = mkDefault true;
 
@@ -42,17 +37,11 @@ in {
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
 
-    programs.simula.enable = false;
-    programs.sway.enable = false;
-
-    nixpkgs.hostPlatform = "x86_64-linux";
-
     #networking.firewall.allowedTCPPorts = [ 19999 ]; # netdata port;
     #services.netdata.enable = true;
 
     services.flatpak.enable = true;
     services.pipewire.enable = true;
-
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
     services.displayManager.autoLogin.enable = true;
@@ -61,19 +50,13 @@ in {
     # Login Manager
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.enable = true;
-    #services.xserver.displayManager.lightdm.enable = true;
-    security.polkit.enable = true;
 
+    security.polkit.enable = true;
 
     ## xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
     ##     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
     services.xserver.desktopManager.gnome.enable = true;
 
-    home-manager.users.criutzel = {
-      imports = [
-        #../../users/criutzel/impermanence.nix
-      ];
-    };
     environment.persistence = {
       "/persist" = {
         hideMounts = true;
@@ -82,6 +65,8 @@ in {
         ];
       };
     };
+    environment.systemPackages = [ ];
+
 
     #system.autoUpgrade = {
     #  enable = true;
@@ -97,9 +82,7 @@ in {
 
     xdg.portal.enable = true;
     environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
-    xdg.portal.config = {
-
-    };
+    xdg.portal.config = { };
 
     environment.profileRelativeEnvVars = {
       QT_PLUGIN_PATH = [
