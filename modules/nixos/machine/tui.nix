@@ -73,7 +73,7 @@ in {
 
         ## network
         iftop # a partition manipulation program
-        latencytop
+        #latencytop # has been removed due to lack of maintenance upstream
         jnettop # View hosts/ports taking up the most network traffic
         dnstop # displays various tables of DNS traffic on your network
         dnsutils # provide dig nslookup nsupdate
