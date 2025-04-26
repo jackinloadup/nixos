@@ -15,7 +15,7 @@ in {
       yubikey-personalization
 
       # gui
-      yubikey-manager-qt
+      #yubikey-manager-qt # end of life upstream
       yubikey-personalization-gui
     ];
 
