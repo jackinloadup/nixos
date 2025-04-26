@@ -12,7 +12,7 @@ in {
       genericName = "Syncthing";
       comment = "Open Syncthing in a browser";
       exec = "${pkgs.systemd}/bin/systemd-cat --identifier=syncthing-browser ${config.programs.chromium.package}/bin/chromium --app=http://localhost:8384";
-      icon = "${pkgs.breeze-icons}/share/icons/breeze-dark/apps/48/syncthing.svg";
+      icon = "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/apps/48/syncthing.svg";
       terminal = false;
       categories = [
         "Utility"
