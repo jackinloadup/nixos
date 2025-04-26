@@ -7,6 +7,10 @@ in {
     boot = {
       initrd.kernelModules = ["kvm-amd" "amdgpu"];
       kernelModules = ["kvm-amd" "amdgpu" "amd_gpio" ];
+
+      # ucodenix: Kernel microcode checksum verification is active. This may prevent microcode from loading. Consider disabling it by setting
+      kernelParams = [ "microcode.amd_sha_check=off" ];
+
       #kernelParams = [
       #  #"nosgx" # remove "SGX disable by BIOS" message on boot
       #  #"intel_iommu=on"
@@ -31,7 +35,7 @@ in {
 
 
     # use amdvlk drivers instead mesa radv drivers
-    # maybe mesa dribers are better??
+    # maybe mesa drivers are better??
     ##hardware.amdgpu.amdvlk.enable = true;
 
     #environment.variables = {
@@ -58,7 +62,6 @@ in {
       ];
     };
 
-
     # some of these could be placed into home-manager?
     # disabled because this is added onto servers which don't' need them
     environment.systemPackages = [
@@ -68,6 +71,22 @@ in {
       #pkgs.radeon-profile # gui - need to figure out how to grant correct permissions
       pkgs.nvtopPackages.amd
     ];
+
+    #nixpkgs.overlays = [
+      # Math libraries for AMD CPUs
+      # causes rebuilds, ran into a lot of failed python tests
+      #(self: super:
+      #  {
+      #    blas = super.blas.override {
+      #      blasProvider = self.amd-blis;
+      #    };
+      #
+      #    lapack = super.lapack.override {
+      #      lapackProvider = self.amd-libflame;
+      #    };
+      #  }
+      #)
+    #];
 
     services.ucodenix.enable = true;
   };
