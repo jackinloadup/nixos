@@ -48,11 +48,13 @@ in {
         home.packages = [
           #nur.repos.dukzcry.gamescope
 
-          (pkgs.retroarch.override {
-            cores = with pkgs.libretro; [
-              mrboom # bomberman clone
-            ];
-          })
+          # stopped working with nixpkgs-unstable
+          #(pkgs.retroarch.override {
+          #  cores = with pkgs.libretro; [
+          #    mrboom # bomberman clone
+          #  ];
+          #})
+
           #retroarchFull
           pkgs.prismlauncher # minecraft
           #supertuxkart # alt mario cart
