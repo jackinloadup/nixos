@@ -10,17 +10,15 @@ in {
 
     services.frigate = {
       enable = true;
-# 0.15 doesn't appear in nixpkgs-unstable
-#package = pkgs.unstable.frigate;
       # 0.0.0.0 didn't seem to work
       hostname = "127.0.0.1";
-      #vaapiDriver = "radeonsi";
+      vaapiDriver = "radeonsi";
       settings = {
-#        auth = {
-# doesn't appear in 0.14.1
-#enable = false; # make things easy for now. Don't really need it.
+        auth = {
+# doesn't appear in 0.14.1 or 0.15??
+#          enable = false; # make things easy for now. Don't really need it.
 #reset_admin_password = true;
-#        };
+        };
 
         ffmpeg.hwaccel_args = "preset-vaapi";
 
@@ -34,7 +32,7 @@ in {
 
         cameras = {
           front = {
-            webui_url = "http://camera1";
+            webui_url = "http://192.168.1.111";
             detect = {
               width = 2560;
               height = 1920;
