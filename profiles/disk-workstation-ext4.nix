@@ -1,8 +1,8 @@
+{ device ? "/dev/nvme0n1" }:
 {
   flake,
   pkgs,
   config,
-  device ? "/dev/nvme0n1",
   ...
 }:
 # simple error checking to ensure garbage isn't passed in
