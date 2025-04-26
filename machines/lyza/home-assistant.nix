@@ -1,7 +1,27 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, flake, ... }:
 let
   inherit (lib) mkIf;
+  unstable = flake.inputs.nixpkgs-unstable;
 in {
+  imports = [
+    {
+      disabledModules = [
+        "services/home-automation/home-assistant.nix"
+        "services/video/frigate.nix"
+      ];
+
+      nixpkgs.overlays = [
+        (self: super: {
+          inherit (unstable) homeassistant home-assistant-component-tests;
+          #inherit (unstable) home-assistant-custom-components;
+          #inherit (unstable) home-assistant-custom-lovelace-modules;
+        })
+      ];
+    }
+    (unstable + /nixos/modules/services/home-automation/home-assistant.nix)
+    (unstable + /nixos/modules/services/video/frigate.nix)
+  ];
+
   config = {
     networking.firewall.allowedTCPPorts = [
       1883 # mosquitto
@@ -10,10 +30,67 @@ in {
 
     services.home-assistant = {
       enable = true;
+      package = pkgs.unstable.home-assistant;
       openFirewall = true;
       #configWritable = true;
 
       extraComponents = [ "mobile_app" ];
+      customComponents = with pkgs.unstable.home-assistant-custom-components; [
+        frigate
+      ];
+      customLovelaceModules = with pkgs.unstable.home-assistant-custom-lovelace-modules; [
+        advanced-camera-card
+      ];
+
+      lovelaceConfig = {
+        title = "Home";
+        views = [
+          {
+            path = "default_view";
+            title = "Studio";
+            cards = [
+              {
+                type = "entities";
+                entities = [
+                  {
+                    entity = "light.shelf_lights_cct";
+                    name = "Warm / Cool";
+                  }
+                  {
+                    entity = "light.shelf_lights_rgb";
+                    name = "Colors";
+                  }
+                ];
+                title = "Shelf";
+              }
+              {
+                type = "entities";
+                entities = [
+                  { entity = "switch.gallery"; }
+                  { entity = "light.bathroom"; }
+                  { entity = "switch.bfl_sign"; }
+                ];
+                title = "Other";
+              }
+              {
+                type = "custom:advanced-camera-card";
+                cameras = [
+                  { camera_entity = "camera.front"; }
+                  {
+                    frigate = {
+                      camera_name = "birdseye";
+                    };
+                    dependencies = {
+                      all_cameras = true;
+                    };
+                  }
+
+                ];
+              }
+            ];
+          }
+        ];
+      };
 
       config = {
         sun = {};
@@ -95,6 +172,49 @@ in {
             "mqtt" = "debug";
           };
         };
+        automation = [
+          {
+            alias = "Security_Frigate_Notifications";
+            description = "";
+            trigger = [
+              {
+                platform = "mqtt";
+                topic = "frigate/reviews";
+                payload = "alert";
+                value_template = "{{ value_json['after']['severity'] }}";
+              }
+            ];
+            action = [
+              {
+                service = "notify.mobile_app_lucas_moto_x4";
+                data = {
+                  message = ''A {{trigger.payload_json["after"]["data"]["objects"] | sort | join(", ") | title}} was detected.'';
+                  data = {
+                    # your.public.hass.address.com
+                    image = ''https://10.100.0.4:8123/api/frigate/notifications/{{trigger.payload_json["after"]["data"]["detections"][0]}}/thumbnail.jpg'';
+                    tag = ''{{trigger.payload_json["after"]["id"]}}'';
+                    when = ''{{trigger.payload_json["after"]["start_time"]|int}}'';
+                    entity_id = ''camera.{{trigger.payload_json["after"]["camera"] | replace("-","_") | lower}}'';
+                  };
+                };
+              }
+              {
+                service = "notify.mobile_app_motorola_edge_plus_2022";
+                data = {
+                  message = ''A {{trigger.payload_json["after"]["data"]["objects"] | sort | join(", ") | title}} was detected.'';
+                  data = {
+                    # your.public.hass.address.com
+                    image = ''https://10.100.0.4:8123/api/frigate/notifications/{{trigger.payload_json["after"]["data"]["detections"][0]}}/thumbnail.jpg'';
+                    tag = ''{{trigger.payload_json["after"]["id"]}}'';
+                    when = ''{{trigger.payload_json["after"]["start_time"]|int}}'';
+                    entity_id = ''camera.{{trigger.payload_json["after"]["camera"] | replace("-","_") | lower}}'';
+                  };
+                };
+              }
+            ];
+            mode = "single";
+          }
+        ];
       };
     };
 

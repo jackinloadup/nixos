@@ -1,22 +1,17 @@
-{
-  self,
-  flake,
-  pkgs,
-  lib,
-  ...
-}:
+{ flake, lib, ... }:
 # machine runs ?
 let
   inherit (lib) mkDefault mkForce;
-  settings = import ../../settings;
   isUserFacing = false;
 in {
+
   imports = [
     ./hardware-configuration.nix
     ./home-assistant.nix
     ./frigate.nix
   ];
 
+  config = {
     ##-----------------------------------
     ## initrd remote decrypt root
     ##-----------------------------------
@@ -37,7 +32,7 @@ in {
     #  network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
     #  systemd.network.enable = true;
     #  systemd.network.wait-online.enable = true;
-#  systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
+  #   systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
     #  systemd.extraBin = {
     #    ip = "${pkgs.iproute2}/bin/ip";
     #    #ps = "${pkgs.procps}/bin/ps";
@@ -68,88 +63,94 @@ in {
       systemd.emergencyAccess = true;
     };
     #-----------------------------------
-  boot.plymouth.enable = isUserFacing;
-  boot.initrd.verbose = !isUserFacing;
+    boot.plymouth.enable = isUserFacing;
+    boot.initrd.verbose = !isUserFacing;
 
-  hardware.bluetooth.enable = isUserFacing;
+    hardware.bluetooth.enable = isUserFacing;
 
-  services.esphome = {
-    enable = true;
-    address = "0.0.0.0";
-    openFirewall = true;
-  };
-
-
-  services.fwupd.enable = mkForce true;
-
-  services.k3s.enable = false;
-  services.k3s.role = "server";
-  services.k3s.clusterInit = true;
-
-
-  services.pipewire.enable = isUserFacing;
-  #services.tor.enable = mkForce true;
-  #services.tor.client.enable = mkForce true;
-
-  services.xserver.desktopManager.gnome.enable = isUserFacing;
-  services.xserver.displayManager.gdm.enable = isUserFacing;
-
-  #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
-  #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  #users.users.lriutzel.extraGroups = [ "tss" ];  # tss group has access to TPM devices
-
-  machine = {
-    users = mkDefault [
-      "lriutzel"
+    networking.firewall.allowedTCPPorts = [
+      80 443 # nginx
+      5000 # un authenticated frigate
     ];
-    sizeTarget = 1; # was 1
-    minimal = true;
-    tui = true;
-    impermanence = mkDefault true;
-    lowLevelXF86keys.enable = isUserFacing;
-    kernel = {
-      rebootAfterPanic = mkForce 10;
-      panicOnOOM = mkForce true;
-      #panicOnFailedBoot = mkForce true;
-      panicOnHungTask = mkForce true;
-      panicOnHungTaskTimeout = mkForce 1;
-    };
-  };
 
-  gumdrop = {
-  #  printerScanner = false;
-  #  storageServer.enable = false;
-  #  storageServer.media = true;
-  #  storageServer.roms = true;
-
-    vpn.server.endpoint = "home.lucasr.com:51820";
-    vpn.client.enable = true;
-    vpn.client.ip = "10.100.0.4/24";
-  };
-
-  networking = {
-    hostName = "lyza";
-    hostId = "1a81f97a";
-
-    dhcpcd = {
-    #  wait = mkForce "ipv4"; # don't wait. That would take longer
-      persistent = true;
+    services.esphome = {
+      enable = true;
+      address = "0.0.0.0";
+      openFirewall = true;
     };
 
-    #interfaces.enp1s0.useDHCP = true;
+
+    services.fwupd.enable = mkForce true;
+
+    services.k3s.enable = false;
+    services.k3s.role = "server";
+    services.k3s.clusterInit = true;
+
+
+    services.pipewire.enable = isUserFacing;
+    #services.tor.enable = mkForce true;
+    #services.tor.client.enable = mkForce true;
+
+    services.xserver.desktopManager.gnome.enable = isUserFacing;
+    services.xserver.displayManager.gdm.enable = isUserFacing;
+
+    #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
+    #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
+    #users.users.lriutzel.extraGroups = [ "tss" ];  # tss group has access to TPM devices
+
+    machine = {
+      users = mkDefault [
+        "lriutzel"
+      ];
+      sizeTarget = 1; # was 1
+      minimal = true;
+      tui = true;
+      impermanence = mkDefault true;
+      lowLevelXF86keys.enable = isUserFacing;
+      kernel = {
+        rebootAfterPanic = mkForce 10;
+        panicOnOOM = mkForce true;
+        #panicOnFailedBoot = mkForce true;
+        panicOnHungTask = mkForce true;
+        panicOnHungTaskTimeout = mkForce 1;
+      };
+    };
+
+    gumdrop = {
+    #  printerScanner = false;
+    #  storageServer.enable = false;
+    #  storageServer.media = true;
+    #  storageServer.roms = true;
+
+      vpn.server.endpoint = "vpn.lucasr.com:51820";
+      vpn.client.enable = true;
+      vpn.client.ip = "10.100.0.4/24";
+    };
+
+    networking = {
+      hostName = "lyza";
+      hostId = "1a81f97a";
+
+      dhcpcd = {
+      #  wait = mkForce "ipv4"; # don't wait. That would take longer
+        persistent = true;
+      };
+
+      #interfaces.enp1s0.useDHCP = true;
+    };
+    networking.networkmanager.enable = true;
+
+    # clean logs older than 2d
+    services.cron.systemCronJobs = [
+      "0 20 * * * root journalctl --vacuum-time=2d"
+    ];
+
+    # This value determines the NixOS release from which the default
+    # settings for stateful data, like file locations and database versions
+    # on your system were taken. It‘s perfectly fine and recommended to leave
+    # this value at the release version of the first install of this system.
+    # Before changing this value read the documentation for this option
+    # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+    system.stateVersion = "24.05"; # Did you read the comment?
   };
-  networking.networkmanager.enable = true;
-
-  # clean logs older than 2d
-  services.cron.systemCronJobs = [
-    "0 20 * * * root journalctl --vacuum-time=2d"
-  ];
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
 }
