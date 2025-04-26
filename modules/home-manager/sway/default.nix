@@ -394,7 +394,7 @@ in {
           ,{
             "label": "Switch User",
             "exec": "${pkgs.gdm}/bin/gdmflexiserver",
-            "icon": "${pkgs.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-switch-user.svg"
+            "icon": "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-switch-user.svg"
           }
         '' else "";
     in ''      [
@@ -411,7 +411,7 @@ in {
        {
          "label": "Suspend",
          "exec": "systemctl suspend",
-         "icon": "${pkgs.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-suspend.svg"
+         "icon": "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-suspend.svg"
        },
        {
          "label": "Reboot",
