@@ -39,8 +39,8 @@ in {
         flake.self.homeModules.tui
         #../../modules/home-manager/default.nix
         #../../modules/home-manager/nix.nix
-        ./kodi.nix
-        ./sway.nix
+        #./kodi.nix
+        #./sway.nix
         #./i3.nix
       ];
     };
@@ -61,11 +61,11 @@ in {
       #sixpair # usb pair playstation controllers
     ];
 
-    nixpkgs.config.retroarch = {
-      enableBsnes = true;
-      enableDolphin = true;
-      enableMGBA = true;
-      enableMAME = true;
-    };
+    #nixpkgs.config.retroarch = {
+    #  enableBsnes = true;
+    #  enableDolphin = true;
+    #  enableMGBA = true;
+    #  enableMAME = true;
+    #};
   };
 }
