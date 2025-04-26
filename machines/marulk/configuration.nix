@@ -76,11 +76,13 @@ in {
       enable = true;
       openFirewall = false; # handle http via nginx
     };
+
     # tcp is handled via nginx
     networking.firewall.allowedUDPPorts = [
       1900
       7359
     ];
+
     services.nginx.virtualHosts."jellyfin.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
@@ -91,6 +93,7 @@ in {
         proxyWebsockets = true;
       };
     };
+
     services.nginx.virtualHosts."ha.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
@@ -101,6 +104,7 @@ in {
         proxyWebsockets = true;
       };
     };
+
     services.nginx.virtualHosts."chat.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
@@ -111,6 +115,7 @@ in {
         proxyWebsockets = true;
       };
     };
+
     services.nginx.virtualHosts."audiobookshelf.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
@@ -124,6 +129,7 @@ in {
         '';
       };
     };
+
     services.nginx.virtualHosts."paperless.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
@@ -145,30 +151,6 @@ in {
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
     #networking.bridges.br0.interfaces = ["enp1s0f0"];
-    #s]ervices.wg-access-server = {
-    #  enable = true;
-    #  settings = {
-    #    loglevel = "info";
-    #    storage = "sqlite3:///var/lib/wg-access-server/db.sqlite3";
-    #    externalHost = "home.lucasr.com";
-    #    dns = {
-    # enabled = true;
-    #      upstream = [
-    #        "10.16.0.2"
-    #      ];
-    #    };
-    #    vpn = {
-    #      gatewayInterface = "br0";
-    #      cidr = "10.44.0.0/24";
-    #      cidrv6 = "0"; # disable
-    #      clientIsolation = false;
-    #      allowedIPs = [
-    #        "0.0.0.0/0"
-    #        #"10.16.1.0/24"
-    #      ];
-    #    };
-    #  };
-    #};
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
