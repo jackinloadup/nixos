@@ -118,7 +118,6 @@ in {
     services.nginx.enable = true;
     services.nginx.virtualHosts = {
       "radarr.lucasr.com" = {
-        serverAliases = [ "radarr.ingolf-wagner.de" ];
         extraConfig = ''
           allow ${subnet};
           deny all;
@@ -129,7 +128,6 @@ in {
         };
       };
       "sonarr.lucasr.com" = {
-        serverAliases = [ "sonarr.ingolf-wagner.de" ];
         extraConfig = ''
           allow ${subnet};
           deny all;
