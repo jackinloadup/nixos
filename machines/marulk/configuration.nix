@@ -16,6 +16,7 @@ in {
     #./nebula-lighthouse.nix
     ./adguard.nix
     ./murmur.nix
+    ./immich.nix
   ];
 
   config = {
@@ -75,6 +76,14 @@ in {
     services.jellyfin = {
       enable = true;
       openFirewall = false; # handle http via nginx
+    };
+
+    services.immich = {
+      enable = true;
+      host = "immich.lucasr.com";
+      database.host = "postgres.home.lucasr.com";
+      mediaLocation = "/mnt/gumdrop/backup/immich";
+      #accelerationDevices = [ "/dev/dri/renderD128" ];
     };
 
     # tcp is handled via nginx
