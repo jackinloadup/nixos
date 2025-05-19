@@ -136,7 +136,7 @@ in {
 
     nix.buildMachines = []
       ++ optionals (hostname != "reg") [{
-        hostName = "reg";
+        hostName = "reg.home.lucasr.com";
         sshUser = "lriutzel";
         system = "x86_64-linux";
         protocol = "ssh-ng";
@@ -149,7 +149,7 @@ in {
         ];
       }]
       ++ optionals (hostname != "zen") [{
-        hostName = "zen";
+        hostName = "zen.home.lucasr.com";
         sshUser = "lriutzel";
         system = "x86_64-linux";
         protocol = "ssh-ng";
