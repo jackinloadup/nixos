@@ -1,5 +1,6 @@
 {pkgs, flake, config, ...}: {
   imports = [
+    flake.inputs.nixos-facter-modules.nixosModules.facter
     ../../profiles/disk-workstation-2.nix
     ../../profiles/amd.nix
     ../../profiles/pro-art-7800x3d.nix
@@ -7,6 +8,8 @@
   ];
 
   config = rec {
+    facter.reportPath = ./facter.json;
+
     boot.kernelParams = [
       "video=DP-8:3840x2160@60" # 4k 60hz
       "video=DP-2:3440x1440@60" # LG 34UM95 144p ultrawide 60hz
