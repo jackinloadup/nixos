@@ -42,7 +42,7 @@
       openFirewall = true;
       port = 11112;
       stateDir = "/var/lib/private/open-webui";
-      host = "chat.lucasr.com";
+      host = "reg.home.lucasr.com";
       environment = {
         # PYDANTIC_SKIP_VALIDATING_CORE_SCHEMAS = "True";
         OLLAMA_BASE_URL = "http://ollama.home.lucasr.com:${toString config.services.ollama.port}";

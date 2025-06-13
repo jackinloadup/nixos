@@ -120,7 +120,8 @@ in {
       acmeRoot = null; # Use DNS Challenege
 
       locations."/" = {
-        proxyPass = "http://reg.home.lucasr.com:${toString config.services.paperless.port}/";
+        #proxyPass = "http://10.16.1.11:${toString config.services.open-webui.port }/";
+        proxyPass = "http://reg.home.lucasr.com:11112/";
         proxyWebsockets = true;
       };
     };
