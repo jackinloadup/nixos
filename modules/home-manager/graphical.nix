@@ -173,6 +173,7 @@ in {
 
         # GUI
         # ---------------------------------------
+
         pkgs.libreoffice # Office suite
         pkgs.libnotify # for notify-send
         # darktile # alternative PTY to try out. GPU + go
@@ -211,8 +212,19 @@ in {
       # Add the network manager to the status bar.
       network-manager-applet.enable = true;
 
+      # syncs files like syncthing. don't need it right now. Currently looking
+      # for remote access not sync
+      #nextcloud-client = {
+      #  enable = true;
+      #  startInBackground = true;
+      #};
+
+
       # Add the audio manager to the status bar.
-      pasystray.enable = true;
+        # when using gnome the message that the monitor
+        # speaker disapeared would wake the system. This would start a cycle
+        # keeping the montior on
+      pasystray.enable = false;
 
       # Set a background image.
       #random-background = {
@@ -243,6 +255,24 @@ in {
         defaultApplications = {
           "application/pdf" = "org.pwmt.zathura.desktop";
 
+          "application/zip" = "file-roller.desktop";
+          "application/x-bzip" = "file-roller.desktop";
+          "application/x-bzip2" = "file-roller.desktop";
+          "application/vnd.rar" = "file-roller.desktop";
+          "application/x-tar" = "file-roller.desktop";
+          "application/x-iso9660-image" = "file-roller.desktop"; # iso
+          "application/x-java-archive" = "file-roller.desktop"; # jar
+          "application/java-archive" = "file-roller.desktop"; # jar
+          "application/x-compressed-tar" = "file-roller.desktop"; # tgz
+          "application/x-tzo" = "file-roller.desktop";
+          "application/vnd.ms-cab-compressed" = "file-roller.desktop";
+          "application/x-zoo" = "file-roller.desktop";
+          "application/vnd.comicbook+zip" = "file-roller.desktop"; # cbz
+          "application/x-xz" = "file-roller.desktop"; # xz
+          "application/x-archive" = "file-roller.desktop"; # ar
+
+
+
           "message/rfc822" = "thunderbird.desktop";
           "x-scheme-handler/mailto" = "thunderbird.desktop";
 
@@ -256,8 +286,6 @@ in {
     };
 
     ## gnome-keyring keeps not getting started in time.
-    #systemd.user.services.nextcloud-client.Unit.Requires =
-    #  "gnome-keyring.service";
-    #};
+    #systemd.user.services.nextcloud-client.Unit.Requires =  [ "gnome-keyring.service" ];
   };
 }
