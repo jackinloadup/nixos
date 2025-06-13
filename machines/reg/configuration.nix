@@ -176,7 +176,7 @@ in {
       enable = true;
       flake = flake.self.outPath;
       flags = [
-        "--update-input"
+        "--update-input" # warning: '--update-input' is a deprecated alias for 'flake update' and will be removed in a future version.
         "nixpkgs"
         "-L"
       ];
@@ -264,7 +264,7 @@ in {
         services.satellite-images.enable = false;
         services.satellite-images.generateTimelapse = false;
 
-        programs.wpaperd = {
+        services.wpaperd = {
           enable = true;
           settings.default = {
             #path = "~/.cache/satellite-images";

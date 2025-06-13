@@ -72,7 +72,7 @@ in {
         "${config.home.username}" = {
           isDefault = true;
 
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             darkreader
             ublock-origin
             bitwarden

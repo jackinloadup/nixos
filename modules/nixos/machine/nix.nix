@@ -39,6 +39,7 @@ in {
     nix.channel.enable = false;
 
     nix.settings = {
+      download-buffer-size = 524288000; # 500Mb
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="

@@ -30,7 +30,7 @@ in {
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
         services.satellite-images.enable = false;
 
-        programs.wpaperd = {
+        services.wpaperd = {
           enable = true;
           settings.default = {
             #path = "${config.xdg.cacheHome}/satellite-images/goes-east/current";

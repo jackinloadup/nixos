@@ -6,7 +6,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf concatStrings mkForce mkDefault optionalString;
+  inherit (lib) mkIf getExe concatStrings mkForce mkDefault optionals;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
 in {
   config = mkIf config.programs.zsh.enable {
@@ -26,8 +26,8 @@ in {
       defaultKeymap = "viins";
       historySubstringSearch.enable = true;
 
-      initExtra =
-        ''
+      initContent = let
+        setWindowTitle = lib.mkOrder 1000 ''
           function set_win_title(){
             echo -ne "\033]0; $(basename "$PWD") \007"
           }
@@ -41,12 +41,14 @@ in {
           #  nix-shell -p flamegraph --run "flamegraph.pl $WORKDIR/nix-function-calls.folded > $WORKDIR/nix-function-calls.svg"
           #  echo "$WORKDIR/nix-function-calls.svg"
           #}
+        '';
 
-        ''
-        + optionalString config.programs.starship.enable ''
-          eval "$(starship init zsh)"
-        ''
-        + interactive;
+        starship = lib.mkOrder 500 ''
+          eval "$(${getExe pkgs.starship} init zsh)"
+        '';
+
+        interactiveOrder = lib.mkOrder 800 interactive;
+      in lib.mkMerge [ setWindowTitle interactiveOrder starship ];
 
       shellAliases = nixosConfig.environment.shellAliases;
 
