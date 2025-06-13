@@ -9,6 +9,7 @@ in {
         type = types.str;
         example = "example.host.com:51820";
         description = "Ip address on network";
+        default = "vpn.lucasr.com:51820";
       };
     };
     client = {
@@ -117,6 +118,73 @@ in {
           ];
 
         };
+        # Sean's networkk
+#        wg1 = {
+#          # Determines the IP address and subnet of the server's end of the tunnel interface.
+#          ips = [ "10.9.0.12/24" ];
+## DNS = 10.8.0.1, 10.8.1.250
+#
+#
+#          # The port that WireGuard listens to. Must be accessible by the client.
+#          listenPort = 51820;
+#
+#          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+#          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+#          postSetup = ''
+#            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+#          '';
+#
+#          # This undoes the above command
+#          postShutdown = ''
+#            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+#          '';
+#
+#          peers = [
+#            {
+#              name = "sean-mcgee";
+#              publicKey = "y//Flcqb/RQbmuDTK6aOMW+pCFVF80idEWDqPkG3tik=";
+#              endpoint = "mcgee.starn.es:51820";
+#              allowedIPs = [
+#                "10.9.0.0/24"
+#                "10.8.0.0/16"
+#                "192.168.107.0/24"
+#              ];
+#            }
+#          ];
+#        };
+#        wgmcgee = {
+#          # Determines the IP address and subnet of the server's end of the tunnel interface.
+#          ips = [ "10.9.0.13/24" ];
+## DNS = 10.8.0.1, 10.8.1.250
+#
+#
+#          # The port that WireGuard listens to. Must be accessible by the client.
+#          listenPort = 51820;
+#
+#          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+#          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+#          postSetup = ''
+#            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+#          '';
+#
+#          # This undoes the above command
+#          postShutdown = ''
+#            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+#          '';
+#
+#          peers = [
+#            {
+#              name = "sean-mcgee";
+#              publicKey = "y//Flcqb/RQbmuDTK6aOMW+pCFVF80idEWDqPkG3tik=";
+#              endpoint = "mcgee.starn.es:51820";
+#              allowedIPs = [
+#                "10.9.0.0/24"
+#                "10.8.0.0/16"
+#                "192.168.107.0/24"
+#              ];
+#            }
+#          ];
+#        };
       }
       // optionalAttrs cfg.client.enable {
         # "wg0" is the network interface name. You can name the interface arbitrarily.
@@ -126,12 +194,12 @@ in {
 
           # The port that WireGuard listens to. Must be accessible by the client.
           listenPort = 51820;
+          dynamicEndpointRefreshSeconds = 5;
 
           peers = [
             {
               name = "marulk";
               endpoint = "home.lucasr.com:51820";
-              dynamicEndpointRefreshSeconds = 5;
               publicKey = "KrWVR+VV04OOmt63FOeqx9UKE4en20lDl6pGieLQSj0=";
               allowedIPs = [ "10.100.0.0/24" ];
               persistentKeepalive = 25;
