@@ -32,6 +32,8 @@ monitioring:
   metrics collection
   logging collection
 
+self host ntfy.sh or other ntfs for push notifications
+
 # Requires secret storage
 - autostart fractal - matrix client
 - yubikey
