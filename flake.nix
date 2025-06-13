@@ -9,6 +9,7 @@
     #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
     nix-software-center = {
       url = "github:snowfallorg/nix-software-center";
