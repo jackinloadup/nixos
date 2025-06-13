@@ -53,7 +53,9 @@ in {
       };
       packages = [
         # Nerdfonts is kinda heavy. We are cutting it down but still looks like it might be 4-10mb
-        (pkgs.nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];})
+        #(pkgs.nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];}) # unstable broke package apart
+        pkgs.nerd-fonts.fira-code
+        pkgs.nerd-fonts.droid-sans-mono
         pkgs.lato
         pkgs.noto-fonts-emoji
       ];
