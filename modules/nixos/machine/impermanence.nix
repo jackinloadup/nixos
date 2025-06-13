@@ -57,7 +57,9 @@ in {
             "/var/lib/private/open-webui"
           ]
           ++ optionals config.services.ollama.enable  [
+            # unsure if one should be deleted or if they are both used
             "/var/lib/private/ollama"
+            "/var/lib/ollama"
           ]
           ++ optionals config.services.colord.enable [
             {
