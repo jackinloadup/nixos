@@ -3,12 +3,11 @@
   description = "GoldenBoy - Always there when you need him!";
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
     nix-software-center = {
@@ -16,6 +15,8 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
       #inputs.nixos-appstream-data.inputs.nixpkgs.follows = "nixpkgs";
       #inputs.nixos-appstream-data.inputs.flake-utils.follows = "flake-utils";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
+    #nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
     };
 
@@ -50,7 +51,7 @@
 
     # Manage a user environment using Nix
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       #url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -103,7 +104,7 @@
 
     nixvim = {
       #url = "github:nix-community/nixvim/main";
-      url = "github:nix-community/nixvim/nixos-24.11";
+      url = "github:nix-community/nixvim/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

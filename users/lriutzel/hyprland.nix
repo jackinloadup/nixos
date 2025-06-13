@@ -23,7 +23,7 @@ in {
     programs.foot.server.enable = true;
 
     # currently controlled per host :-(
-    programs.wpaperd = {
+    services.wpaperd = {
       #enable = mkDefault true;
       settings = {
         default  = {

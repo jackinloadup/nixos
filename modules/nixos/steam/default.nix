@@ -27,11 +27,9 @@ in {
       # heroic games
     ];
 
-    hardware = {
-      steam-hardware.enable = true;
-      pulseaudio.support32Bit = true;
-    };
+    hardware.steam-hardware.enable = true;
 
+    services.pulseaudio.support32Bit = true;
     services.pipewire.alsa.support32Bit = config.services.pipewire.alsa.enable;
 
     # from https://github.com/Atemu/nixos-config/blob/d6a173bcf9c28f2b161f0b238baa0e9c62be2b7b/modules/gaming/module.nix#L20

@@ -8,7 +8,7 @@
 in {
   config = mkIf config.services.pipewire.enable {
     security.rtkit.enable = true; # Allows pipewire to run "realtime"
-    hardware.pulseaudio.enable = false; # Disable pulseaudio
+    services.pulseaudio.enable = false; # Disable pulseaudio
 
     # Enable pipewire https://nixos.wiki/wiki/PipeWire
     services.pipewire = {
