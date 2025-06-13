@@ -22,6 +22,9 @@ in {
       pkgs.gnome-session
       pkgs.gnome-tweaks
       pkgs.dconf-editor
+
+      #pkgs.gnome.nautilus-python # for nextcloud - for nextcloud-client
+      pkgs.gnome.gvfs
     ];
 
     environment.gnome.excludePackages = [
