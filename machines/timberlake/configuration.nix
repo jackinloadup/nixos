@@ -13,7 +13,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    #./home-assistant.nix
+    ./home-assistant.nix
   ];
 
   config = {
@@ -41,7 +41,41 @@ in {
     services.xserver.desktopManager.gnome.enable = isUserFacing;
     services.xserver.displayManager.gdm.enable = isUserFacing;
 
+    services.jellyfin = {
+      enable = true;
+      openFirewall = false; # handle http via nginx
+    };
+
+    # tcp is handled via nginx
+    networking.firewall.allowedUDPPorts = [
+      1900
+      7359
+    ];
+
+    services.nginx.virtualHosts."jellyfin.timberlake.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://localhost:8096/";
+        proxyWebsockets = true;
+      };
+    };
+
+    services.nginx.virtualHosts."ha.timberlake.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://localhost:8123/";
+        proxyWebsockets = true;
+      };
+    };
+
     machine = {
+      # TODO make this user more minimal
       users = mkDefault [
         "lriutzel"
       ];
