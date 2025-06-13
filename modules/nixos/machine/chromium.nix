@@ -13,7 +13,8 @@ let
 in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      chromium
+      #chromium
+      ungoogled-chromium
     ];
 
     programs.chromium = {
