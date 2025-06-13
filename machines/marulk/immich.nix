@@ -5,6 +5,15 @@ let
   dbUser = config.services.immich.database.user;
 in {
   config = {
+    services.immich = {
+      enable = true;
+      host = "127.0.0.1"; # where to listen
+      settings.server.externalDomain = "https://immich.lucasr.com";
+      database.host = "postgres.home.lucasr.com";
+      mediaLocation = "/mnt/gumdrop/backup/immich";
+      #accelerationDevices = [ "/dev/dri/renderD128" ];
+    };
+
     services.postgresql = {
       # allowing whole subnet as marulk uses dhcp
       authentication = ''

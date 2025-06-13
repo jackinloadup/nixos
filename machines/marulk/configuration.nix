@@ -13,6 +13,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
+    ./homepage.nix
     #./nebula-lighthouse.nix
     ./adguard.nix
     ./murmur.nix
@@ -42,6 +43,10 @@ in {
     networking.bridges.br0.interfaces = ["enp1s0f0"];
     networking.interfaces.br0.useDHCP = true;
 
+    # because we are the dns, force upstream
+#   networking.resolvconf.extraConfig = ''
+#     name_servers 10.16.1.1
+#   '';
 
     networking.dhcpcd = {
       #wait = "ipv4";
@@ -207,6 +212,17 @@ in {
         extraConfig = ''
           proxy_set_header Host localhost;
         '';
+      };
+    };
+
+    services.nginx.virtualHosts."homepage.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.homepage-dashboard.listenPort }/";
+        proxyWebsockets = true;
       };
     };
 
