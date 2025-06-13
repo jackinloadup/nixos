@@ -119,6 +119,7 @@ in {
       programs.zoom-us.enable = true;
       programs.zsh.enable = true;
 
+      services.ssh-agent.enable = true;
       services.syncthing.enable = true;
     };
   };

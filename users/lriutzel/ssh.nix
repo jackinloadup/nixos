@@ -12,6 +12,9 @@
     #services.sslh.enable = ?;
 
     programs.ssh = {
+      # add used keys to agent
+      addKeysToAgent = "yes";
+
       compression = true;
 
       controlPersist = "30m";
