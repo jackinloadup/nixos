@@ -69,6 +69,7 @@ in {
                   { entity = "switch.gallery"; }
                   { entity = "light.bathroom"; }
                   { entity = "switch.bfl_sign"; }
+                  { entity = "switch.back_pendent"; }
                 ];
                 title = "Other";
               }
@@ -174,45 +175,63 @@ in {
         };
         automation = [
           {
-            alias = "Security_Frigate_Notifications";
+            alias = "Camera Detection";
             description = "";
+            use_blueprint = {
+              path = "SgtBatten/Stable.yaml";
+              input = {
+                presence_filter = [""];
+                camera = [
+                  "camera.front"
+                ];
+                notify_device = "483d83e6d41da5d46ed4126db800313b";
+              };
+            };
+          }
+          {
+            id = "Security_Frigate_Notifications";
+            alias = "Security Frigate Notifications";
+            description = "Notify on camera detection";
+            mode = "single";
+            #mode = "parallel";
+            trace = { stored_traces = 20; };
             trigger = [
               {
                 platform = "mqtt";
                 topic = "frigate/reviews";
                 payload = "alert";
                 value_template = "{{ value_json['after']['severity'] }}";
+                id = "detection";
               }
             ];
             action = [
               {
                 service = "notify.mobile_app_lucas_moto_x4";
                 data = {
-                  message = ''A {{trigger.payload_json["after"]["data"]["objects"] | sort | join(", ") | title}} was detected.'';
+                  message = ''A {{ trigger.payload_json["after"]["data"]["objects"] | sort | join(", ") | title }} was detected.'';
                   data = {
                     # your.public.hass.address.com
-                    image = ''https://10.100.0.4:8123/api/frigate/notifications/{{trigger.payload_json["after"]["data"]["detections"][0]}}/thumbnail.jpg'';
-                    tag = ''{{trigger.payload_json["after"]["id"]}}'';
-                    when = ''{{trigger.payload_json["after"]["start_time"]|int}}'';
-                    entity_id = ''camera.{{trigger.payload_json["after"]["camera"] | replace("-","_") | lower}}'';
+                    image = ''https://10.100.0.4:8123/api/frigate/notifications/{{ trigger.payload_json["after"]["data"]["detections"][0] }}/thumbnail.jpg'';
+                    tag = ''{{ trigger.payload_json["after"]["id"] }}'';
+                    when = ''{{ trigger.payload_json["after"]["start_time"] | int }}'';
+                    entity_id = ''camera.{{ trigger.payload_json["after"]["camera"] | replace("-","_") | lower }}'';
                   };
                 };
               }
               {
                 service = "notify.mobile_app_motorola_edge_plus_2022";
                 data = {
-                  message = ''A {{trigger.payload_json["after"]["data"]["objects"] | sort | join(", ") | title}} was detected.'';
+                  message = ''A {{ trigger.payload_json["after"]["data"]["objects"] | sort | join(", ") | title }} was detected.'';
                   data = {
                     # your.public.hass.address.com
-                    image = ''https://10.100.0.4:8123/api/frigate/notifications/{{trigger.payload_json["after"]["data"]["detections"][0]}}/thumbnail.jpg'';
-                    tag = ''{{trigger.payload_json["after"]["id"]}}'';
-                    when = ''{{trigger.payload_json["after"]["start_time"]|int}}'';
-                    entity_id = ''camera.{{trigger.payload_json["after"]["camera"] | replace("-","_") | lower}}'';
+                    image = ''https://10.100.0.4:8123/api/frigate/notifications/{{ trigger.payload_json["after"]["data"]["detections"][0] }}/thumbnail.jpg'';
+                    tag = ''{{ trigger.payload_json["after"]["id"] }}'';
+                    when = ''{{ trigger.payload_json["after"]["start_time"]|int }}'';
+                    entity_id = ''camera.{{ trigger.payload_json["after"]["camera"] | replace("-","_") | lower }}'';
                   };
                 };
               }
             ];
-            mode = "single";
           }
         ];
       };
