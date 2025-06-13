@@ -64,8 +64,8 @@ in {
     };
 
     # TODO submit upstream?
-    systemd.services.mosquitto.after = ["network-online.target"];
-    systemd.services.libvirtd.after = ["network-online.target"];
+    systemd.services.mosquitto.requires = ["network-online.target"];
+    systemd.services.libvirtd.requires = ["network-online.target"];
 
     virtualisation.libvirtd.enable = mkForce true;
     virtualisation.libvirtd.onShutdown = "shutdown";

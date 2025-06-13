@@ -32,6 +32,9 @@ in {
 
     services.colord.enable = true;
 
+    systemd.services."paperless-task-queue.servicepaperless-scheduler.service".requires = ["network-online.target"];
+    systemd.services."paperless-task-queue.service".requires = ["network-online.target"];
+
     hardware.printers.ensurePrinters = with printer; [
       {
         name = "${make}_${model}";
