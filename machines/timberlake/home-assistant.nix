@@ -20,7 +20,7 @@ in {
         # sun.elevation = 247;
         # esphome = {}; # fails
         # camera = [];
-        # discovery = {};
+        discovery = {};
         # conversation = {};
         # history = {};
         # logbook = {};
@@ -35,9 +35,9 @@ in {
           auth_providers = [
             { type = "trusted_networks";
               trusted_networks = [
-                "10.16.1.0/24"
-                "10.100.0.0/24"
-                "192.168.1.0/24"
+                "10.16.1.0/24" # gumdrop
+                "10.100.0.0/24" # wg vpn
+                "192.168.1.0/24" # timberlake
               ];
               allow_bypass_login = true;
             }
@@ -98,59 +98,59 @@ in {
       };
     };
 
-    services.zigbee2mqtt = {
-      enable = true;
-      settings = {
-        homeassistant = mkIf config.services.home-assistant.enable {
-           # Optional: Home Assistant discovery topic (default: shown below)
-           # Note: should be different from [MQTT base topic](../mqtt.md) to prevent errors in HA software
-           discovery_topic = "homeassistant";
-           # Optional: Home Assistant status topic (default: shown below)
-           # Note: in addition to the `status_topic`, 'homeassistant/status' will also be used
-           status_topic = "hass/status";
-        };
-        frontend = {
-          port = 8080;
-          host = "0.0.0.0";
-        };
-        permit_join = false;
-        serial = {
-          port = "/dev/ttyUSB0";
-        };
-        mqtt = {
-          base_topic = "zigbee2mqtt";
-          server = "mqtt://127.0.0.1:1883";
-          user = "mosquitto";
-          password = "mosquitto";
-        };
-        advanced = {
-          # Optional: ZigBee pan ID (default: shown below)
-          # Setting pan_id: GENERATE will make Zigbee2MQTT generate a new panID on next startup
-          #pan_id =  "0x1a62";
-          pan_id =  4695;
-          # Optional: Zigbee extended pan ID, GENERATE will make Zigbee2MQTT generate a new extended panID on next startup (default: shown below)
-          #ext_pan_id = ["0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD"];
-          ext_pan_id = [3422 9650 3893 1478 2004 8834 4356 9974];
-          # Optional: ZigBee channel, changing requires re-pairing of all devices. (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid Problems)
-          # (default: 11)
-          channel = 11;
-          # Optional: network encryption key
-          # GENERATE will make Zigbee2MQTT generate a new network key on next startup
-          # Note: changing requires repairing of all devices (default: shown below)
-          network_key = [ 170 31 25 137 89 121 173 150 30 52 24 76 88 107 192 113 ];
-          #network_key = "GENERATE";
-        };
+    #services.zigbee2mqtt = {
+    #  enable = true;
+    #  settings = {
+    #    homeassistant = mkIf config.services.home-assistant.enable {
+    #       # Optional: Home Assistant discovery topic (default: shown below)
+    #       # Note: should be different from [MQTT base topic](../mqtt.md) to prevent errors in HA software
+    #       discovery_topic = "homeassistant";
+    #       # Optional: Home Assistant status topic (default: shown below)
+    #       # Note: in addition to the `status_topic`, 'homeassistant/status' will also be used
+    #       status_topic = "hass/status";
+    #    };
+    #    frontend = {
+    #      port = 8080;
+    #      host = "0.0.0.0";
+    #    };
+    #    permit_join = false;
+    #    serial = {
+    #      port = "/dev/ttyUSB0";
+    #    };
+    #    mqtt = {
+    #      base_topic = "zigbee2mqtt";
+    #      server = "mqtt://127.0.0.1:1883";
+    #      user = "mosquitto";
+    #      password = "mosquitto";
+    #    };
+    #    advanced = {
+    #      # Optional: ZigBee pan ID (default: shown below)
+    #      # Setting pan_id: GENERATE will make Zigbee2MQTT generate a new panID on next startup
+    #      #pan_id =  "0x1a62";
+    #      pan_id =  4695;
+    #      # Optional: Zigbee extended pan ID, GENERATE will make Zigbee2MQTT generate a new extended panID on next startup (default: shown below)
+    #      #ext_pan_id = ["0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD"];
+    #      ext_pan_id = [3422 9650 3893 1478 2004 8834 4356 9974];
+    #      # Optional: ZigBee channel, changing requires re-pairing of all devices. (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid Problems)
+    #      # (default: 11)
+    #      channel = 11;
+    #      # Optional: network encryption key
+    #      # GENERATE will make Zigbee2MQTT generate a new network key on next startup
+    #      # Note: changing requires repairing of all devices (default: shown below)
+    #      network_key = [ 170 31 25 137 89 121 173 150 30 52 24 76 88 107 192 113 ];
+    #      #network_key = "GENERATE";
+    #    };
 
-      };
-    };
+    #  };
+    #};
 
-    systemd.services.home-assistant = {
-      serviceConfig = {
-        DeviceAllow = [
-          "/dev/ttyUSB0"
-        ];
-      };
-    };
+    #systemd.services.home-assistant = {
+    #  serviceConfig = {
+    #    DeviceAllow = [
+    #      "/dev/ttyUSB0"
+    #    ];
+    #  };
+    #};
 
     # Enable mosquitto MQTT broker
     services.mosquitto = {
