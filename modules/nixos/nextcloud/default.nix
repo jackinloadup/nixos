@@ -29,7 +29,9 @@ in {
       extraApps = with config.services.nextcloud.package.packages.apps; {
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit calendar contacts notes tasks cookbook qownnotesapi;
+        inherit calendar contacts notes tasks cookbook qownnotesapi
+          richdocuments # Collabora Online for Nextcloud - https://apps.nextcloud.com/apps/richdocuments
+          ;
 # onlyoffice
         # Custom app example.
 #        socialsharing_telegram = pkgs.fetchNextcloudApp rec {
@@ -193,7 +195,10 @@ in {
     #  $PSQL service1 -c 'GRANT ALL PRIVILEGES ON DATABAES "postgres" TO "nextcloud"'
     #'';
 
-    services.postgresql = {
+    services.postgresql =
+    let
+      dbUser = config.services.nextcloud.config.dbuser;
+    in {
       enable = true;
       ensureDatabases = [ currentDatabase ];
       ensureUsers = [
@@ -206,9 +211,9 @@ in {
       ];
       # allowing whole subnet as marulk uses dhcp
       authentication = ''
-        host ${currentDatabase} nextcloud 10.16.1.0/24 md5
-        host postgres nextcloud 10.16.1.0/24 md5
-        host postgres nextcloud 127.0.0.1/32 md5
+        host ${currentDatabase} ${dbUser} 10.16.1.0/24 md5
+        host postgres ${dbUser} 10.16.1.0/24 md5
+        host postgres ${dbUser} 127.0.0.1/32 md5
       '';
     };
     services.postgresqlBackup.databases = [ currentDatabase ];
