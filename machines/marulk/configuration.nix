@@ -78,12 +78,57 @@ in {
       openFirewall = false; # handle http via nginx
     };
 
-    services.immich = {
+    services.collabora-online = {
       enable = true;
-      host = "immich.lucasr.com";
-      database.host = "postgres.home.lucasr.com";
-      mediaLocation = "/mnt/gumdrop/backup/immich";
-      #accelerationDevices = [ "/dev/dri/renderD128" ];
+      port = 9980; # default
+      settings = {
+        # Rely on reverse proxy for SSL
+        ssl = {
+          enable = false;
+          termination = true;
+        };
+
+        # Listen on loopback interface only, and accept requests from ::1
+        net = {
+          listen = "loopback";
+          post_allow.host = ["::1"];
+        };
+
+        # Restrict loading documents from WOPI Host nextcloud.example.com
+        storage.wopi = {
+          "@allow" = true;
+          host = ["nextcloud.lucasr.com"];
+        };
+
+        # Set FQDN of server
+        server_name = "collabora.lucasr.com";
+      };
+    };
+
+    systemd.services.nextcloud-config-collabora = let
+      inherit (config.services.nextcloud) occ;
+
+      wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
+      public_wopi_url = "https://collabora.lucasr.com";
+      wopi_allowlist = lib.concatStringsSep "," [
+        "127.0.0.1"
+        "::1"
+        "10.16.1.0/24" # pretty sure these two are needed
+        "10.100.0.0/24"
+      ];
+    in {
+      wantedBy = ["multi-user.target"];
+      after = ["nextcloud-setup.service" "coolwsd.service"];
+      requires = ["coolwsd.service"];
+      script = ''
+        ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_url --value ${lib.escapeShellArg wopi_url}
+        ${occ}/bin/nextcloud-occ config:app:set richdocuments public_wopi_url --value ${lib.escapeShellArg public_wopi_url}
+        ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_allowlist --value ${lib.escapeShellArg wopi_allowlist}
+        ${occ}/bin/nextcloud-occ richdocuments:setup
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
     };
 
     # tcp is handled via nginx
@@ -92,13 +137,24 @@ in {
       7359
     ];
 
+    services.nginx.virtualHosts."collabora.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://[::1]:${toString config.services.collabora-online.port}";
+        proxyWebsockets = true;
+      };
+    };
+
     services.nginx.virtualHosts."jellyfin.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
       acmeRoot = null; # Use DNS Challenege
 
       locations."/" = {
-        proxyPass = "http://localhost:8096/";
+        proxyPass = "http://127.0.0.1:8096/";
         proxyWebsockets = true;
       };
     };
