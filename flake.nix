@@ -10,15 +10,15 @@
 
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
-    nix-software-center = {
-      url = "github:snowfallorg/nix-software-center";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-      #inputs.nixos-appstream-data.inputs.nixpkgs.follows = "nixpkgs";
-      #inputs.nixos-appstream-data.inputs.flake-utils.follows = "flake-utils";
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
     #nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
-    };
+    #nix-software-center = {
+    #  url = "github:snowfallorg/nix-software-center";
+    #  inputs.nixpkgs.follows = "nixpkgs-stable";
+    #  #inputs.nixos-appstream-data.inputs.nixpkgs.follows = "nixpkgs";
+    #  #inputs.nixos-appstream-data.inputs.flake-utils.follows = "flake-utils";
+    #};
 
     # explore prebuilt unfree packages
     #nixpkgs-unfree.url = "github:numtide/nixos-unfree";
@@ -191,7 +191,7 @@
                 ./machines/riko/configuration.nix
               ];
             };
-            # TV box
+            # Nathan TV box
             nat = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default

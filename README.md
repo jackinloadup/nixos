@@ -44,11 +44,26 @@ Personal home lab nixos setup exposed as a flake.
 - (new machine) boot PXE nixos-iso or usb
 - (new machine) set password for nixos user `passwd`
 - (new machine) get ip `ip addr`
-- (new machines) check disk `lsblk`
-- (new machines) install keys `curl "https://github.com/jackinloadup.keys" > ~/.ssh/authorized_keys`
+- (new machine) check disk `lsblk`
+- (new machine) install keys `curl "https://github.com/jackinloadup.keys" > ~/.ssh/authorized_keys`
+- (new machine) get factor.json `sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o facter.json`
 - (existing machine) add disk encryption key into /tmp/disk.key
 - (existing machine) nix run github:nix-community/nixos-anywhere -- --build-on local --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --disk-encryption-keys /tmp/disk.key /tmp/disk.key nixos@10.16.1.159
 
 ## test with vm. Must comment out or disable all encryption due to vm-test not supporting disk key transfer
 - (existing machine) nix run github:nix-community/nixos-anywhere -- --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --vm-test
 
+## Nextcloud upgrade
+Connect to host
+`ssh marulk`
+Connect to database
+`sudo su - postgres -c psql`
+Copy database
+`CREATE DATABASE nextcloud30 WITH TEMPLATE nextcloud29;`
+Grant access
+`GRANT ALL PRIVILEGES ON DATABASE nextcloud30 to nextcloud;`
+Update currentDatabase in modules/nixos/nextcloud/default.nix
+
+
+If mounts didn't come up immediately, re apply tmpfiles
+`sudo systemctl restart systemd-tmpfiles-resetup.service`
