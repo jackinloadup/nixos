@@ -76,13 +76,13 @@ in {
 
          listener = [
            {
-             timeout = 900;
+             timeout = 300;
              on-timeout = "hyprlock";
 
              #lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
            }
            {
-             timeout = 960;
+             timeout = 360;
              on-timeout = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms off";
              on-resume = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
            }
@@ -126,7 +126,7 @@ in {
             fade_on_empty = true;
             placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
             hide_input = false;
-            position = "0,-120";
+            position = "0,220";
             halign = "center";
             valign = "center";
           }

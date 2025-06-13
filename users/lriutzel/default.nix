@@ -170,7 +170,6 @@ in {
       # The 'programs.command-not-found.enable' option is mutually exclusive
       # with the 'programs.nix-index.enableBashIntegration' option.
       #programs.command-not-found.enable = isFullSystem;
-      programs.git.extraConfig.safe.directory = "${homeDir}/Projects/dotfiles";
 
       #programs.neovim.enable = true;
 
@@ -234,7 +233,6 @@ in {
 
       home.packages = []
         ++ optionals ifGraphical [
-          pkgs.magic-wormhole-rs # Get things from one computer to another, safely.
           #flake.inputs.scripts.packages.x86_64-linux.disk-burnin
 
           pkgs.bc
@@ -258,13 +256,10 @@ in {
           #pkgs.fractal # matrix client
           #pkgs.fractal-next # matrix client. isn't compiling
           #pkgs.nheko # matrix client
-          #mumble # voice chat application
-          pkgs.signal-desktop # messaging client
 
           ## Task/notes
           pkgs.mindforger
 
-          pkgs.kodi-wayland
 
           pkgs.file-roller # Archive manager
           pkgs.sysbench # benchmarking tool
@@ -274,7 +269,7 @@ in {
           pkgs.nvd # nix tool to diff
         ]
         ++ optionals isFullSystem [
-          flake.inputs.nix-software-center.packages.x86_64-linux.nix-software-center
+          #flake.inputs.nix-software-center.packages.x86_64-linux.nix-software-center
           flake.inputs.scripts.packages.x86_64-linux.rebuild
           #helvum # pipewire patchbay # failing to build
           pkgs.easyeffects # Audio effects
@@ -307,6 +302,7 @@ in {
           pkgs.wireshark
           pkgs.gparted
           pkgs.nmapsi4 # QT frontend for nmap
+          #pkgs.inxi # cli extensive system information
 
           ## Wine Apps
           pkgs.winbox4 # Mikrotik RouterOS GUI
@@ -315,7 +311,6 @@ in {
           # alt browser with ipfs builtin
           pkgs.brave
 
-          pkgs.warp # transfer files between computers gui
           pkgs.gnome-maps # map viewer
 
           #pkgs.unzip # duh
@@ -338,10 +333,6 @@ in {
           pkgs.nixos-shell
           #  attribute 'default' missing
           #flake.inputs.nix-inspect.packages.default
-
-          ## spreadsheet stuffs
-          pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
-          pkgs.visidata
 
           # TUI to GUI helpers
           pkgs.bfs # breadth-first version of the UNIX find command. might be faster than fd?
@@ -366,22 +357,32 @@ in {
           pkgs.nsnake # snake game
           pkgs.terminal-parrot # parrot in your terminal
           pkgs.pipes-rs # pipes terminal screensaver
-
-          # k8s
-          pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
+          # https://tattoy.sh/ not yet in nixpkgs
 
           # benchmarking
           pkgs.geekbench # benchmarking tool
           pkgs.cpu-x # cpu info
           pkgs.lm_sensors
 
-          pkgs.textsnatcher #  com.github.rajsolai.textsnatcher maybe make alias
-          pkgs.super-productivity
+          # Disabled due to lack of use
+          #pkgs.kodi-wayland
+          #pkgs.warp # transfer files between computers gui
+          #pkgs.textsnatcher #  com.github.rajsolai.textsnatcher maybe make alias
+          #pkgs.super-productivity
+          #pkgs.signal-desktop # messaging client
+          #pkgs.magic-wormhole-rs # Get things from one computer to another, safely.
 
-          pkgs.libsForQt5.marble # map / globe viewer
-          pkgs.stellarium # planetarium
+          #pkgs.libsForQt5.marble # map / globe viewer
+          #pkgs.stellarium # planetarium
 
-          pkgs.anytype # distributed p2p local-first
+          #pkgs.anytype # distributed p2p local-first
+
+          ## k8s
+          #pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
+
+          ## spreadsheet stuffs
+          #pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
+          #pkgs.visidata
         ];
     };
 

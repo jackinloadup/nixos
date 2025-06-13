@@ -28,7 +28,7 @@ in {
       # that mean and why doesn't it work if used in sessionVariables which
       # i think is the same but exported??
       # Runs after profileExtra
-      initExtra = ''
+      initContent = lib.mkOrder 1000 ''
         export WAYLAND_DISPLAY=wayland-1
         # SWAYSOCK needs to be set after sway is started
         export SWAYSOCK="$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock"
