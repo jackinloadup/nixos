@@ -173,7 +173,7 @@ in {
     services.xserver.windowManager.i3.enable = true;
 
     system.autoUpgrade = {
-      enable = true;
+      enable = false; # secrets repo is limiting factor atm
       flake = flake.self.outPath;
       flags = [
         "--update-input" # warning: '--update-input' is a deprecated alias for 'flake update' and will be removed in a future version.
