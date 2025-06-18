@@ -20,6 +20,7 @@ in
     #frigate = self.unstable.frigate;
 
     # All for 8BitDuo support. TODO remove - 2-25
+    # merged, can be removed soonish
     # https://github.com/libretro/retroarch-joypad-autoconfig/pull/1224
     retroarch-joypad-autoconfig = super.retroarch-joypad-autoconfig.overrideAttrs {
       src = super.fetchFromGitHub {
@@ -37,6 +38,8 @@ in
     obsidian = self.unstable.obsidian;
     bark = self.unstable.bark;
     rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix {};
+
+    ragenix = inputs.ragenix.packages."x86_64-linux".default;
 
     # update in unstable broke b/c of schema version mismatch in config file
     adguardhome = self.stable.adguardhome;

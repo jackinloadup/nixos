@@ -13,6 +13,8 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
     #nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
+    ragenix.url = "github:yaxitech/ragenix";
+
     #nix-software-center = {
     #  url = "github:snowfallorg/nix-software-center";
     #  inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -89,12 +91,6 @@
     };
 
     nixos-unified.url = "github:srid/nixos-unified";
-
-   secrets = {
-      url = "/home/lriutzel/Projects/secrets";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
 
     scripts = {
       url = "/home/lriutzel/Projects/scripts";
@@ -274,6 +270,7 @@
         in rec {
           devShells = flattenTree {
             rust = import ./shells/rust.nix {inherit pkgs;};
+            secrets = import ./shells/secrets.nix {inherit pkgs;};
           };
         })
         // (eachSystem supportedX86Systems)
@@ -284,7 +281,7 @@
           # allow using them from other flakes that import this one.
           packages = flattenTree {
             rtl_433-dev = pkgs.rtl_433-dev;
-
+            ragenix = inputs.ragenix.packages.${system}.default;
           };
 
           apps = {
@@ -312,6 +309,7 @@
         };
 
         devShells.default = pkgs.mkShell {
+          inputsFrom = with self.outputs.devShells.${system}; [ secrets ];
           buildInputs = [
             pkgs.nixpkgs-fmt
             #pkgs.sops

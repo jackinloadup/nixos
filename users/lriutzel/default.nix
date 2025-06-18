@@ -131,7 +131,6 @@ in {
       imports = [
           flake.self.homeModules.common
           ./ssh.nix
-          flake.inputs.secrets.homemanagerModules.lriutzel
           flake.inputs.nix-index-database.hmModules.nix-index
         ]
         ++ optionals ifTui [
