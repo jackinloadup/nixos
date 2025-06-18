@@ -1,20 +1,8 @@
-# completed
-zsh + spaceship
-wireshark
-migrate laptop
-zsh: change window title based on location
-nvim: limit tree siter language support
-option to enable docker.
-vm system like qemu or w/e
-
 # partial
-steam compartment?
 kexec reboot
 yubikey
-gamescope - SteamOS session compositing window manager - https://github.com/Plagman/gamescope
 
 # proposed
-- gnupg
 - clamav - OnAccessScan
 - wfvm https://git.m-labs.hk/M-Labs/wfvm
 - quickemu
@@ -32,7 +20,9 @@ monitioring:
   metrics collection
   logging collection
 
-self host ntfy.sh or other ntfs for push notifications
+self host ntfy.sh or other ntfy for push notifications
+
+
 
 # Requires secret storage
 - autostart fractal - matrix client
@@ -43,17 +33,14 @@ self host ntfy.sh or other ntfs for push notifications
 - fractal?
 
 
+move machines to hosts to allow easier external configuration like github.com
+
+
 TinyCoreLinux or similar as a alt boot?
-vm system like qemu or w/e
-different size builds eg: replace libreoffice for somethings smaller
-explore quick shells for rust / secops / private + colors per shell in case of multi-tasking?
 ephemeral boot option
 nixops deploy to other computer
 
 zsh: set window titles based on what applications we run
-
-sway dimr - creates options for swaylock
-https://gitlab.com/cytopyge/dotfiles/-/raw/master/files/code/sway/dimr
 
 vault secrets nix
 https://github.com/serokell/vault-secrets
@@ -65,11 +52,9 @@ CopyQ - Clipboard manager
 https://hluk.github.io/CopyQ/
 
 
-build plan to migrate desktop
-labled menu in sway for rando application browsing / searching
 kexec emergency - already exists but explore options
 mpd
-profile-sync-daemon
+profile-sync-daemon possible/useful with impermance?
 
 kms glsl shader boot experience like plymouth?
 
