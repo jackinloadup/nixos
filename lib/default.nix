@@ -61,7 +61,6 @@ in rec {
         ++ attrValues nixosModules
         ++ attrValues nixosUsers
         ++ [
-          inputs.secrets.nixosModules.default
           (rootPath + "/machines/${hostname}/configuration.nix")
         ];
     };
@@ -72,7 +71,6 @@ in rec {
       modules =
         (import (rootPath + "/machines/${hostname}/modules.nix") {inherit inputs;})
         ++ [
-          inputs.secrets.nixosModules.default
           (rootPath + "/machines/${hostname}/configuration.nix")
         ];
     };
@@ -82,7 +80,6 @@ in rec {
       inherit system specialArgs;
       format = "install-iso";
       modules = [
-        inputs.secrets.nixosModules.default
         (rootPath + "/modules/nixos/machine/nix.nix")
         ({
           pkgs,
