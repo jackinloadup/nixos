@@ -192,6 +192,10 @@ in {
     # users who are smart can be trusted?
     security.sudo.wheelNeedsPassword = false;
 
+    # https://kokada.dev/blog/an-unordered-list-of-hidden-gems-inside-nixos/
+    # use high performance implementation
+    services.dbus.implementation = "broker";
+
     # Fuse filesystem that returns symlinks to executables based on the PATH of
     # the requesting process. This is useful to execute shebangs on NixOS that
     # assume hard coded locations in locations like /bin or /usr/bin etc.
