@@ -5,7 +5,6 @@
     nixosModules = {
       # For modules that work on both Linux and Darwin
       common.imports = [
-        inputs.secrets.nixosModules.default
         #./arewehackersyet
         ./bluetooth
         ./botamusique
@@ -19,6 +18,7 @@
         ./vault
         ./yubikey
         ./zsh
+        ./../../nixos-secrets.nix
       ];
 
       linux.imports = [
