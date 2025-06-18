@@ -382,6 +382,20 @@ in {
           ## spreadsheet stuffs
           #pkgs.sc-im # disabled due to insecure dependency: libxls-1.6.2
           #pkgs.visidata
+
+
+          # todoist # task manager
+          pkgs.systemctl-tui # tui for systemd
+          # gping
+          # impala # wifi tui
+          # cms # audio/podcast?
+          # tdf # PDF viewer
+          # jqp # jq playground tui
+          # rainfrog # tui database management
+          # parallama # llm interface
+          # wikitui # wikipedia tui
+          # mc # midnight commander. file manager, haven't quite picked this up yet
+          # somo # easier tcp/udp ports ect
         ];
     };
 
