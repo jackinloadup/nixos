@@ -633,11 +633,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1750005367,
-        "narHash": "sha256-h/aac1dGLhS3qpaD2aZt25NdKY7b+JT0ZIP2WuGsJMU=",
+        "lastModified": 1750133334,
+        "narHash": "sha256-urV51uWH7fVnhIvsZIELIYalMYsyr2FCalvlRTzqWRw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6c64dabd3aa85e0c02ef1cdcb6e1213de64baee3",
+        "rev": "36ab78dab7da2e4e27911007033713bab534187b",
         "type": "github"
       },
       "original": {
@@ -665,11 +665,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1750005367,
-        "narHash": "sha256-h/aac1dGLhS3qpaD2aZt25NdKY7b+JT0ZIP2WuGsJMU=",
+        "lastModified": 1750133334,
+        "narHash": "sha256-urV51uWH7fVnhIvsZIELIYalMYsyr2FCalvlRTzqWRw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6c64dabd3aa85e0c02ef1cdcb6e1213de64baee3",
+        "rev": "36ab78dab7da2e4e27911007033713bab534187b",
         "type": "github"
       },
       "original": {
@@ -758,11 +758,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1750195501,
-        "narHash": "sha256-OQLqWa3uqd4EKNRC03Sb3jsRPGPIGity7viEP50H1SQ=",
+        "lastModified": 1750251095,
+        "narHash": "sha256-1GINhhSNLBlyU9CH/xRzkd2xqfDaMtu+4dX0BMRafkc=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "7e0827ccf4094cb68e49ece793cf1e2f414cca24",
+        "rev": "6da79ed7b38658baee0646a1882d9742e8688038",
         "type": "github"
       },
       "original": {
@@ -982,14 +982,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1732068705,
-        "narHash": "sha256-NImGc3Oz5z5hP/HRvm8L2Y3q+JXL4d5x718q4PufAYo=",
-        "path": "/home/lriutzel/Projects/scripts",
-        "type": "path"
+        "lastModified": 1750255303,
+        "narHash": "sha256-fmwZht0Ut4jLny/OY2GqHO/+MFxifC6aOFXR5Jgx3xA=",
+        "owner": "jackinloadup",
+        "repo": "scripts",
+        "rev": "87745e253164ebd9c8bfddc93b4e8583793960cc",
+        "type": "github"
       },
       "original": {
-        "path": "/home/lriutzel/Projects/scripts",
-        "type": "path"
+        "owner": "jackinloadup",
+        "repo": "scripts",
+        "type": "github"
       }
     },
     "slimlock": {

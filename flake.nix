@@ -93,7 +93,7 @@
     nixos-unified.url = "github:srid/nixos-unified";
 
     scripts = {
-      url = "/home/lriutzel/Projects/scripts";
+      url = "github:jackinloadup/scripts";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
