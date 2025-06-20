@@ -42,13 +42,13 @@ let
   torHostsConfig = mergeAttrsList (map mkTorHost torHosts);
 
   mkSshdHost = (host: {
-    "secrets/machines/${host}/sshd/private_key.age".publicKeys = all;
+    "secrets/machines/${host}/sshd/private_key.age".publicKeys = users ++ (sshKeyMap [host]);
   });
   sshdHosts = filter (host: shostHasService host "sshd") smachines;
   sshdHostsConfig = mergeAttrsList (map mkSshdHost sshdHosts);
 
   mkInitSshdHost = (host: {
-    "secrets/machines/${host}/init-sshd/private_key.age".publicKeys = all;
+    "secrets/machines/${host}/init-sshd/private_key.age".publicKeys = users ++ (sshKeyMap [host]);
   });
   initSshdHosts = filter (host: shostHasService host "init-sshd") smachines;
   initSshdHostsConfig = mergeAttrsList (map mkInitSshdHost initSshdHosts);
