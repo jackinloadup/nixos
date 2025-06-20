@@ -22,12 +22,12 @@
 
   lriutzelKeys = [
     # password protected private key file
-    "ssh-rsa aaaab3nzac1yc2eaaaabiwaaaqea1pkthuapo4ox3plxnxctlz7xszedeyjfbfeuyliygd32invsvqhl3zmhz1p5imdmrmb/zd9dsmbtfy1fgy+unsmblb6rs7sxot6vfifxnc1r7ylaa1hufgahjht+bswngplia5ds2xbdbph3i6yrft+v37quz9eesdfauc0jvegqvoauiksagxhaesktpqhd//32lepwpm45ivs7zix34lyrq/ryvl9ekmrglgfkj3uglsn6j8wos7em9yow8s7lueshbccflqgus2mjg71l14mwm1cctaifebr04btmhtvcjkj505zfvlwlc8bg/urr6mizabc1oqkrnm017tlj3q== lriutzel@gmail.com"
-    "ssh-ed25519 aaaac3nzac1lzdi1nte5aaaaipo/wqsqhq1wmzbwg8ujm4vk/exuwmst49kmkpdtju0v lriutzel@gmail.com"
+    "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1pkTHUApo4oX3PLXnXcTLZ7xszEdeYJfBFEUyliYgD32INvsvQhl3ZmhZ1P5IMDmrMb/zd9dsMbtfY1fgy+unSMblb6RS7SxOt6vfifxNc1R7ylaa1HufgAhJHT+bSWNGPliA5Ds2XbdbPh3I6yRFT+V37QUz9EesDFaUC0JVEgqVOAUikSAGXhAeskTpQhD//32lEPwPM45iVS7Zix34LYrQ/RyVL9EKMRGLGFkJ3UgLsn6j8Wos7EM9YoW8s7lueShBcCFLqGus2Mjg71L14MWM1CCtaiFeBr04BtmhtvCjKJ505zfVLWLC8bg/URR6mIZABc1OqKRnm017tlJ3Q== lriutzel@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPO/wQSQHq1Wmzbwg8uJM4vK/exUWmsT49kmkPdtJU0v lriutzel@gmail.com"
 
     # pin protected solo2 security key
-    "sk-ssh-ed25519@openssh.com aaaagnnrlxnzac1lzdi1nte5qg9wzw5zc2guy29taaaaipxpfmngk0tw467uszyaa1mjgb2owdfbqt939dzolbwyaaaabhnzado= orange"
-    "sk-ssh-ed25519@openssh.com aaaagnnrlxnzac1lzdi1nte5qg9wzw5zc2guy29taaaainmfkdhabjag/k0w78kqbg1pl8w+wmv7xwp4vbkdhtinaaaabhnzado= black"
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPxPFMNGK0tw467usZYAA1mjgB2owDFBQT939dzOlBWyAAAABHNzaDo= orange"
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINmfKdhabJag/k0w78kqBG1PL8w+WMv7xWp4VbkdhtINAAAABHNzaDo= black"
   ];
 
 in {
