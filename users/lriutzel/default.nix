@@ -344,6 +344,7 @@ in {
           #fast-cli # bandwidth test through fast.com
           pkgs.nmap
           pkgs.television # blazingly fast general purpose fuzzy finder
+          pkgs.mission-center # great cpu/network/disk monitor gui
 
           ## Audio
           pkgs.playerctl # TUI
