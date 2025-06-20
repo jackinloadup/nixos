@@ -67,7 +67,7 @@ in {
       enable = mkDefault true;
       detection_time = 3600;
       attack_threshold = 50; # 5 failed attempts. ~10 per;
-      whitelist = [ "10.16.0.0/8" ];
+      whitelist = [ "10.16.0.0/8" "10.100.0.0/24" ];
     };
     home-manager.sharedModules = [ {
       # a proxy forwarding Bluetooth MIDI controls via MPRIS2
