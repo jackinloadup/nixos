@@ -19,7 +19,7 @@ in {
   environment.etc."issue.d/ip.issue".text = "\\4\n";
   networking.dhcpcd.runHook = "${pkgs.util-linux}/bin/agetty --reload";
 
-  #services.openssh.enable = true;
+  services.openssh.enable = true;
   virtualisation = {
     cores = 2;
     memorySize = 1024;
@@ -36,7 +36,5 @@ in {
     };
   };
 
-  services.openssh.enable = true;
-  #services.xserver.enable = true;
   virtualisation.graphics = true;
 }
