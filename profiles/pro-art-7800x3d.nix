@@ -7,10 +7,12 @@ in {
     boot.loader.efi.canTouchEfiVariables = true;
     # machine isn't physically moving. Keep same dhcp issued address
     networking.networkmanager.wifi.macAddress = mkForce "permanent";
-    #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+
     boot.kernelPackages = pkgs.linuxPackages_zen;
-    #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
-    #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+
+    ##boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    ##boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
+    ##boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
     # Disabled everything related to MEDIATEK Corp. MT7922 802.11ax in the BIOS
     # for zen
