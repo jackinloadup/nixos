@@ -132,7 +132,6 @@ in {
     #    gain 0
     #  '';
     #};
-    services.media-services.enable = true;
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
     #services.displayManager.sddm.enable = true;
