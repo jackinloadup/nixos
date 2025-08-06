@@ -106,7 +106,7 @@ in {
       loader.systemd-boot = {
         enable = mkDefault true;
         memtest86.enable = mkDefault ifTui; # show memtest
-        configurationLimit = mkDefault 20;
+        configurationLimit = mkDefault 5;
         consoleMode = mkDefault "auto";
         netbootxyz.enable = true;
       };
