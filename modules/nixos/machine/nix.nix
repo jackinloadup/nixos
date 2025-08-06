@@ -45,6 +45,7 @@ in {
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
       ];
+      allowed-users = [ "root" "@wheel" ];
       trusted-users = [ "root" "@wheel" ];
       auto-optimise-store = mkDefault ifTui;
       builders-use-substitutes = true;
