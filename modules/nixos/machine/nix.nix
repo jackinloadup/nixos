@@ -26,6 +26,10 @@
   repoRoot = toString ../../../.;
 in {
   config = {
+    environment.variables = {
+      NIXPKGS_ALLOW_UNFREE = "1";
+    };
+
     # Allow unfree packages.
     nixpkgs.config.allowUnfree = true;
 
