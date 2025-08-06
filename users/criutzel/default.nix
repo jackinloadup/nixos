@@ -63,7 +63,6 @@ in {
 
         pkgs.media-downloader # youtube-dl gui
 
-        pkgs.signal-desktop # chat messaging
         pkgs.tor-browser-bundle-bin # Anonymity browser
 
         pkgs.warp # transfer files between computers gui

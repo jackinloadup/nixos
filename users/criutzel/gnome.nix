@@ -8,7 +8,6 @@
         "kdenlive.desktop"
         "obs.desktop"
         "filezilla.desktop"
-        "signal-desktop.desktop"
         "simple-scan.desktop"
         "org.kde.kdenlive"
       ];

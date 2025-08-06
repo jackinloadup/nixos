@@ -9,7 +9,6 @@ in {
           "org.gnome.Nautilus.desktop"
           "kdenlive.desktop"
           "obs.desktop"
-          "signal-desktop.desktop"
           "org.kde.kdenlive"
         ];
 
