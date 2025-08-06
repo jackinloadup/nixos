@@ -27,11 +27,21 @@ in {
         }
       ];
       bookmarks = [{
-        Bookmarks = [
+        Starnes = [
           {
-            "Jellyfin" = [{
-              description = "";
-              href = "https://jellyfin.home.lucasr.com";
+            "Vaultwarden" = [{
+              description = "Password Store";
+              href = "https://vaultwarden.starn.es";
+            }];
+          }
+        ];
+      }
+      {
+        Gumdrop = [
+          {
+            "Paperless" = [{
+              description = "Document Manager";
+              href = "https://paperless.home.lucasr.com/";
             }];
           }
           {
@@ -41,11 +51,33 @@ in {
             }];
           }
           {
+            "Syncthing - NAS" = [{
+              description = "File Sync";
+              href = "http://truenas.home.lucasr.com:20910/#";
+            }];
+          }
+          {
             "Nextcloud" = [{
               description = "Personal files";
               href = "https://nextcloud.lucasr.com";
             }];
           }
+          {
+            "Home Assistant" = [{
+              description = "Automate Life";
+              href = "https://ha.home.lucasr.com/";
+            }];
+          }
+          {
+            "AI Chat" = [{
+              description = "Chat Bot";
+              href = "http://chat.lucasr.com/";
+            }];
+          }
+        ];
+      }
+      {
+        Media = [
           {
             "Audiobookshelf" = [{
               description = "Audio Books";
@@ -53,44 +85,85 @@ in {
             }];
           }
           {
-            "Home Assistant" = [{
-              description = "";
-              href = "https://ha.home.lucasr.com/";
+            "Jellyseerr" = [{
+              description = "Media Finder";
+              href = "http://jellyseerr.lucasr.com/";
             }];
           }
           {
-            "Chat" = [{
-              description = "AI chat";
-              href = "http://chat.lucasr.com:11112/";
+            "Jellyfin" = [{
+              description = "Consume Media";
+              href = "https://jellyfin.home.lucasr.com";
             }];
-          }];
+          }
+        ];
       }
       {
-        Media = [
+        Infra = [
+          {
+            "Modem" = [{
+              description = "Netgear Cable Modem";
+              href = "http://192.168.100.1/";
+            }];
+          }
+          {
+            "Router" = [{
+              description = "Mikrotik Router";
+              href = "http://10.16.1.1";
+            }];
+          }
+          {
+            "Printer" = [{
+              description = "Brother MFC-9130CW";
+              href = "http://printer.home.lucasr.com";
+            }];
+          }
+          {
+            "Truenas" = [{
+              description = "Storage server";
+              href = "http://truenas.home.lucasr.com";
+            }];
+          }
+        ];
+      }
+      {
+        Management = [
+          {
+            "Sabnzb" = [{
+              description = "Download Content";
+              href = "https://sabnzb.lucasr.com/";
+            }];
+          }
           {
             "radarr" = [{
-              description = "Movies";
-              href = "http://radarr.lucasr.com:11112/";
+              description = "Movies Manager";
+              href = "https://radarr.lucasr.com/";
+            }];
+          }
+          {
+            "Sonarr" = [{
+              description = "Series Manager";
+              href = "https://sonarr.lucasr.com/";
             }];
           }
           {
             "prowlarr" = [{
               description = "Index api middleware";
-              href = "http://prowlarr.lucasr.com:11112/";
+              href = "https://prowlarr.lucasr.com/";
             }];
           }
           {
             "Bazarr" = [{
-              description = "bazaar";
-              href = "http://bazarr.lucasr.com/";
+              description = "Subtitle Finder";
+              href = "https://bazarr.lucasr.com/";
             }];
           }
-          {
-            "Lidarr" = [{
-              description = "lidarr";
-              href = "http://lidarr.lucasr.com/";
-            }];
-          }
+            #{
+            #  "Lidarr" = [{
+            #    description = "Music Manager";
+            #    href = "https://lidarr.lucasr.com/";
+            #  }];
+            #}
         ];
       }];
     };
