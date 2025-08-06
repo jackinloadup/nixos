@@ -7,7 +7,7 @@
 }: {
   config = {
     home.packages = [ # needed to compile treesitter plugins, somewhat guess but works
-      #pkgs.gcc # should be included automatically
+      pkgs.gcc # should be included automatically
       #pkgs.clang # can't have them both. some kind of namespace collision
     ];
 
