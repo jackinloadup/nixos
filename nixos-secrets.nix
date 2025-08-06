@@ -1,13 +1,18 @@
-{ flake, lib, ... }:
+{ config, flake, lib, ... }:
 let
-  inherit (lib) attrNames mergeAttrsList;
-  inherit (builtins) readDir filter;
+  inherit (lib) attrNames mergeAttrsList mkIf;
+  inherit (builtins) readDir filter elem;
 
   selfLib = import ./lib/secrets.nix {};
   inherit (selfLib) smachines shostHasService;
 
+  hostname = config.networking.hostName;
+
+  servers = ["marulk" "reg"];
+  lucasDevHosts = ["reg" "riko"];
+
   mkWgHost = (host: {
-     "wg-vpn-${host}" = {
+     "wg-vpn-${host}" = mkIf (hostname == host) {
         file = ./secrets/machines/${host}/wg-vpn/private.age;
      };
   });
@@ -15,13 +20,13 @@ let
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
 
   mkTorHost = (host: {
-     "tor-service-${host}-hostname" = {
+     "tor-service-${host}-hostname" = mkIf (hostname == host) {
         file = ./secrets/machines/${host}/tor-service/hostname.age;
      };
-     "tor-service-${host}-hs_ed25519_public_key" = {
+     "tor-service-${host}-hs_ed25519_public_key" = mkIf (hostname == host) {
         file = ./secrets/machines/${host}/tor-service/hs_ed25519_public_key.age;
      };
-     "tor-service-${host}-hs_ed25519_secret_key" = {
+     "tor-service-${host}-hs_ed25519_secret_key" = mkIf (hostname == host) {
         file = ./secrets/machines/${host}/tor-service/hs_ed25519_secret_key.age;
      };
   });
@@ -30,7 +35,7 @@ let
 
   # ssh host private keys aren't stored here and public keys are not encrypted
   mkSshdHost = (host: {
-    "sshd-${host}-private-key" = {
+    "sshd-${host}-private-key" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/sshd/private_key.age;
     };
   });
@@ -38,7 +43,7 @@ let
   sshdHostsConfig = mergeAttrsList (map mkSshdHost sshdHosts);
 
   mkInitSshdHost = (host: {
-    "init-sshd-${host}-private-key" = {
+    "init-sshd-${host}-private-key" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/init-sshd/private_key.age;
     };
   });
@@ -68,38 +73,26 @@ in {
         group = "immich";
       };
 
-      namecheap-api-user = {
+      namecheap-api-user = mkIf (elem hostname servers) {
         file = ./secrets/services/namecheap/api-user.age;
 
       };
 
-      namecheap-api-key = {
+      namecheap-api-key = mkIf (elem hostname servers) {
         file = ./secrets/services/namecheap/api-key.age;
       };
 
-      nextcloud-db-pass = {
+      nextcloud-db-pass = mkIf (elem hostname servers) {
         file = ./secrets/services/nextcloud/db-pass.age;
         owner = "nextcloud";
         group = "nextcloud";
       };
 
-      wg-vpn-marulk = {
-        file = ./secrets/machines/marulk/wg-vpn/private.age;
-      };
-
-      wg-vpn-reg = {
-        file = ./secrets/machines/reg/wg-vpn/private.age;
-      };
-
-      wg-vpn-riko = {
-        file = ./secrets/machines/riko/wg-vpn/private.age;
-      };
-
-      nix-signing-key = {
+      nix-signing-key = mkIf (elem hostname servers) {
         file = ./secrets/services/nix/signing-key.age;
       };
 
-      nix-signing-pub-key = {
+      nix-signing-pub-key = mkIf (elem hostname servers) {
         file = ./secrets/services/nix/signing-key.pub.age;
       };
 
@@ -107,11 +100,11 @@ in {
         file = ./secrets/users/lriutzel/hashed-password.age;
       };
 
-      lriutzel-aws-beautyfromlight-key-id = {
+      lriutzel-aws-beautyfromlight-key-id = mkIf (elem hostname lucasDevHosts) {
         file = ./secrets/users/lriutzel/aws-beautyfromlight-key_id.age;
       };
 
-      lriutzel-aws-beautyfromlight-access-key = {
+      lriutzel-aws-beautyfromlight-access-key = mkIf (elem hostname lucasDevHosts) {
         file = ./secrets/users/lriutzel/aws-beautyfromlight-access_key.age;
       };
 

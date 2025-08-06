@@ -153,12 +153,12 @@ in {
       ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="248a", ATTR{idProduct}=="5b2f", TEST=="power/control", ATTR{power/control}="auto", TEST=="power/autosuspend_delay_ms", ATTR{power/autosuspend_delay_ms}="120000"
     '';
 
-    services.paperless.passwordFile = config.age.secrets.badPass.path;
+    services.paperless.passwordFile = config.age.secrets.commonPass.path;
 
-    services.nextcloud.config.adminpassFile = config.age.secrets.badPass.path;
+    services.nextcloud.config.adminpassFile = config.age.secrets.commonPass.path;
     services.nextcloud.config.dbpassFile = config.age.secrets.nextcloud-db-pass.path;
     services.pgadmin.initialEmail = "lriutzel@gmail.com";
-    services.pgadmin.initialPasswordFile = config.age.secrets.badPass.path;
+    services.pgadmin.initialPasswordFile = config.age.secrets.commonPass.path;
 
     #services.immich.secretsFile = "/run/secrets/immich";
     services.immich.secretsFile = config.age.secrets.immich.path;
