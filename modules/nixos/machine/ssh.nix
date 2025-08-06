@@ -20,6 +20,14 @@ in {
       settings = {
         PermitRootLogin = "prohibit-password";
         PasswordAuthentication = false;
+        X11Forwarding = false;
+
+        # don't allow system accounts to login
+        # possibly change this to a new group like ssh_login
+        #
+        # Added root to allow remote nix builders
+        AllowGroups = [ "users" "root" ];
+
         # disable insecure ciphers and macs
         Ciphers = [
           "chacha20-poly1305@openssh.com"
@@ -40,13 +48,6 @@ in {
       };
 
       extraConfig = ''
-
-        # don't allow system accounts to login
-        # possibly change this to a new group like ssh_login
-        #
-        # Added root to allow remote nix builders
-        AllowGroups users root
-
         PermitEmptyPasswords no
       '';
 
