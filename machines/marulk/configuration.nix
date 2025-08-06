@@ -18,9 +18,12 @@ in {
     ./adguard.nix
     ./murmur.nix
     ./immich.nix
+    ./frigate.nix
   ];
 
   config = {
+
+    nixpkgs.config.allowUnfree = true;
 
     boot.initrd.verbose = true;
 
@@ -34,11 +37,164 @@ in {
     gumdrop.vpn.server.enable = true;
     gumdrop.storageServer.enable = true;
     gumdrop.storageServer.media = true;
+    gumdrop.printerScanner = true;
+
     gumdrop.scanned-document-handling.enable = true;
 
-    services.media-services.enable = false;
+    services.media-services.enable = true;
+    services.smokeping = {
+      enable = true;
+      host = "smokeping.lucasr.com";
+      probeConfig = ''
+        +FPing
+        binary = ${config.security.wrapperDir}/fping
+
+        +FPing6
+        binary = ${config.security.wrapperDir}/fping
+        protocol = 6
+
+        +DNS
+        binary = ${pkgs.dig}/bin/dig
+        lookup = 10.16.1.1
+        pings = 5
+        step = 300
+      '';
+      targetConfig = ''
+        probe = FPing
+        menu = Top
+        title = Murray Home Network Statistics
+        remark = To view the network statistics, choose from one of the latency menu options in the column on the left.
+
+        + network
+        menu = Net latency
+        title = Network latency (ICMP pings)
+
+        ++ Google
+        host = google.com
+
+        ++ Spectrum
+        host = rns01.charter.com
+
+        ++ WashU
+        host = anycast.ip.wustl.edu.
+
+        ++ Amazon
+        host = amazon.com
+
+        ++ Studio
+        host = 10.100.0.4
+
+        ++ Timberlake
+        host = 10.100.0.8
+
+        ++ home-router
+        host = testwifi.here
+
+        ++ Netflix
+        host = netflix.com
+
+        + services
+        menu = Service latency
+        title = Service latency (DNS, HTTP)
+
+        ++ DNS
+        probe = DNS
+        menu = DNS latency
+        title = Service latency (DNS)
+
+        +++ Google
+        host = dns.google
+
+        +++ Spectrum
+        host = rns01.charter.com
+
+        +++ OpenDNS
+        host = resolver1.opendns.com
+
+        +++ WashU
+        lookup = wustl.edu
+        host = anycast.ip.wustl.edu.
+
+        +++ CloudFlare
+        host = one.one.one.one
+
+        +++ home-router
+        host = testwifi.here
+
+        ++ HTTP
+        menu = HTTP latency
+        title = Service latency (HTTP)
+
+        +++ Google
+        host = google.com
+
+        +++ OpenDNS
+        host = opendns.com
+
+        +++ WashU
+        host = www.wustl.edu
+
+        +++ Amazon
+        host = amazon.com
+
+        +++ home-router
+        host = testwifi.here
+
+        +++ Netflix
+        host = netflix.com
+      '';
+    };
+
+    systemd.services.go2rtc.serviceConfig.Restart = "on-failure";
+    services.go2rtc = {
+      enable = true;
+      settings = {
+        api = {
+          origin = "*";
+        };
+
+        webrtc = {
+          listen = ":8555";
+          candidates = [
+            "10.100.0.1:8555"
+            "stun:8555"
+          ];
+        };
+        streams = {
+          #front = "rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_main";
+          #front_sub = "rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_sub";
+
+          #front = "ffmpeg:rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_main#video=copy#audio=copy#audio=opus";
+          #front_sub = "ffmpeg:rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_sub#video=copy#audio=copy#audio=opus";
+
+          front = [
+            "onvif://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:8000?subtype=000"
+            "ffmpeg:front#audio=opus"
+          ];
+          front_sub = [
+            "onvif://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:8000?subtype=001"
+            "ffmpeg:front#audio=opus"
+          ];
+        };
+      };
+    };
+
 
     networking.hostName = "marulk";
+    #networking.useNetworkd = true;
+    systemd.network.enable = true;
+
+    systemd.network.wait-online.enable = true;
+    #systemd.network.wait-online.anyInterface = true;
+    systemd.network.wait-online.extraArgs = [
+      "--interface=br0"
+      "--ipv4"
+    ];
+    #systemd.network.wait-online.ignoredInterfaces = [
+    #  "wg0"
+    #  "br0"
+    #];
+
     networking.networkmanager.enable = mkForce false;
     networking.bridges.br0.interfaces = ["enp1s0f0"];
     networking.interfaces.br0.useDHCP = true;
@@ -140,7 +296,34 @@ in {
     networking.firewall.allowedUDPPorts = [
       1900
       7359
+      #1984 #go2rtc - now nginx proxy
+      8555 # Frigate webrtc
+      8554 # Frigate rtsp
     ];
+    networking.firewall.allowedTCPPorts = [
+      #1984 # go2rtc - now nginx proxy
+      8555 # Frigate webrtc
+      8554 # Frigate rtsp
+    ];
+
+    #systemd.services.nginx.serviceConfig.ReadWritePaths = [
+    #  "/var/spool/nginx/logs/"
+    #];
+    #systemd.tmpfiles.rules = [
+    #  "d /var/spool/nginx/logs 0755 nginx nginx"
+    #];
+
+     services.nginx.commonHttpConfig = ''
+          log_format vhost '$host $remote_addr - $remote_user '
+           '[$time_local] "$request" $status '
+           '$body_bytes_sent "$http_referer" '
+           '"$http_user_agent"';
+          error_log stderr;
+          access_log syslog:server=unix:/dev/log vhost;
+
+        '';
+
+
 
     services.nginx.virtualHosts."collabora.lucasr.com" = {
       forceSSL = true;
@@ -225,6 +408,92 @@ in {
         proxyWebsockets = true;
       };
     };
+
+    services.nginx.virtualHosts."go2rtc.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:1984/";
+        proxyWebsockets = true;
+      };
+    };
+
+    services.nginx.virtualHosts."frigate.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+    };
+
+    services.nginx.virtualHosts.smokeping = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+      serverAliases = [
+        "smokeping.lucasr.com"
+      ];
+
+        #locations."/" = {
+        #  proxyPass = "http://127.0.0.1:${toString config.services.smokeping.listenPort }/";
+        #  proxyWebsockets = true;
+        #};
+    };
+
+    #services.nginx.virtualHosts."lidarr.lucasr.com" = {
+    #  forceSSL = true;
+    #  enableACME = true;
+    #  acmeRoot = null; # Use DNS Challenege
+
+    #  locations."/" = {
+    #    proxyPass = "http://127.0.0.1:${toString services.lidarr.settings.server.port }/";
+    #    proxyWebsockets = true;
+    #  };
+    #};
+
+    #services.nginx.virtualHosts."radarr.lucasr.com" = {
+    #  forceSSL = true;
+    #  enableACME = true;
+    #  acmeRoot = null; # Use DNS Challenege
+
+    #  locations."/" = {
+    #    proxyPass = "http://127.0.0.1:${toString services.radarr.settings.server.port }/";
+    #    proxyWebsockets = true;
+    #  };
+    #};
+
+    #services.nginx.virtualHosts."prowlarr.lucasr.com" = {
+    #  forceSSL = true;
+    #  enableACME = true;
+    #  acmeRoot = null; # Use DNS Challenege
+
+    #  locations."/" = {
+    #    proxyPass = "http://127.0.0.1:${toString services.prowlarr.settings.server.port }/";
+    #    proxyWebsockets = true;
+    #  };
+    #};
+
+    #services.nginx.virtualHosts."bazarr.lucasr.com" = {
+    #  forceSSL = true;
+    #  enableACME = true;
+    #  acmeRoot = null; # Use DNS Challenege
+
+    #  locations."/" = {
+    #    proxyPass = "http://127.0.0.1:${toString services.bazarr.listenPort }/";
+    #    proxyWebsockets = true;
+    #  };
+    #};
+
+    #services.nginx.virtualHosts."jellyseer.lucasr.com" = {
+    #  forceSSL = true;
+    #  enableACME = true;
+    #  acmeRoot = null; # Use DNS Challenege
+
+    #  locations."/" = {
+    #    proxyPass = "http://127.0.0.1:${toString services.jellyseerr.port }/";
+    #    proxyWebsockets = true;
+    #  };
+    #};
 
     services.nextcloud.enable = true;
 
