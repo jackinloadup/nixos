@@ -126,7 +126,7 @@ in {
             fade_on_empty = true;
             placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
             hide_input = false;
-            position = "0,220";
+            position = "0,-220";
             halign = "center";
             valign = "center";
           }
@@ -138,7 +138,7 @@ in {
             color = "rgba(216, 222, 233, .85)";
             #text = "$TIME12";
             font_size = 120;
-            position = "0, -240";
+            position = "0, 240";
             valign = "center";
             halign = "center";
           }
@@ -148,7 +148,7 @@ in {
             color = "rgba(216, 222, 233, .85)";
             font_size = 32;
             #font_family = "SF Pro Display Bold";
-            position = "0, -100";
+            position = "0, 350";
             halign = "center";
             valign = "center";
           }
