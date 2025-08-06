@@ -397,6 +397,9 @@ in {
           # wikitui # wikipedia tui
           # mc # midnight commander. file manager, haven't quite picked this up yet
           # somo # easier tcp/udp ports ect
+
+          # mprocs # run multiple log running commands at once and see output
+          # presenterm # Presentations
         ];
     };
 
