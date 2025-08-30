@@ -31,6 +31,23 @@ in {
     hardware.logitech.wireless.enableGraphical = mkDefault true;
 
     services.hardware.bolt.enable = true;
+    #services.xmrig = {
+    #  enable = true;
+    #  settings = {
+    #    autosave = true;
+    #    cpu = true;
+    #    opencl = false;
+    #    cuda = false;
+    #    pools = [
+    #      {
+    #        url = "pool.supportxmr.com:443";
+    #        user = "your-wallet";
+    #        keepalive = true;
+    #        tls = true;
+    #      }
+    #    ];
+    #  };
+    #};
 
     powerManagement.cpuFreqGovernor = mkForce "performance";
 
