@@ -154,6 +154,7 @@ in {
         "allow_other" # for non-root access
         "_netdev" # requires network to mount
         "x-systemd.automount" # mount on demand
+        "x-systemd.after=network-online.target" # try another way to depend on network
 
         # The ssh key must not be encrypted, have strict
         # permissions (like 600) and owned by root.
@@ -185,6 +186,7 @@ in {
     systemd.services."nextcloud-setup" = {
       requires = ["postgresql.service" "network-online.target"];
       after = ["postgresql.service" "mnt-nextcloud.mount"];
+      bindsTo = ["mnt-nextcloud.mount"];
     };
 
     # response to depriciation
