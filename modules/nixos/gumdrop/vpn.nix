@@ -118,6 +118,94 @@ in {
           ];
 
         };
+      }
+      // optionalAttrs cfg.client.enable {
+        # "wg0" is the network interface name. You can name the interface arbitrarily.
+        wg0 = {
+          # Determines the IP address and subnet of the server's end of the tunnel interface.
+          ips = [ cfg.client.ip ];
+
+          # The port that WireGuard listens to. Must be accessible by the client.
+          #listenPort = 51820; # shouldn't be on client
+          dynamicEndpointRefreshSeconds = 60; # wg0 flops on this refresh
+          allowedIPsAsRoutes = false;
+
+          peers = [
+            {
+              name = "marulk";
+              endpoint = "vpn.lucasr.com:51820";
+              publicKey = "KrWVR+VV04OOmt63FOeqx9UKE4en20lDl6pGieLQSj0=";
+              # traversing to gumdrop breaks when at gumdrop
+              #allowedIPs = [ "10.100.0.0/24"  "10.16.1.0/24"];
+              allowedIPs = [ "10.100.0.0/24" ];
+              persistentKeepalive = 25;
+            }
+          ];
+        };
+      };
+
+    systemd.network.networks.wg0.dns = mkIf cfg.client.enable ["10.100.0.1"];
+    # systemd.network.wait-online.ignoredInterfaces = [ "wg0" ];
+
+    # goal is to only return the addresses below. No other hosts
+    services.dnsmasq = mkIf cfg.server.enable {
+      enable = true;
+      resolveLocalQueries = false;
+      settings = {
+        bind-interfaces = true;
+        interface = "wg0";
+        no-hosts = true; # don't read /etc/hosts
+        no-resolv = true; # don't use /etc/resolve.conf
+        listen-address = "10.100.0.1";
+        # doesn't seem to help how I would want
+        #domain = "home.lucasr.com";
+        #expand-hosts = true;
+        address = [
+          "/marulk.home.lucasr.com/10.100.0.1" # server
+          "/lucas-phone/10.100.0.2"
+          "/riko.home.lucasr.com/10.100.0.3" # Christine's laptop
+          "/lyza.home.lucasr.com/10.100.0.4" # Christine's studio
+          "/kanye.home.lucasr.com/10.100.0.5"
+          "/zen.home.lucasr.com/10.100.0.6" # Christine Desktop
+          "/christine-phone/10.100.0.7"
+          "/timberlake.home.lucasr.com/10.100.0.8"
+          "/nat.home.lucasr.com/10.100.0.9" # Nathan Kodi
+          "/christine-ipad/10.100.0.10"
+          "/reg.home.lucasr.com/10.100.0.11" # Desktop
+
+          # imitation CNAMEs
+          "/ha.home.lucasr.com/10.100.0.1"
+          "/jellyfin.home.lucasr.com/10.100.0.1"
+          "/mqtt.home.lucasr.com/10.100.0.1"
+          "/nextcloud.lucasr.com/10.100.0.1"
+          "/postgres.home.lucasr.com/10.100.0.1"
+          "/paperless.home.lucasr.com/10.100.0.1"
+          "/chat.lucasr.com/10.100.0.1"
+          "/jellyseer.lucasr.com/10.100.0.1"
+          "/immich.lucasr.com/10.100.0.1"
+          "/collabora.lucasr.com/10.100.0.1"
+          "/homepage.lucasr.com/10.100.0.1"
+          "/radarr.lucasr.com/10.100.0.1"
+          "/prowlarr.lucasr.com/10.100.0.1"
+          "/bazarr.lucasr.com/10.100.0.1"
+          "/lidarr.lucasr.com/10.100.0.1"
+          "/sonarr.lucasr.com/10.100.0.1"
+          "/sabnzb.lucasr.com/10.100.0.1"
+          "/smokeping.lucasr.com/10.100.0.1"
+          "/go2rtc.home.lucasr.com/10.100.0.1"
+          "/frigate.home.lucasr.com/10.100.0.1"
+          "/music-assistant.home.lucasr.com/10.100.0.1"
+          "/music-assistant-streams.home.lucasr.com/10.100.0.1"
+        ];
+        # cnames apparently only work if the value is in /etc/hosts?? crazy.
+        # Maybe look for alternative to dnsmasq
+        #cname = [
+        #  "ha.home.lucasr.com,marulk.home.lucasr.com"
+        #  "jellyfin.home.lucasr.com,marulk.home.lucasr.com"
+        #];
+      };
+    };
+  };
         # Sean's networkk
 #        wg1 = {
 #          # Determines the IP address and subnet of the server's end of the tunnel interface.
