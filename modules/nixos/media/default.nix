@@ -33,7 +33,13 @@ in {
     hardware.graphics.extraPackages = [ pkgs.amf ];
     hardware.graphics.enable = true;
 
-    #readarr
+    networking.firewall.allowedUDPPorts = [
+      8097 # music assistant stream
+    ];
+    networking.firewall.allowedTCPPorts = [
+      8097 # music assistant stream
+    ];
+
     #whisparr
 
     # force dir to exist
@@ -45,6 +51,7 @@ in {
       "d /var/lib/bazarr 0775 ${config.services.bazarr.user} ${config.services.bazarr.group} -"
       "d /var/lib/prowlarr 0775 root root -"
       "d /var/lib/jellyseer 0775 ${config.services.jellyfin.user} ${config.services.jellyfin.group} -"
+      "d ${config.services.readarr.dataDir} 0775 ${config.services.readarr.user} ${config.services.readarr.group} -"
     ];
 
     # places all services into a container to add another layer of security
@@ -119,6 +126,42 @@ in {
           8989
         ];
 
+        services.music-assistant = {
+          enable = true;
+          providers = [
+            #"airplay"  airplay support is missing libraop, a library we will not package because it depends on OpenSSL 1.1.
+            "audible"
+            "audiobookshelf"
+            "chromecast"
+            "dlna"
+            "filesystem_local"
+            "hass"
+            "hass_players"
+            "jellyfin"
+            "musicbrainz"
+            "player_group"
+            "spotify"
+            "spotify_connect"
+            "ytmusic"
+          ];
+        };
+
+      # deprecated
+      #services.readarr = {
+      # enable = true;
+      #   openFirewall = false;
+      #};
+
+        services.audiobookshelf = {
+          enable = true;
+          openFirewall = false; # handle http via nginx
+        };
+
+        services.jellyfin = {
+          enable = true;
+          openFirewall = false; # handle http via nginx
+        };
+
         services.sabnzbd = { # nzb downloader
           enable = true;
           group = "media";
@@ -156,6 +199,11 @@ in {
           group = "media";
           listenPort = 6767;
         };
+
+        services.readarr = {
+          enable = true;
+        };
+
         #        services.lidarr = { # Music
         #          enable = true;
         #          user = "media";
@@ -246,6 +294,20 @@ in {
           proxyWebsockets = true;
         };
       };
+      "readarr.lucasr.com" = {
+        forceSSL = true;
+        enableACME = true;
+        acmeRoot = null; # Use DNS Challenege
+
+        extraConfig = ''
+          ${allowSubnets}
+          deny all;
+        '';
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.readarr.settings.server.port }/";
+          proxyWebsockets = true;
+        };
+      };
       "jellyseerr.lucasr.com" = {
         forceSSL = true;
         enableACME = true;
@@ -285,6 +347,42 @@ in {
         '';
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString config.services.bazarr.listenPort }";
+          proxyWebsockets = true;
+        };
+      };
+
+      "jellyfin.home.lucasr.com" = {
+        forceSSL = true;
+        enableACME = true;
+        acmeRoot = null; # Use DNS Challenege
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8096/";
+          proxyWebsockets = true;
+        };
+      };
+
+      "audiobookshelf.lucasr.com" = {
+       forceSSL = true;
+       enableACME = true;
+       acmeRoot = null; # Use DNS challenege
+
+       locations."/" = {
+         proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}/";
+         proxyWebsockets = true;
+         extraConfig = ''
+           proxy_set_header Host localhost;
+         '';
+       };
+     };
+
+     "music-assistant.home.lucasr.com" = {
+        forceSSL = true;
+        enableACME = true;
+        acmeRoot = null; # Use DNS Challenege
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8095/";
           proxyWebsockets = true;
         };
       };
