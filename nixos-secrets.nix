@@ -61,6 +61,10 @@ in {
         file = ./secrets/commonPass.age;
       };
 
+      lyza-frigate = {
+        file = ./secrets/machines/lyza/frigate/environment.age;
+      };
+
       system-wireless-networking = {
         file = ./secrets/system/wireless-networking.age;
       };
