@@ -36,6 +36,8 @@
 in
 # look into for the future in rust projects
 # https://github.com/mdevlamynck/nix-flake-templates/blob/master/bevy/flake.nix
+## Real-time rust build visualizer
+# https://danielchasehooper.com/posts/syscall-build-snooping/
   pkgs.mkShell rec {
     name = "rust";
     #nativeBuildInputs = [
