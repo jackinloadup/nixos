@@ -79,6 +79,12 @@ in {
       {
         Media = [
           {
+            "Music Assistant" = [{
+              description = "Music";
+              href = "https://music-assistant.home.lucasr.com/";
+            }];
+          }
+          {
             "Audiobookshelf" = [{
               description = "Audio Books";
               href = "https://audiobookshelf.lucasr.com/";
