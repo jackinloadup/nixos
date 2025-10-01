@@ -45,6 +45,8 @@ in {
 
     home-manager.sharedModules = [
       {
+        programs.chromium.package = pkgs.ungoogled-chromium;
+
         home.packages = [
           #nur.repos.dukzcry.gamescope
 
@@ -78,6 +80,16 @@ in {
         qt.style.package = mkForce pkgs.adwaita-qt;
       }
     ];
+
+    services.sunshine = {
+      openFirewall = true;
+      # use webui for now
+      #applications = [
+      #  {
+
+      #  }
+      #]
+    };
 
     # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
     # Never had an actual latency issue
