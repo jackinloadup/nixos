@@ -80,6 +80,7 @@ in {
 
     # "wg0" is the network interface name. You can name the interface arbitrarily.
     networking.wireguard.interfaces.wg0 = mkIf (shostHasService hostname "wg-vpn") {
+    #networking.wg-quick.interfaces.wg0 = mkIf (shostHasService hostname "wg-vpn") {
         privateKeyFile = config.age.secrets."wg-vpn-${hostname}".path;
     };
 
@@ -197,5 +198,144 @@ in {
       };
     };
 
+    #networking.wg-quick.interfaces = {}
+    #  // optionalAttrs cfg.server.enable {
+    #    # "wg0" is the network interface name. You can name the interface arbitrarily.
+    #    wg0 = {
+    #      # Determines the IP address and subnet of the server's end of the tunnel interface.
+    #      address = [ "10.100.0.1/24" ];
+
+    #      # The port that WireGuard listens to. Must be accessible by the client.
+    #      listenPort = 51820;
+
+    #      # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+    #      # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+    #      postUp = ''
+    #        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+    #      '';
+
+    #      # This undoes the above command
+    #      postDown = ''
+    #        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+    #      '';
+
+    #      peers = [
+    #        {
+    #          #name = "lucas-phone";
+    #          publicKey = "4bJ3FxfAWkfr8dbNWLHdh7fIcavtt/EbTKo/1q4C5Fs=";
+    #          allowedIPs = [ "10.100.0.2/32" ];
+    #        }
+    #        {
+    #          #name = "riko";
+    #          publicKey = "hMalIs+gw/ooiFVjHBzysS6Wn1ZTC9AOKnSCyOEvVQc=";
+    #          allowedIPs = [ "10.100.0.3/32" ];
+    #        }
+    #        {
+    #          #name = "lyza";
+    #          publicKey = "439vHIw45W3VpVm1OllB6QN85VSUnIKT3RGWzRuzLSE=";
+    #          allowedIPs = [ "10.100.0.4/32" ];
+    #          persistentKeepalive = 25;
+    #        }
+    #        {
+    #          #name = "kanye";
+    #          publicKey = "85q15pyFUBdt1UTE5BLklvy9uKknXdWVQWTge1Vy1nk=";
+    #          allowedIPs = [ "10.100.0.5/32" ];
+    #        }
+    #        {
+    #          #name = "zen";
+    #          publicKey = "5zadvDWL6pMIlqYI7dVrrAXFxVqHDRvJo6u+LQ0WpSQ=";
+    #          allowedIPs = [ "10.100.0.6/32" ];
+    #        }
+    #        {
+    #          #name = "christine-phone";
+    #          publicKey = "TkkSJLCOTB6/qoWh5hZzyZEtyswsRftFLjcTvKo1RBc=";
+    #          allowedIPs = [ "10.100.0.7/32" ];
+    #        }
+    #        {
+    #          #name = "timberlake";
+    #          publicKey = "TSIU47c//x361/fxl1fxZ3cpSWbH7G06jt/FVqfYpRM=";
+    #          allowedIPs = [ "10.100.0.8/32" ];
+    #        }
+    #        {
+    #          #name = "nat";
+    #          publicKey = "LFhXpxrDepNzAqVwcbvEpqDKlIUDaHyIG4t9mIsz6mk=";
+    #          allowedIPs = [ "10.100.0.9/32" ];
+    #        }
+    #        {
+    #          #name = "christine-ipad";
+    #          publicKey = "RHhV4nC7YrM/iTJmUda56JumWCiyVfkQ2Yc17qJI6ws=";
+    #          allowedIPs = [ "10.100.0.10/32" ];
+    #        }
+    #        {
+    #          #name = "reg";
+    #          publicKey = "ycZ424QpGCSIVswLUk2EweH+Z7sTc33dH0B0AER4pgc=";
+    #          allowedIPs = [ "10.100.0.11/32" ];
+    #        }
+    #      ];
+
+    #    };
+    #  }
+    #  // optionalAttrs cfg.client.enable {
+    #    # "wg0" is the network interface name. You can name the interface arbitrarily.
+    #    wg0 = {
+    #      # Determines the IP address and subnet of the server's end of the tunnel interface.
+    #      address = [ cfg.client.ip ];
+    #      dns = [ "10.100.0.1" ];
+
+    #      # The port that WireGuard listens to. Must be accessible by the client.
+    #      #listenPort = 51820; # shouldn't be on client
+    #      #dynamicEndpointRefreshSeconds = 5; # not in wg-quick
+    #      #allowedIPsAsRoutes = false; # not in wg-quick
+
+    #      # Set DNS for wg0 after it comes up
+    #      postUp = ''
+    #        resolvectl dns wg0 10.100.0.1
+    #        resolvectl domain wg0 "home.lucasr.com"
+    #      '';
+
+    #      # Remove DNS when wg0 goes down
+    #      postDown = ''
+    #        resolvectl revert wg0
+    #      '';
+
+    #      peers = [
+    #        {
+    #          #name = "marulk";
+    #          endpoint = "vpn.lucasr.com:51820";
+    #          publicKey = "KrWVR+VV04OOmt63FOeqx9UKE4en20lDl6pGieLQSj0=";
+    #          # traversing to gumdrop breaks when at gumdrop
+    #          #allowedIPs = [ "10.100.0.0/24"  "10.16.1.0/24"];
+    #          allowedIPs = [ "10.100.0.0/24" ];
+    #          persistentKeepalive = 25;
+    #        }
+    #      ];
+    #    };
+    #  };
+
+    #systemd.services.wg0_dynamic_endpoint = {
+    #  enable = true;
+    #  description = "Refresh wg0 WireGuard interface to resolve dynamic endpoints";
+    #  serviceConfig = {
+    #    Type = "oneshot";
+    #    ExecStart = ''
+    #      ${pkgs.wireguard-tools}/bin/wg-quick down wg0 || true
+    #      ${pkgs.wireguard-tools}/bin/wg-quick up wg0
+    #    '';
+    #  };
+    #};
+
+    #systemd.timers.wg0_dynamic_endpoint = {
+    #  description = "Refresh wg0 WireGuard interface to resolve dynamic endpoints";
+    #  #Unit = { Description = "Refresh wg0 WireGuard interface to resolve dynamic endpoints"; };
+    #  wantedBy = [ "timers.target" "wg-quick-wg0.service" ];
+    #  timerConfig = {
+    #    OnBootSec = "10s";
+    #    OnUnitActiveSec = "30s";
+    #    OnUnitInactiveSec = "30s";
+    #    Unit = "wg0_dynamic_endpoint.service";
+    #    Persistent = true;
+    #    #OnUnitActiveSec = "${toString refreshInterval}s";
+    #  };
+    #};
   };
 }
