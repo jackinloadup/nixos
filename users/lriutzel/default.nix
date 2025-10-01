@@ -345,6 +345,7 @@ in {
           pkgs.nmap
           pkgs.television # blazingly fast general purpose fuzzy finder
           pkgs.mission-center # great cpu/network/disk monitor gui
+          #pkgs.doxx # document viewer
 
           ## Audio
           pkgs.playerctl # TUI
