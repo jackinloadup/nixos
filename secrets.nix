@@ -69,6 +69,9 @@ in
   "secrets/services/immich/secretsFile".publicKeys = servers;
 
   "secrets/commonPass.age".publicKeys = all;
+
+  "secrets/machines/lyza/frigate/environment.age".publicKeys = servers;
+
   "secrets/system/wireless-networking.age".publicKeys = all;
 
   # service users
