@@ -145,39 +145,7 @@ in {
       '';
     };
 
-    systemd.services.go2rtc.serviceConfig.Restart = "on-failure";
-    services.go2rtc = {
-      enable = true;
-      settings = {
-        api = {
-          origin = "*";
-        };
 
-        webrtc = {
-          listen = ":8555";
-          candidates = [
-            "10.100.0.1:8555"
-            "stun:8555"
-          ];
-        };
-        streams = {
-          #front = "rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_main";
-          #front_sub = "rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_sub";
-
-          #front = "ffmpeg:rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_main#video=copy#audio=copy#audio=opus";
-          #front_sub = "ffmpeg:rtsp://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:554/h264Preview_01_sub#video=copy#audio=copy#audio=opus";
-
-          front = [
-            "onvif://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:8000?subtype=000"
-            "ffmpeg:front#audio=opus"
-          ];
-          front_sub = [
-            "onvif://go2rtc:g0nQCcGL8T38Sp@camera1.home.lucasr.com:8000?subtype=001"
-            "ffmpeg:front#audio=opus"
-          ];
-        };
-      };
-    };
 
 
     networking.hostName = "marulk";
