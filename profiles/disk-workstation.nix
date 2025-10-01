@@ -26,6 +26,7 @@ in {
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
     inputs.disko.nixosModules.disko
+    ./zfs.nix
   ];
 
   config = {
@@ -34,12 +35,6 @@ in {
       (writeScriptBin "disko-mount" mountScript)
       (writeScriptBin "disko" mountScript)
     ];
-
-    boot.initrd.supportedFilesystems = ["zfs"];
-    boot.supportedFilesystems = ["zfs"];
-
-    services.zfs.autoScrub.enable = true;
-    boot.zfs.forceImportRoot = true;
 
     disko.devices = {
       nodev = {

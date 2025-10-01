@@ -26,6 +26,7 @@ in {
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
     flake.inputs.disko.nixosModules.disko
+    ./zfs.nix
   ];
 
   config = {
@@ -34,25 +35,6 @@ in {
       (writeScriptBin "disko-mount" mountScript)
       (writeScriptBin "disko" mountScript)
     ];
-
-    boot.initrd.supportedFilesystems = ["zfs"];
-    boot.supportedFilesystems = ["zfs"];
-
-    services.zfs.autoScrub.enable = true;
-    boot.zfs.forceImportRoot = true;
-    #boot.zfs.package = mkDefault pkgs.zfs_unstable;
-
-    #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
-    #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    #boot.kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_8;
-
-    # Added due to issue with kernel panics after suspend.
-    # I suspect this is due to zfs.
-    systemd.targets.sleep.enable = false;
-    systemd.targets.suspend.enable = false;
-    systemd.targets.hibernate.enable = false;
-    systemd.targets.hybrid-sleep.enable = false;
-
 
     disko.devices = {
       nodev = {
