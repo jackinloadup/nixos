@@ -49,7 +49,7 @@ in {
         ## compression tools
         unzip
         #unrar #unfree
-        unrar-wrapper # free wrapper around unrar
+        #unrar-wrapper # free wrapper around unrar
         p7zip
 
         ## http/web
