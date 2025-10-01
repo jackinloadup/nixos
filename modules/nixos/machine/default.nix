@@ -237,8 +237,6 @@ in {
     programs.system-config-printer.enable = mkDefault ifGraphical;
     services.system-config-printer.enable = mkDefault ifGraphical;
 
-    systemd.network.wait-online.anyInterface = true;
-
     # A way to somewhat mimic normal linux systems. Could help random
     # bashscripts work
     # When implimented I didn't actually need this. I saw it on youtube and
