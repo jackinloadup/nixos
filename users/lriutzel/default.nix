@@ -349,6 +349,8 @@ in {
           ## Audio
           pkgs.playerctl # TUI
 
+          pkgs.ubpm # universal blood pressure monitor
+
           # Fun
           pkgs.asciiquarium # Fun aquarium animation
           pkgs.cmatrix # Fun matrix animation

@@ -30,6 +30,28 @@ in
         hash = "sha256-xwro/YXl5g520YLF6WLpgaLkCgU58vpmF2kgxd5EL78=";
       };
     };
+
+    #ubpm = super.ubpm.overrideAttrs {
+    #  #version = "1.13.0";
+    #  version = "1.12.0";
+    #  patches = [];
+    #  nativeBuildInputs = super.ubpm.nativeBuildInputs ++ [
+    #    super.pkg-config
+    #  ];
+    #  buildInputs = super.ubpm.buildInputs ++ [
+    #    super.udev
+    #  ];
+
+    #  src = super.fetchFromGitea {
+    #    domain = "codeberg.org";
+    #    owner = "LazyT";
+    #    repo = "ubpm";
+    #    #rev = "1.13.0";
+    #    #hash = "sha256-Hw0QWf1vnJlR7tP5rZjdo4amYN1uxoKv9jxxkBdlJQs=";
+    #    rev = "1.12.0";
+    #    hash = "sha256-Hw0QWf1vnJlR7tP5rZjdo4amYN1uxoKv9jxxkBdlJQs=";
+    #  };
+    #};
     #home-assistant = self.unstable.home-assistant.override {
     #  extraPackages = py: with py; [ psycopg2 librouteros ];
     #};
