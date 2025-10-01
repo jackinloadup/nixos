@@ -112,11 +112,17 @@ in {
       extraFlags = [ "--enable-pubsub-experiment" ];
     };
 
+    #services.snapserver = {
+    #  enable = true;
+    #  openFirewall = true;
+    #};
+
     #networking.firewall.allowedTCPPorts = [ 19999 ]; # netdata port;
     #services.netdata.enable = true;
 
     services.flatpak.enable = true;
     services.pipewire.enable = true;
+    services.sunshine.enable = true;
 
     #services.rtl_433 = {
     #  enable = false;
