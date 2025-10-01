@@ -131,7 +131,7 @@ in {
       imports = [
           flake.self.homeModules.common
           ./ssh.nix
-          flake.inputs.nix-index-database.hmModules.nix-index
+          flake.inputs.nix-index-database.homeModules.nix-index
         ]
         ++ optionals ifTui [
           flake.self.homeModules.tui
