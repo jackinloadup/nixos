@@ -27,6 +27,10 @@
 
     nix-inspect.url = "github:bluskript/nix-inspect";
 
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     #chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
@@ -60,7 +64,8 @@
 
     # color library for theming
     base16 = {
-      url = "github:alukardbf/base16-nix";
+      url = "github:alukardbf/base16-nix"; # defunk
+      #url = "github:SenchoPens/base16.nix"; # look into?
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils-plus.follows = "flake-utils-plus";
     };
@@ -272,6 +277,9 @@
             rust = import ./shells/rust.nix {inherit pkgs;};
             secrets = import ./shells/secrets.nix {inherit pkgs;};
           };
+        # nixvimModules = flattenTree {
+        #    default = import ./modules/nixvim/default.nix {inherit pkgs;};
+        # };
         })
         // (eachSystem supportedX86Systems)
         (system: let
