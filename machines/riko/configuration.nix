@@ -49,7 +49,7 @@ in {
     programs.steam.enable = true;
 
     services.fprintd.enable = true;
-    services.kubo.enable = true;
+    services.kubo.enable = false;
     services.kubo.settings.Addresses.API = "/ip4/127.0.0.1/tcp/5001";
     services.pipewire.enable = true;
 
@@ -65,7 +65,11 @@ in {
     services.xserver.desktopManager.gnome.enable = true;
     services.xserver.windowManager.i3.enable = true;
 
+    #services.resolved.enable = false;
+
     security.polkit.enable = true;
+
+    #systemd.network.networks.wlan0.DHCP = "yes";
 
     machine = {
       users = ["lriutzel" "criutzel"];
@@ -90,6 +94,9 @@ in {
     powerManagement.cpuFreqGovernor = "powersave";
 
     networking.hostName = "riko";
+    # Not sure what I was using the bridge for. Going to disable for now.
+    #networking.bridges.br0.interfaces = ["wlan0"];
+    #networking.interfaces.br0.useDHCP = true;
 
     # update to nixos-unified is setting this to auto
     #nix.settings.max-jobs = mkDefault 4;

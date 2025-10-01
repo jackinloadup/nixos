@@ -146,6 +146,25 @@ in {
     };
 
 
+    #services.vaultwarden = {
+    #  enable = true;
+    #  backupDir = "/var/lib/vaultwarden";
+    #  #environmentFile = secrets;
+    #  config = {
+    #    DOMAIN = "https://bitwarden.lucasr.com";
+    #    SIGNUPS_ALLOWED = false;
+    #    ROCKET_ADDRESS = "127.0.0.1";
+    #    ROCKET_PORT = 8222;
+    #    ROCKET_LOG = "critical";
+
+    #    SMTP_HOST = "127.0.0.1";
+    #    SMTP_PORT = 25;
+    #    SMTP_SSL = false;
+
+    #    SMTP_FROM = "admin@bitwarden.lucasr.com";
+    #    SMTP_FROM_NAME = "example.com Bitwarden server";
+    #  }
+    #};
 
 
     networking.hostName = "marulk";
