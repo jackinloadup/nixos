@@ -197,15 +197,6 @@ in {
     #    }
     #  ];
     #};
-    services.audiobookshelf = {
-      enable = true;
-      openFirewall = false; # handle http via nginx
-    };
-
-    services.jellyfin = {
-      enable = true;
-      openFirewall = false; # handle http via nginx
-    };
 
     services.collabora-online = {
       enable = true;
@@ -267,11 +258,13 @@ in {
       #1984 #go2rtc - now nginx proxy
       8555 # Frigate webrtc
       8554 # Frigate rtsp
+      8097 # music assistant stream
     ];
     networking.firewall.allowedTCPPorts = [
       #1984 # go2rtc - now nginx proxy
       8555 # Frigate webrtc
       8554 # Frigate rtsp
+      8097 # music assistant stream
     ];
 
     #systemd.services.nginx.serviceConfig.ReadWritePaths = [
@@ -291,8 +284,6 @@ in {
 
         '';
 
-
-
     services.nginx.virtualHosts."collabora.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
@@ -300,17 +291,6 @@ in {
 
       locations."/" = {
         proxyPass = "http://[::1]:${toString config.services.collabora-online.port}";
-        proxyWebsockets = true;
-      };
-    };
-
-    services.nginx.virtualHosts."jellyfin.home.lucasr.com" = {
-      forceSSL = true;
-      enableACME = true;
-      acmeRoot = null; # Use DNS Challenege
-
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8096/";
         proxyWebsockets = true;
       };
     };
@@ -335,20 +315,6 @@ in {
         #proxyPass = "http://10.16.1.11:${toString config.services.open-webui.port }/";
         proxyPass = "http://reg.home.lucasr.com:11112/";
         proxyWebsockets = true;
-      };
-    };
-
-    services.nginx.virtualHosts."audiobookshelf.lucasr.com" = {
-      forceSSL = true;
-      enableACME = true;
-      acmeRoot = null; # Use DNS challenege
-
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}/";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_set_header Host localhost;
-        '';
       };
     };
 
@@ -407,61 +373,6 @@ in {
         #  proxyWebsockets = true;
         #};
     };
-
-    #services.nginx.virtualHosts."lidarr.lucasr.com" = {
-    #  forceSSL = true;
-    #  enableACME = true;
-    #  acmeRoot = null; # Use DNS Challenege
-
-    #  locations."/" = {
-    #    proxyPass = "http://127.0.0.1:${toString services.lidarr.settings.server.port }/";
-    #    proxyWebsockets = true;
-    #  };
-    #};
-
-    #services.nginx.virtualHosts."radarr.lucasr.com" = {
-    #  forceSSL = true;
-    #  enableACME = true;
-    #  acmeRoot = null; # Use DNS Challenege
-
-    #  locations."/" = {
-    #    proxyPass = "http://127.0.0.1:${toString services.radarr.settings.server.port }/";
-    #    proxyWebsockets = true;
-    #  };
-    #};
-
-    #services.nginx.virtualHosts."prowlarr.lucasr.com" = {
-    #  forceSSL = true;
-    #  enableACME = true;
-    #  acmeRoot = null; # Use DNS Challenege
-
-    #  locations."/" = {
-    #    proxyPass = "http://127.0.0.1:${toString services.prowlarr.settings.server.port }/";
-    #    proxyWebsockets = true;
-    #  };
-    #};
-
-    #services.nginx.virtualHosts."bazarr.lucasr.com" = {
-    #  forceSSL = true;
-    #  enableACME = true;
-    #  acmeRoot = null; # Use DNS Challenege
-
-    #  locations."/" = {
-    #    proxyPass = "http://127.0.0.1:${toString services.bazarr.listenPort }/";
-    #    proxyWebsockets = true;
-    #  };
-    #};
-
-    #services.nginx.virtualHosts."jellyseer.lucasr.com" = {
-    #  forceSSL = true;
-    #  enableACME = true;
-    #  acmeRoot = null; # Use DNS Challenege
-
-    #  locations."/" = {
-    #    proxyPass = "http://127.0.0.1:${toString services.jellyseerr.port }/";
-    #    proxyWebsockets = true;
-    #  };
-    #};
 
     services.nextcloud.enable = true;
 
