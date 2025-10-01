@@ -9,6 +9,9 @@
         AddressRandomization = "network";
         AddressRandomizationRange = "full";
         DisableANQP = false; # Hotspot 2.0 explore turning on
+
+        # https://wiki.nixos.org/wiki/Iwd#desconnect-info_reason:_2
+        ControlPortOverNL80211 = false;
       };
       Network = {
         EnableIPv6 = true;
