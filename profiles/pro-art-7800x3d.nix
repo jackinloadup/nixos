@@ -1,4 +1,4 @@
-{lib, pkgs, ...}:
+{lib, pkgs, config, ...}:
 let
   inherit (lib) mkForce;
 in {
@@ -11,8 +11,7 @@ in {
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     ##boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    ##boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
-    ##boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
 
     # Disabled everything related to MEDIATEK Corp. MT7922 802.11ax in the BIOS
     # for zen
