@@ -1,7 +1,12 @@
 {pkgs, lib, config, flake,  ...}: let
   inherit (lib) optionals mkIf;
 in {
-  imports = [ flake.inputs.ucodenix.nixosModules.default ];
+  # workaround for https://github.com/e-tho/ucodenix/issues/59
+  disabledModules = [ "hardware/cpu/amd-microcode.nix" ];
+  imports = [
+    flake.inputs.ucodenix.nixosModules.default
+    "${flake.inputs.nixpkgs-unstable}/nixos/modules/hardware/cpu/amd-microcode.nix"
+  ];
 
   config = {
     boot = {
