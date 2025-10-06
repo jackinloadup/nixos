@@ -43,8 +43,6 @@ in {
     ## Remove polkit. It depends on spidermonkey !
     security.polkit.enable = mkDefault false;
 
-    services.nixosManual.enable = mkDefault false;
-
     #sound.enable = mkDefault false;
 
 
