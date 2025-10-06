@@ -13,6 +13,7 @@ in {
       # 0.0.0.0 didn't seem to work
       hostname = "127.0.0.1";
       vaapiDriver = "radeonsi";
+      checkConfig = false; # env vars below break checks
       settings = {
         auth = {
 # doesn't appear in 0.14.1 or 0.15??

@@ -23,6 +23,7 @@ let
   allBoot = users ++ machineBootKeys;
 
   servers = users ++ (sshKeyMap ["marulk" "reg"]);
+  studio = users ++ (sshKeyMap ["lyza"]);
 
   lucasDevHosts = lriutzel ++ (sshKeyMap ["reg" "riko"]);
 
@@ -70,7 +71,7 @@ in
 
   "secrets/commonPass.age".publicKeys = all;
 
-  "secrets/machines/lyza/frigate/environment.age".publicKeys = servers;
+  "secrets/machines/lyza/frigate/environment.age".publicKeys = studio;
 
   "secrets/system/wireless-networking.age".publicKeys = all;
 
