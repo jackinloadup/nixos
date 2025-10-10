@@ -10,7 +10,6 @@
   settings = import ../../../settings;
 in {
   imports = [
-    ./base16.nix
     ./tmux.nix
   ];
 
@@ -117,24 +116,6 @@ in {
       # might be set in machine/fonts.nix
       #font = "ter-132n";
       #packages = with pkgs; [ terminus_font ];
-      colors = with config.lib.base16.theme; [
-        base00-hex # 0 bg
-        base08-hex # 1 red
-        base0B-hex # 2 green
-        base0A-hex # 3 yellow
-        base0D-hex # 4 blue
-        base0E-hex # 5 violet
-        base0C-hex # 6 cyan
-        base05-hex # 7 gray/dim
-        base03-hex # 8 fg
-        base08-hex # 9 bright red
-        base0B-hex # 10 bright green
-        base0A-hex # 11 bright yellow
-        base0D-hex # 12 bright blue
-        base0E-hex # 13 bright violet
-        base0C-hex # 14 bright cyan
-        base07-hex # 15 fg 2
-      ];
     };
 
     # haven't tested placing for reference
@@ -150,12 +131,6 @@ in {
 
     #programs.autojump.enable = true;
     programs = {
-      bash = {
-        interactiveShellInit = ''
-          source ${config.lib.base16.templateFile {name = "shell";}}
-        '';
-      };
-
       htop = {
         enable = true;
         settings = {

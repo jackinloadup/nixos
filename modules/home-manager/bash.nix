@@ -18,7 +18,6 @@ in {
       historyIgnore = ["l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit"];
       initExtra =
         ''
-          source ${config.lib.base16.templateFile {name = "shell";}}
         ''
         + optionalString config.programs.starship.enable ''
           eval "$(starship init bash)"

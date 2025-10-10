@@ -39,10 +39,6 @@ in {
       modules = [pkgs.xorg.xf86inputjoystick];
     };
 
-    qt.enable = mkDefault true;
-    qt.platformTheme = mkDefault "gnome";
-    qt.style = mkDefault "adwaita-dark";
-
     home-manager.sharedModules = [
       {
         programs.chromium.package = pkgs.ungoogled-chromium;
@@ -73,11 +69,6 @@ in {
           # SNES
           pkgs.snes9x-gtk
         ];
-
-        qt.enable = mkForce true;
-        qt.platformTheme.name = mkForce "adwaita";
-        qt.style.name = mkForce "adwaita-dark";
-        qt.style.package = mkForce pkgs.adwaita-qt;
       }
     ];
 

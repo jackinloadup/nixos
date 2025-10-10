@@ -23,8 +23,6 @@ in {
       keyMode = "emacs"; # default
       aggressiveResize = true;
       resizeAmount = 10;
-      # the following comment goes into the extra config but it broke
-      # source ${config.lib.base16.templateFile { name="tmux"; }}
       extraConfig = ''
         set -ga terminal-overrides ',*256col*:Tc'
         set-option -g mouse on

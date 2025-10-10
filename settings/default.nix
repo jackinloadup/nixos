@@ -63,14 +63,6 @@
         style = "Regular";
       };
     };
-    base16 = {
-      scheme = "gruvbox";
-      variant = "gruvbox-dark-hard";
-      #scheme = "tomorrow";
-      #variant = "tomorrow-night";
-      #scheme = "woodland";
-      #variant = "woodland";
-    };
   };
 }
 ###############

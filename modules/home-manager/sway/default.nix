@@ -216,8 +216,6 @@ in {
         output = import ./output.nix;
         window = import ./window.nix;
         bars = [];
-        #bars = (import ./bars.nix {inherit config pkgs;}).bars;
-        colors = (import ./colors.nix {inherit config pkgs;}).colors;
 
         floating.criteria = [{class = "^Wine$";}];
 

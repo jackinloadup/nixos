@@ -8,8 +8,6 @@
   ifTui = config.machine.sizeTarget > 0;
   users = config.machine.users;
   interactive = ''
-      source ${config.lib.base16.templateFile {name = "shell";}}
-
       bindkey '^a' beginning-of-line
 
       bindkey '^R' history-incremental-pattern-search-backward

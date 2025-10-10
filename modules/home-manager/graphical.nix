@@ -3,7 +3,7 @@
   pkgs,
   nixosConfig,
   lib,
-  inputs,
+  flake,
   ...
 }: let
   inherit (lib) mkDefault getBin;
@@ -11,11 +11,37 @@
   ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
   imports = [
+    flake.inputs.stylix.homeModules.stylix
     ./navigation.nix
-
   ];
 
   config = {
+    stylix = {
+      enable = true;
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+      fonts = {
+        serif = {
+          package = pkgs.dejavu_fonts;
+          name = "DejaVu Serif";
+        };
+
+        sansSerif = {
+          package = pkgs.dejavu_fonts;
+          name = "DejaVu Sans";
+        };
+
+        monospace = {
+          package = pkgs.dejavu_fonts;
+          name = "DejaVu Sans Mono";
+        };
+
+        emoji = {
+          package = pkgs.noto-fonts-emoji;
+          name = "Noto Color Emoji";
+        };
+      };
+    };
+
     dconf.settings = {
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
@@ -38,7 +64,6 @@ in {
         disable-user-extensions = false;
       };
       "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
         clock-format = "12h";
         clock-show-date = true;
         clock-show-seconds = false;
@@ -123,18 +148,11 @@ in {
 
     gtk = with settings.theme; {
       enable = mkDefault ifGraphical;
-      font.name = "${font.normal.family} ${font.normal.style} ${toString font.size}";
       iconTheme = {
         name = "Papirus-Dark";
         package = pkgs.papirus-icon-theme;
       };
 
-      theme = {
-        #name = "palenight";
-        #package = pkgs.palenight-theme;
-        name = gtk.name;
-        package = pkgs.${gtk.package};
-      };
 
       cursorTheme = {
         name = "Numix-Cursor";
@@ -148,11 +166,6 @@ in {
       gtk4.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
       };
-    };
-
-    qt = {
-      enable = mkDefault true;
-      platformTheme.name = mkDefault "adwaita-dark";
     };
 
     home.packages = [

@@ -15,10 +15,6 @@
     size = builtins.mul theme.font.size 1.0; # typecast to float
   };
 in {
-  imports = [
-    ./base16.nix
-  ];
-
   config = mkIf nixosConfig.services.xserver.windowManager.i3.enable {
     programs.alacritty.enable = true;
 
@@ -128,97 +124,18 @@ in {
           "${mod}+Shift+minus" = "move container to scratchpad";
           "${mod}+minus" = "scratchpad show";
         };
-        colors = with config.lib.base16.theme; {
-          background = "#${base00-hex}";
-          #statusline = "#${base04-hex}";
-          #separator = "#${base01-hex}";
-          focused = {
-            border = "#${base05-hex}";
-            background = "#${base0D-hex}";
-            text = "#${base00-hex}";
-            indicator = "#${base0B-hex}";
-            childBorder = "#${base0D-hex}";
-          };
-          focusedInactive = {
-            border = "#${base03-hex}";
-            background = "#${base01-hex}";
-            text = "#${base05-hex}";
-            indicator = "#${base03-hex}";
-            childBorder = "#${base01-hex}";
-          };
-          unfocused = {
-            border = "#${base03-hex}";
-            background = "#${base01-hex}";
-            text = "#${base05-hex}";
-            indicator = "#${base0B-hex}";
-            childBorder = "#${base01-hex}";
-          };
-          urgent = {
-            border = "#${base08-hex}";
-            background = "#${base08-hex}";
-            text = "#${base00-hex}";
-            indicator = "#${base08-hex}";
-            childBorder = "#${base08-hex}";
-          };
-          placeholder = {
-            border = "#${base00-hex}";
-            background = "#${base0A-hex}";
-            childBorder = "#${base0A-hex}";
-            indicator = "#${base09-hex}";
-            text = "#${base00-hex}";
-          };
-        };
-
-        bars = with config.lib.base16.theme; [
-          {
-            #command = "${pkgs.waybar}/bin/waybar";
-            #position = "top";
-            #fonts = fontConf;
-            #trayOutput = "*";
-            colors = {
-              background = "#${base00-hex}";
-              statusline = "#${base04-hex}";
-              separator = "#${base01-hex}";
-              focusedWorkspace = {
-                border = "#${base05-hex}";
-                background = "#${base0D-hex}";
-                text = "#${base00-hex}";
-              };
-              activeWorkspace = {
-                border = "#${base05-hex}";
-                background = "#${base03-hex}";
-                text = "#${base00-hex}";
-              };
-              inactiveWorkspace = {
-                border = "#${base03-hex}";
-                background = "#${base01-hex}";
-                text = "#${base05-hex}";
-              };
-              urgentWorkspace = {
-                border = "#${base08-hex}";
-                background = "#${base08-hex}";
-                text = "#${base00-hex}";
-              };
-              bindingMode = {
-                border = "#${base00-hex}";
-                background = "#${base0A-hex}";
-                text = "#${base00-hex}";
-              };
-            };
-          }
-        ];
       };
     };
 
-    programs.i3status = with config.lib.base16.theme; {
+    programs.i3status = {
       enable = true;
 
       general = {
         output_format = "i3bar";
         colors = true;
-        color_good = "#${base08-hex}";
-        color_degraded = "#${base05-hex}";
-        color_bad = "#${base04-hex}";
+        #color_good = "#${base08-hex}";
+        #color_degraded = "#${base05-hex}";
+        #color_bad = "#${base04-hex}";
       };
 
       modules = {

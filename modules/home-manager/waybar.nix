@@ -14,10 +14,6 @@
     then true
     else false;
 in {
-  imports = [
-    ./base16.nix
-  ];
-
   config = mkIf config.programs.waybar.enable {
     programs.waybar = {
       systemd = {

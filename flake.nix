@@ -70,6 +70,12 @@
       inputs.flake-utils-plus.follows = "flake-utils-plus";
     };
 
+    stylix = {
+      url = "github:nix-community/stylix/release-25.05";
+      #url = "github:nix-community/stylix"; # unstable
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Take NixOS configuration, and generate outputs for different target formats
     nixos-generators = {
       url = "github:nix-community/nixos-generators";

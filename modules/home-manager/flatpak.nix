@@ -16,5 +16,8 @@ in {
       enable = true;
       onCalendar = "weekly"; # Default value
     };
+    services.flatpak.packages = [
+      #"com.discordapp.Discord"
+    ];
   };
 }

@@ -181,7 +181,7 @@ in {
       programs.mpv.enable = ifGraphical;
       programs.firefox.enable = ifGraphical;
       programs.fzf.enable = ifTui;
-      programs.openrct2.enable = isFullSystem;
+      #programs.openrct2.enable = isFullSystem; # disabled due to discord-rpc
       programs.ssh.enable = true;
       programs.starship.enable = ifGraphical; # Current config is slow. Need to investigate
       programs.thunderbird.enable = false; #isFullSystem; # Email client
@@ -201,6 +201,8 @@ in {
       services.ssh-agent.enable = true;
       services.mopidy.enable = isFullSystem;
       services.syncthing.enable = isFullSystem;
+
+      #stylix.image = /home/lriutzel/Pictures/background.jpg;
 
       #programs.rbw = {
       #  enable = true;
@@ -266,6 +268,7 @@ in {
 
           # nvd diff /nix/var/nix/profiles/system-{296,297}-link
           pkgs.nvd # nix tool to diff
+          pkgs.isd # systemd tui
         ]
         ++ optionals isFullSystem [
           #flake.inputs.nix-software-center.packages.x86_64-linux.nix-software-center

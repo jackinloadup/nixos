@@ -9,10 +9,6 @@
   settings = import ../../settings;
   isGraphical = nixosConfig.machine.sizeTarget > 1;
 in {
-  imports = [
-    ./base16.nix
-  ];
-
   config = lib.mkIf config.services.dunst.enable {
     # Display desktop notfications.
     services.dunst = {
@@ -55,24 +51,15 @@ in {
           context = "ctrl+shift+period";
         };
 
-        urgency_low = with config.lib.base16.theme; {
-          background = "#${base00-hex}";
-          foreground = "#${base04-hex}";
-          frame_color = "#${base03-hex}";
+        urgency_low = {
           timeout = "15s";
         };
 
-        urgency_normal = with config.lib.base16.theme; {
-          background = "#${base00-hex}";
-          foreground = "#${base04-hex}";
-          frame_color = "#${base0A-hex}";
+        urgency_normal = {
           timeout = "30s";
         };
 
-        urgency_critical = with config.lib.base16.theme; {
-          background = "#${base00-hex}";
-          foreground = "#${base04-hex}";
-          frame_color = "#${base0B-hex}";
+        urgency_critical = {
           timeout = "1d";
         };
       };

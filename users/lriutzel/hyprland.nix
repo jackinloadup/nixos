@@ -104,15 +104,17 @@ in {
           disable_loading_bar = true;
           grace = 5;
         };
-        background = [{
-        #  monitor = "";
-          path = "/home/lriutzel/Pictures/background.jpg";
-        #  color = "rgba(25, 20, 20, 1.0)";
-        #  blur_passes = 1;
-        #  blur_size = 0;
-        #  brightness = 0.2;
-        }];
-        input-field = [
+          # handled via wpaperd
+        #background = [{
+        ##  monitor = "";
+        # path = "/home/lriutzel/Pictures/background.jpg";
+        ##  color = "rgba(25, 20, 20, 1.0)";
+        ##  blur_passes = 1;
+        ##  blur_size = 0;
+        ##  brightness = 0.2;
+        #}];
+        # force over stylix
+        input-field = lib.mkForce [
           { # Password Field
             monitor = "";
             size = "200,60";
@@ -351,8 +353,6 @@ in {
           gaps_in = 16;
           gaps_out = 32;
           resize_on_border = true;
-          "col.active_border" = "0x99f000aa";
-          "col.inactive_border" = "0x66000000";
         };
 
         decoration = {
@@ -405,8 +405,6 @@ in {
           groupbar = {
             font_size = 12;
             gradients = false;
-            "col.inactive" = "0x2E344000";
-            "col.active" = "0x5E81AC00";
           };
         };
 

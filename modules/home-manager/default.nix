@@ -10,7 +10,6 @@
       common = {
         imports = [
           ./alacritty.nix
-          ./base16.nix
           ./base.nix
           ./dunst.nix
           ./firefox.nix
