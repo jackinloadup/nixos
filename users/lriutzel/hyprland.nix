@@ -105,14 +105,15 @@ in {
           grace = 5;
         };
           # handled via wpaperd
-        #background = [{
-        ##  monitor = "";
-        # path = "/home/lriutzel/Pictures/background.jpg";
-        ##  color = "rgba(25, 20, 20, 1.0)";
-        ##  blur_passes = 1;
-        ##  blur_size = 0;
-        ##  brightness = 0.2;
-        #}];
+        # force over stylix
+        background = lib.mkForce [{
+        #  monitor = "";
+         path = "/home/lriutzel/Pictures/background.jpg";
+        #  color = "rgba(25, 20, 20, 1.0)";
+        #  blur_passes = 1;
+        #  blur_size = 0;
+        #  brightness = 0.2;
+        }];
         # force over stylix
         input-field = lib.mkForce [
           { # Password Field
