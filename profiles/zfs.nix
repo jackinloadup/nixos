@@ -8,6 +8,24 @@
   inherit (lib) mkIf mkDefault;
   inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
+
+  # Taken from https://wiki.nixos.org/wiki/ZFS
+  # Warning: This will often result in the Kernel version going backwards as
+  # Kernel versions become end-of-life and are removed from Nixpkgs. If you
+  # need more control over the Kernel version due to hardware requirements,
+  # consider simply pinning a specific version rather than calculating it as
+  # below.
+  zfsCompatibleKernelPackages = lib.filterAttrs (
+    name: kernelPackages:
+    (builtins.match "linux_[0-9]+_[0-9]+" name) != null
+    && (builtins.tryEval kernelPackages).success
+    && (!kernelPackages.${config.boot.zfs.package.kernelModuleAttribute}.meta.broken)
+  ) pkgs.linuxKernel.packages;
+  latestKernelPackage = lib.last (
+    lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version)) (
+      builtins.attrValues zfsCompatibleKernelPackages
+    )
+  );
 in {
   config = {
     boot.initrd.supportedFilesystems = ["zfs"];
@@ -17,9 +35,7 @@ in {
     boot.zfs.forceImportRoot = true;
     #boot.zfs.package = pkgs.zfs_unstable;
 
-    # depreciated pointed at the default kernel now
-    #boot.kernelPackages = pkgs.zfs_unstable.latestCompatibleLinuxPackages;
-    #boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    boot.kernelPackages = latestKernelPackage;
 
     # tried to set due to Zen kernel set in another place?
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;

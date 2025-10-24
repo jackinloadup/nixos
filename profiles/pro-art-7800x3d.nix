@@ -8,7 +8,9 @@ in {
     # machine isn't physically moving. Keep same dhcp issued address
     networking.networkmanager.wifi.macAddress = mkForce "permanent";
 
-    boot.kernelPackages = pkgs.linuxPackages_zen;
+    # doesn't always support zfs :-( I'll have to move away from it for desktops
+    # for now moving back to mainline
+    #boot.kernelPackages = pkgs.linuxPackages_zen;
 
     ##boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
