@@ -204,12 +204,12 @@ in {
           enable = true;
         };
 
-        #        services.lidarr = { # Music
-        #          enable = true;
-        #          user = "media";
-        #          group = "media";
-        #          #dataDir = "/var/lib/lidarr";
-        #        };
+        services.lidarr = { # Music
+          enable = true;
+          user = "media";
+          group = "media";
+          dataDir = "/var/lib/lidarr";
+        };
 
         #permown."/media/arr" = {
         #  owner = "media";
