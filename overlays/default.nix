@@ -55,7 +55,7 @@ in
     #home-assistant = self.unstable.home-assistant.override {
     #  extraPackages = py: with py; [ psycopg2 librouteros ];
     #};
-    waytrogen = self.unstable.waytrogen;
+    lidarr = self.unstable.lidarr;
     clblast = self.unstable.clblast; # needed for https://github.com/NixOS/nixpkgs/issues/445447
     ollama = self.unstable.ollama; # needed for https://github.com/NixOS/nixpkgs/issues/445447
     openrct2 = self.unstable.openrct2;
