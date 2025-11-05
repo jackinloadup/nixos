@@ -55,7 +55,10 @@ in {
       };
     };
 
-    environment.systemPackages = [pkgs.bluetuith];
+    environment.systemPackages = [
+      pkgs.bluetuith
+      pkgs.bluetui
+    ];
     hardware.bluetooth.input = {
       General = {
         IdleTimeout = true;
