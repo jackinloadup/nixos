@@ -126,6 +126,12 @@
     # or even discontinued over time. This flake ensures you have the latest
     # microcodes directly on NixOS, without depending on BIOS updates.
     ucodenix.url = "github:e-tho/ucodenix";
+
+    # NixVirt lets you declare virtual machines
+    #nixvirt.url = "AshleyYakeley/NixVirt";
+
+    # Exploring the integration between Nix and AI coding agents
+    #nix-ai-tools.url = "github:numtide/nix-ai-tools";
   };
 
   outputs = {self, ...} @ inputs:

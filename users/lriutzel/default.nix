@@ -91,7 +91,6 @@ in {
 
     services.tor.enable = mkDefault isFullSystem;
     services.tor.client.enable = mkDefault isFullSystem;
-    services.trezord.enable = isFullSystem;
 
     hardware.logitech.wireless.enable = isFullSystem;
     hardware.logitech.wireless.enableGraphical = isFullSystem;
@@ -278,12 +277,6 @@ in {
           pkgs.mumble
 
           pkgs.kitty
-          # crypto
-          pkgs.trezorctl
-          pkgs.trezor_agent
-          #pkgs.trezor-suite # wasn't building
-          #pkgs.exodus # Cryptowallet
-          #pkgs.electron-cash # BCH walle
           pkgs.libfido2 # interact with fido2 tokens
 
           # Media Management

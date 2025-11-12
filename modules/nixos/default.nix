@@ -47,6 +47,10 @@
         ./control-monitor-backlight.nix
       ];
 
+      crypto.imports = [
+        ./crypto.nix
+      ];
+
       #darwin.imports = [
       #];
 
