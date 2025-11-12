@@ -8,9 +8,20 @@ in {
     services.immich = {
       enable = true;
       host = "127.0.0.1"; # where to listen
-      settings.server.externalDomain = "https://immich.lucasr.com";
+      settings = {
+        server.externalDomain = "https://immich.lucasr.com";
+        storageTemplate = {
+          enabled = true;
+          hashVerificationEnabled = true;
+          template = "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}";
+        };
+        #newVersionCheck.enable = false;
+      };
       database.host = "postgres.home.lucasr.com";
       mediaLocation = "/mnt/gumdrop/backup/immich";
+      # `null` will give access to all devices.
+      # You may want to restrict this by using something like `[ "/dev/dri/renderD128" ]`
+      accelerationDevices = null;
       #accelerationDevices = [ "/dev/dri/renderD128" ];
     };
 
@@ -32,8 +43,20 @@ in {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString config.services.immich.port}/";
         proxyWebsockets = true;
+        recommendedProxySettings = true;
+        extraConfig = ''
+          client_max_body_size 50000M;
+          proxy_read_timeout   600s;
+          proxy_send_timeout   600s;
+          send_timeout         600s;
+        '';
       };
+
     };
+
+    # https://wiki.nixos.org/wiki/Immich#Enabling_Hardware_Accelerated_Video_Transcoding
+    systemd.services."immich-server".serviceConfig.PrivateDevices = lib.mkForce false;
+    users.users.immich.extraGroups = [ "video" "render" ];
   };
 }
 
