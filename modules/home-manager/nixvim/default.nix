@@ -40,12 +40,13 @@
           command = "setlocal spell spelllang=en";
           desc = "Spell Checking";
         }
-        {
-          event = "FileType";
-          pattern = [ "markdown" "org" "norg" ];
-          command = ":TableModeEnable";
-          desc = "Table Mode";
-        }
+        # Broken, keeping as a reminder to fix
+        #{
+        #  event = "FileType";
+        #  pattern = [ "markdown" "org" "norg" ];
+        #  command = ":TableModeEnable";
+        #  desc = "Table Mode";
+        #}
         {
           event = "FileType";
           pattern = [ "markdown" ];
