@@ -22,7 +22,8 @@ in {
     environment.systemPackages = with pkgs;
       mkIf ifTui [
         # if system is not minimal
-        dive
+        dive # image inspector
+        lazydocker # docker tui
       ]
       // mkIf ifGraphical [
         # if system is full user
