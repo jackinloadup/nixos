@@ -14,36 +14,88 @@
 
     readonly PROGNAME="$(basename "$0")"
 
-    # get swaysock from path
-    SWAYSOCK=$(fd sway-ipc /run/user/$UID/ -1)
 
-    if [ -z "$SWAYSOCK" ]; then
-        echo "No sway socket found"
-        exit 1
-    fi
+    main() {
+      local DESK="$1"
+      local WM="$XDG_SESSION_DESKTOP"
+      local SUPPORTED_WM="sway hyprland"
+      local DISPLAY_ALTWORK="DP-1"
+      local DISPLAY_DESK="DP-2"
 
-    if [ -z "$1" ]; then
-        echo "No argument supplied"
-        echo "Usage: $PROGNAME [desk|altwork]"
-        exit 1
-    fi
+      usage
+      case $WM in
+        "sway")
+          sway
+          ;;
 
-    # help
-    if [ "$1" == "help" ]; then
-        echo "Usage: $PROGNAME [desk|altwork]"
-        exit 0
-    fi
+        "hyprland")
+          hyprland
+          ;;
 
-    if [ "$1" == "desk" ]; then
-        swaymsg -s $SWAYSOCK "output DP-5 enable, output DP-1 disable"
-        exit 0
-    fi
+        *)
+          echo "Window manager `$WM` not supported"
+          echo "Please modify script to support it"
+          exit 1
+          ;;
+      esac
 
-    if [ "$1" == "altwork" ]; then
-        swaymsg -s $SWAYSOCK "output DP-1 enable, output DP-5 disable"
-        bluetoothctl connect E0:EB:40:F1:95:21
-        exit 0
-    fi
+    }
+
+    usage() {
+       if [ -z "$DESK" ]; then
+           echo "No argument supplied"
+           echo "Usage: $PROGNAME [desk|altwork]"
+           exit 1
+       fi
+
+       if [ -z "$WM" ]; then
+           echo "No WM detected"
+           echo "Please set XDG_SESSION_DESKTOP"
+           exit 1
+       fi
+    }
+
+    sway() {
+      # get swaysock from path
+      SWAYSOCK=$(fd sway-ipc /run/user/$UID/ -1)
+
+      if [ -z "$SWAYSOCK" ]; then
+          echo "No sway socket found"
+          exit 1
+      fi
+
+      if [ "$DESK" == "desk" ]; then
+          swaymsg -s $SWAYSOCK "output $DISPLAY_DESK enable, output $DISPLAY_ALTWORK disable"
+          exit 0
+      fi
+
+      if [ "$DESK" == "altwork" ]; then
+          swaymsg -s $SWAYSOCK "output $DISPLAY_ALTWORK enable, output $DISPLAY_DESK disable"
+          exit 0
+      fi
+    }
+
+    hyprland() {
+      if [ "$DESK" == "desk" ]; then
+          hyprctl keyword monitor $DISPLAY_DESK,enable
+          hyprctl keyword monitor $DISPLAY_ALTWORK,disable
+          exit 0
+      fi
+
+      if [ "$DESK" == "altwork" ]; then
+          hyprctl keyword monitor $DISPLAY_ALTWORK,enable
+          hyprctl keyword monitor $DISPLAY_DESK,disable
+          exit 0
+      fi
+    }
+
+
+    # Not sure what bluetooth device I was connecting anymore
+    connect_bluetooth() {
+      bluetoothctl connect E0:EB:40:F1:95:21
+    }
+
+    main $@
   '';
 
   package = pkgs.stdenv.mkDerivation {
