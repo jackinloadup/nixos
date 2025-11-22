@@ -376,7 +376,8 @@
           };
         };
 
-        barbar.enable = true;
+        # buffer tabbar. didn't end up liking this.
+        #barbar.enable = true;
 
         #cmp-treesitter.enable = true;
         #cmp-path.enable = true;
