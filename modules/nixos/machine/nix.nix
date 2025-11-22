@@ -140,33 +140,35 @@ in {
     #nix.distributedBuilds = (!isBuilder);
     nix.distributedBuilds = true;
 
-    nix.buildMachines = []
-      ++ optionals (hostname != "reg") [{
-        hostName = "reg.home.lucasr.com";
-        sshUser = "lriutzel";
-        system = "x86_64-linux";
-        protocol = "ssh-ng";
-        maxJobs = 16;
-        speedFactor = 3;
-        supportedFeatures = [
-          "big-parallel"
-          "nixos-test"
-          "kvm"
-        ];
-      }]
-      ++ optionals (hostname != "zen") [{
-        hostName = "zen.home.lucasr.com";
-        sshUser = "lriutzel";
-        system = "x86_64-linux";
-        protocol = "ssh-ng";
-        maxJobs = 16;
-        speedFactor = 3;
-        supportedFeatures = [
-          "big-parallel"
-          "nixos-test"
-          "kvm"
-        ];
-      }];
+    # doesn't work cuz idk
+    # cannot build on 'ssh-ng://lriutzel@zen.home.lucasr.com': error: failed to start SSH connection to 'lriutzel@zen.home.lucasr.com'
+    #nix.buildMachines = []
+    #  ++ optionals (hostname != "reg") [{
+    #    hostName = "reg.home.lucasr.com";
+    #    sshUser = "lriutzel";
+    #    system = "x86_64-linux";
+    #    protocol = "ssh-ng";
+    #    maxJobs = 16;
+    #    speedFactor = 3;
+    #    supportedFeatures = [
+    #      "big-parallel"
+    #      "nixos-test"
+    #      "kvm"
+    #    ];
+    #  }]
+    #  ++ optionals (hostname != "zen") [{
+    #    hostName = "zen.home.lucasr.com";
+    #    sshUser = "lriutzel";
+    #    system = "x86_64-linux";
+    #    protocol = "ssh-ng";
+    #    maxJobs = 16;
+    #    speedFactor = 3;
+    #    supportedFeatures = [
+    #      "big-parallel"
+    #      "nixos-test"
+    #      "kvm"
+    #    ];
+    #  }];
 
     nix.sshServe = mkIf isBuilder {
       enable = true;
