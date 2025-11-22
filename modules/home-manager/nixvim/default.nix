@@ -438,6 +438,7 @@
 
         nix.enable = true;
         nvim-autopairs.enable = true;
+        numbertoggle.enable = true;
 
         web-devicons.enable = true;
         telescope = {
