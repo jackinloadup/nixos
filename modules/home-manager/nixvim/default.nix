@@ -417,6 +417,7 @@
             html.enable = false; # failing
             cssls.enable = false; # failing
             pyright.enable = false;
+            java_language_server.enable = true;
           };
         };
 
@@ -577,26 +578,27 @@
           action = "<C-w>w";
           options.desc = "Cycle Between Windows";
         }
-        {
-          key = "<leader>bb";
-          action = "<CMD>BufferPick<CR>";
-          options.desc = "View Open Buffer";
-        }
-        {
-          key = "<leader>bc";
-          action = "<CMD>BufferClose<CR>";
-          options.desc = "View Open Buffer";
-        }
-        {
-          key = "<leader>bn";
-          action = "<CMD>:bnext<CR>";
-          options.desc = "Next Buffer";
-        }
-        {
-          key = "<leader>bp";
-          action = "<CMD>:bprev<CR>";
-          options.desc = "Previous Buffer";
-        }
+        # Not an editor command
+        #{
+        #  key = "<leader>bb";
+        #  action = "<CMD>BufferPick<CR>";
+        #  options.desc = "View Open Buffer";
+        #}
+        #{
+        #  key = "<leader>bc";
+        #  action = "<CMD>BufferClose<CR>";
+        #  options.desc = "View Open Buffer";
+        #}
+        #{
+        #  key = "<leader>bn";
+        #  action = "<CMD>:bnext<CR>";
+        #  options.desc = "Next Buffer";
+        #}
+        #{
+        #  key = "<leader>bp";
+        #  action = "<CMD>:bprev<CR>";
+        #  options.desc = "Previous Buffer";
+        #}
         {
           mode = "v";
           key = "<";
@@ -642,6 +644,16 @@
           mode = "n";
           key = "gD";
           action = "<CMD>lua vim.lsp.buf.definition()<CR>";
+        }
+        {
+          mode = "n";
+          key = "gr";
+          action = "<CMD>lua vim.lsp.buf.references()<CR>";
+        }
+        {
+          mode = "n";
+          key = "ga";
+          action = "<CMD>lua vim.lsp.buf.code_action()<CR>";
         }
         {
           mode = "n";
