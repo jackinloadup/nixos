@@ -294,6 +294,23 @@ in {
 
           "inode/directory" = "nautilus.desktop";
           #"inode/directory" = "nemo.desktop";
+
+          # Images - gThumb first, then imv
+          "image/png" = [ "org.gnome.gThumb.desktop" "imv.desktop" ];
+          "image/jpeg" = [ "org.gnome.gThumb.desktop" "imv.desktop" ];
+          "image/jpg" = [ "org.gnome.gThumb.desktop" "imv.desktop" ];
+          "image/gif" = [ "org.gnome.gThumb.desktop" "imv.desktop" ];
+          "image/webp" = [ "org.gnome.gThumb.desktop" "imv.desktop" ];
+          "image/bmp" = [ "org.gnome.gThumb.desktop" ];
+          "image/svg+xml" = [ "org.gnome.gThumb.desktop" ];
+          "image/tiff" = [ "org.gnome.gThumb.desktop" ];
+
+          # Videos
+          "video/mp4" = [ "mpv.desktop" ];
+          "video/x-matroska" = [ "mpv.desktop" ];
+          "video/webm" = [ "mpv.desktop" ];
+          "video/avi" = [ "mpv.desktop" ];
+          "video/quicktime" = [ "mpv.desktop" ];
         };
       };
     };
