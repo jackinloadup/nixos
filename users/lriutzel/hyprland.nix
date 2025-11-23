@@ -5,8 +5,8 @@
   ...
 }: let
   inherit (lib) mkIf mkDefault getBin getExe optionals;
-  termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
-  #termCmd = "${getExe pkgs.kitty}";
+  termCmd = "${getExe pkgs.kitty}";
+  termAltCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
   left = "h";
   down = "j";
   up = "k";
@@ -18,6 +18,13 @@ in {
     home.packages = [
       pkgs.hyprlock
     ];
+
+    programs.kitty = {
+      enable = true;
+      settings = {
+        cursor_trail = 1;
+      };
+    };
 
     programs.foot.enable = true;
     programs.foot.server.enable = true;
@@ -248,6 +255,7 @@ in {
         "$terminal" = "${termCmd}";
         bind = [
           "$mod, Return, exec, ${termCmd}"
+          "$mod SHIFT, Return, exec, ${termAltCmd}"
           "$mod SHIFT, q, hy3:killactive"
           "$mod, Space, exec, ${menu}"
           "$mod SHIFT, Space, togglefloating"

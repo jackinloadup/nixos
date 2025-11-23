@@ -171,6 +171,11 @@ in {
       #programs.command-not-found.enable = isFullSystem;
 
       #programs.neovim.enable = true;
+      programs.kitty = {
+        settings = {
+          cursor_trail = 1;
+        };
+      }
 
       # mic noise removal
       #programs.noisetorch.enable = isFullSystem;

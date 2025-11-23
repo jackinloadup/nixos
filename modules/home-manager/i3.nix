@@ -17,10 +17,7 @@
 in {
   config = mkIf nixosConfig.services.xserver.windowManager.i3.enable {
     programs.alacritty.enable = true;
-
-    home.packages = [
-      pkgs.kitty
-    ];
+    programs.kitty.enable = true;
 
     xsession.windowManager.i3 = let
       left = "h"; # vim directions ftw
