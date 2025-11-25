@@ -180,6 +180,7 @@ in {
           "/nextcloud.lucasr.com/10.100.0.1"
           "/postgres.home.lucasr.com/10.100.0.1"
           "/paperless.home.lucasr.com/10.100.0.1"
+          "/searx.home.lucasr.com/10.100.0.1"
           "/chat.lucasr.com/10.100.0.1"
           "/jellyseer.lucasr.com/10.100.0.1"
           "/immich.lucasr.com/10.100.0.1"

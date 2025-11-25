@@ -74,6 +74,12 @@ in {
               href = "http://chat.lucasr.com/";
             }];
           }
+          {
+            "Searx" = [{
+              description = "Search Engine";
+              href = "http://searx.home.lucasr.com/";
+            }];
+          }
         ];
       }
       {
