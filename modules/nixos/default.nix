@@ -7,14 +7,12 @@
       common.imports = [
         #./arewehackersyet
         ./bluetooth
-        ./botamusique
         ./browsers
         ./dnsmasq
         ./gumdrop
         ./../../insecure-packages.nix
         ./solo2
         ./unattended
-        ./vault
         ./yubikey
         ./zsh
         ./../../nixos-secrets.nix
