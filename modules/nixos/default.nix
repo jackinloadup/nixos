@@ -12,7 +12,6 @@
         ./dnsmasq
         ./gumdrop
         ./../../insecure-packages.nix
-        ./postgres
         ./solo2
         ./unattended
         ./vault
@@ -23,17 +22,21 @@
 
       linux.imports = [
         ./boot-tor-service
-        ./autologin-tty1
+        #./autologin-tty1
         ./machine
-        ./hydra
         ./home-assistant
         ./k3s
         ./machine
         ./sdr
         ./rtl_433
-        ./simula
+        #./simula
         ./nextcloud
         ./media
+      ];
+
+      server.imports = [
+        ./hydra
+        ./postgres
       ];
 
       tui.imports = [

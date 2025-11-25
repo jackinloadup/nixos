@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}: let
-  homeDir = config.home.homeDirectory;
-in {
+}: {
   config = lib.mkIf config.services.syncthing.enable {
     xdg.desktopEntries.syncthing = {
       name = "Syncthing";

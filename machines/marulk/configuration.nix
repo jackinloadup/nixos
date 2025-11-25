@@ -19,6 +19,7 @@ in {
     ./murmur.nix
     ./immich.nix
     ./frigate.nix
+    flake.self.nixosModules.server
   ];
 
   config = {

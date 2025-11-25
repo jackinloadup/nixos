@@ -1,5 +1,4 @@
 {
-  self,
   flake,
   pkgs,
   lib,
@@ -8,7 +7,6 @@
 }:
 let
   inherit (lib) mkForce mkDefault getExe;
-  settings = import ../../settings;
   debug = false;
 in {
   imports = [
@@ -85,10 +83,6 @@ in {
     nixpkgs.hostPlatform = "x86_64-linux";
 
     #services.hydra.enable = true;
-
-    #services.k3s.enable = false;
-    #services.k3s.role = "server";
-    #services.k3s.clusterInit = true;
 
     services.kubo = {
       enable = false;

@@ -32,16 +32,17 @@
       ];
 
       gui.imports = [
-          ./development.nix
-          ./graphical.nix
-          ./satellite-images.nix
-          ./i3.nix
-          #./neovim
-          ./nixvim
-          ./sway
-          ./syncthing.nix
-          ./waybar.nix
-          ./xorg.nix
+        ./development.nix
+        ./graphical.nix
+        ./satellite-images.nix
+        ./i3.nix
+        #./neovim
+        ./niri
+        ./nixvim
+        ./sway
+        ./syncthing.nix
+        ./waybar.nix
+        ./xorg.nix
       ];
 
       video-editor.imports = [

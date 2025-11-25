@@ -1,5 +1,4 @@
 {
-  self,
   pkgs,
   lib,
   flake,
@@ -8,7 +7,6 @@
 }:
 let
   inherit (lib) mkDefault mkForce;
-  settings = import ../../settings;
 in {
   imports = [
     ./hardware-configuration.nix
