@@ -39,23 +39,36 @@
         "all" = {
           user = "lriutzel";
           extraOptions = {
-            preferredAuthentications = "publickey,keyboard-interactive,password";
+            PreferredAuthentications = "publickey,keyboard-interactive,password";
             #localCommand = "printf '\033]4;4;#004080;12;#0040ff\007'";
           };
         };
         "*.compute.amazonaws.com" = {
           forwardAgent = false;
           extraOptions = {
-            strictHostKeyChecking = "no";
-            userKnownHostsFile = "/dev/null";
+            StrictHostKeyChecking = "no";
+            UserKnownHostsFile = "/dev/null";
+          };
+        };
+        "dtcc github" = {
+          match = ''Host github.com exec "pwd | grep ~/Projects/obsidian-systems/canton-dtcc"'';
+          forwardAgent = false;
+          user = "git";
+          hostname = "github.com";
+          identityFile = "~/.ssh/keys/devx";
+          extraOptions = {
+            ControlPath = "/run/user/%i/ssh-devx";
+            PreferredAuthentications = "publickey";
+            IdentitiesOnly = "yes";
           };
         };
         "github github.com" = {
+          match = ''Host github.com !exec "pwd | grep ~/Projects/obsidian-systems/canton-dtcc"'';
           hostname = "github.com";
           user = "git";
           forwardAgent = false;
           extraOptions = {
-            preferredAuthentications = "publickey";
+            PreferredAuthentications = "publickey";
           };
         };
         "truenas" = {
