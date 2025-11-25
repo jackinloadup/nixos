@@ -63,7 +63,6 @@ in {
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
 
-    programs.simula.enable = false;
     programs.sway.enable = false;
 
     #services.mullvad-vpn.enable = true;

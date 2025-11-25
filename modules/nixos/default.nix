@@ -29,7 +29,6 @@
         ./machine
         ./sdr
         ./rtl_433
-        #./simula
         ./nextcloud
         ./media
       ];
