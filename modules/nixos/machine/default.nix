@@ -175,6 +175,11 @@ in {
 
     programs.dconf.enable = mkDefault ifGraphical;
 
+    security.pam.loginLimits = [
+      { domain = "*"; type = "soft"; item = "nofile"; value = "65536"; }
+      { domain = "*"; type = "hard"; item = "nofile"; value = "1048576"; }
+    ];
+
     security.pam.sshAgentAuth.enable = mkDefault true; # todo explore to see if it fixes the nixos-rebuld need for the ssh flag
     #security.pam.services.sudo.unixAuth = false;
     security.pam.services.sudo.sshAgentAuth = true;
