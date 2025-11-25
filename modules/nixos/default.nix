@@ -42,6 +42,7 @@
 
       gui.imports = [
         inputs.stylix.nixosModules.stylix
+        inputs.niri.nixosModules.niri
         ./steam
         ./gaming
         ./control-monitor-backlight.nix

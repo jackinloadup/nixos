@@ -36,6 +36,7 @@ in {
     nixpkgs.overlays = [
       flake.inputs.nur.overlays.default
       flake.inputs.self.overlays.default
+      flake.inputs.niri.overlays.niri
       #flake.inputs.self.overlays.kodi-wayland # official package available
     ];
 
@@ -48,6 +49,7 @@ in {
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
+        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
       allowed-users = [ "root" "@wheel" ];
       trusted-users = [ "root" "@wheel" ];
@@ -56,6 +58,7 @@ in {
       substituters = [
         "https://aseipp-nix-cache.global.ssl.fastly.net"
         "https://hyprland.cachix.org"
+        "https://niri.cachix.org"
       ];
     };
 

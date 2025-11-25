@@ -11,6 +11,78 @@
   down = "j";
   up = "k";
   right = "l";
+  hyprlandPkg = config.wayland.windowManager.hyprland.package;
+  niriPkg = config.programs.niri.package;
+  monitorScript = pkgs.writeShellApplication {
+    name = "manage-montitor-state";
+    runtimeInputs = [ hyprlandPkg niriPkg pkgs.fd ];
+    text = ''
+      # debug
+      set -x
+
+      PROGNAME="$(basename "$0")"
+
+      main() {
+        local STATE="$1"
+        local WM="$XDG_SESSION_DESKTOP"
+
+        usage() {
+          if [ -z "$STATE" ]; then
+            echo "No argument supplied"
+            echo "Usage: $PROGNAME [enable|disable]"
+            exit 1
+          fi
+        }
+
+        case $WM in
+          "niri")
+            control_niri
+            ;;
+
+          "hyprland")
+            control_hyprland
+            ;;
+
+          *)
+            echo "Window manager $WM not supported"
+            echo "Please modify script to support it"
+            exit 1
+            ;;
+        esac
+
+      }
+
+      control_hyprland() {
+        if [ "$STATE" == "enable" ]; then
+            hyprctl dispatch dpms on
+            exit 0
+        fi
+
+        if [ "$STATE" == "disable" ]; then
+            hyprctl dispatch dpms off
+            exit 0
+        fi
+      }
+
+      control_niri() {
+        # get niri socket from path
+        export NIRI_SOCKET
+        NIRI_SOCKET=$(fd --exact-depth 1 niri /run/user/$UID/ -1)
+
+        if [ "$STATE" == "enable" ]; then
+            niri msg action power-on-monitors
+            exit 0
+        fi
+
+        if [ "$STATE" == "disable" ]; then
+            niri msg action power-off-monitors
+            exit 0
+        fi
+      }
+
+      main "$@"
+    '';
+  };
 in {
   config = let
     menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
@@ -19,15 +91,10 @@ in {
       pkgs.hyprlock
     ];
 
-    programs.kitty = {
-      enable = true;
-      settings = {
-        cursor_trail = 1;
-      };
-    };
-
     programs.foot.enable = true;
     programs.foot.server.enable = true;
+
+    programs.kitty.enable = true;
 
     # currently controlled per host :-(
     services.wpaperd = {
@@ -47,6 +114,11 @@ in {
       };
     };
     programs.waybar.enable = true;
+
+    # doesn't work with hyprland atm. must need some adjustments
+    #services.flameshot = {
+    #  enable = true;
+    #};
 
     # Clamshell mode references available in MatthiasBenaets/modules/desktops/hyprland.nix
 #    home.file = {
@@ -76,7 +148,7 @@ in {
       enable = true;
       settings = {
         general = {
-           after_sleep_cmd = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
+           after_sleep_cmd = "${monitorScript} enable";
            ignore_dbus_inhibit = false;
            lock_cmd = "hyprlock";
          };
@@ -90,8 +162,8 @@ in {
            }
            {
              timeout = 360;
-             on-timeout = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms off";
-             on-resume = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch dpms on";
+             on-timeout = "${monitorScript} disable";
+             on-resume = "${monitorScript} enable";
            }
          ];
       };

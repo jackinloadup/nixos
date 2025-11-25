@@ -18,18 +18,21 @@
     main() {
       local DESK="$1"
       local WM="$XDG_SESSION_DESKTOP"
-      local SUPPORTED_WM="sway hyprland"
       local DISPLAY_ALTWORK="DP-1"
       local DISPLAY_DESK="DP-2"
 
       usage
       case $WM in
         "sway")
-          sway
+          control_sway
           ;;
 
         "hyprland")
-          hyprland
+          control_hyprland
+          ;;
+
+        "niri")
+          control_niri
           ;;
 
         *)
@@ -55,7 +58,7 @@
        fi
     }
 
-    sway() {
+    control_sway() {
       # get swaysock from path
       SWAYSOCK=$(fd sway-ipc /run/user/$UID/ -1)
 
@@ -75,7 +78,7 @@
       fi
     }
 
-    hyprland() {
+    control_hyprland() {
       if [ "$DESK" == "desk" ]; then
           hyprctl keyword monitor $DISPLAY_DESK,enable
           hyprctl keyword monitor $DISPLAY_ALTWORK,disable
@@ -87,6 +90,24 @@
           hyprctl keyword monitor $DISPLAY_DESK,disable
           exit 0
       fi
+    }
+
+    control_niri() {
+        # get niri socket from path
+        export NIRI_SOCKET
+        NIRI_SOCKET=$(fd --exact-depth 1 niri /run/user/$UID/ -1)
+
+        if [ "$DESK" == "desk" ]; then
+            niri msg output $DISPLAY_DESK on
+            niri msg output $DISPLAY_ALTWORK off
+            exit 0
+        fi
+
+        if [ "$DESK" == "altwork" ]; then
+            niri msg output $DISPLAY_ALTWORK on
+            niri msg output $DISPLAY_DESK off
+            exit 0
+        fi
     }
 
 
