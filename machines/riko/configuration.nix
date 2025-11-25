@@ -11,7 +11,6 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./monitor-setup.nix
-    ./rtl_433.nix
     ./iwd.nix
     flake.self.nixosModules.work
   ];
