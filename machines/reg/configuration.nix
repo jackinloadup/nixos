@@ -17,7 +17,7 @@ in {
     ./monitor-setup.nix
     ./switch-desk.nix
     ./aichat.nix
-    #flake.self.nixosModules.crypto
+    flake.self.nixosModules.work
   ];
 
   config = {

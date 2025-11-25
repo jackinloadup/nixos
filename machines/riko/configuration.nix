@@ -13,6 +13,7 @@ in {
     ./monitor-setup.nix
     ./rtl_433.nix
     ./iwd.nix
+    flake.self.nixosModules.work
   ];
 
   config = {

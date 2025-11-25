@@ -55,6 +55,10 @@
         ./crypto.nix
       ];
 
+      work.imports = [
+        ./obsidian.nix
+      ];
+
       #darwin.imports = [
       #];
 

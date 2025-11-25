@@ -143,7 +143,6 @@ in {
           flake.self.homeModules.video-editor
           ./gnome.nix
           ./hyprland.nix
-          ./obsidian.nix
         ]
         ++ optionals isFullSystem [
           #./bah.nix
