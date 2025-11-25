@@ -82,6 +82,9 @@ in {
     #programs.nix-ld.enable = isFullSystem;
     #programs.nix-ld.enable = true;
     programs.wireshark.enable = isFullSystem;
+
+    programs.yazi.enable = true;
+
     services.udev = mkIf isFullSystem {
       extraRules = ''
         SUBSYSTEM=="usbmon", GROUP="wireshark", MODE="0640"
@@ -174,8 +177,9 @@ in {
       programs.kitty = {
         settings = {
           cursor_trail = 1;
+          cursor_trail_color = "#ff0000"; # Red
         };
-      }
+      };
 
       # mic noise removal
       #programs.noisetorch.enable = isFullSystem;
