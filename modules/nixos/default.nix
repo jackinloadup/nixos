@@ -25,8 +25,6 @@
         ./home-assistant
         ./k3s
         ./machine
-        ./sdr
-        ./rtl_433
         ./nextcloud
         ./media
       ];
@@ -34,6 +32,11 @@
       server.imports = [
         ./hydra
         ./postgres
+      ];
+
+      radio.imports = [
+        ./sdr
+        ./rtl_433
       ];
 
       tui.imports = [
