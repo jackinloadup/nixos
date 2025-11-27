@@ -5,7 +5,6 @@
     nixosModules = {
       # For modules that work on both Linux and Darwin
       common.imports = [
-        #./arewehackersyet
         ./bluetooth
         ./browsers
         ./dnsmasq
@@ -61,15 +60,6 @@
 
       #darwin.imports = [
       #];
-
-      #my-home = {
-      #  users.users.${config.people.myself}.isNormalUser = true;
-      #  home-manager.users.${config.people.myself} = {
-      #    imports = [
-      #      self.homeModules.common-linux
-      #    ];
-      #  };
-      #};
 
       default.imports = [
         inputs.self.nixosModules.common
