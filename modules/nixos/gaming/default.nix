@@ -41,8 +41,6 @@ in {
 
     home-manager.sharedModules = [
       {
-        programs.chromium.package = pkgs.ungoogled-chromium;
-
         home.packages = [
           #nur.repos.dukzcry.gamescope
 
