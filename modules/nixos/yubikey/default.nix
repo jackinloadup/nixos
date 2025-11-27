@@ -4,19 +4,19 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib) mkIf mkEnableOption;
 in {
   options.hardware.yubikey.enable = mkEnableOption "Add resources to support using a Yubico Yubikey";
 
   config = mkIf config.hardware.yubikey.enable {
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = [
       # cli
-      yubikey-manager
-      yubikey-personalization
+      pkgs.yubikey-manager
+      pkgs.yubikey-personalization
 
       # gui
-      #yubikey-manager-qt # end of life upstream
-      yubikey-personalization-gui
+      #pkgs.yubikey-manager-qt # end of life upstream
+      pkgs.yubikey-personalization-gui
     ];
 
     services.udev.extraRules = ''

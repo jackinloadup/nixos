@@ -7,6 +7,7 @@
   inherit (lib) mkIf mkEnableOption;
   cfg = config.hardware.solo2;
 in {
+  # TODO: upstream to nixpkgs
   options.hardware.solo2.enable = mkEnableOption "Enable udev rules for Solo2 seciruty key";
 
   config = mkIf cfg.enable {
