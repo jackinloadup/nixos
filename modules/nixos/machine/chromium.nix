@@ -1,20 +1,17 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ pkgs, ... }:
 # If extraOpts can be expressed in home-manager that
-# would be more ideal or at least an alterate if using
-# nix seporate from nixos
-let
-  inherit (lib) mkIf;
-  cfg = config.programs.chromium;
-in {
-  config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
+# would be more ideal or at least an alternate if using
+# nix separate from nixos
+{
+  config =  {
+    environment.systemPackages = [
       #chromium
-      ungoogled-chromium
+      pkgs.ungoogled-chromium
+    ];
+    home-manager.sharedModules = [
+      {
+        programs.chromium.package = pkgs.ungoogled-chromium;
+      }
     ];
 
     programs.chromium = {
