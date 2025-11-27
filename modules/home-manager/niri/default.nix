@@ -312,5 +312,16 @@ in {
         };
       };
     };
+    xdg = {
+      portal = {
+        enable = true;
+        extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+        config.niri = {
+          default = [ "gnome" ];
+          "org.freedesktop.impl.portal.ScreenCast" = [ "gnome"];
+        };
+      };
+    };
+
   };
 }
