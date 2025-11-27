@@ -59,7 +59,28 @@
       }
       zle -N fancy-ctrl-z
       bindkey '^Z' fancy-ctrl-z
-  '';
+    ''
+
+    # interrupts `nix store ping` and some ssh sessions when in
+    #   environment.sessionVariables
+    # might need to be interactive only.
+    # less.envVariables is worse than environment.sessionVariables
+    # the commands aren't evaluated. They are printed in place.
+    ++ ''
+         export LESS_TERMCAP_mb="$(tput bold; tput setaf 2)";
+         export LESS_TERMCAP_md="$(tput bold; tput setaf 3)";
+         export LESS_TERMCAP_me="$(tput sgr0)";
+         export LESS_TERMCAP_so="$(tput bold; tput setaf 3; tput setab 4)";
+         export LESS_TERMCAP_se="$(tput rmso; tput sgr0)";
+         export LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 2)";
+         export LESS_TERMCAP_ue="$(tput rmul; tput sgr0)";
+         export LESS_TERMCAP_mr="$(tput rev)";
+         export LESS_TERMCAP_mh="$(tput dim)";
+         export LESS_TERMCAP_ZN="$(tput ssubm)";
+         export LESS_TERMCAP_ZV="$(tput rsubm)";
+         export LESS_TERMCAP_ZO="$(tput ssupm)";
+         export LESS_TERMCAP_ZW="$(tput rsupm)";
+    '';
 in {
     # might break current auto start sway script
     #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
