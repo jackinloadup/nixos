@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   ifGraphical = config.machine.sizeTarget > 1;
 in {
   config = mkIf config.hardware.bluetooth.enable {
@@ -15,6 +15,8 @@ in {
     ];
 
     hardware.bluetooth = {
+      input.General.IdleTimeout = true;
+
       # Change package to enable controller support
       # https://github.com/NixOS/nixpkgs/pull/52168
       # https://functor.tokyo/blog/2018-12-20-playstation-bluetooth-controller
@@ -55,15 +57,16 @@ in {
       };
     };
 
+    home-manager.sharedModules = [ {
+      # a proxy forwarding Bluetooth MIDI controls via MPRIS2
+      # to control media players.
+      services.mpris-proxy.enable = true;
+    }];
+
     environment.systemPackages = [
       pkgs.bluetuith
       pkgs.bluetui
     ];
-    hardware.bluetooth.input = {
-      General = {
-        IdleTimeout = true;
-      };
-    };
 
     # I can't seem to find offical documentation for what can be in these files
     # Enable field is under testing
