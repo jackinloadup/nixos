@@ -1,12 +1,7 @@
 {
-  lib,
   pkgs,
-  config,
   ...
 }: let
-  inherit (lib) mkIf;
-  ifTui = config.machine.sizeTarget > 0;
-  users = config.machine.users;
   interactive = ''
       bindkey '^a' beginning-of-line
 
@@ -65,8 +60,7 @@
       zle -N fancy-ctrl-z
       bindkey '^Z' fancy-ctrl-z
   '';
-in
-  mkIf ifTui {
+in {
     # might break current auto start sway script
     #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
 

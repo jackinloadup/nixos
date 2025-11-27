@@ -1,13 +1,10 @@
 {
   config,
   pkgs,
-  nixosConfig,
   lib,
-  inputs,
   ...
 }: let
   inherit (lib) mkIf;
-  settings = import ../../settings;
 
   minsToSecs = mins: (mins * 60);
   hoursToSecs = hours: (hours * 60 * 60);
