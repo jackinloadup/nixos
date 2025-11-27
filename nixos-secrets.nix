@@ -8,7 +8,7 @@ let
 
   hostname = config.networking.hostName;
 
-  servers = ["marulk" "reg"];
+  servers = ["marulk"];
   lucasDevHosts = ["reg" "riko"];
 
   mkWgHost = (host: {
@@ -61,7 +61,7 @@ in {
         file = ./secrets/commonPass.age;
       };
 
-      lyza-frigate = {
+      lyza-frigate = mkIf (elem hostname ["lyza"] ) {
         file = ./secrets/machines/lyza/frigate/environment.age;
       };
 
@@ -69,7 +69,7 @@ in {
         file = ./secrets/system/wireless-networking.age;
       };
 
-      immich = {
+      immich = mkIf (elem hostname servers) {
         file = ./secrets/services/immich/secretsFile;
         path = "/run/secrets/immich";
         mode = "770";
