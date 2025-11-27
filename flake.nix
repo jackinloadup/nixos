@@ -284,10 +284,15 @@
         }
         // (eachSystem supportedSystems)
         (system: let
-          pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
-        in rec {
+          # pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
+          pkgs = import defaultPkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+        in {
           devShells = flattenTree {
             rust = import ./shells/rust.nix {inherit pkgs;};
+            hack = import ./shells/hack.nix {inherit pkgs;};
             secrets = import ./shells/secrets.nix {inherit pkgs;};
           };
         # nixvimModules = flattenTree {
