@@ -20,7 +20,6 @@ in {
     #  home-manager.backupFileExtension = "hm-backup";
     #}
     ./adb.nix
-    ./chirp.nix
     ./chromium.nix
     ./encryptedRoot.nix
     ./fonts.nix

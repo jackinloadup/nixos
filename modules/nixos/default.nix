@@ -35,7 +35,6 @@
 
       radio.imports = [
         ./sdr
-        ./rtl_433
       ];
 
       tui.imports = [

@@ -4,10 +4,15 @@
   config,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption types attrNames genAttrs;
+  inherit (lib) mkIf attrNames genAttrs;
   normalUsers = attrNames config.home-manager.users;
   addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
 in {
+  imports = [
+    ./rtl_433.nix
+    ./chirp.nix
+  ];
+
   config = mkIf config.hardware.rtl-sdr.enable {
     users.users = addExtraGroups normalUsers ["plugdev"];
 
