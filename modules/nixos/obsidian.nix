@@ -9,6 +9,8 @@ in {
   config = {
     home-manager.sharedModules = [
       ({config, ... }: {
+        programs.zoom-us.enable = true;
+
         xdg.desktopEntries.gather = let
           url = "https://app.v2.gather.town/app/obsidian-3812d4d3-1a3e-4e30-b603-b31c7b22e94f/join";
           icon = builtins.fetchurl {
@@ -39,11 +41,11 @@ in {
         "--disable=traefik"
       ];
     };
-    environment.systemPackages = with pkgs; [
-      kubectl
-      k3s
-      k9s
-      istioctl
+    environment.systemPackages = [
+      pkgs.kubectl
+      pkgs.k3s
+      pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
+      pkgs.istioctl
     ];
   };
 }
