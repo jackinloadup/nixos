@@ -8,7 +8,6 @@
 # Machine runs DNS and home-assistant vm
 let
   inherit (lib) mkForce mkDefault;
-  settings = import ../../settings;
 in {
   imports = [
     ./hardware-configuration.nix
@@ -16,12 +15,6 @@ in {
 
   config = {
     boot.initrd.verbose = false;
-
-    machine = {
-      users = [ "lriutzel" ];
-      sizeTarget = 1;
-      tui = true;
-    };
 
     networking.hostName = "rename";
 
