@@ -37,7 +37,6 @@
         ./satellite-images.nix
         ./i3.nix
         #./neovim
-        ./niri
         ./nixvim
         ./sway
         ./syncthing.nix

@@ -56,6 +56,7 @@
       work.imports = [ ./obsidian.nix ];
 
       hyprland.imports = [ ./window-managers/hyprland.nix ];
+      niri.imports = [ ./window-managers/niri.nix ];
 
       windowManagers.imports = [
         inputs.self.nixosModules.hyprland

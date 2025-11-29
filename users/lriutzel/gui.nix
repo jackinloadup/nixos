@@ -12,6 +12,7 @@
 in {
   imports = [
     flake.inputs.self.nixosModules.hyprland
+    flake.inputs.self.nixosModules.niri
   ];
 
   config = {
