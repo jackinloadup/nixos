@@ -36,7 +36,6 @@ in {
       imports = [
           flake.self.homeModules.gui
           ./gnome.nix
-          ./hyprland.nix
       ];
 
       #home.persistence."/persist/home/${username}".enable = true;
