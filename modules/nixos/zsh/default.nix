@@ -66,7 +66,7 @@
     # might need to be interactive only.
     # less.envVariables is worse than environment.sessionVariables
     # the commands aren't evaluated. They are printed in place.
-    ++ ''
+    + ''
          export LESS_TERMCAP_mb="$(tput bold; tput setaf 2)";
          export LESS_TERMCAP_md="$(tput bold; tput setaf 3)";
          export LESS_TERMCAP_me="$(tput sgr0)";
