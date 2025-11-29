@@ -256,6 +256,18 @@
                 ./machines/timberlake/configuration.nix
               ];
             };
+            obsidian = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
+              imports = [
+                self.nixosModules.common
+                self.nixosModules.linux
+                self.nixosModules.tui
+                self.nixosModules.home
+                self.nixosModules.gui
+                self.nixosModules.work
+                self.nixosModules.lriutzelGui
+                ./machines/obsidian/configuration.nix
+              ];
+            };
             minimal = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default

@@ -13,8 +13,7 @@
 
   ramSize = "16GiB";
 
-  hostname = config.networking.hostName;
-  zfsPoolName = "zroot_${hostname}";
+  zfsPoolName = "zroot";
   ## TODOS
   ## figure out how to make this by name/label it's an issue of pre/post disk
   ## formatting nixos does't really care about disk
@@ -22,7 +21,7 @@
   ## disko-create should have an ability to override disks by name:
   ##   $ disko-create --disk=sd=/dev/sdb
   ##
-  rootPartionName = "nixos_${hostname}";
+  rootPartionName = "nixos";
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
   #isTesting = (hasAttr "backdoor" config.systemd.services);
@@ -194,7 +193,7 @@ in {
       };
     };
 
-    fileSystems."/persist/etc".neededForBoot = true;
-    fileSystems."/persist/lib".neededForBoot = true;
+    #fileSystems."/persist/etc".neededForBoot = true;
+    #fileSystems."/persist/lib".neededForBoot = true;
   };
 }
