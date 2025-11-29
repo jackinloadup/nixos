@@ -318,6 +318,10 @@
           packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
           #packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "zen";
           templates = {
+            machine = {
+              path = ./templates/machine;
+              description = "File structure for a new machines";
+            };
             shell = {
               path = ./templates/shell;
               description = "A nix shell using direnv to autoload on entry";
