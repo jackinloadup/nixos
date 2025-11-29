@@ -17,6 +17,7 @@
         ./../../nixos-secrets.nix
       ];
 
+
       linux.imports = [
         ./boot-tor-service
         #./autologin-tty1
@@ -38,7 +39,6 @@
       ];
 
       tui.imports = [
-
       ];
 
       gui.imports = [
@@ -49,12 +49,14 @@
         ./control-monitor-backlight.nix
       ];
 
-      crypto.imports = [
-        ./crypto.nix
-      ];
+      crypto.imports = [ ./crypto.nix ];
 
-      work.imports = [
-        ./obsidian.nix
+      work.imports = [ ./obsidian.nix ];
+
+      hyprland.imports = [ ./window-managers/hyprland.nix ];
+
+      windowManagers.imports = [
+        inputs.self.nixosModules.hyprland
       ];
 
       #darwin.imports = [
