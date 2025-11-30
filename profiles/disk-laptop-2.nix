@@ -68,7 +68,7 @@ in {
               };
               esp = {
                 #name = "ESP";
-                size = "512M";
+                size = "2G";
                 #start = "1M";
                 #end = "512M";
                 #bootable = true;
