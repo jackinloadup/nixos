@@ -11,6 +11,7 @@
   username = "lriutzel";
 in {
   imports = [
+    flake.inputs.self.nixosModules.radio
     #flake.inputs.nix-ld.nixosModules.nix-ld
     #./nix-ld.nix
   ];
