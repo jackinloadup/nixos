@@ -3,7 +3,7 @@ let
   inherit (selfLib) machines hostHasService smachines shostHasService;
   inherit (builtins) filter readFile;
   lib = (import <nixpkgs> { }).pkgs.lib;
-  inherit (lib) mkMerge mergeAttrsList;
+  inherit (lib) mkMerge mergeAttrsList replaceStrings;
 
   #orange = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPxPFMNGK0tw467usZYAA1mjgB2owDFBQT939dzOlBWyAAAABHNzaDo= orange";
   #black = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINmfKdhabJag/k0w78kqBG1PL8w+WMv7xWp4VbkdhtINAAAABHNzaDo= black";
@@ -11,14 +11,17 @@ let
   lriutzel = [ lriutzel_ed25519 ];
   users = lriutzel;
 
+  cleanKey = str: replaceStrings ["\n"] [" "] str;
+  readKey = path: cleanKey (readFile path);
+
   # public ssh key
-  machineSshKey = (host: lib.readFile ./machines/${host}/sshd/public_key) ;
+  machineSshKey = (host: readKey ./machines/${host}/sshd/public_key) ;
   sshKeyMap = map machineSshKey;
   machinesWithHostKeys = filter (host: hostHasService host "sshd") machines;
   machineKeys = sshKeyMap machinesWithHostKeys;
 
   machinesWithBootHostKeys = filter (host: hostHasService host "init-sshd") machines;
-  machineBootKeys = map (host: readFile ./machines/${host}/init-sshd/public_key) machinesWithBootHostKeys;
+  machineBootKeys = map (host: readKey ./machines/${host}/init-sshd/public_key) machinesWithBootHostKeys;
   all = users ++ machineKeys;
   allBoot = users ++ machineBootKeys;
 
