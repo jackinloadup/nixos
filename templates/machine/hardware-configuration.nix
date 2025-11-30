@@ -12,6 +12,7 @@
     boot.loader.efi.efiSysMountPoint = "/boot/EFI";
     boot.loader.efi.canTouchEfiVariables = true;
 
+    networking.hostId = "";
     nixpkgs.hostPlatform = "x86_64-linux";
   };
 }
