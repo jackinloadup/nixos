@@ -369,6 +369,9 @@
     };
 
   nixConfig = {
-    extra-substituters = "https://aseipp-nix-cache.global.ssl.fastly.net";
+    extra-substituters = [
+      "https://aseipp-nix-cache.global.ssl.fastly.net"
+      "https://niri.cachix.org"
+    ];
   };
 }

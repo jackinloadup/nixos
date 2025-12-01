@@ -11,7 +11,7 @@ declare -a hosts=(
   "zen"
   "nat"
   "gumdrop-nas"
-  "chichi"
+  "obsidian"
 )
 
 ## now loop through the above array
