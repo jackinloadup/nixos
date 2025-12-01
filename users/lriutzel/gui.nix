@@ -11,8 +11,8 @@
   username = "lriutzel";
 in {
   imports = [
-    flake.inputs.self.nixosModules.hyprland
-    flake.inputs.self.nixosModules.niri
+    #flake.inputs.self.nixosModules.hyprland
+    #flake.inputs.self.nixosModules.niri
   ];
 
   config = {
@@ -30,7 +30,7 @@ in {
 
     #programs.captive-browser.enable = true;
     programs.chromium.enable = true;
-    programs.niri.enable = true;
+    programs.niri.enable = false;
 
     home-manager.users."${username}" = let
       homeDir = "/home/${username}";

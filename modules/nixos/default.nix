@@ -45,10 +45,12 @@
 
       gui.imports = [
         inputs.stylix.nixosModules.stylix
-        inputs.niri.nixosModules.niri
+        ./control-monitor-backlight.nix
+      ];
+
+      gaming.imports = [
         ./steam
         ./gaming
-        ./control-monitor-backlight.nix
       ];
 
       crypto.imports = [ ./crypto.nix ];
@@ -60,6 +62,7 @@
 
       windowManagers.imports = [
         inputs.self.nixosModules.hyprland
+        inputs.self.nixosModules.niri
       ];
 
       #darwin.imports = [];

@@ -12,6 +12,9 @@
 in {
   imports = [
     flake.inputs.self.nixosModules.radio
+    flake.inputs.self.nixosModules.hyprland
+    flake.inputs.self.nixosModules.niri
+    flake.inputs.self.nixosModules.gaming
     #flake.inputs.nix-ld.nixosModules.nix-ld
     #./nix-ld.nix
   ];
@@ -96,6 +99,7 @@ in {
       ];
 
       programs.awscli.enable = true;
+      programs.niri.enable = true;
 
       # mic noise removal
       #programs.noisetorch.enable = true;
