@@ -35,7 +35,7 @@
         ./development.nix
         ./graphical.nix
         ./satellite-images.nix
-        ./i3.nix
+        #./i3.nix
         #./neovim
         ./nixvim
         ./sway

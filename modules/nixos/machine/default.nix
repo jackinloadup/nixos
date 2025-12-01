@@ -27,7 +27,7 @@ in {
     ./gdm.nix
     ./gnome.nix
     ./greetd.nix
-    ./i3.nix
+    #./i3.nix
     ./impermanence.nix
     ./kernel.nix
     ./lowLevelXF86keys.nix
