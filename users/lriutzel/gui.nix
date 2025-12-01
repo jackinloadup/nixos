@@ -30,6 +30,7 @@ in {
 
     #programs.captive-browser.enable = true;
     programs.chromium.enable = true;
+    programs.niri.enable = true;
 
     home-manager.users."${username}" = let
       homeDir = "/home/${username}";

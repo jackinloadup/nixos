@@ -169,9 +169,6 @@ in {
 
     home-manager.backupFileExtension = "backup";
 
-    programs.niri.enable = mkDefault ifGraphical;
-    programs.niri.package = pkgs.niri-unstable;
-
     programs.dconf.enable = mkDefault ifGraphical;
 
     security.pam.loginLimits = [

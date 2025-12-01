@@ -26,6 +26,7 @@ in {
         #};
 
         programs.niri = {
+          package = pkgs.niri-unstable;
           settings = {
             input = {
               keyboard = {
