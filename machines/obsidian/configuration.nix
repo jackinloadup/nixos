@@ -16,6 +16,18 @@ in {
   config = {
     boot.initrd.verbose = true;
 
+    boot.initrd = {
+      systemd.emergencyAccess = true;
+    };
+
+    boot.kernelParams = [
+      "rd.shell"              # Drop to shell if initrd fails
+      #"rd.break"              # Break before switching root
+      "systemd.log_level=debug"
+      "debug"
+      "boot.shell_on_fail"    # Shell on failure
+    ];
+
     networking.hostName = "obsidian";
 
     networking.dhcpcd.persistent = true;
