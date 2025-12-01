@@ -12,6 +12,7 @@ in {
       enableGnomeKeyring = true;
       sshAgentAuth = true;
     };
+    programs.niri.package = pkgs.niri-unstable;
 
     home-manager.sharedModules = [
       ({ config, ... }: let
@@ -26,7 +27,6 @@ in {
         #};
 
         programs.niri = {
-          package = pkgs.niri-unstable;
           settings = {
             input = {
               keyboard = {
