@@ -14,7 +14,7 @@ in {
   ];
 
   config = {
-    boot.initrd.verbose = false;
+    boot.initrd.verbose = true;
 
     networking.hostName = "obsidian";
 

@@ -132,6 +132,8 @@
 
     # Exploring the integration between Nix and AI coding agents
     #nix-ai-tools.url = "github:numtide/nix-ai-tools";
+
+    affinity.url = "github:mrshmllow/affinity-nix";
     niri.url = "github:sodiboo/niri-flake";
   };
 

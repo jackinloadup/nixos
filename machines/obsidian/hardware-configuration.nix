@@ -11,8 +11,7 @@
   ];
 
   config = {
-    boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
-    boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+    boot.initrd.availableKernelModules = [ "nvme" "ahci" "thunderbolt" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
     boot.loader.efi.canTouchEfiVariables = true;
 
     nixpkgs.hostPlatform = "x86_64-linux";
