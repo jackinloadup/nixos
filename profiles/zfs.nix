@@ -41,8 +41,8 @@ in {
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
 
     # Added due to issue with kernel panics after suspend.
-    # I suspect this is due to zfs.
-    systemd.targets.sleep.enable = false;
+    # try allowing sleep due to obsidian laptop using zfs
+    systemd.targets.sleep.enable = true;
     systemd.targets.suspend.enable = false;
     systemd.targets.hibernate.enable = false;
     systemd.targets.hybrid-sleep.enable = false;
