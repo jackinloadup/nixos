@@ -180,7 +180,8 @@ in {
       };
     };
 
-    fileSystems."/persist/etc".neededForBoot = true;
-    fileSystems."/persist/lib".neededForBoot = true;
+    # unsure why this isn't possible right now
+    #fileSystems."/persist/etc".neededForBoot = true;
+    #fileSystems."/persist/lib".neededForBoot = true;
   };
 }
