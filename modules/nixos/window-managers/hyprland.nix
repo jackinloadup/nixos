@@ -26,17 +26,14 @@ in {
 
             PROGNAME="$(basename "$0")"
 
+
             main() {
               local STATE="$1"
-              local WM="$XDG_SESSION_DESKTOP"
+              local WM
 
-              usage() {
-                if [ -z "$STATE" ]; then
-                  echo "No argument supplied"
-                  echo "Usage: $PROGNAME [enable|disable]"
-                  exit 1
-                fi
-              }
+              WM=$(get_desktop)
+
+              usage
 
               case $WM in
                 "niri")
@@ -54,6 +51,20 @@ in {
                   ;;
               esac
 
+            }
+
+            usage() {
+              if [ -z "$STATE" ]; then
+                echo "No argument supplied"
+                echo "Usage: $PROGNAME [enable|disable]"
+                exit 1
+              fi
+            }
+
+            get_desktop() {
+              systemctl --user show-environment \
+                | grep XDG_SESSION_DESKTOP \
+                | cut -d= -f2-
             }
 
             control_hyprland() {
@@ -145,7 +156,7 @@ in {
           enable = true;
           settings = {
             general = {
-               after_sleep_cmd = "${monitorScript} enable 2>&1 >> ~/monitor-script";
+               after_sleep_cmd = "${getExe monitorScript} enable";
                ignore_dbus_inhibit = false;
                lock_cmd = "hyprlock";
              };
@@ -159,8 +170,8 @@ in {
                }
                {
                  timeout = 360;
-                 on-timeout = "${monitorScript} disable 2>&1 >> ~/monitor-script";
-                 on-resume = "${monitorScript} enable 2>&1 >> ~/monitor-script";
+                 on-timeout = "${getExe monitorScript} disable";
+                 on-resume = "${getExe monitorScript} enable";
                }
              ];
           };
