@@ -61,10 +61,7 @@ in {
             partitions = {
               boot = {
                 size = "1M";
-                #start = "0";
-                #end = "1M";
                 type = "EF02"; # for grub MBR
-                #flags = [ "bios_grub" ];
               };
               esp = {
                 #name = "ESP";
@@ -123,22 +120,9 @@ in {
             ashift = "12";
             autotrim = "on";
           };
-          # commented out due to
-          # error: builder for '/nix/store/7ax5hb59bcd82lbz63byv8n7bpgv160l-disko-format.drv' failed with exit code 1;
-          # last 10 log lines:
-          # >     ^--^ SC2030 (info): Modification of name is local (to subshell caused by (..) group).
-          # >
-          # >
-          # > In /nix/store/78gplx80z9vcicmrxvphb534higv5pk2-disko-format line 224:
-          # >   zfs set keylocation="prompt" $name;
-          # >                                ^---^ SC2031 (info): name was modified in a subshell. That change might be lost.
-          # >
-          # > For more information:
-          # >   https://www.shellcheck.net/wiki/SC2030 -- Modification of name is local (to...
-          # >   https://www.shellcheck.net/wiki/SC2031 -- name was modified in a subshell. ...
-          #postCreateHook = ''
-          #  zfs set keylocation="prompt" $name;
-          #'';
+          postCreateHook = mkIf isEncrypted ''
+            zfs set keylocation="prompt" ${zfsPoolName};
+          '';
           rootFsOptions = {
             #compression = "lz4";
             compression = "zstd";
@@ -146,18 +130,18 @@ in {
 
             acltype = "posixacl";
 
+            encryption = mkIf isEncrypted "on";
+            # insert via secrets
+            keylocation = mkIf isEncrypted "file:///tmp/disk.key";
+            keyformat = mkIf isEncrypted "passphrase";
+
             mountpoint = "none";
             canmount = "off";
             xattr = "sa";
             dnodesize = "auto";
             normalization = "formD";
             relatime = "on";
-          } // (if !isTesting then {
-            encryption = "on";
-            # insert via secrets
-            keylocation = "file:///tmp/disk.key";
-            keyformat = "passphrase";
-          } else {});
+          });
           #mountpoint = "/persist";
 
           datasets = let
@@ -183,17 +167,20 @@ in {
           } else {}) // (if tmpfsRoot then {
             # Nothing handled above
           } else { # zfs managed root
-            "local/root" = filesystem "/";
+            "local/root" =
+              filesystem "/"
+              // {
+                postCreateHook = ''
+                  zfs snapshot ${zfsPoolName}/local/root@blank
+                '';
+                options.mountpoint = "legacy";
+              };
           });
-            #{
-            ##  postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
-            ##  options.mountpoint = "legacy";
-            #};
         };
       };
     };
 
-    #fileSystems."/persist/etc".neededForBoot = true;
-    #fileSystems."/persist/lib".neededForBoot = true;
+    fileSystems."/persist/etc".neededForBoot = true;
+    fileSystems."/persist/lib".neededForBoot = true;
   };
 }
