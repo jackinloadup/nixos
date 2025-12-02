@@ -94,7 +94,7 @@ in {
            "custom/quit" = {
                "format" = "󰗼 ";
                "tooltip" = false;
-               "on-click" = "hyprctl dispatch exit";
+               "on-click" = "hyprctl dispatch exit || niri msg action quit";
            };
            "custom/lock" = {
                "format" = "󰍁 ";
