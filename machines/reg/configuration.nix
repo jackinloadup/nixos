@@ -62,7 +62,7 @@ in {
 
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
-
+    programs.niri.enable = true;
     programs.sway.enable = false;
 
     #services.mullvad-vpn.enable = true;
@@ -134,10 +134,9 @@ in {
     #};
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
-    #services.displayManager.sddm.enable = true;
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "lriutzel";
-    services.displayManager.defaultSession = "hyprland";
+    services.displayManager.defaultSession = "niri";
 
 
     #services.vaultwarden = {
@@ -157,6 +156,9 @@ in {
 
     # Login Manager
     services.xserver.displayManager.gdm.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
+    services.xserver.windowManager.i3.enable = false;
+
     #services.xserver.enable = true;
     #services.xserver.displayManager.lightdm.enable = true;
     security.polkit.enable = true;
@@ -166,10 +168,6 @@ in {
     #programs.ssh.askPassword = mkForce "${pkgs.gnome.seahorse}/libexec/seahorse/ssh-askpass";
     #programs.ssh.askPassword = mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
 
-    ## xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
-    ##     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
-    services.xserver.desktopManager.gnome.enable = true;
-    services.xserver.windowManager.i3.enable = true;
 
     system.autoUpgrade = {
       enable = false; # secrets repo is limiting factor atm
@@ -190,9 +188,6 @@ in {
 
     xdg.portal.enable = true;
     environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
-    xdg.portal.config = {
-
-    };
 
     environment.profileRelativeEnvVars = {
       QT_PLUGIN_PATH = [
@@ -254,11 +249,9 @@ in {
 
     home-manager.sharedModules = [
       {
-        #dconf.settings."org/gnome/desktop/interface".show-battery-percentage = true;
-      }
-      {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
+        programs.niri.enable = true;
 
         services.satellite-images.enable = false;
         services.satellite-images.generateTimelapse = false;

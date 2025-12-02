@@ -12,7 +12,6 @@ in {
     ./hardware-configuration.nix
     ./monitor-setup.nix
     ./iwd.nix
-    flake.self.nixosModules.work
   ];
 
   config = {
@@ -20,12 +19,13 @@ in {
     boot.initrd.verbose = false;
 
     hardware.bluetooth.enable = true;
-    hardware.yubikey.enable = true;
 
     home-manager.sharedModules = [
       {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
+        programs.niri.enable = config.programs.niri.enable;
+
         services.satellite-images.enable = false;
 
         services.wpaperd = {
@@ -42,8 +42,9 @@ in {
 
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
-
+    programs.niri.enable = true;;
     programs.sway.enable = false;
+
     programs.steam.enable = true;
 
     services.fprintd.enable = true;
@@ -52,16 +53,15 @@ in {
     services.pipewire.enable = true;
 
     #services.displayManager.enable = true; # enable systemd’s display-manager service
-    #services.displayManager.sddm.enable = true;
 
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "lriutzel";
-    services.displayManager.defaultSession = "hyprland";
+    services.displayManager.defaultSession = "niri";
 
     services.xserver.displayManager.gdm.enable = true;
 
     services.xserver.desktopManager.gnome.enable = true;
-    services.xserver.windowManager.i3.enable = true;
+    services.xserver.windowManager.i3.enable = false;
 
     #services.resolved.enable = false;
 

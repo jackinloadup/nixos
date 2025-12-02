@@ -141,7 +141,7 @@ in {
             dnodesize = "auto";
             normalization = "formD";
             relatime = "on";
-          });
+          };
           #mountpoint = "/persist";
 
           datasets = let

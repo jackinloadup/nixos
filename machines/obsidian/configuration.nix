@@ -1,7 +1,5 @@
 {
-  self,
-  flake,
-  pkgs,
+  config,
   lib,
   ...
 }:
@@ -14,7 +12,8 @@ in {
   ];
 
   config = {
-    boot.initrd.verbose = true;
+    boot.plymouth.enable = true;
+    boot.initrd.verbose = false;
 
     boot.initrd = {
       systemd.emergencyAccess = true;
@@ -28,10 +27,35 @@ in {
       "boot.shell_on_fail"    # Shell on failure
     ];
 
-    networking.hostName = "obsidian";
+    hardware.bluetooth.enable = true;
 
-    networking.dhcpcd.persistent = true;
+    home-manager.sharedModules = [
+      {
+        wayland.windowManager.sway.enable = config.programs.sway.enable;
+        wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
+        programs.niri.enable = config.programs.niri.enable;
 
+        services.wpaperd = {
+          enable = true;
+          settings.default = {
+            path = "~/Pictures/Wallpapers";
+            sorting = "random";
+            duration = "5m";
+          };
+        };
+      }
+    ];
+
+    programs.hyprland.enable = true;
+    programs.hyprland.xwayland.enable = true;
+    programs.niri.enable = true;
+
+    services.displayManager.autoLogin.enable = true;
+    services.displayManager.autoLogin.user = "lriutzel";
+    services.displayManager.defaultSession = "niri";
+
+    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

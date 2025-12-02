@@ -160,9 +160,6 @@ in {
 
     home-manager.sharedModules = [
       {
-        #dconf.settings."org/gnome/desktop/interface".show-battery-percentage = true;
-      }
-      {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
       }
