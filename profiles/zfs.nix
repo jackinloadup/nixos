@@ -41,9 +41,10 @@ in {
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
 
     # Added due to issue with kernel panics after suspend.
-    # try allowing sleep due to obsidian laptop using zfs
+    # try allowing sleep via suspend due to obsidian laptop using zfs
+    # https://discourse.nixos.org/t/zfs-and-hibernate-suspend-to-disk/64992/3
     systemd.targets.sleep.enable = true;
-    systemd.targets.suspend.enable = false;
+    systemd.targets.suspend.enable = true;
     systemd.targets.hibernate.enable = false;
     systemd.targets.hybrid-sleep.enable = false;
 
