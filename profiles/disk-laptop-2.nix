@@ -5,27 +5,18 @@
   config,
   device ? "/dev/sda",
   isEncrypted ? false,
+  ramSize ? "16GiB",
   ...
 }: let
   inherit (lib) mkIf mkDefault;
   inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
 
-  ramSize = "16GiB";
 
   zfsPoolName = "zroot";
-  ## TODOS
-  ## figure out how to make this by name/label it's an issue of pre/post disk
-  ## formatting nixos does't really care about disk
-  ##
-  ## disko-create should have an ability to override disks by name:
-  ##   $ disko-create --disk=sd=/dev/sdb
-  ##
   rootPartionName = "nixos";
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
-  #isTesting = (hasAttr "backdoor" config.systemd.services);
-  isTesting = true;
 in {
   imports = [
     flake.inputs.disko.nixosModules.disko
@@ -64,10 +55,8 @@ in {
                 type = "EF02"; # for grub MBR
               };
               esp = {
-                #name = "ESP";
+                name = "ESP";
                 size = "2G";
-                #start = "1M";
-                #end = "512M";
                 #bootable = true;
                 # https://github.com/nix-community/disko/blob/master/docs/upgrade-guide.md#2023-04-07-d6f062e
                 type = "EF00";
@@ -82,15 +71,7 @@ in {
                 };
               };
               swap = {
-                # larger than 3G is not working when testing via
-                # i suspect it is only an artifact of testing and some vm disk
-                # size. I don't think it will effect setting this larger on
-                # a real install
-                # nix build '.#nixosConfigurations.chichi.config.system.build.installTest'
-
-                size = "3G";
-                #start = "-16G";
-                #end = "100%";
+                size = ramSize;
                 type = "8200";
                 content = {
                   type = "swap";
@@ -101,8 +82,6 @@ in {
               root = {
                 name = rootPartionName;
                 size = "100%";
-                #start = "512M";
-                #end = "-16G"; # leave 16GB for swap = to ram for hybernation
                 content = {
                   type = "zfs";
                   pool = "${zfsPoolName}";
@@ -159,7 +138,7 @@ in {
             "local" = unmountable; # Data that is replaceable
             "safe" = unmountable; # Data that is valued. Provides a sync point
             "local/nix" = filesystem "/nix" // {options.mountpoint = "legacy";};
-          } // (if config.machine.impermanence then {
+          } // (if impermanence then {
             "local/etc" = filesystem "/persist/etc";
             "local/log" = filesystem "/persist/log";
             "safe/home" = filesystem "/persist/home";
@@ -181,7 +160,7 @@ in {
     };
 
     # unsure why this isn't possible right now
-    #fileSystems."/persist/etc".neededForBoot = true;
-    #fileSystems."/persist/lib".neededForBoot = true;
+    #fileSystems."/persist/etc".neededForBoot = mkIf impermanence true;
+    #fileSystems."/persist/lib".neededForBoot = mkIf impermanence true;
   };
 }

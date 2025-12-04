@@ -5,6 +5,7 @@
       inherit flake pkgs config lib;
       device = "/dev/nvme0n1";
       isEncrypted = true;
+      ramSize = "94G";
     })
     ../../profiles/amd.nix
     ../../profiles/mobile-device.nix
