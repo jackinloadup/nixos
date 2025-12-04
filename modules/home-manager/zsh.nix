@@ -27,7 +27,7 @@ in {
       historySubstringSearch.enable = true;
 
       initContent = let
-        setWindowTitle = lib.mkOrder 1000 ''
+        setWindowTitle = lib.mkOrder 100 ''
           function set_win_title(){
             echo -ne "\033]0; $(basename "$PWD") \007"
           }
@@ -43,12 +43,8 @@ in {
           #}
         '';
 
-        starship = lib.mkOrder 500 ''
-          eval "$(${getExe pkgs.starship} init zsh)"
-        '';
-
         interactiveOrder = lib.mkOrder 800 interactive;
-      in lib.mkMerge [ setWindowTitle interactiveOrder starship ];
+      in lib.mkMerge [ setWindowTitle interactiveOrder ];
 
       shellAliases = nixosConfig.environment.shellAliases;
 
