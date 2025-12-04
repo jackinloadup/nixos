@@ -33,6 +33,11 @@
         ./nextcloud
         ./postgres
         ./unattended
+        inputs.self.nixosModules.services
+      ];
+
+      services.imports = [
+        ./services/searx.nix
       ];
 
       radio.imports = [
