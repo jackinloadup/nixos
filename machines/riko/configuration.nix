@@ -42,7 +42,7 @@ in {
 
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
-    programs.niri.enable = true;;
+    programs.niri.enable = true;
     programs.sway.enable = false;
 
     programs.steam.enable = true;
