@@ -258,7 +258,7 @@ in {
                   cooldown-ms = 150;
                 };
 
-                MouseForward.action.toggle-overview = [];
+                "Mod+MouseMiddle".action.toggle-overview = [];
 
                 "Mod+WheelScrollRight".action.focus-column-right = [];
                 "Mod+WheelScrollLeft".action.focus-column-left = [];
