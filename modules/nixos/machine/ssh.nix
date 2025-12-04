@@ -70,5 +70,12 @@ in {
       attack_threshold = 50; # 5 failed attempts. ~10 per;
       whitelist = [ "10.16.0.0/8" "10.100.0.0/24" ];
     };
+
+    systemd.services.sshguard.serviceConfig = {
+      TimeoutStopSec = "5s";
+      KillMode = "mixed";
+    };
+
+    systemd.services.sshguard.before = [ "shutdown.target" ];
   };
 }
