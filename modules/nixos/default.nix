@@ -38,6 +38,7 @@
 
       services.imports = [
         ./services/searx.nix
+        ./services/smokeping.nix
       ];
 
       radio.imports = [
