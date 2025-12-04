@@ -665,6 +665,24 @@
           key = "<leader>r";
           action = ":! ";
         }
+        {
+          mode = "n";
+          key = "<leader>z";
+          action.__raw = ''
+            function()
+              if vim.t.zoomed then
+                vim.cmd('tabclose')
+              else
+                vim.cmd('tab split')
+                vim.t.zoomed = true
+              end
+            end
+          '';
+          options = {
+            desc = "Toggle zoom";
+            silent = true;
+          };
+        }
       ];
     };
   };
