@@ -159,22 +159,24 @@ in {
                 # "Mod+D".action.spawn = "fuzzel";
                 #"Mod+D".action.spawn-sh = "${noctaliaIPC} launcher toggle";
                 #"Super+Alt+L".action.spawn-sh = "${noctaliaIPC} lockScreen lock";
-                "XF86AudioRaiseVolume" = {
-                  action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
-                  allow-when-locked = true;
-                };
-                "XF86AudioLowerVolume" = {
-                  action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
-                  allow-when-locked = true;
-                };
-                "XF86AudioMute" = {
-                  action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
-                  allow-when-locked = true;
-                };
-                "XF86AudioMicMute" = {
-                  action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
-                  allow-when-locked = true;
-                };
+
+                # handing media via lowLevelXF86keys and actkbd
+                #"XF86AudioRaiseVolume" = {
+                #  action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
+                #  allow-when-locked = true;
+                #};
+                #"XF86AudioLowerVolume" = {
+                #  action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+                #  allow-when-locked = true;
+                #};
+                #"XF86AudioMute" = {
+                #  action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+                #  allow-when-locked = true;
+                #};
+                #"XF86AudioMicMute" = {
+                #  action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+                #  allow-when-locked = true;
+                #};
 
                 "Mod+Tab".action.toggle-overview = [];
 
