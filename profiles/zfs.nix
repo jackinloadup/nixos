@@ -35,7 +35,7 @@ in {
     boot.zfs.forceImportRoot = true;
     #boot.zfs.package = pkgs.zfs_unstable;
 
-    boot.kernelPackages = latestKernelPackage;
+    boot.kernelPackages = mkDefault latestKernelPackage;
 
     # tried to set due to Zen kernel set in another place?
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
