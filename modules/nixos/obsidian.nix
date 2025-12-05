@@ -47,5 +47,8 @@ in {
       pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
       pkgs.istioctl
     ];
+
+    virtualisation.docker.enable = true;
+    virtualisation.libvirtd.enable = mkDefault true;
   };
 }
