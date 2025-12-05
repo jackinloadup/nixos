@@ -7,6 +7,7 @@ pkgs.mkShell {
     pkgs.mkp224o # generate tor service keys
     pkgs.wireguard-tools
     pkgs.ragenix
+    pkgs.age
   ];
   #NIX_LD_LIBRARY_PATH = with pkgs; nixpkgs.lib.makeLibraryPath [
   #  stdenv.cc.cc
