@@ -54,6 +54,14 @@ in {
               };
 
               spawn-at-startup = [
+                {
+                  command = [
+                    "systemctl"
+                    "--user"
+                    "start"
+                    "waybar.service"
+                  ];
+                }
                 # {
                 #   sh = "${noctalia}/bin/noctalia-shell";
                 # }
