@@ -10,7 +10,7 @@
 in {
   imports = [];
 
-  config = mkIf config.services.xserver.displayManager.gdm.enable {
+  config = mkIf config.services.displayManager.gdm.enable {
     #programs.dconf.enable = true;
 
     # gnome has its own power management tool
@@ -20,13 +20,13 @@ in {
     programs.xwayland.enable = true;
     #services.xserver.autorun = true;
     #services.xserver.displayManager.lightdm.enable = false;
-    services.xserver.displayManager.gdm.settings = {
+    services.displayManager.gdm.settings = {
       greeter = {
         #IncludeAll = true;
         Include = concatStringsSep "," normalUsers;
       };
     };
-    services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+    services.desktopManager.gnome.extraGSettingsOverrides = ''
       [com.ubuntu.login-screen]
       background-repeat='no-repeat'
       background-size='cover'

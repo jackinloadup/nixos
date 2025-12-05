@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkIf mkOption types getBin getExe;
-  desktops = config.services.xserver.displayManager.sessionData.desktops;
+  desktops = config.services.displayManager.sessionData.desktops;
   sessions = "${desktops}/share/wayland-sessions:${desktops}/share/xsessions";
 in {
   imports = [];
@@ -19,7 +19,7 @@ in {
     #environment.etc."greetd/environments".text = ''
     #  ${lib.optionalString config.programs.sway.enable "${getBin pkgs.systemd}/bin/systemd-cat -t sway ${getExe pkgs.sway}"}
     #  ${lib.optionalString config.services.xserver.windowManager.i3.enable "${getBin pkgs.systemd}/bin/systemd-cat -t i3 ${getBin pkgs.xorg.xinit}/bin/startx ~/.xsession"}
-    #  ${lib.optionalString config.services.xserver.desktopManager.gnome.enable "${getBin pkgs.systemd}/bin/systemd-cat -t gnome gnome-session"}
+    #  ${lib.optionalString config.services.desktopManager.gnome.enable "${getBin pkgs.systemd}/bin/systemd-cat -t gnome gnome-session"}
     #'';
 
     users.users.greeter.group = "greeter";
@@ -49,8 +49,8 @@ in {
           user = "greeter";
         };
         initial_session = {
-          command = config.services.xserver.displayManager.defaultSession;
-          user = config.services.xserver.displayManager.autoLogin.user;
+          command = config.services.displayManager.defaultSession;
+          user = config.services.displayManager.autoLogin.user;
         };
       };
     };

@@ -40,7 +40,7 @@ in {
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "kodi";
     services.displayManager.defaultSession = "kodi";
-    services.xserver.displayManager.gdm.enable = true;
+    services.displayManager.gdm.enable = true;
     services.xserver.desktopManager.kodi.enable = true;
 
     machine = {

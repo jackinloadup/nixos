@@ -57,7 +57,7 @@ in {
         pkgs.nerd-fonts.fira-code
         pkgs.nerd-fonts.droid-sans-mono
         pkgs.lato
-        pkgs.noto-fonts-emoji
+        pkgs.noto-fonts-color-emoji
       ];
     };
   };

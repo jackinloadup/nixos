@@ -58,9 +58,9 @@ in {
     services.displayManager.autoLogin.user = "lriutzel";
     services.displayManager.defaultSession = "niri";
 
-    services.xserver.displayManager.gdm.enable = true;
+    services.displayManager.gdm.enable = true;
 
-    services.xserver.desktopManager.gnome.enable = true;
+    services.desktopManager.gnome.enable = true;
     services.xserver.windowManager.i3.enable = false;
 
     #services.resolved.enable = false;

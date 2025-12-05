@@ -56,7 +56,7 @@ in {
           #supertuxkart # alt mario cart
           #warsow # Multiplayer FPS game
           #cool-retro-term
-          pkgs.gamehub
+          #pkgs.gamehub # broken
           pkgs.nethack # Rogue-like game
           #mindustry
           pkgs.gltron

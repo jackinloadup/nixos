@@ -16,7 +16,8 @@ in {
 
       # gui
       #pkgs.yubikey-manager-qt # end of life upstream
-      pkgs.yubikey-personalization-gui
+      #pkgs.yubikey-personalization-gui # end of life upstream
+      pkgs.yubioath-flutter
     ];
 
     services.udev.extraRules = ''

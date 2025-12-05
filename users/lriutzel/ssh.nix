@@ -12,23 +12,6 @@
     #services.sslh.enable = ?;
 
     programs.ssh = {
-      # add used keys to agent
-      addKeysToAgent = "yes";
-
-      compression = true;
-
-      controlPersist = "30m";
-      controlMaster = "auto";
-      controlPath = "/run/user/%i/ssh-%r@%h:%p";
-
-      #forwardX11 = false;
-      forwardAgent = true; # don't forward the ssh agent (security risk)
-
-      serverAliveCountMax = 3;
-      serverAliveInterval = 30;
-
-      #TCPKeepAlive = true;
-      hashKnownHosts = false; # Privacy concern
       extraConfig = ''
         ConnectTimeout 5
       '';
@@ -37,7 +20,26 @@
 
       matchBlocks = {
         "all" = {
+          # add used keys to agent
+          addKeysToAgent = "yes";
+
           user = "lriutzel";
+
+          compression = true;
+
+          controlPersist = "30m";
+          controlMaster = "auto";
+          controlPath = "/run/user/%i/ssh-%r@%h:%p";
+
+          serverAliveCountMax = 3;
+          serverAliveInterval = 30;
+
+          #TCPKeepAlive = true;
+          hashKnownHosts = false; # Privacy concern
+
+          #forwardX11 = false;
+          forwardAgent = true; # don't forward the ssh agent (security risk)
+
           extraOptions = {
             PreferredAuthentications = "publickey,keyboard-interactive,password";
             #localCommand = "printf '\033]4;4;#004080;12;#0040ff\007'";

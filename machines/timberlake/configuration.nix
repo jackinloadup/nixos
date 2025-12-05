@@ -35,11 +35,11 @@ in {
 
     services.pipewire.enable = isUserFacing;
 
-    #services.xserver.displayManager.autoLogin.user = "lriutzel";
-    #services.xserver.displayManager.defaultSession = "sway";
+    #services.displayManager.autoLogin.user = "lriutzel";
+    #services.displayManager.defaultSession = "sway";
 
-    services.xserver.desktopManager.gnome.enable = isUserFacing;
-    services.xserver.displayManager.gdm.enable = isUserFacing;
+    services.desktopManager.gnome.enable = isUserFacing;
+    services.displayManager.gdm.enable = isUserFacing;
 
     services.jellyfin = {
       enable = true;

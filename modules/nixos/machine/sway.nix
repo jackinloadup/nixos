@@ -54,7 +54,7 @@ in {
     xdg = {
       portal = {
         enable = mkDefault true;
-        extraPortals = mkIf (!config.services.xserver.desktopManager.gnome.enable) [
+        extraPortals = mkIf (!config.services.desktopManager.gnome.enable) [
           pkgs.xdg-desktop-portal-gtk # Desktop integration portals for sandboxed apps
           pkgs.xdg-desktop-portal-shana # A filechooser portal backend for any desktop environment
         ];

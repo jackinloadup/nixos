@@ -388,7 +388,7 @@ in {
     };
 
     home.file."${config.xdg.configHome}/nwg-bar/bar.json".text = let
-      gdmSwitchUser = if nixosConfig.services.xserver.displayManager.gdm.enable then ''
+      gdmSwitchUser = if nixosConfig.services.displayManager.gdm.enable then ''
           ,{
             "label": "Switch User",
             "exec": "${pkgs.gdm}/bin/gdmflexiserver",

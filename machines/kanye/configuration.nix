@@ -37,12 +37,12 @@ in {
 
   services.pipewire.enable = true;
 
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "criutzel";
-  services.xserver.displayManager.defaultSession = "gnome";
-  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "criutzel";
+  services.displayManager.defaultSession = "gnome";
+  services.displayManager.gdm.enable = true;
 
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
   #services.xserver.windowManager.i3.enable = true;
 
   machine = {

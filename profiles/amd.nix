@@ -63,7 +63,7 @@ in {
 
       # For 32 bit applications
       extraPackages32 = [
-        pkgs.driversi686Linux.amdvlk
+        #pkgs.driversi686Linux.amdvlk # gone in 25.11, idk
       ];
     };
 

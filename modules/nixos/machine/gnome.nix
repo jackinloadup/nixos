@@ -6,7 +6,7 @@
 }: let
   inherit (lib) mkIf mkForce;
 in {
-  config = mkIf config.services.xserver.desktopManager.gnome.enable {
+  config = mkIf config.services.desktopManager.gnome.enable {
   # xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
   #     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
     programs.dconf.enable = true;

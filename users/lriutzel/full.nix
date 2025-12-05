@@ -136,7 +136,7 @@ in {
       home.packages = [
         #flake.inputs.scripts.packages.x86_64-linux.disk-burnin
         pkgs.krusader # Norton/Total Commander clone for KDE
-        pkgs.tor-browser-bundle-bin
+        pkgs.tor-browser
 
         ## Spotify - disabling and using webui
         #spotify-tui # spotifyd ui
@@ -150,7 +150,7 @@ in {
         #pkgs.nheko # matrix client
 
         ## Task/notes
-        pkgs.mindforger
+        # pkgs.mindforger  # qtwebengine-5.15.19 insecure
 
         pkgs.sysbench # benchmarking tool
         pkgs.postgresql # for psql to maintain nextcloud. Should be in shell
@@ -179,7 +179,7 @@ in {
         ## Debugging
         pkgs.wireshark
         pkgs.gparted
-        pkgs.nmapsi4 # QT frontend for nmap
+        # pkgs.nmapsi4 # QT frontend for nmap -- qtwebengine-5.15.19 insecure
 
         ## Wine Apps
         pkgs.winbox4 # Mikrotik RouterOS GUI

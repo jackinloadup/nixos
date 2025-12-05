@@ -17,7 +17,6 @@ in {
       onShutdown = "shutdown";
       parallelShutdown = 5;
       qemu = {
-        ovmf.enable = true;
         swtpm.enable = true;
         verbatimConfig = ''
           remember_owner = 0

@@ -65,14 +65,12 @@ in {
     services.displayManager.autoLogin.user = "criutzel";
     services.displayManager.defaultSession = "gnome";
     # Login Manager
-    services.xserver.displayManager.gdm.enable = true;
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
     services.xserver.enable = true;
 
     security.polkit.enable = true;
 
-    ## xdg-desktop-portal-gnome 44 causes delays in non-GNOME desktops
-    ##     https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/issues/74
-    services.xserver.desktopManager.gnome.enable = true;
 
     environment.persistence = {
       "/persist" = {

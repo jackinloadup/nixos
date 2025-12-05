@@ -63,8 +63,6 @@ in {
 
         pkgs.media-downloader # youtube-dl gui
 
-        pkgs.tor-browser-bundle-bin # Anonymity browser
-
         pkgs.warp # transfer files between computers gui
 
         pkgs.bottles # wine gui
