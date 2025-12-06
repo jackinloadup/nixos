@@ -21,10 +21,10 @@
       linux.imports = [
         ./boot-tor-service
         #./autologin-tty1
-        ./machine
         ./k3s
         ./machine
         ./media
+        inputs.self.nixosModules.services
       ];
 
       server.imports = [
@@ -39,6 +39,8 @@
       services.imports = [
         ./services/searx.nix
         ./services/smokeping.nix
+        ./services/docker.nix
+        ./services/syncthing.nix
       ];
 
       radio.imports = [
@@ -64,11 +66,15 @@
       work.imports = [ ./obsidian.nix ];
 
       hyprland.imports = [ ./window-managers/hyprland.nix ];
+      i3.imports = [ ./window-managers/i3.nix ];
       niri.imports = [ ./window-managers/niri.nix ];
+      sway.imports = [ ./window-managers/sway.nix ];
 
       windowManagers.imports = [
         inputs.self.nixosModules.hyprland
+        #inputs.self.nixosModules.i3
         inputs.self.nixosModules.niri
+        inputs.self.nixosModules.sway
       ];
 
       #darwin.imports = [];

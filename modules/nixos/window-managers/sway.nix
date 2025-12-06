@@ -1,15 +1,8 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
-  inherit (lib) mkIf mkOption types mkDefault;
-  inherit (builtins) elem;
+{ lib, pkgs, config, ... }: let
+  inherit (lib) mkIf mkDefault;
 in {
   imports = [];
 
-  #config = mkIf (elem "sway" config.machine.windowManagers) {
   config = mkIf config.programs.sway.enable {
  #   environment.sessionVariables = {
  #     # Hint to electron apps to use wayland

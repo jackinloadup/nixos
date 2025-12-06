@@ -27,18 +27,14 @@ in {
     ./gdm.nix
     ./gnome.nix
     ./greetd.nix
-    #./i3.nix
     ./impermanence.nix
     ./kernel.nix
     ./lowLevelXF86keys.nix
     ./locale.nix
     ./ly.nix
-    ./docker.nix
     ./sddm.nix
-    ./sway.nix
     ./sound.nix
     ./ssh.nix
-    ./syncthing.nix
     ./time.nix
     ./tui.nix
     ./minimal.nix
