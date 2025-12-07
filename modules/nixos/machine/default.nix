@@ -100,7 +100,7 @@ in {
 
       loader.systemd-boot = {
         enable = mkDefault true;
-        memtest86.enable = mkDefault ifTui; # show memtest
+        memtest86.enable = mkDefault true; # show memtest
         configurationLimit = mkDefault 5;
         consoleMode = mkDefault "auto";
         netbootxyz.enable = true;
@@ -111,16 +111,9 @@ in {
       kernel.sysctl."net.ipv4.tcp_congestion_control" = "bbr";
       kernel.sysctl."net.core.default_qdisc" = "fq";
     };
-    #  } // (if cfg.sizeTarget > -1 then {
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
-    environment.systemPackages = mkIf ifTui [
-        #nix-plugins # Collection of miscellaneous plugins for the nix expression language
-
-        pkgs.fuse3
-        pkgs.libva-utils
-      ];
 
     powerManagement = {
       enable = mkDefault ifTui;

@@ -16,6 +16,10 @@ in {
   config = mkIf cfg.tui {
     environment.systemPackages =
       (with pkgs; [
+        # don't know what I needed these for
+        #pkgs.fuse3
+        #pkgs.libva-utils
+
         pv # progress meter
 
         #vim # text editor

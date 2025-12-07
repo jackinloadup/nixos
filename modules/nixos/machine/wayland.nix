@@ -1,19 +1,10 @@
-
-{
-  lib,
-  pkgs,
-  config,
-  flake,
-  ...
-}: let
-inherit (lib) mkDefault mkIf;
-in {
+{ pkgs, ... }: {
   config = {
     environment.systemPackages = [
-        pkgs.wev
-        pkgs.wdisplays
-        pkgs.wlr-randr
+      pkgs.wev # listen to keyboard mouse events
+      pkgs.wdisplays
+      pkgs.wlr-randr
+      pkgs.wlrctl # control mouse keyboard windows
     ];
-
   };
 }

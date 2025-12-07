@@ -6,22 +6,21 @@
   ...
 }: let
   inherit (lib) mkIf getExe optionals;
-  inherit (builtins) readFile;
+  inherit (builtins) elem readFile;
   settings = import ../../settings;
   host = nixosConfig.networking.hostName;
-  hasBattery =
-    if host == "riko"
-    then true
-    else false;
+  hostsWithBattery = [ "riko" "obsidian" ];
+  hasBattery = elem host hostsWithBattery;
 in {
   config = mkIf config.programs.waybar.enable {
     programs.waybar = {
       systemd = {
         enable = true;
         target = mkIf config.wayland.windowManager.hyprland.enable "hyprland-session.target";
-          #target = []
+        #target = []
           #++ optionals config.wayland.windowManager.sway.enable [ "sway-session.target" ]
-          #++ optionals config.wayland.windowManager.hyprland.enable [ "hyprland-session.target" ];
+        #++ optionals config.wayland.windowManager.hyprland.enable [ "hyprland-session.target" ]
+        #++ optionals config.programs.niri.enable [ "niri.service" ];
 
       };
       settings = [

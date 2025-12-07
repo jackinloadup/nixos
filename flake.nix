@@ -185,7 +185,7 @@
             reg = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelFull
                 ./machines/reg/configuration.nix
               ];
             };
@@ -193,7 +193,7 @@
             zen = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelGui
                 self.nixosModules.criutzel
                 ./machines/zen/configuration.nix
               ];
@@ -202,7 +202,7 @@
             riko = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelFull
                 self.nixosModules.criutzel
                 ./machines/riko/configuration.nix
               ];
@@ -211,7 +211,7 @@
             nat = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelTui
                 self.nixosModules.kodi
                 ./machines/nat/configuration.nix
               ];
@@ -220,7 +220,7 @@
             marulk = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelTui
                 ./machines/marulk/configuration.nix
               ];
             };
@@ -228,7 +228,7 @@
             lyza = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelTui
                 ./machines/lyza/configuration.nix
               ];
             };
@@ -236,7 +236,7 @@
             kanye = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelGui
                 self.nixosModules.criutzel
                 ./machines/kanye/configuration.nix
               ];
@@ -245,8 +245,7 @@
             jesus = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
-                self.nixosModules.criutzel
+                self.nixosModules.lriutzelTui
                 ./machines/jesus/configuration.nix
               ];
             };
@@ -254,7 +253,7 @@
             timberlake = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
                 self.nixosModules.default
-                self.nixosModules.lriutzel
+                self.nixosModules.lriutzelTui
                 ./machines/timberlake/configuration.nix
               ];
             };
