@@ -32,6 +32,7 @@
 
 in {
   imports = [
+    ./adguard.nix
     ./frigate.nix
     ./immich.nix
     ./murmur.nix

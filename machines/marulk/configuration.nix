@@ -15,7 +15,6 @@ in {
     ./hardware-configuration.nix
     ./homepage.nix
     #./nebula-lighthouse.nix
-    ./adguard.nix
     flake.self.nixosModules.server
   ];
 
@@ -45,6 +44,7 @@ in {
     services.frigate.enable = true;
     services.immich.enable = true;
     services.murmur.enable = true;
+    services.adguardhome.enable = true;
 
     networking.hostName = "marulk";
     #networking.useNetworkd = true;

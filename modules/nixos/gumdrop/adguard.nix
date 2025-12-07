@@ -1,8 +1,8 @@
 { config, lib, ...}:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkIf;
 in {
-  config = {
+  config = mkIf config.services.adguardhome.enable {
     networking.firewall.allowedTCPPorts = [53];
     networking.firewall.allowedUDPPorts = [53];
     networking.interfaces.br0.ipv4.addresses = [{
@@ -11,7 +11,6 @@ in {
     }];
 
     services.adguardhome = {
-      enable = true;
       # opens port
       openFirewall = true;
       extraArgs = ["--no-etc-hosts"];
