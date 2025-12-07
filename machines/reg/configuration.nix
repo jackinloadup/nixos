@@ -138,22 +138,6 @@ in {
     services.displayManager.autoLogin.user = "lriutzel";
     services.displayManager.defaultSession = "niri";
 
-
-    #services.vaultwarden = {
-    #  enable = false;
-    #  environmentFile = config.age.secrets.vaultwarden-env.path;
-    #  #backupDir = "/var/lib/vw-backup";
-
-    #  config = {
-    #    DOMAIN = "https://bw.9000.dev";
-    #    SIGNUPS_ALLOWED = "false";
-    #    PASSWORD_HINTS_ALLOWED = "false";
-    #    ROCKET_ADDRESS = "127.0.0.1";
-    #    ROCKET_PORT = 8222;
-    #    PASSWORD_ITERATIONS = 600000;
-    #  };
-    #};
-
     # Login Manager
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
