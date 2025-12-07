@@ -1,10 +1,9 @@
 { config, lib, ...}:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkIf;
 in {
-  config = {
+  config = mkIf config.services.murmur.enable {
     services.murmur = {
-      enable = true;
       openFirewall = true;
       registerHostname = "mumble.lucasr.com";
       registerName = "Ramble Rable";

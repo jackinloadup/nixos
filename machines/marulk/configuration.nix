@@ -16,7 +16,6 @@ in {
     ./homepage.nix
     #./nebula-lighthouse.nix
     ./adguard.nix
-    ./murmur.nix
     flake.self.nixosModules.server
   ];
 
@@ -45,6 +44,7 @@ in {
     services.vaultwarden.enable = true;
     services.frigate.enable = true;
     services.immich.enable = true;
+    services.murmur.enable = true;
 
     networking.hostName = "marulk";
     #networking.useNetworkd = true;
