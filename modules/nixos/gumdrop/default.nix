@@ -33,6 +33,7 @@
 in {
   imports = [
     ./frigate.nix
+    ./immich.nix
     ./printer-scanner.nix
     ./pihole.nix
     ./scanned-document-handling.nix

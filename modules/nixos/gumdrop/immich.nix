@@ -1,12 +1,11 @@
 { config, lib, ...}:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkIf;
   currentDatabase = config.services.immich.database.name;
   dbUser = config.services.immich.database.user;
 in {
   config = {
-    services.immich = {
-      enable = true;
+    services.immich = mkIf config.services.immich.enable {
       host = "127.0.0.1"; # where to listen
       settings = {
         server.externalDomain = "https://immich.lucasr.com";

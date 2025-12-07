@@ -17,7 +17,6 @@ in {
     #./nebula-lighthouse.nix
     ./adguard.nix
     ./murmur.nix
-    ./immich.nix
     flake.self.nixosModules.server
   ];
 
@@ -45,6 +44,7 @@ in {
     services.smokeping.enable = true;
     services.vaultwarden.enable = true;
     services.frigate.enable = true;
+    services.immich.enable = true;
 
     networking.hostName = "marulk";
     #networking.useNetworkd = true;
