@@ -8,9 +8,8 @@ inherit (lib) mkIf;
   cfg = config.services.media-services;
   subnet = "10.100.0.0/24";
 in {
-  config = {
+  config = mkIf config.services.homepage-dashboard.enable {
     services.homepage-dashboard = {
-      enable = true;
       widgets = [
         {
           resources = {

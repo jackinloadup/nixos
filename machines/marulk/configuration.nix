@@ -13,7 +13,6 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
-    ./homepage.nix
     #./nebula-lighthouse.nix
     flake.self.nixosModules.server
   ];
@@ -45,6 +44,7 @@ in {
     services.immich.enable = true;
     services.murmur.enable = true;
     services.adguardhome.enable = true;
+    services.homepage-dashboard.enable = true;
 
     networking.hostName = "marulk";
     #networking.useNetworkd = true;

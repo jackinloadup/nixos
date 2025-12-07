@@ -34,6 +34,7 @@ in {
   imports = [
     ./adguard.nix
     ./frigate.nix
+    ./homepage.nix
     ./immich.nix
     ./murmur.nix
     ./printer-scanner.nix
