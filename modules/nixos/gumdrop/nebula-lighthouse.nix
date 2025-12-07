@@ -1,4 +1,7 @@
-{...}: {
+{config, lib, ...}: let
+  inherit (lib) mkIf;
+  cfg = config.services.nebula.networks.gumdrop;
+in mkIf cfg.enable {
   config = {
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
@@ -8,6 +11,6 @@
       iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
     '';
 
-    services.nebula.networks.gumdrop.isLighthouse = true;
+    services.nebula.networks.gumdrop.islighthouse = true;
   };
 }
