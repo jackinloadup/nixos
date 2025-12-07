@@ -19,7 +19,7 @@
 
 
       matchBlocks = {
-        "all" = {
+        "*" = {
           # add used keys to agent
           addKeysToAgent = "yes";
 
@@ -43,6 +43,10 @@
           extraOptions = {
             PreferredAuthentications = "publickey,keyboard-interactive,password";
             #localCommand = "printf '\033]4;4;#004080;12;#0040ff\007'";
+          };
+
+          setEnv = {
+            TERM = "xterm-256color";
           };
         };
         "*.compute.amazonaws.com" = {
