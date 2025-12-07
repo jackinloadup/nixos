@@ -44,9 +44,7 @@ in {
 
     services.media-services.enable = true;
     services.smokeping.enable = true;
-
     services.vaultwarden.enable = true;
-    services.vaultwarden.config.DOMAIN = "https://vaultwarden.lucasr.com";
 
     networking.hostName = "marulk";
     #networking.useNetworkd = true;

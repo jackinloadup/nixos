@@ -147,6 +147,8 @@ in {
     systemd.network.networks.wg0.dns = mkIf cfg.client.enable ["10.100.0.1"];
     # systemd.network.wait-online.ignoredInterfaces = [ "wg0" ];
 
+    # replace dnsmasq with something that allows CNAME
+    # Look into Technitium and unbound
     # goal is to only return the addresses below. No other hosts
     services.dnsmasq = mkIf cfg.server.enable {
       enable = true;
@@ -197,6 +199,7 @@ in {
           "/frigate.home.lucasr.com/10.100.0.1"
           "/music-assistant.home.lucasr.com/10.100.0.1"
           "/music-assistant-streams.home.lucasr.com/10.100.0.1"
+          "/vaultwarden.lucasr.com/10.100.0.1"
         ];
         # cnames apparently only work if the value is in /etc/hosts?? crazy.
         # Maybe look for alternative to dnsmasq
