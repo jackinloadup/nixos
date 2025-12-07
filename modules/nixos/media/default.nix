@@ -29,7 +29,6 @@ in {
   config = mkIf cfg.enable {
 
     hardware.amdgpu.opencl.enable = true;
-    hardware.amdgpu.amdvlk.enable = true;
     hardware.graphics.extraPackages = [ pkgs.amf ];
     hardware.graphics.enable = true;
 

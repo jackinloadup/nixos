@@ -43,7 +43,6 @@ in {
     gumdrop.scanned-document-handling.enable = true;
 
     services.media-services.enable = true;
-;
     services.smokeping.enable = true;
 
 

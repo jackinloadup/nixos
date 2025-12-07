@@ -1,10 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  inputs,
-  ...
-}: let
+{ lib, ... }: let
   inherit (lib) mkDefault;
 in {
   # explore locking ssh capabilities by user
@@ -38,6 +32,10 @@ in {
           "aes128-ctr"
         ];
         KexAlgorithms = [
+          "sntrup761x25519-sha512"
+          "sntrup761x25519-sha512@openssh.com"
+          "mlkem768x25519-sha256"
+          "curve25519-sha256"
           "curve25519-sha256@libssh.org"
         ];
         Macs = [

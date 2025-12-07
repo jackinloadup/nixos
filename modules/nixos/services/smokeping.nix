@@ -1,14 +1,8 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
-  inherit (lib) mkIf
+{ lib, config, pkgs, ... }: let
+  inherit (lib) mkIf;
 in {
   config = mkIf config.services.smokeping.enable {
     services.smokeping = {
-      enable = true;
       host = "smokeping.lucasr.com";
       probeConfig = ''
         +FPing
@@ -108,6 +102,6 @@ in {
         +++ Netflix
         host = netflix.com
       '';
-    }
+    };
   };
 }

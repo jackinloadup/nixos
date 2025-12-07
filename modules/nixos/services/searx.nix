@@ -1,9 +1,5 @@
-{
-  lib,
-  config,
-  ...
-}: let
-  inherit (lib) mkIf
+{ lib, config, ... }: let
+  inherit (lib) mkIf;
 in {
   config = mkIf config.services.searx.enable {
     services.searx = {

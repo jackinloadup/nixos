@@ -25,7 +25,6 @@ in {
     memorySize = 1024;
     graphics = true;
     qemu = {
-      options = ["-bios" "${pkgs.OVMF.fd}/FV/OVMF.fd"];
       networkingOptions = [
         # We need to re-define our usermode network driver
         # since we are overriding the default value.

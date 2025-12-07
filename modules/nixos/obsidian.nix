@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) getExe;
+  inherit (lib) getExe mkDefault;
 in {
   config = {
     home-manager.sharedModules = [
