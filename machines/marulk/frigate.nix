@@ -206,5 +206,23 @@ in {
         };
       };
     };
+
+    services.nginx.virtualHosts."go2rtc.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:1984/";
+        proxyWebsockets = true;
+      };
+    };
+
+    services.nginx.virtualHosts."frigate.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+    };
+
   };
 }

@@ -2,6 +2,14 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.services.smokeping.enable {
+
+    services.nginx.virtualHosts.smokeping = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
+      serverAliases = [ "smokeping.lucasr.com" ];
+    };
+
     services.smokeping = {
       host = "smokeping.lucasr.com";
       probeConfig = ''

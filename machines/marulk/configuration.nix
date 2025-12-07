@@ -189,53 +189,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."go2rtc.home.lucasr.com" = {
-      forceSSL = true;
-      enableACME = true;
-      acmeRoot = null; # Use DNS Challenege
-
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:1984/";
-        proxyWebsockets = true;
-      };
-    };
-
-    services.nginx.virtualHosts."frigate.home.lucasr.com" = {
-      forceSSL = true;
-      enableACME = true;
-      acmeRoot = null; # Use DNS Challenege
-    };
-
-    services.nginx.virtualHosts.smokeping = {
-      forceSSL = true;
-      enableACME = true;
-      acmeRoot = null; # Use DNS Challenege
-      serverAliases = [
-        "smokeping.lucasr.com"
-      ];
-
-        #locations."/" = {
-        #  proxyPass = "http://127.0.0.1:${toString config.services.smokeping.listenPort }/";
-        #  proxyWebsockets = true;
-        #};
-    };
-
-    services.nginx.virtualHosts."searx.home.lucasr.com" = {
-      forceSSL = true;
-      enableACME = true;
-      acmeRoot = null; # Use DNS Challenege
-
-      locations."/" = let
-          port = toString config.services.searx.settings.server.port;
-      in {
-        proxyPass = "http://127.0.0.1:${port}/";
-        proxyWebsockets = true;
-      };
-    };
-
     services.nextcloud.enable = true;
-
-
     services.searx.enable = true;
 
     # wireguard-tools

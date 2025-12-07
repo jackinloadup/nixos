@@ -2,8 +2,20 @@
   inherit (lib) mkIf;
 in {
   config = mkIf config.services.searx.enable {
-    services.searx = {
+    services.nginx.virtualHosts."searx.home.lucasr.com" = {
+      forceSSL = true;
+      enableACME = true;
+      acmeRoot = null; # Use DNS Challenege
 
+      locations."/" = let
+          port = toString config.services.searx.settings.server.port;
+      in {
+        proxyPass = "http://127.0.0.1:${port}/";
+        proxyWebsockets = true;
+      };
+    };
+
+    services.searx = {
       settings = {
         general.debug = false; # breaks at runtime otherwise, somehow
         search = {
