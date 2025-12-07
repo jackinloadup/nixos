@@ -70,10 +70,7 @@ in {
 #     name_servers 10.16.1.1
 #   '';
 
-    networking.dhcpcd = {
-      #wait = "ipv4";
-      persistent = true;
-    };
+    networking.dhcpcd.persistent = true;
 
     #networking.nat = {
     #  enable = true;
