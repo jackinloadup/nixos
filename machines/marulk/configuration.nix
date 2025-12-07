@@ -18,7 +18,6 @@ in {
     ./adguard.nix
     ./murmur.nix
     ./immich.nix
-    ./frigate.nix
     flake.self.nixosModules.server
   ];
 
@@ -45,6 +44,7 @@ in {
     services.media-services.enable = true;
     services.smokeping.enable = true;
     services.vaultwarden.enable = true;
+    services.frigate.enable = true;
 
     networking.hostName = "marulk";
     #networking.useNetworkd = true;

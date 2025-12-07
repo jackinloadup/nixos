@@ -1,8 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
 in {
-  config = {
+  config = mkIf config.services.frigate.enable {
     hardware.graphics.enable = true;
 
     systemd.tmpfiles.rules = [

@@ -14,9 +14,7 @@
         ./../../nixos-secrets.nix
       ];
 
-      home.imports = [
-        ./gumdrop
-      ];
+      home.imports = [ ./gumdrop ];
 
       linux.imports = [
         ./boot-tor-service
