@@ -98,6 +98,8 @@ in {
           ## Audio
           pkgs.playerctl # TUI
 
+          pkgs.luminance # Display brightness
+
           # Fun
           pkgs.asciiquarium # Fun aquarium animation
           pkgs.cmatrix # Fun matrix animation
