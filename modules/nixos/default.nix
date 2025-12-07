@@ -41,6 +41,7 @@
         ./services/smokeping.nix
         ./services/docker.nix
         ./services/syncthing.nix
+        ./services/vaultwarden.nix
       ];
 
       radio.imports = [
