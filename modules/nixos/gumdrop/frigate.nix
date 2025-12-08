@@ -14,7 +14,6 @@ in {
     };
 
     services.frigate = {
-      enable = true;
       # 0.0.0.0 didn't seem to work
       hostname = "frigate.home.lucasr.com";
       vaapiDriver = "radeonsi";

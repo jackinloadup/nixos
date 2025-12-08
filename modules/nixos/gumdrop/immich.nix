@@ -4,8 +4,8 @@ let
   currentDatabase = config.services.immich.database.name;
   dbUser = config.services.immich.database.user;
 in {
-  config = {
-    services.immich = mkIf config.services.immich.enable {
+  config = mkIf config.services.immich.enable {
+    services.immich = {
       host = "127.0.0.1"; # where to listen
       settings = {
         server.externalDomain = "https://immich.lucasr.com";
