@@ -275,12 +275,6 @@
                 ./machines/minimal/configuration.nix
               ];
             };
-            #reg = mkNixosSystem defaultPkgs "x86_64-linux" "reg";
-            #riko = mkNixosSystem inputs.nixpkgs-unstable "x86_64-linux" "riko";
-            #nat = mkNixosSystem defaultPkgs "x86_64-linux" "nat";
-            #marulk = mkNixosSystem defaultPkgs "x86_64-linux" "marulk";
-            #lyza = mkNixosSystem defaultPkgs "x86_64-linux" "lyza";
-            #minimal = mkNixosSystem defaultPkgs "x86_64-linux" "minimal";
           };
 
           #nixosModules = importDirOfModules "modules/nixos";
