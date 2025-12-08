@@ -464,6 +464,7 @@
         lualine.enable = true;
         markdown-preview.enable = true;
 
+        neogit.enable = true;
         neo-tree = {
           enable = true;
           window.width = 30;
@@ -699,6 +700,11 @@
           mode = "n";
           key = "ge";
           action = "<CMD>lua vim.diagnostic.open_float()<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>gi";
+          action = "<cmd>Neogit<cr>";
         }
         {
           mode = "n";
