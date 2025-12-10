@@ -44,9 +44,6 @@
       }
       bindkey -s '^o' 'lfcd\n'
 
-      bindkey '^R' history-incremental-pattern-search-backward
-      bindkey '^F' history-incremental-pattern-search-forward
-
       # C-z to toggle current process (background/foreground)
       fancy-ctrl-z () {
         if [[ $#BUFFER -eq 0 ]]; then
