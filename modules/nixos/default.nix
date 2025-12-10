@@ -14,7 +14,9 @@
         ./../../nixos-secrets.nix
       ];
 
-      home.imports = [ ./gumdrop ];
+      gumdrop.imports = [ ./gumdrop ];
+      gumdropServer.import = [];
+      #timberlake.imports = [ ./timberlake ];
 
       linux.imports = [
         ./boot-tor-service
@@ -83,7 +85,7 @@
         inputs.self.nixosModules.linux
         inputs.self.nixosModules.tui
         inputs.self.nixosModules.gui
-        inputs.self.nixosModules.home
+        inputs.self.nixosModules.gumdrop
       ];
     };
   };
