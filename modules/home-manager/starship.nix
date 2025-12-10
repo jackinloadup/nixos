@@ -38,7 +38,7 @@ in {
           #"$rust"
           #"$terraform"
           #"$zig"
-          "$nix_shell"
+          #"$nix_shell"
           "$memory_usage"
           #"$aws"
           #"$gcloud"
