@@ -45,7 +45,6 @@ in {
 
     machine = {
       users = [
-        "lriutzel"
         "kodi"
       ];
       sizeTarget = 2;
