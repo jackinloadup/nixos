@@ -123,7 +123,7 @@ in {
       ];
       tui = true;
       sizeTarget = 3;
-      gaming = true;
+      #gaming = true;
       impermanence = true;
       lowLevelXF86keys.enable = true;
     };
