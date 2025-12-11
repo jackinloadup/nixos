@@ -58,7 +58,7 @@ in {
 
     settings = {
 
-      aliases = {
+      alias = {
         viz = "log --all --decorate --oneline --graph";
         # list commits in a tree
         lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
