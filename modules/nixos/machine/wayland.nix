@@ -5,6 +5,7 @@
       pkgs.wdisplays
       pkgs.wlr-randr
       pkgs.wlrctl # control mouse keyboard windows
+      pkgs.wl-clipboard-rs # wl-copy
     ];
   };
 }
