@@ -13,9 +13,9 @@
 
     programs.nixvim = {
 
+      defaultEditor = true;
       viAlias = true;
       vimAlias = true;
-      defaultEditor = true;
 
       autoCmd = [
         {
@@ -467,12 +467,14 @@
         neogit.enable = true;
         neo-tree = {
           enable = true;
-          window.width = 30;
-          closeIfLastWindow = true;
-          extraOptions = {
-            filesystem = {
-              filtered_items = {
-                visible = true;
+          settings = {
+            window.width = 30;
+            closeIfLastWindow = true;
+            extraOptions = {
+              filesystem = {
+                filtered_items = {
+                  visible = true;
+                };
               };
             };
           };

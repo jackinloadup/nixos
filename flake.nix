@@ -158,6 +158,7 @@
 
         selfLib = import ./lib/default.nix {
           lib = defaultPkgs.lib;
+          flake = self;
           inherit inputs;
         };
         inherit (selfLib) importDirOfOverlays importDirOfModules mkNixosSystem mkNixosSystemGenerator;
@@ -291,7 +292,6 @@
         }
         // (eachSystem supportedSystems)
         (system: let
-          # pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
           pkgs = import defaultPkgs {
             system = "x86_64-linux";
             config.allowUnfree = true;
@@ -302,9 +302,6 @@
             hack = import ./shells/hack.nix {inherit pkgs;};
             secrets = import ./shells/secrets.nix {inherit pkgs;};
           };
-        # nixvimModules = flattenTree {
-        #    default = import ./modules/nixvim/default.nix {inherit pkgs;};
-        # };
         })
         // (eachSystem supportedX86Systems)
         (system: let
@@ -336,7 +333,20 @@
           };
         };
 
-      perSystem = { self', system, pkgs, lib, config, inputs', ... }: {
+      perSystem = { self', system, pkgs, lib, config, inputs', ... }: let
+          nixvimLib = inputs.nixvim.lib.${system};
+          nixvimPkgs = inputs.nixvim.legacyPackages.${system};
+          nixvimBasicModule = {
+            inherit system pkgs;
+            module = import ./modules/nixvim/basic.nix;
+          };
+          nixvimFullModule = {
+            inherit system pkgs;
+            module = import ./modules/nixvim/full.nix;
+          };
+          nvimBasic = nixvimPkgs.makeNixvimWithModule nixvimBasicModule;
+          nvimFull = nixvimPkgs.makeNixvimWithModule nixvimFullModule;
+      in {
         nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" "nixos-unified" ];
 
         treefmt.config = {
@@ -358,6 +368,17 @@
         };
 
         formatter = config.treefmt.build.wrapper;
+
+        checks = {
+          # Run `nix flake check .` to verify that your config is not broken
+          nvimBasic = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimBasicModule;
+          nvimFull = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimFullModule;
+        };
+
+        packages = {
+          nvimBasic = nvimBasic;
+          nvimFull = nvimFull;
+        };
       };
     };
 

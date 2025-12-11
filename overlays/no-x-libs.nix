@@ -1,4 +1,4 @@
-inputs: self: super: {
+flake: self: super: {
   kodi-wayland = super.kodi-wayland.override {x11Support = false;};
   pipewire =
     (super.pipewire.override {

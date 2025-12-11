@@ -1,4 +1,4 @@
-inputs: self: super: {
+flake: self: super: {
   kodi-wayland =
     (self
       .unstable

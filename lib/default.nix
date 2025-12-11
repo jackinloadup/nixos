@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  flake,
   ...
 }: let
   inherit
@@ -31,7 +32,7 @@
   buildPath = dir: name: (rootPath + "/${dir}/${name}");
   importOverlaySet = name: path: {
     name = removeSuffix ".nix" name;
-    value = importOverlay path inputs;
+    value = importOverlay path flake;
   };
   importModuleSet = name: path: {
     name = removeSuffix ".nix" name;

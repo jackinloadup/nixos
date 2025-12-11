@@ -1,15 +1,14 @@
-inputs: let
-  inherit inputs;
+flake: let
   #cp = f: (super.callPackage f) {};
 in
   self: super: {
     # make all unstable packages available;
-    unstable = import inputs.nixpkgs-unstable {
+    unstable = import flake.inputs.nixpkgs-unstable {
       system = "x86_64-linux";
       config.allowUnfree = true;
     };
 
-    stable = import inputs.nixpkgs-stable {
+    stable = import flake.inputs.nixpkgs-stable {
       system = "x86_64-linux";
       config.allowUnfree = true;
     };
@@ -63,7 +62,9 @@ in
     bark = self.unstable.bark;
     rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix {};
 
-    ragenix = inputs.ragenix.packages."x86_64-linux".default;
+    ragenix = flake.inputs.ragenix.packages."x86_64-linux".default;
+    nvimBasic = flake.packages.${self.system}.nvimBasic;
+    nvimFull = flake.packages.${self.system}.nvimFull;
 
     # update in unstable broke b/c of schema version mismatch in config file
     adguardhome = self.stable.adguardhome;

@@ -28,7 +28,7 @@
           ./bash.nix
           ./tui.nix
           ./zsh.nix
-          inputs.nixvim.homeManagerModules.nixvim
+          inputs.nixvim.homeModules.nixvim
       ];
 
       gui.imports = [

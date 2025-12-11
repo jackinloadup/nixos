@@ -16,6 +16,7 @@ in {
   config = mkIf cfg.tui {
     environment.systemPackages =
       (with pkgs; [
+        pkgs.nvimBasic
         # don't know what I needed these for
         #pkgs.fuse3
         #pkgs.libva-utils
