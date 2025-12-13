@@ -300,7 +300,8 @@
       folding = false;
       nixGrammars = true;
       settings = {
-        ensure_installed = "all";
+        # breaks pre-compiled from nixGrammers
+        #ensure_installed = "all";
         indent.enable = true;
         incremental_selection.enable = true;
       };
