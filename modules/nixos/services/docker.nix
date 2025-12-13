@@ -19,7 +19,6 @@ in {
     environment.systemPackages = [
       # if system is not minimal
       pkgs.dive # image inspector
-      pkgs.lazydocker # docker tui
     ];
 
     users.users = addExtraGroups normalUsers ["docker"];

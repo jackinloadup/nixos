@@ -181,4 +181,11 @@ in {
       };
     };
   };
+
+  programs.lazydocker = {
+    enable = nixosConfig.virtualisation.docker.enable;
+    settings = {
+      gui.returnImmediately = true;
+    };
+  };
 }
