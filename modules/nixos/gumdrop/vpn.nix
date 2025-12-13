@@ -115,6 +115,11 @@ in {
               publicKey = "ycZ424QpGCSIVswLUk2EweH+Z7sTc33dH0B0AER4pgc=";
               allowedIPs = [ "10.100.0.11/32" ];
             }
+            {
+              name = "mike-laptop";
+              publicKey = "r8sTKseZP43FCXkTWvjmuhQv92wnbVKtvXlrPNM6IjU=";
+              allowedIPs = [ "10.100.0.12/32" ];
+            }
           ];
 
         };

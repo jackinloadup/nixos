@@ -6,6 +6,6 @@ in rec {
   hostHasService = (name: service: pathExists (../machines/${name}/${service}));
 
   smachines = attrNames (readDir ../secrets/machines);
-  shostExists = (name: elem name machines);
+  shostExists = (name: elem name smachines);
   shostHasService = (name: service: pathExists (../secrets/machines/${name}/${service}));
 }

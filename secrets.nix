@@ -1,9 +1,10 @@
 let
   selfLib = import ./lib/secrets.nix {};
   inherit (selfLib) machines hostHasService smachines shostHasService;
-  inherit (builtins) filter readFile;
+  inherit (builtins) filter readFile pathExists;
   lib = (import <nixpkgs> { }).pkgs.lib;
   inherit (lib) mkMerge mergeAttrsList replaceStrings;
+  inherit (lib.lists) uniqueStrings;
 
   #orange = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPxPFMNGK0tw467usZYAA1mjgB2owDFBQT939dzOlBWyAAAABHNzaDo= orange";
   #black = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINmfKdhabJag/k0w78kqBG1PL8w+WMv7xWp4VbkdhtINAAAABHNzaDo= black";
@@ -12,11 +13,12 @@ let
   users = lriutzel;
 
   cleanKey = str: replaceStrings ["\n"] [" "] str;
-  readKey = path: cleanKey (readFile path);
+  # Read key  if file exists
+  readKey = path: if pathExists path then cleanKey (readFile path) else null;
 
   # public ssh key
   machineSshKey = (host: readKey ./machines/${host}/sshd/public_key) ;
-  sshKeyMap = map machineSshKey;
+  sshKeyMap = (host: uniqueStrings (filter (x: x != null ) (map machineSshKey host)));
   machinesWithHostKeys = filter (host: hostHasService host "sshd") machines;
   machineKeys = sshKeyMap machinesWithHostKeys;
 
@@ -29,10 +31,13 @@ let
   studio = users ++ (sshKeyMap ["lyza"]);
 
   lucasDevHosts = lriutzel ++ (sshKeyMap ["reg" "riko"]);
+  vpnServers = ["marulk"];
 
   mkWgHost = (host: {
-    "secrets/machines/${host}/wg-vpn/private.age".publicKeys = users ++ (sshKeyMap [host]);
-    "secrets/machines/${host}/wg-vpn/public.age".publicKeys = users ++ (sshKeyMap [host]);
+    "secrets/machines/${host}/wg-vpn/private.age".publicKeys = users ++
+      (sshKeyMap ([host] ++ vpnServers));
+    "secrets/machines/${host}/wg-vpn/public.age".publicKeys = users ++
+      (sshKeyMap ([host] ++ vpnServers));
   });
   wgHosts = filter (host: shostHasService host "wg-vpn") smachines;
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
@@ -92,3 +97,4 @@ in
 // torHostsConfig
 // sshdHostsConfig
 // initSshdHostsConfig
+#// mkWgHost "mike-laptop"
