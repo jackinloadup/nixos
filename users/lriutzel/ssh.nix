@@ -12,6 +12,8 @@
     #services.sslh.enable = ?;
 
     programs.ssh = {
+      enableDefaultConfig = false;
+
       extraConfig = ''
         ConnectTimeout 5
       '';
@@ -35,10 +37,10 @@
           serverAliveInterval = 30;
 
           #TCPKeepAlive = true;
-          hashKnownHosts = false; # Privacy concern
+          hashKnownHosts = false; # Privacy concern, but eh
+          userKnownHostsFile = "~/.ssh/known_hosts";
 
-          #forwardX11 = false;
-          forwardAgent = true; # don't forward the ssh agent (security risk)
+          forwardAgent = false; # don't forward the ssh agent (security risk)
 
           extraOptions = {
             PreferredAuthentications = "publickey,keyboard-interactive,password";
