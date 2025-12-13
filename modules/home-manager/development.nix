@@ -53,10 +53,12 @@ in {
   programs.git = {
     enable = true;
 
-    userName = settings.user.name;
-    userEmail = settings.user.email;
 
     settings = {
+      user = {
+        name = settings.user.name;
+        email = settings.user.email;
+      };
 
       alias = {
         viz = "log --all --decorate --oneline --graph";
