@@ -38,6 +38,7 @@ in {
           modules-center = [
             "hyprland/workspaces"
             "sway/workspaces"
+            "niri/workspaces"
             "sway/mode"
           ];
           modules-right = [
@@ -59,6 +60,13 @@ in {
             "on-scroll-up" = "hyprctl dispatch workspace e+1";
             "on-scroll-down" = "hyprctl dispatch workspace e-1";
             "on-click" = "activate";
+          };
+          "niri/workspaces" = {
+            all-outputs = false;
+            current-only = true;
+            format = "{index}";
+            disable-click = true;
+            disable-markup = true;
           };
           "hyprland/window" = {
             "max-length" = 200;
