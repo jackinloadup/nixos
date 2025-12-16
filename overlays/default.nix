@@ -63,8 +63,8 @@ in
     rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix {};
 
     ragenix = flake.inputs.ragenix.packages."x86_64-linux".default;
-    nvimBasic = flake.packages.${self.system}.nvimBasic;
-    nvimFull = flake.packages.${self.system}.nvimFull;
+    nvimBasic = flake.packages.${self.stdenv.hostPlatform.system}.nvimBasic;
+    nvimFull = flake.packages.${self.stdenv.hostPlatform.system}.nvimFull;
 
     # update in unstable broke b/c of schema version mismatch in config file
     adguardhome = self.stable.adguardhome;
