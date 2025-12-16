@@ -16,8 +16,11 @@
       }
     ];
 
-    services.logind.lidSwitch = "suspend-then-hibernate";
-    #services.logind.lidSwitch = "hibernate";
+    #services.upower.enable = true;
+    #services.upower.criticalPowerAction = "Hibernate";
+
+    services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+    #services.logind.settings.Login.HandleLidSwitch = "hibernate";
 
     services.acpid = {
       handlers = {
