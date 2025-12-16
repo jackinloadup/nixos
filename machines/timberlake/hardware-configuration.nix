@@ -9,5 +9,10 @@
   ];
 
   config = {
+    nixpkgs.hostPlatform = "x86_64-linux";
+
+    networking.hostName = "timberlake";
+    networking.domain = "timberlake.lucasr.com";
+    networking.hostId = "ddce49ec";
   };
 }

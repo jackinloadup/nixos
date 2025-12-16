@@ -30,6 +30,10 @@
     #services.btrfs.autoScrub.enable = true;
     #services.btrfs.autoScrub.fileSystems = ["/dev/disk/by-label/nixos"];
 
+    nixpkgs.hostPlatform = "x86_64-linux";
+
+    networking.hostName = "reg";
+    networking.domain = "home.lucasr.com";
     networking.hostId = "3182e8f0";
 
     fileSystems = {

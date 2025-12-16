@@ -14,6 +14,12 @@
 
     boot.resumeDevice = "/dev/disk/by-label/nixos";
 
+    nixpkgs.hostPlatform = "x86_64-linux";
+
+    networking.hostName = "riko";
+    networking.domain = "home.lucasr.com";
+    networking.hostId = "e3320aa2";
+
     fileSystems."/boot" = {
       device = "/dev/disk/by-label/efi";
       fsType = "vfat";

@@ -31,6 +31,7 @@ in {
 
     networking.hostId = "9b93167d";
     networking.hostName = "obsidian";
+    networking.domain = "obsidian.systems";
 
     networking.dhcpcd.persistent = true;
   };

@@ -67,11 +67,6 @@ in {
 
   powerManagement.cpuFreqGovernor = "powersave";
 
-  networking.hostId = "aa0431f3";
-  networking.hostName = "kanye";
-
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   #fonts.fontconfig.dpi = 152;
 
   services.logind.lidSwitch = "suspend-then-hibernate";

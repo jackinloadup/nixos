@@ -47,7 +47,6 @@ in {
 
     services.nebula.networks.gumdrop.enable = false;
 
-    networking.hostName = "marulk";
     #networking.useNetworkd = true;
     systemd.network.enable = true;
 
@@ -104,6 +103,7 @@ in {
       8554 # Frigate rtsp
       8097 # music assistant stream
     ];
+
     networking.firewall.allowedTCPPorts = [
       #1984 # go2rtc - now nginx proxy
       8555 # Frigate webrtc

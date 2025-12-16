@@ -109,7 +109,6 @@ in {
     };
 
     networking = {
-      hostName = "nat";
       networkmanager.enable = mkForce false;
 
       dhcpcd = {

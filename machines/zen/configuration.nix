@@ -140,9 +140,6 @@ in {
       vpn.client.ip = "10.100.0.6/24";
     };
 
-    nixpkgs.hostPlatform = "x86_64-linux";
-
-    networking.hostName = "zen";
     networking.enableIPv6 = false;
 
     # Some programs need SUID wrappers, can be configured further or are

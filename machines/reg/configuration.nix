@@ -79,7 +79,6 @@ in {
 
 
     #nixpkgs.config.rocmSupport = true;
-    nixpkgs.hostPlatform = "x86_64-linux";
 
     #services.hydra.enable = true;
 
@@ -214,7 +213,6 @@ in {
       vpn.client.ip = "10.100.0.11/24";
     };
 
-    networking.hostName = "reg";
     networking.bridges.br0.interfaces = ["eno1"];
     networking.interfaces.br0.useDHCP = true;
     networking.enableIPv6 = false;

@@ -9,6 +9,9 @@
   ];
 
   config = {
-
+    nixpkgs.hostPlatform = "x86_64-linux";
+    networking.hostName = "lyza";
+    networking.domain = "studio.lucasr.com";
+    networking.hostId = "1a81f97a";
   };
 }

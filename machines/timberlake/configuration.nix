@@ -137,9 +137,6 @@ in {
     };
 
     networking = {
-      hostName = "timberlake";
-      hostId = "ddce49ec";
-
       dhcpcd = {
       #  wait = mkForce "ipv4"; # don't wait. That would take longer
         persistent = true;

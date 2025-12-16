@@ -91,15 +91,12 @@ in {
 
     powerManagement.cpuFreqGovernor = "powersave";
 
-    networking.hostName = "riko";
     # Not sure what I was using the bridge for. Going to disable for now.
     #networking.bridges.br0.interfaces = ["wlan0"];
     #networking.interfaces.br0.useDHCP = true;
 
     # update to nixos-unified is setting this to auto
     #nix.settings.max-jobs = mkDefault 4;
-
-    nixpkgs.hostPlatform = "x86_64-linux";
 
     #fonts.fontconfig.dpi = 152;
 

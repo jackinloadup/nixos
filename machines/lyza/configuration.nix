@@ -128,9 +128,6 @@ in {
     };
 
     networking = {
-      hostName = "lyza";
-      hostId = "1a81f97a";
-
       dhcpcd = {
       #  wait = mkForce "ipv4"; # don't wait. That would take longer
         persistent = true;

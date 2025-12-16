@@ -6,7 +6,7 @@
     #flake.inputs.chaotic.nixosModules.default
   ];
 
-  config = rec {
+  config = {
     # We have a lot of ram. We can wait a bit before we think we need to swap.
     # does this even matter if I don't have swap attached?
     boot.kernel.sysctl."vm.swappiness" = 5;
@@ -17,6 +17,10 @@
 
     programs.fuse.userAllowOther = true;
 
+    nixpkgs.hostPlatform = "x86_64-linux";
+
+    networking.hostName = "zen";
+    networking.domain = "home.lucasr.com";
     networking.hostId = "c99cd5f7";
   };
 }
