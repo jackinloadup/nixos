@@ -4,7 +4,8 @@
   config,
   ...
 }: let
-  inherit (lib) attrNames mkIf;
+  inherit (lib) attrNames mkIf mkOption;
+  inherit (lib.types) nullOr enum;
   inherit (builtins) filter readFile elem pathExists hasAttr;
   selfLib = import ../../../lib/secrets.nix {};
   inherit (selfLib) machines hostExists hostHasService
@@ -75,7 +76,6 @@ in {
     # may not be nessisary if multiple dhcp search/domain things stack
     # as the machine is connected to more networks
     networking.search = ["home.lucasr.com"];
-    networking.domain = "home.lucasr.com";
 
     networking.wireless.secretsFile = config.age.secrets.system-wireless-networking.path;
     networking.wireless.networks = {

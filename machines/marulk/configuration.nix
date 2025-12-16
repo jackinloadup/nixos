@@ -1,15 +1,7 @@
-{
-  self,
-  flake,
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ flake, lib, config, ... }:
 # Machine runs DNS and home-assistant vm
 let
   inherit (lib) mkForce mkDefault;
-  settings = import ../../settings;
 in {
   imports = [
     ./hardware-configuration.nix
@@ -17,7 +9,6 @@ in {
   ];
 
   config = {
-
     nixpkgs.config.allowUnfree = true;
 
     boot.initrd.verbose = true;
@@ -44,6 +35,9 @@ in {
     services.murmur.enable = true;
     services.adguardhome.enable = true;
     services.homepage-dashboard.enable = true;
+    services.nextcloud.enable = true;
+    services.searx.enable = true;
+
 
     services.nebula.networks.gumdrop.enable = false;
 
@@ -118,15 +112,14 @@ in {
     #  "d /var/spool/nginx/logs 0755 nginx nginx"
     #];
 
-     services.nginx.commonHttpConfig = ''
-          log_format vhost '$host $remote_addr - $remote_user '
-           '[$time_local] "$request" $status '
-           '$body_bytes_sent "$http_referer" '
-           '"$http_user_agent"';
-          error_log stderr;
-          access_log syslog:server=unix:/dev/log vhost;
-
-        '';
+    services.nginx.commonHttpConfig = ''
+      log_format vhost '$host $remote_addr - $remote_user '
+       '[$time_local] "$request" $status '
+       '$body_bytes_sent "$http_referer" '
+       '"$http_user_agent"';
+      error_log stderr;
+      access_log syslog:server=unix:/dev/log vhost;
+    '';
 
     services.nginx.virtualHosts."collabora.lucasr.com" = {
       forceSSL = true;
@@ -186,9 +179,6 @@ in {
         proxyWebsockets = true;
       };
     };
-
-    services.nextcloud.enable = true;
-    services.searx.enable = true;
 
     # wireguard-tools
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;

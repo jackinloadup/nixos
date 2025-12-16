@@ -1,8 +1,10 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
+  cfg = config.services.frigate;
+  isHostAtGumdrop = config.networking.domain == "home.lucasr.com";
 in {
-  config = mkIf config.services.frigate.enable {
+  config = mkIf (isHostAtGumdrop && cfg.enable) {
     hardware.graphics.enable = true;
 
     systemd.tmpfiles.rules = [

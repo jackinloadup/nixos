@@ -1,14 +1,6 @@
-{
-  self,
-  flake,
-  pkgs,
-  lib,
-  ...
-}:
-# machine runs ?
+{ lib, ... }:
 let
   inherit (lib) mkDefault mkForce;
-  settings = import ../../settings;
   isUserFacing = false;
 in {
   imports = [

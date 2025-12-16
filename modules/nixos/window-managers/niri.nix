@@ -306,9 +306,12 @@ in {
                 "Mod+Comma".action.consume-window-into-column = [];
                 "Mod+Period".action.expel-window-from-column = [];
 
+                # Resize
                 "Mod+R".action.switch-preset-column-width = [];
                 "Mod+Shift+R".action.switch-preset-window-height = [];
                 "Mod+Ctrl+R".action.reset-window-height = [];
+
+                # Full screen
                 "Mod+F".action.maximize-column = [];
                 "Mod+Shift+F".action.fullscreen-window = [];
 
