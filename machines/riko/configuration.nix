@@ -70,7 +70,7 @@ in {
     #systemd.network.networks.wlan0.DHCP = "yes";
 
     machine = {
-      users = ["lriutzel" "criutzel"];
+      users = ["lriutzel"];
       tui = true;
       sizeTarget = 2;
       encryptedRoot = true;

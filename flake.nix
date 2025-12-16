@@ -204,7 +204,6 @@
               imports = [
                 self.nixosModules.default
                 self.nixosModules.lriutzelFull
-                self.nixosModules.criutzel
                 ./machines/riko/configuration.nix
               ];
             };
