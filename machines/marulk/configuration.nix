@@ -4,8 +4,10 @@ let
   inherit (lib) mkForce mkDefault;
 in {
   imports = [
-    ./hardware-configuration.nix
+    flake.self.nixosModules.default
+    flake.self.nixosModules.lriutzelTui
     flake.self.nixosModules.server
+    ./hardware-configuration.nix
   ];
 
   config = {

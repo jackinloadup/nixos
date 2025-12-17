@@ -1,15 +1,11 @@
-{
-  self,
-  pkgs,
-  lib,
-  flake,
-  ...
-}:
+{ lib, flake, ... }:
 let
   inherit (lib) mkDefault mkForce;
-  settings = import ../../settings;
 in {
   imports = [
+    flake.self.nixosModules.default
+    flake.self.nixosModules.lriutzelGui
+    flake.self.nixosModules.criutzel
     ./hardware-configuration.nix
     ./iwd.nix
   ];

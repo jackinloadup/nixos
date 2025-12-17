@@ -6,6 +6,8 @@ let
 in {
 
   imports = [
+    flake.self.nixosModules.default
+    flake.self.nixosModules.lriutzelTui
     ./hardware-configuration.nix
     ./home-assistant.nix
     ./frigate.nix

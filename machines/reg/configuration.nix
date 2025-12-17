@@ -10,6 +10,9 @@ let
   debug = false;
 in {
   imports = [
+    flake.self.nixosModules.default
+    flake.self.nixosModules.lriutzelFull
+    flake.self.nixosModules.work
     ./hardware-configuration.nix
     ./usb-switch-monitor-input.nix
     #./rename-pipewire-sinks.nix # isn't working and caused build error on
@@ -17,7 +20,6 @@ in {
     ./monitor-setup.nix
     ./switch-desk.nix
     ./aichat.nix
-    flake.self.nixosModules.work
   ];
 
   config = {

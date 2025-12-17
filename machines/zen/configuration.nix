@@ -1,5 +1,4 @@
 {
-  self,
   flake,
   pkgs,
   lib,
@@ -8,10 +7,12 @@
 }:
 let
   inherit (lib) mkForce mkDefault getExe;
-  settings = import ../../settings;
   debug = false;
 in {
   imports = [
+    flake.self.nixosModules.default
+    flake.self.nixosModules.lriutzelGui
+    flake.self.nixosModules.criutzel
     #./control-monitor-backlight.nix
     ./hardware-configuration.nix
     #./rename-pipewire-sinks.nix # isn't working and caused build error on

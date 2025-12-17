@@ -185,93 +185,64 @@
             # Personal Desktop
             reg = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelFull
                 ./machines/reg/configuration.nix
               ];
             };
             # Wife Desktop
             zen = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelGui
-                self.nixosModules.criutzel
                 ./machines/zen/configuration.nix
               ];
             };
             # Personal laptop
             riko = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelFull
                 ./machines/riko/configuration.nix
               ];
             };
             # Nathan TV box
             nat = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelTui
-                self.nixosModules.kodi
                 ./machines/nat/configuration.nix
               ];
             };
             # home server
             marulk = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelTui
                 ./machines/marulk/configuration.nix
               ];
             };
             # Server at studio location
             lyza = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelTui
                 ./machines/lyza/configuration.nix
               ];
             };
             # Christine newer laptop
             kanye = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelGui
-                self.nixosModules.criutzel
                 ./machines/kanye/configuration.nix
               ];
             };
             # Christine micro server
             jesus = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelTui
                 ./machines/jesus/configuration.nix
               ];
             };
             # Server at timberlake location
             timberlake = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
               imports = [
-                self.nixosModules.default
-                self.nixosModules.lriutzelTui
                 ./machines/timberlake/configuration.nix
               ];
             };
             obsidian = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
-                self.nixosModules.common
-                self.nixosModules.linux
-                self.nixosModules.tui
-                self.nixosModules.home
-                self.nixosModules.gui
-                self.nixosModules.work
-                self.nixosModules.lriutzelGui
                 ./machines/obsidian/configuration.nix
               ];
             };
             minimal = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
               imports = [
-                self.nixosModules.default
                 ./machines/minimal/configuration.nix
               ];
             };

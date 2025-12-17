@@ -1,16 +1,13 @@
-{
-  self,
-  flake,
-  pkgs,
-  lib,
-  ...
-}:
+{ flake, pkgs, lib, ... }:
 # machine runs kodi
 let
   inherit (lib) mkDefault mkForce;
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
 in {
   imports = [
+    flake.self.nixosModules.default
+    flake.self.nixosModules.lriutzelTui
+    flake.self.nixosModules.kodi
     ./hardware-configuration.nix
     #  ./auto-pair-ps3-remote.nix
   ];
