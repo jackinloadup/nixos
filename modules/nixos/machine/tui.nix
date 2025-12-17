@@ -105,10 +105,10 @@ in {
         nix-diff
         vulnix # vulnerability scanner for nix
         # atop?
+        perf # Linux tools to profile with performance counters
       ])
       ++ (with config.boot.kernelPackages; [
         turbostat # Report processor frequency and idle statistics
-        perf # Linux tools to profile with performance counters
         tmon # Monitoring and Testing Tool for Linux kernel thermal subsystem
         usbip # allows to pass USB device from server to client over the network
       ]);
