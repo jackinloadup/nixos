@@ -9,7 +9,7 @@ in {
   config = {
     home-manager.sharedModules = [
       ({config, ... }: {
-        programs.zoom-us.enable = true;
+        programs.zoom-us.enable = false;
 
         xdg.desktopEntries.gather = let
           url = "https://app.v2.gather.town/app/obsidian-3812d4d3-1a3e-4e30-b603-b31c7b22e94f/join";
