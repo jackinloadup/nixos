@@ -46,6 +46,7 @@ in {
       pkgs.k3s
       pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
       pkgs.istioctl
+      pkgs.dbeaver-bin # database gui
     ];
 
     virtualisation.docker.enable = true;
