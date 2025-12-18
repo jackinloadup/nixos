@@ -70,9 +70,7 @@ in {
 
     machine = {
       # TODO make this user more minimal
-      users = mkDefault [
-        "lriutzel"
-      ];
+      users = mkDefault [ ];
       sizeTarget = 2; # was 1
       minimal = false;
       tui = true;

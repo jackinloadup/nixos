@@ -116,10 +116,7 @@ in {
     };
 
     machine = {
-      users = [
-        "lriutzel"
-        "criutzel"
-      ];
+      users = [ "criutzel" ];
       tui = true;
       sizeTarget = 3;
       #gaming = true;

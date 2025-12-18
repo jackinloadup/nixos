@@ -40,7 +40,7 @@ in {
   #services.xserver.windowManager.i3.enable = true;
 
   machine = {
-    users = ["lriutzel" "criutzel"];
+    users = ["criutzel"];
     tui = true;
     sizeTarget = 2;
     lowLevelXF86keys.enable = true;

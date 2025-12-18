@@ -101,9 +101,7 @@ in {
     #users.users.lriutzel.extraGroups = [ "tss" ];  # tss group has access to TPM devices
 
     machine = {
-      users = mkDefault [
-        "lriutzel"
-      ];
+      users = mkDefault [ ];
       sizeTarget = 1; # was 1
       minimal = true;
       tui = true;
