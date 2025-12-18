@@ -40,6 +40,9 @@ in {
           name = "Noto Color Emoji";
         };
       };
+      opacity = {
+        terminal = 0.9;
+      };
     };
 
     dconf.settings = {
