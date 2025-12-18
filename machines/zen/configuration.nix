@@ -28,8 +28,6 @@ in {
     boot.plymouth.enable = !debug;
 
     hardware.bluetooth.enable = true;
-    hardware.logitech.wireless.enable = mkDefault true;
-    hardware.logitech.wireless.enableGraphical = mkDefault true;
 
     services.hardware.bolt.enable = true;
     #services.xmrig = {

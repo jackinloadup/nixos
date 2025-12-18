@@ -33,8 +33,6 @@ in {
       ];
     };
 
-    hardware.logitech.wireless.enable = mkDefault true;
-    hardware.logitech.wireless.enableGraphical = mkDefault true;
     hardware.solo2.enable = mkDefault true;
     hardware.yubikey.enable = mkDefault true;
 

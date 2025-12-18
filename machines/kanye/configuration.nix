@@ -28,8 +28,6 @@ in {
 
   hardware.bluetooth.enable = true;
   hardware.yubikey.enable = mkDefault true;
-  hardware.logitech.wireless.enable = mkDefault true;
-  hardware.logitech.wireless.enableGraphical = mkDefault true;
 
   services.pipewire.enable = true;
 
