@@ -81,13 +81,7 @@ in {
       openFirewall = true;
     };
 
-
     services.fwupd.enable = mkForce true;
-
-    services.k3s.enable = false;
-    services.k3s.role = "server";
-    services.k3s.clusterInit = true;
-
 
     services.pipewire.enable = isUserFacing;
     #services.tor.enable = mkForce true;

@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (lib) attrNames mkIf mkOption;
+  inherit (lib) attrNames mkIf mkDefault;
   inherit (lib.types) nullOr enum;
   inherit (builtins) filter readFile elem pathExists hasAttr;
   selfLib = import ../../../lib/secrets.nix {};

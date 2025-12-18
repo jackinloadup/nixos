@@ -79,8 +79,6 @@ in {
         ];
       };
     };
-    environment.systemPackages = [ ];
-
 
     #system.autoUpgrade = {
     #  enable = true;
@@ -96,7 +94,6 @@ in {
 
     xdg.portal.enable = true;
     environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
-    xdg.portal.config = { };
 
     environment.profileRelativeEnvVars = {
       QT_PLUGIN_PATH = [
@@ -119,7 +116,6 @@ in {
       users = [ "criutzel" ];
       tui = true;
       sizeTarget = 3;
-      #gaming = true;
       impermanence = true;
       lowLevelXF86keys.enable = true;
     };
@@ -135,8 +131,6 @@ in {
       vpn.client.enable = true;
       vpn.client.ip = "10.100.0.6/24";
     };
-
-    networking.enableIPv6 = false;
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.

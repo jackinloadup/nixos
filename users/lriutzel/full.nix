@@ -1,12 +1,5 @@
-{
-  lib,
-  pkgs,
-  config,
-  flake,
-  ...
-}: let
-  inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem getExe;
-  inherit (lib.types) listOf enum;
+{ lib, pkgs, config, flake, ... }: let
+  inherit (lib) mkDefault getExe;
 
   username = "lriutzel";
 in {

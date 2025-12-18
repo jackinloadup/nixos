@@ -25,7 +25,6 @@ in {
     };
     nix.settings.trusted-users = [username];
 
-    hardware.logitech.wireless.enable = true;
     hardware.solo2.enable = true;
     hardware.yubikey.enable = true;
 
@@ -63,7 +62,7 @@ in {
       programs.fzf.enable = true;
 
       programs.ssh.enable = true;
-      programs.starship.enable = true; # Current config is slow. Need to investigate
+      programs.starship.enable = true;
       programs.zsh.enable = true;
 
       # per https://github.com/solokeys/solo2/discussions/108#discussioncomment-12253610

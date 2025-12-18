@@ -29,12 +29,6 @@ in {
 
     services.pipewire.enable = isUserFacing;
 
-    #services.displayManager.autoLogin.user = "lriutzel";
-    #services.displayManager.defaultSession = "sway";
-
-    services.desktopManager.gnome.enable = isUserFacing;
-    services.displayManager.gdm.enable = isUserFacing;
-
     services.jellyfin = {
       enable = true;
       openFirewall = false; # handle http via nginx

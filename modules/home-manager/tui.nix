@@ -1,13 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  nixosConfig,
-  ...
-}: let
-  inherit (lib) optionalString;
-  settings = import ../../settings;
-in {
+{ pkgs, config, ... }: {
   config = {
     #programs.bash.enable = true;
 

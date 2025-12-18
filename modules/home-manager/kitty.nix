@@ -1,11 +1,7 @@
-{ config, pkgs, lib, ... }:
-let
-  inherit (lib) mkIf;
-in {
+{ config, pkgs, lib, ... }: {
   config = {
     programs.kitty = {
       settings = {
-        #background_opacity = "0.8";
       };
     };
   };
