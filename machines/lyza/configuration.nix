@@ -121,14 +121,7 @@ in {
       vpn.client.ip = "10.100.0.4/24";
     };
 
-    networking = {
-      dhcpcd = {
-      #  wait = mkForce "ipv4"; # don't wait. That would take longer
-        persistent = true;
-      };
-
-      #interfaces.enp1s0.useDHCP = true;
-    };
+    networking.dhcpcd.persistent = true;
     networking.networkmanager.enable = true;
 
     # clean logs older than 2d

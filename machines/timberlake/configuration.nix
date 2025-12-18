@@ -122,14 +122,7 @@ in {
       vmVariantWithBootLoader = vmVariant;
     };
 
-    networking = {
-      dhcpcd = {
-      #  wait = mkForce "ipv4"; # don't wait. That would take longer
-        persistent = true;
-      };
-
-      #interfaces.enp1s0.useDHCP = true;
-    };
+    networking.dhcpcd.persistent = true;
     networking.networkmanager.enable = true;
     networking.wireless.enable = mkForce false;
     # Playing with iwd

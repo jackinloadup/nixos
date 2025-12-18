@@ -108,10 +108,7 @@ in {
     networking = {
       networkmanager.enable = mkForce false;
 
-      dhcpcd = {
-        wait = mkForce "ipv4"; # don't wait. That would take longer
-        persistent = true;
-      };
+      dhcpcd.persistent = true;
 
       interfaces.enp1s0.useDHCP = true;
       firewall = {
