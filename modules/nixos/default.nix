@@ -49,6 +49,7 @@
       ];
 
       tui.imports = [
+        ./tmux.nix
         ./zsh
       ];
 

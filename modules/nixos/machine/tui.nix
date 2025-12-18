@@ -1,15 +1,8 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib, pkgs, config, ... }: let
   inherit (lib) mkIf mkDefault mkEnableOption;
   cfg = config.machine;
 in {
-  imports = [
-    ./tmux.nix
-  ];
+  imports = [ ];
 
   options.machine.tui = mkEnableOption "Extensive tui tools";
 
@@ -94,7 +87,6 @@ in {
         dust # disk usage viewer kinda, not sold over ncdu
         file # determine file type
         fd # find alternative
-        btrfs-progs
 
         ## Executables
         binutils

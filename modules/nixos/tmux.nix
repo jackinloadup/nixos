@@ -1,17 +1,7 @@
-{
-  lib,
-  pkgs,
-  config,
-  inputs,
-  ...
-}: let
-  inherit (lib) mkIf;
-  cfg = config.machine;
-  settings = import ../../../settings;
-in {
-  config = mkIf cfg.tui {
-    environment.systemPackages = with pkgs; [
-      tmux
+{ pkgs, ... }: {
+  config = {
+    environment.systemPackages = [
+      pkgs.tmux
       #tmux-cssh;
     ];
 
@@ -71,9 +61,11 @@ in {
         #set-option -g lock-command asciiquarium
         #set-option -g lock-after-time 180
       '';
+
       plugins = with pkgs.tmuxPlugins; [
         vim-tmux-navigator
       ];
+
       #plugins = with pkgs.tmuxPlugins; [
       #  {
       #    plugin = pain-control;
