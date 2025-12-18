@@ -87,7 +87,7 @@ in {
     # Also pulls in the flake repo onto the device
     # removed the following line to see if that would change build times
     # ln -sv ${repoRoot} $out/nixos-config
-    system.extraSystemBuilderCmds = ''
+    system.systemBuilderCommands = ''
       ln -sv ${repoRoot} $out/flake
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
