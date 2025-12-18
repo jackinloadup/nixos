@@ -63,7 +63,7 @@ in {
           };
           "niri/workspaces" = {
             all-outputs = false;
-            current-only = true;
+            current-only = false;
             format = "{index}";
             disable-click = true;
             disable-markup = true;
