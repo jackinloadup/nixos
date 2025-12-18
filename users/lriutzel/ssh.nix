@@ -48,6 +48,7 @@
           };
 
           setEnv = {
+            # resolve issues when using an term like kitty
             TERM = "xterm-256color";
           };
         };
@@ -59,7 +60,7 @@
           };
         };
         "dtcc github" = {
-          match = ''Host github.com exec "pwd | grep ~/Projects/obsidian-systems/canton-dtcc"'';
+          match = ''Host github.com exec "pwd | grep ~/Projects/obsidian-systems/dtcc"'';
           forwardAgent = false;
           user = "git";
           hostname = "github.com";
@@ -71,7 +72,7 @@
           };
         };
         "github github.com" = {
-          match = ''Host github.com !exec "pwd | grep ~/Projects/obsidian-systems/canton-dtcc"'';
+          match = ''Host github.com !exec "pwd | grep ~/Projects/obsidian-systems/dtcc"'';
           hostname = "github.com";
           user = "git";
           forwardAgent = false;
