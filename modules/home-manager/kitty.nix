@@ -1,13 +1,11 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib) mkIf;
-  cfg = config.programs.kitty;
-
-in mkIf cfg.enable {
+in {
   config = {
     programs.kitty = {
       settings = {
-        background_opacity = 0.8;
+        #background_opacity = "0.8";
       };
     };
   };

@@ -9,10 +9,6 @@
   inherit (lib.attrsets) genAttrs;
 in {
   config = mkIf config.programs.firefox.enable {
-    #nixpkgs.overlays = [
-    #  flake.inputs.nur.overlays.default
-    #];
-
     home.packages = [
       pkgs.speechd # for speech synthesis
       pkgs.ffmpeg # used for firefox va-api accel with media.rdd-ffmpeg

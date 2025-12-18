@@ -11,8 +11,6 @@ in {
   ];
 
   config = {
-    nixpkgs.config.allowUnfree = true;
-
     boot.initrd.verbose = true;
 
     machine = {
