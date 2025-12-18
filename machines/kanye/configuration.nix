@@ -44,7 +44,6 @@ in {
     tui = true;
     sizeTarget = 2;
     lowLevelXF86keys.enable = true;
-    gaming = true;
     impermanence = true;
   };
 
