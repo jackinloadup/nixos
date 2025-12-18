@@ -43,6 +43,7 @@ in {
       opacity = {
         terminal = 0.9;
       };
+      targets.firefox.profileNames = [ "${config.home.username}" ];
     };
 
     dconf.settings = {
