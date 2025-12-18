@@ -1,7 +1,12 @@
-{pkgs, ...}: {
+{flake, pkgs, config, lib, ...}: {
   imports = [
     ../../profiles/intel.nix
-    ../../profiles/disk-laptop-1.nix
+    (import ../../profiles/disk-laptop-1.nix {
+      inherit flake pkgs config lib;
+      device = "/dev/nvme0n1";
+      isEncrypted = true;
+      ramSize = "16G";
+    })
     ../../profiles/mobile-device.nix
   ];
 
