@@ -30,6 +30,7 @@ in {
           #services.flameshot = {
           #  enable = true;
           #};
+          programs.kitty.enable = true;
 
           programs.niri = {
             settings = {
