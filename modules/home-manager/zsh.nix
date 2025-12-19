@@ -54,7 +54,10 @@ in {
         alias -s json=jq
       '';
 
-      shellGlobalAliases = {
+      shellGlobalAliases = let
+        successSound = "/run/current-system/sw/share/sounds/freedesktop/stereo/complete.oga";
+        failureSound = "/run/current-system/sw/share/sounds/freedesktop/stereo/suspend-error.oga";
+      in {
         UUID = "$(uuidgen | tr -d \\n)";
         G = "| grep";
         L = "| less";
@@ -62,6 +65,7 @@ in {
         "@noboth" = "&> /dev/null";
         "@errtostd" = "2&>1";
         "bell" = "tput bel && sleep 0.1 && tput bel && sleep 0.1 && tput bel";
+        "@notify" = "&& pw-play ${successSound} || pw-play ${failureSound}";
       };
 
       dirHashes = {
