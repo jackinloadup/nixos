@@ -1,14 +1,18 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, lib, pkgs, ... }: let
   inherit (lib) getExe mkDefault;
 in {
   config = {
     home-manager.sharedModules = [
       ({config, ... }: {
+        home.packages = [
+          pkgs.kubectl
+          pkgs.k3s
+          pkgs.istioctl
+          pkgs.dbeaver-bin # database gui
+        ];
+
+        programs.claude-code.enable = true;
+        programs.k9s.enable = true; # Kubernetes CLI To Manage Your Clusters In Style
         programs.zoom-us.enable = false;
 
         xdg.desktopEntries.gather = let
@@ -41,13 +45,6 @@ in {
         "--disable=traefik"
       ];
     };
-    environment.systemPackages = [
-      pkgs.kubectl
-      pkgs.k3s
-      pkgs.k9s # Kubernetes CLI To Manage Your Clusters In Style
-      pkgs.istioctl
-      pkgs.dbeaver-bin # database gui
-    ];
 
     virtualisation.docker.enable = true;
     virtualisation.libvirtd.enable = mkDefault true;
