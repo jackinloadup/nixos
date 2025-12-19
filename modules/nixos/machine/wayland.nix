@@ -7,5 +7,9 @@
       pkgs.wlrctl # control mouse keyboard windows
       pkgs.wl-clipboard-rs # wl-copy
     ];
+
+    # try these again later. Spent minimal time playing with them
+    #services.ringboard.wayland.enable = true; # clipboard manager
+    #programs.wshowkeys.enable = true; # show pressed keys on screen for others
   };
 }
