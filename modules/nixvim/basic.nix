@@ -290,6 +290,7 @@
       };
     };
 
+    # pairs with tmux plugin of the same name
     tmux-navigator.enable = true;
     #rustaceanvim.enable = true;
 
@@ -311,6 +312,7 @@
       enable = true;
     };
 
+    # I don't think I use this. I need to figure how to get to the UI
     undotree = {
       enable = true;
       settings = {

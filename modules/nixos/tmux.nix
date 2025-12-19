@@ -62,6 +62,7 @@
         #set-option -g lock-after-time 180
       '';
 
+      # pairs with vim plugin of the same name
       plugins = with pkgs.tmuxPlugins; [
         vim-tmux-navigator
       ];
