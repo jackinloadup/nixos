@@ -71,12 +71,24 @@ in rec {
       format = "install-iso";
       modules = [
         (rootPath + "/modules/nixos/machine/nix.nix")
-        ({
-          pkgs,
-          config,
-          ...
-        }: {
-          config = {
+        (rootPath + "/nixos-secrets.nix")
+        ({ pkgs, config, ... }: {
+          config = let
+            lriutzelKeys = [
+              # password protected private key file
+              "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA1pkTHUApo4oX3PLXnXcTLZ7xszEdeYJfBFEUyliYgD32INvsvQhl3ZmhZ1P5IMDmrMb/zd9dsMbtfY1fgy+unSMblb6RS7SxOt6vfifxNc1R7ylaa1HufgAhJHT+bSWNGPliA5Ds2XbdbPh3I6yRFT+V37QUz9EesDFaUC0JVEgqVOAUikSAGXhAeskTpQhD//32lEPwPM45iVS7Zix34LYrQ/RyVL9EKMRGLGFkJ3UgLsn6j8Wos7EM9YoW8s7lueShBcCFLqGus2Mjg71L14MWM1CCtaiFeBr04BtmhtvCjKJ505zfVLWLC8bg/URR6mIZABc1OqKRnm017tlJ3Q== lriutzel@gmail.com"
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPO/wQSQHq1Wmzbwg8uJM4vK/exUWmsT49kmkPdtJU0v lriutzel@gmail.com"
+
+              # pin protected solo2 security key
+              "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPxPFMNGK0tw467usZYAA1mjgB2owDFBQT939dzOlBWyAAAABHNzaDo= orange"
+              "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINmfKdhabJag/k0w78kqBG1PL8w+WMv7xWp4VbkdhtINAAAABHNzaDo= black"
+            ];
+          in {
+            users.users.nixos = {
+              hashedPasswordFile = config.age.secrets.lriutzel-hashed-password.path;
+              openssh.authorizedKeys.keys = lriutzelKeys;
+            };
+
             environment.systemPackages = [
               pkgs.git
               pkgs.htop
