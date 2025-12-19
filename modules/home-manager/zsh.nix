@@ -61,6 +61,7 @@ in {
         "@noerr" = "2> /dev/null";
         "@noboth" = "&> /dev/null";
         "@errtostd" = "2&>1";
+        "bell" = "tput bel && sleep 0.1 && tput bel && sleep 0.1 && tput bel";
       };
 
       dirHashes = {
