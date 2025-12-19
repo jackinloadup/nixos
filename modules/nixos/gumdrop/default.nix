@@ -81,6 +81,9 @@ in {
     networking.wireless.networks = {
       "epic" = { pskraw = "ext:psk_gumdrop"; };
       "Arpanet" = { pskRaw = "ext:psk_gumdrop"; };
+      "The Internet" = { pskRaw = "ext:psk_gumdrop"; };
+      "Art Zone" = { pskRaw = "ext:psk_gumdrop"; };
+      "Big Blue House" = { pskRaw = "ext:psk_big_blue_house"; };
       "Serious-panda-town" = { pskRaw = "ext:psk_nathan_ruby"; };
     };
 
