@@ -161,18 +161,10 @@
           flake = self;
           inherit inputs;
         };
-        inherit (selfLib) importDirOfOverlays importDirOfModules mkNixosSystem mkNixosSystemGenerator;
+        inherit (selfLib) importDirOfOverlays allNixosSystems mkNixosSystemGenerator;
 
-        supportedX86Systems = [
-          "i686-linux"
-          "x86_64-linux"
-        ];
-
-        supportedSystems =
-          supportedX86Systems
-          ++ [
-            "aarch64-linux"
-          ];
+        supportedX86Systems = [ "i686-linux" "x86_64-linux" ];
+        supportedSystems = supportedX86Systems ++ [ "aarch64-linux" ];
       in
         {
           # Expose overlay to flake outputs, to allow using it from other flakes.
@@ -181,72 +173,7 @@
           # Each subdirectory in ./machines is a host. Add them all to
           # nixosConfiguratons. Host configurations need a file called
           # configuration.nix that will be read first
-          nixosConfigurations = {
-            # Personal Desktop
-            reg = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
-              imports = [
-                ./machines/reg/configuration.nix
-              ];
-            };
-            # Wife Desktop
-            zen = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
-              imports = [
-                ./machines/zen/configuration.nix
-              ];
-            };
-            # Personal laptop
-            riko = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
-              imports = [
-                ./machines/riko/configuration.nix
-              ];
-            };
-            # Nathan TV box
-            nat = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
-              imports = [
-                ./machines/nat/configuration.nix
-              ];
-            };
-            # home server
-            marulk = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
-              imports = [
-                ./machines/marulk/configuration.nix
-              ];
-            };
-            # Server at studio location
-            lyza = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
-              imports = [
-                ./machines/lyza/configuration.nix
-              ];
-            };
-            # Christine newer laptop
-            kanye = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
-              imports = [
-                ./machines/kanye/configuration.nix
-              ];
-            };
-            # Christine micro server
-            jesus = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
-              imports = [
-                ./machines/jesus/configuration.nix
-              ];
-            };
-            # Server at timberlake location
-            timberlake = self.nixos-unified.lib.mkLinuxSystem  { home-manager = true; } {
-              imports = [
-                ./machines/timberlake/configuration.nix
-              ];
-            };
-            obsidian = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
-              imports = [
-                ./machines/obsidian/configuration.nix
-              ];
-            };
-            minimal = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
-              imports = [
-                ./machines/minimal/configuration.nix
-              ];
-            };
-          };
+          nixosConfigurations = allNixosSystems;
 
           #nixosModules = importDirOfModules "modules/nixos";
           #homeManagerModules = importDirOfModules "modules/home-manager";

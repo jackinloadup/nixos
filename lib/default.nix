@@ -8,16 +8,15 @@
     (builtins)
     attrNames
     attrValues
-    isAttrs
+    pathExists
     readDir
-    head
-    length
     toPath
     listToAttrs
+    filter
     ;
   inherit
     (lib)
-    filterAttrs
+    genAttrs
     mapAttrs'
     nameValuePair
     mapAttrs
@@ -54,27 +53,17 @@ in rec {
   nixosModules = importDirOfModules "modules/nixos";
   nixosUsers = importDirOfModules "users";
 
-  mkNixosSystem = pkgs: system: hostname:
-    pkgs.lib.nixosSystem {
-      inherit system specialArgs;
-      modules =
-        (import (rootPath + "/machines/${hostname}/modules.nix") {inherit inputs;})
-        ++ attrValues nixosModules
-        ++ attrValues nixosUsers
-        ++ [
-          (rootPath + "/machines/${hostname}/configuration.nix")
-        ];
-    };
+  machines = attrNames (readDir (rootPath + "/machines"));
+  machinesHasConfig = (host: pathExists (rootPath + "/machines/${host}/configuration.nix"));
+  machinesWithConfig = filter (host: machinesHasConfig host) machines;
 
-  mkNixosNoModulesSystem = pkgs: system: hostname:
-    pkgs.lib.nixosSystem {
-      inherit system specialArgs;
-      modules =
-        (import (rootPath + "/machines/${hostname}/modules.nix") {inherit inputs;})
-        ++ [
-          (rootPath + "/machines/${hostname}/configuration.nix")
-        ];
-    };
+  allNixosSystems = genAttrs machinesWithConfig mkNixosSystem;
+
+  mkNixosSystem = (name:
+    flake.nixos-unified.lib.mkLinuxSystem
+      { home-manager = true; }
+      { imports = [ (rootPath + "/machines/${name}/configuration.nix") ]; }
+    );
 
   mkNixosSystemGenerator = pkgs: system: hostname:
     nixos-generators.nixosGenerate {
