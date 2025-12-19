@@ -182,10 +182,21 @@ in {
     };
   };
 
+  programs.k9s = {
+    settings = {
+      skin = "skin"; # use stylix skin
+      # following doesn't work for some reason
+      #logoless = true;
+      #noIcons = false;
+      #enableMouse = true;
+    };
+  };
+
   programs.lazydocker = {
     enable = nixosConfig.virtualisation.docker.enable;
     settings = {
-      gui.returnImmediately = true;
+      # makes diagnosing why you can't connect to container impossible
+      #gui.returnImmediately = true;
     };
   };
 }
