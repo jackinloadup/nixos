@@ -5,7 +5,8 @@ in {
     home-manager.sharedModules = [
       ({config, ... }: {
         home.packages = [
-          pkgs.kubectl
+          # conflicted with k3s, which provides a variation of the package
+          #pkgs.kubectl
           pkgs.k3s
           pkgs.istioctl
           pkgs.dbeaver-bin # database gui

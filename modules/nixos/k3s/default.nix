@@ -8,7 +8,8 @@
 in {
   config = mkIf config.services.k3s.enable {
     environment.systemPackages = [
-      pkgs.kubectl
+      # conflicted with k3s, which provides a variation of the package
+      #pkgs.kubectl
       # pkgs.kty # not used yet
       # pkgs.lens # not used and closed source
       # pkgs.seabird # native desktop app that simplifies working with Kubernetes
