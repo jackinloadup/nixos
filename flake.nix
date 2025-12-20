@@ -118,6 +118,9 @@
     # Devshell
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
+    # Git hooks managed by Nix
+    git-hooks.url = "github:cachix/git-hooks.nix";
+
     # AMD microcode updates
     #
     # AMD only provides microcodes to linux-firmware for certain server-grade
@@ -146,6 +149,7 @@
       ];
       imports = [
         inputs.treefmt-nix.flakeModule
+        inputs.git-hooks.flakeModule
         inputs.nixos-unified.flakeModule
         ./modules/nixos
         ./modules/home-manager
@@ -261,6 +265,22 @@
             #formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
           };
 
+          # Git pre-commit hooks
+          pre-commit = {
+            check.enable = true;
+            settings.hooks = {
+              # Run nix flake check before commit
+              #flake-check = {
+              #  enable = true;
+              #  name = "nix flake check";
+              #  entry = "nix flake check";
+              #  language = "system";
+              #  pass_filenames = false;
+              #};
+              # Optional: also run the formatter
+              treefmt.enable = true;
+            };
+          };
 
           devShells.default = pkgs.mkShell {
             inputsFrom = with self.outputs.devShells.${system}; [ secrets ];
@@ -272,6 +292,10 @@
             packages = [
               #pkgs.
             ];
+            # Install git hooks when entering the devShell
+            shellHook = ''
+              ${config.pre-commit.installationScript}
+            '';
           };
 
           formatter = config.treefmt.build.wrapper;
