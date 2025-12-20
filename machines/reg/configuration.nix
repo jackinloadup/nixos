@@ -15,8 +15,7 @@ in {
     flake.self.nixosModules.work
     ./hardware-configuration.nix
     ./usb-switch-monitor-input.nix
-    #./rename-pipewire-sinks.nix # isn't working and caused build error on
-    #unstable eventually
+    ./rename-pipewire-sinks.nix
     ./monitor-setup.nix
     ./switch-desk.nix
     ./aichat.nix
