@@ -1,15 +1,16 @@
-{
-  inputs,
-  pkgs,
-  config,
-  lib,
-  nixosConfig,
-  ...
-}: let
+{ inputs
+, pkgs
+, config
+, lib
+, nixosConfig
+, ...
+}:
+let
   inherit (lib.attrsets) genAttrs;
   inherit (lib) mkIf;
   settings = import ../../settings;
-in {
+in
+{
   config = mkIf config.programs.mpv.enable {
     programs.mpv = {
       config = {
@@ -89,6 +90,7 @@ in {
       "video/x-ogm+ogg"
       "video/x-theora"
       "video/x-theora+ogg"
-    ] (name: "mpv.desktop");
+    ]
+      (name: "mpv.desktop");
   };
 }

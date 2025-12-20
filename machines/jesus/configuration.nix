@@ -1,7 +1,8 @@
 { pkgs, lib, flake, ... }:
 let
   inherit (lib) mkDefault mkForce;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelTui
@@ -39,11 +40,10 @@ in {
   #services.xserver.windowManager.i3.enable = true;
 
   machine = {
-    users = ["lriutzel" "criutzel"];
+    users = [ "lriutzel" "criutzel" ];
     tui = true;
     sizeTarget = 2;
     lowLevelXF86keys.enable = true;
-    gaming = true;
     impermanence = true;
   };
 

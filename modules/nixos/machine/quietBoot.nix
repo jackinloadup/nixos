@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
-in {
+in
+{
   config = mkIf (!config.boot.initrd.verbose) {
     boot = {
       # heard on matrix that timeout should be able to be 0 and still

@@ -1,12 +1,13 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.machine;
-in {
+in
+{
   options.machine.encryptedRoot = mkEnableOption "Enable luks handling for /root is encyption";
 
   config = mkIf cfg.encryptedRoot {

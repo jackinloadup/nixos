@@ -1,9 +1,8 @@
-{
-  self,
-  inputs,
-  pkgs,
-  lib,
-  ...
+{ self
+, inputs
+, pkgs
+, lib
+, ...
 }: {
   # Source: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
   #

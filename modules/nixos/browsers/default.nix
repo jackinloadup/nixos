@@ -1,13 +1,11 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
+{ lib
+, pkgs
+, config
+, ...
 }: {
   imports = [
     ./firefox
   ];
 
-  config = {
-  };
+  config = { };
 }

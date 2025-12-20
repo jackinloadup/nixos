@@ -1,12 +1,13 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkOption types;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   #config = mkIf (config.machine.displayManager == "ly") {
   #  environment.systemPackages = with pkgs; [

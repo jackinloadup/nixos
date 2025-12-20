@@ -1,10 +1,11 @@
-{ config, lib, ...}:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.adguardhome.enable {
-    networking.firewall.allowedTCPPorts = [53];
-    networking.firewall.allowedUDPPorts = [53];
+    networking.firewall.allowedTCPPorts = [ 53 ];
+    networking.firewall.allowedUDPPorts = [ 53 ];
     networking.interfaces.br0.ipv4.addresses = [{
       address = "10.16.1.2";
       prefixLength = 8;
@@ -13,7 +14,7 @@ in {
     services.adguardhome = {
       # opens port
       openFirewall = true;
-      extraArgs = ["--no-etc-hosts"];
+      extraArgs = [ "--no-etc-hosts" ];
       port = 8001; # Web gui
       host = "10.16.1.2";
       settings = {
@@ -27,11 +28,11 @@ in {
       };
     };
 
-    systemd.services."adguardhome".wants = ["network-online.target"];
+    systemd.services."adguardhome".wants = [ "network-online.target" ];
     # Ensures that adguardhome doesn't stop until libvirtd has
     # This is simply to keep DNS running as long as possible if running on
     # a machine also running libvirtd.
-    systemd.services."adguardhome".before = ["libvirtd.service"];
+    systemd.services."adguardhome".before = [ "libvirtd.service" ];
     #systemd.services.libvirtd.after = ["adguardhome.service"];
 
     services.nginx.virtualHosts."dns.home.lucasr.com" = {

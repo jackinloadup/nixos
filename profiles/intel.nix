@@ -1,9 +1,11 @@
-{pkgs, lib, config,  ...}: let
+{ pkgs, lib, config, ... }:
+let
   inherit (lib) optionals mkIf;
-in {
+in
+{
   boot = {
-    initrd.kernelModules = ["kvm-intel"];
-    kernelModules = ["kvm-intel"];
+    initrd.kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" ];
     kernelParams = [
       "nosgx" # remove "SGX disable by BIOS" message on boot
       #"intel_iommu=on"
@@ -14,11 +16,11 @@ in {
     ];
     extraModprobeConfig = "options snd-hda-intel enable_msi=1";
   };
-  services.xserver.videoDrivers = ["modesetting"];
+  services.xserver.videoDrivers = [ "modesetting" ];
 
   # forgot what this was for
   nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
 
   environment.systemPackages = [

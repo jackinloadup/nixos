@@ -1,10 +1,10 @@
-{
-  lib,
-  inputs,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, inputs
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
   inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
@@ -20,7 +20,8 @@
   device = "/dev/sda"; # TODO change per host
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
-in {
+in
+{
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
     inputs.disko.nixosModules.disko

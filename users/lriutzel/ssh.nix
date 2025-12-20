@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   # tool to sanity check a remote machine
   # - check how out of sync the clock is
   #   - maybe ssh already does this?
@@ -17,7 +17,7 @@
       extraConfig = ''
         ConnectTimeout 5
       '';
-        #PermitLocalCommand yes
+      #PermitLocalCommand yes
 
 
       matchBlocks = {

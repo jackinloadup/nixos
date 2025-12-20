@@ -1,6 +1,8 @@
-{...}: let
+{ ... }:
+let
   inherit (builtins) attrNames elem readDir pathExists;
-in rec {
+in
+rec {
   machines = attrNames (readDir ../machines);
   hostExists = (name: elem name machines);
   hostHasService = (name: service: pathExists (../machines/${name}/${service}));

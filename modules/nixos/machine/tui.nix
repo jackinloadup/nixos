@@ -1,7 +1,9 @@
-{ lib, pkgs, config, ... }: let
+{ lib, pkgs, config, ... }:
+let
   inherit (lib) mkIf mkDefault mkEnableOption;
   cfg = config.machine;
-in {
+in
+{
   imports = [ ];
 
   options.machine.tui = mkEnableOption "Extensive tui tools";

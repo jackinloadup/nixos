@@ -1,12 +1,13 @@
-{
-  self,
-  inputs,
-  pkgs,
-  lib,
-  ...
-}: let
+{ self
+, inputs
+, pkgs
+, lib
+, ...
+}:
+let
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
-in {
+in
+{
   imports = [
     ../../modules/home-manager/i3.nix
   ];
@@ -24,13 +25,13 @@ in {
   };
 
   xsession.windowManager.i3.config = {
-    bars = [];
+    bars = [ ];
     startup = [
       {
         command = "{pkgs.feh}/bin/feh --bg-scale ${kodiSplash}";
         notification = false;
       }
-      {command = "${pkgs.kodi}/bin/kodi";}
+      { command = "${pkgs.kodi}/bin/kodi"; }
     ];
   };
 }

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
@@ -25,13 +25,15 @@
         #  "space-bar@luchrioh"
       ];
     };
-    "org/gnome/desktop/background" = let
-      #file = "file:///run/current-system/sw/share/backgrounds/gnome/pills-d.webp";
-      file = "file:///persist/home/criutzel/Pictures/wallpaper/heyastrovoi.jpg";
-    in{
-      picture-uri = file;
-      picture-uri-dark = file;
-    };
+    "org/gnome/desktop/background" =
+      let
+        #file = "file:///run/current-system/sw/share/backgrounds/gnome/pills-d.webp";
+        file = "file:///persist/home/criutzel/Pictures/wallpaper/heyastrovoi.jpg";
+      in
+      {
+        picture-uri = file;
+        picture-uri-dark = file;
+      };
     "org/gnome/simple-scan" = {
       document-type = "photo";
       #paper-height = 2794;

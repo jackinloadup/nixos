@@ -3,7 +3,7 @@
 # would be more ideal or at least an alternate if using
 # nix separate from nixos
 {
-  config =  {
+  config = {
     environment.systemPackages = [
       #chromium
       pkgs.ungoogled-chromium

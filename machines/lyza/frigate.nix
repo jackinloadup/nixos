@@ -2,7 +2,8 @@
 let
   inherit (lib) mkIf;
   secrets = config.age.secrets;
-in {
+in
+{
   config = {
     hardware.graphics.enable = true;
 
@@ -16,9 +17,9 @@ in {
       checkConfig = false; # env vars below break checks
       settings = {
         auth = {
-# doesn't appear in 0.14.1 or 0.15??
-#          enable = false; # make things easy for now. Don't really need it.
-#reset_admin_password = true;
+          # doesn't appear in 0.14.1 or 0.15??
+          #          enable = false; # make things easy for now. Don't really need it.
+          #reset_admin_password = true;
         };
 
         ffmpeg.hwaccel_args = "preset-vaapi";
@@ -72,8 +73,8 @@ in {
             days = 7;
             mode = "motion";
           };
-#          alerts.retain.days = 30;
-#          detections.retain.days = 30;
+          #          alerts.retain.days = 30;
+          #          detections.retain.days = 30;
         };
 
         snapshots = {

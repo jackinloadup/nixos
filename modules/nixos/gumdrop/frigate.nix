@@ -3,7 +3,8 @@ let
   inherit (lib) mkIf;
   cfg = config.services.frigate;
   isHostAtGumdrop = config.networking.domain == "home.lucasr.com";
-in {
+in
+{
   config = mkIf (isHostAtGumdrop && cfg.enable) {
     hardware.graphics.enable = true;
 
@@ -21,9 +22,9 @@ in {
       vaapiDriver = "radeonsi";
       settings = {
         auth = {
-# doesn't appear in 0.14.1 or 0.15??
-#          enable = false; # make things easy for now. Don't really need it.
-#reset_admin_password = true;
+          # doesn't appear in 0.14.1 or 0.15??
+          #          enable = false; # make things easy for now. Don't really need it.
+          #reset_admin_password = true;
         };
 
         ffmpeg = {
@@ -139,8 +140,8 @@ in {
             days = 7;
             mode = "motion";
           };
-#          alerts.retain.days = 30;
-#          detections.retain.days = 30;
+          #          alerts.retain.days = 30;
+          #          detections.retain.days = 30;
         };
         review = {
           alerts = {

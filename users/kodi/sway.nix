@@ -1,14 +1,15 @@
-{
-  self,
-  inputs,
-  pkgs,
-  lib,
-  config,
-  ...
-}: let
+{ self
+, inputs
+, pkgs
+, lib
+, config
+, ...
+}:
+let
   swayConfig = config.wayland.windowManager.sway.config;
   kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";
-in {
+in
+{
   imports = [
     ../../modules/home-manager/foot.nix
   ];
@@ -72,18 +73,20 @@ in {
         output = {
           "*".bg = ''${kodiSplash} fill'';
         };
-        bars = [];
+        bars = [ ];
         seat = {
-          "*" = {hide_cursor = "3000";};
+          "*" = { hide_cursor = "3000"; };
         };
-        keybindings = let
-          inherit (swayConfig) modifier terminal;
-          mod = modifier;
-        in {
-          "${mod}+Return" = "exec ${terminal}";
-          "${mod}+Shift+q" = "kill";
-          "--inhibited --no-repeat XF86Eject" = "exec ${pkgs.procps}/bin/pkill -9 kodi-wayland & ${pkgs.kodi-wayland}/bin/kodi";
-        };
+        keybindings =
+          let
+            inherit (swayConfig) modifier terminal;
+            mod = modifier;
+          in
+          {
+            "${mod}+Return" = "exec ${terminal}";
+            "${mod}+Shift+q" = "kill";
+            "--inhibited --no-repeat XF86Eject" = "exec ${pkgs.procps}/bin/pkill -9 kodi-wayland & ${pkgs.kodi-wayland}/bin/kodi";
+          };
       };
     };
   };

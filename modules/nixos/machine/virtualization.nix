@@ -1,16 +1,17 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkForce mkEnableOption genAttrs optionals attrNames;
   cfg = config.machine;
   ifTui = cfg.sizeTarget > 0;
   ifGraphical = cfg.sizeTarget > 1;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
-in {
+  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+in
+{
   config = mkIf config.virtualisation.libvirtd.enable {
     virtualisation.spiceUSBRedirection.enable = true;
     virtualisation.libvirtd = {
@@ -46,6 +47,6 @@ in {
         pkgs.spice-gtk
       ];
 
-    users.users = addExtraGroups normalUsers ["libvirtd"];
+    users.users = addExtraGroups normalUsers [ "libvirtd" ];
   };
 }

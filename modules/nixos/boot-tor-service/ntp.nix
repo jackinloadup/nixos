@@ -1,12 +1,13 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkOption mkOrder getBin types literalExpression;
   cfg = config.boot.initrd.network.ntpd;
-in {
+in
+{
   options.boot.initrd.network.ntpd = {
     enable = mkOption {
       type = types.bool;
@@ -48,9 +49,9 @@ in {
     boot.initrd.systemd.services.ntpd = {
       description = "Ntp Set Time";
 
-      wantedBy = ["initrd.target"];
-      conflicts = ["basic.target"];
-      after = ["network.target" "initrd-nixos-copy-secrets.service"];
+      wantedBy = [ "initrd.target" ];
+      conflicts = [ "basic.target" ];
+      after = [ "network.target" "initrd-nixos-copy-secrets.service" ];
 
       unitConfig = {
         DefaultDependencies = false;

@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption;
-in {
+in
+{
   options.hardware.yubikey.enable = mkEnableOption "Add resources to support using a Yubico Yubikey";
 
   config = mkIf config.hardware.yubikey.enable {

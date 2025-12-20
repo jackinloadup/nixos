@@ -1,14 +1,15 @@
-{
-  config,
-  lib,
-  pkgs,
-  nixosConfig,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, nixosConfig
+, ...
+}:
+let
   settings = import ../../settings;
   theme = settings.theme;
   font = theme.font;
-in {
+in
+{
   config = {
     programs.alacritty = {
       settings = {

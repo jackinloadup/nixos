@@ -1,16 +1,17 @@
-{
-  flake,
-  pkgs,
-  config,
-  lib,
-  nixosConfig,
-  ...
-}: let
+{ flake
+, pkgs
+, config
+, lib
+, nixosConfig
+, ...
+}:
+let
   inherit (lib) mkIf optionals;
   username = config.home.username;
   cfg = nixosConfig.machine;
   ifGraphical = cfg.sizeTarget > 1;
-in {
+in
+{
   imports = [
     flake.inputs.impermanence.nixosModules.home-manager.impermanence
   ];
@@ -76,17 +77,17 @@ in {
         #++ optionals nixosConfig.programs.steam.enable [".local/share/Steam"]
         #++ optionals nixosConfig.services.trezord.enable [".config/@trezor"]
         #++ optionals nixosConfig.services.pipewire.enable [".local/state/pipewire" ".local/state/wireplumber"]
-        ++ [".local/share/Steam"]
-        ++ [".config/@trezor"]
-        ++ [".local/state/pipewire" ".local/state/wireplumber"]
-        ++ optionals config.programs.chromium.enable [".config/chromium" ".cache/chromium"]
-        ++ optionals config.programs.neovim.enable [".local/share/nvim"]
-        ++ optionals config.programs.direnv.enable [".local/share/direnv" ".cache/direnv"]
-        ++ optionals config.programs.gpg.enable [".gnupg"]
-        ++ optionals config.programs.firefox.enable [".mozilla" ".cache/mozilla"]
-        ++ optionals config.programs.thunderbird.enable [".thunderbird" ".cache/thunderbird"]
-        ++ optionals config.programs.zoom-us.enable [".zoom"]
-        ++ optionals config.programs.zsh.enable [".local/state/zsh"]
+        ++ [ ".local/share/Steam" ]
+        ++ [ ".config/@trezor" ]
+        ++ [ ".local/state/pipewire" ".local/state/wireplumber" ]
+        ++ optionals config.programs.chromium.enable [ ".config/chromium" ".cache/chromium" ]
+        ++ optionals config.programs.neovim.enable [ ".local/share/nvim" ]
+        ++ optionals config.programs.direnv.enable [ ".local/share/direnv" ".cache/direnv" ]
+        ++ optionals config.programs.gpg.enable [ ".gnupg" ]
+        ++ optionals config.programs.firefox.enable [ ".mozilla" ".cache/mozilla" ]
+        ++ optionals config.programs.thunderbird.enable [ ".thunderbird" ".cache/thunderbird" ]
+        ++ optionals config.programs.zoom-us.enable [ ".zoom" ]
+        ++ optionals config.programs.zsh.enable [ ".local/state/zsh" ]
         ++ optionals config.services.syncthing.enable [
           ".local/share/syncthing"
           ".config/syncthing"
@@ -100,7 +101,7 @@ in {
       #    #".screenrc"
       #    ".steam/registry.vdf"
       #  ];
-        #++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
+      #++ optionals nixosConfig.programs.steam.enable [".steam/registry.vdf"];
     };
   };
 }

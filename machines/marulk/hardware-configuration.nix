@@ -1,4 +1,4 @@
-{flake, pkgs, config, lib, ...}: {
+{ flake, pkgs, config, lib, ... }: {
   imports = [
     flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
     flake.inputs.nixos-hardware.nixosModules.common-pc

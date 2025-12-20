@@ -1,20 +1,21 @@
-{
-  pkgsi686Linux,
-  stdenv,
-  a2ps,
-  coreutils,
-  dpkg,
-  fetchurl,
-  file,
-  ghostscript,
-  gnugrep,
-  gnused,
-  lib,
-  makeWrapper,
-  perl,
-  psutils,
-  which,
-}: let
+{ pkgsi686Linux
+, stdenv
+, a2ps
+, coreutils
+, dpkg
+, fetchurl
+, file
+, ghostscript
+, gnugrep
+, gnused
+, lib
+, makeWrapper
+, perl
+, psutils
+, which
+,
+}:
+let
   model = "mfc9130cw";
   humanModel = "MFC-9130CW";
   cupsVersion = "1.1.4-0";
@@ -22,7 +23,8 @@
 
   reldir = "opt/brother/Printers/${model}";
   filterFile = "lpd/filter${model}";
-in rec {
+in
+rec {
   driver = pkgsi686Linux.stdenv.mkDerivation rec {
     version = lprVersion;
     src = fetchurl {
@@ -31,7 +33,7 @@ in rec {
     };
     name = "${model}lpr-${lprVersion}";
 
-    nativeBuildInputs = [dpkg makeWrapper];
+    nativeBuildInputs = [ dpkg makeWrapper ];
 
     unpackPhase = "dpkg-deb -x $src $out";
 
@@ -79,8 +81,8 @@ in rec {
       description = "Brother ${lib.strings.toUpper model} driver";
       homepage = http://www.brother.com/;
       license = lib.licenses.unfree;
-      platforms = ["x86_64-linux" "i686-linux"];
-      maintainers = [lib.maintainers.syd];
+      platforms = [ "x86_64-linux" "i686-linux" ];
+      maintainers = [ lib.maintainers.syd ];
     };
   };
 
@@ -92,7 +94,7 @@ in rec {
     };
     name = "${model}cupswrapper-${cupsVersion}";
 
-    nativeBuildInputs = [dpkg makeWrapper pkgsi686Linux.cups];
+    nativeBuildInputs = [ dpkg makeWrapper pkgsi686Linux.cups ];
 
     unpackPhase = "dpkg-deb -x $src $out";
 
@@ -153,8 +155,8 @@ in rec {
       description = "Brother ${lib.strings.toUpper model} CUPS wrapper driver";
       homepage = http://www.brother.com/;
       license = lib.licenses.gpl2;
-      platforms = ["x86_64-linux" "i686-linux"];
-      maintainers = [lib.maintainers.syd];
+      platforms = [ "x86_64-linux" "i686-linux" ];
+      maintainers = [ lib.maintainers.syd ];
     };
   };
 }

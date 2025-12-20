@@ -39,8 +39,7 @@ with lib;
 
       kodi-wayland = super.kodi-wayland.override { x11Support = false; };
       pipewire =
-        (super.pipewire.override { x11Support = false; })
-        .overrideAttrs (old: {
+        (super.pipewire.override { x11Support = false; }).overrideAttrs (old: {
           mesonFlags =
             [ "-Dx11-xfixes=disabled" ]
             ++ old.mesonFlags;

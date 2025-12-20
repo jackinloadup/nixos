@@ -1,13 +1,13 @@
-{
-  lib,
-  flake,
-  pkgs,
-  config,
-  device ? "/dev/sda",
-  isEncrypted ? false,
-  ramSize ? "16GiB",
-  ...
-}: let
+{ lib
+, flake
+, pkgs
+, config
+, device ? "/dev/sda"
+, isEncrypted ? false
+, ramSize ? "16GiB"
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
   inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
@@ -17,7 +17,8 @@
   rootPartionName = "nixos";
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
-in {
+in
+{
   imports = [
     flake.inputs.disko.nixosModules.disko
     ./zfs.nix
@@ -123,38 +124,41 @@ in {
           };
           #mountpoint = "/persist";
 
-          datasets = let
-            unmountable = {
-              type = "zfs_fs";
-              mountpoint = null;
-              options.canmount = "off";
-            };
-            filesystem = mountpoint: {
-              type = "zfs_fs";
-              inherit mountpoint;
-              #  options."com.sun:auto-snapshot" = "true";
-            };
-          in {
-            "local" = unmountable; # Data that is replaceable
-            "safe" = unmountable; # Data that is valued. Provides a sync point
-            "local/nix" = filesystem "/nix" // {options.mountpoint = "legacy";};
-          } // (if impermanence then {
-            "local/etc" = filesystem "/persist/etc";
-            "local/log" = filesystem "/persist/log";
-            "safe/home" = filesystem "/persist/home";
-            "safe/lib" = filesystem "/persist/lib";
-          } else {}) // (if tmpfsRoot then {
-            # Nothing handled above
-          } else { # zfs managed root
-            "local/root" =
-              filesystem "/"
-              // {
-                postCreateHook = ''
-                  zfs snapshot ${zfsPoolName}/local/root@blank
-                '';
-                options.mountpoint = "legacy";
+          datasets =
+            let
+              unmountable = {
+                type = "zfs_fs";
+                mountpoint = null;
+                options.canmount = "off";
               };
-          });
+              filesystem = mountpoint: {
+                type = "zfs_fs";
+                inherit mountpoint;
+                #  options."com.sun:auto-snapshot" = "true";
+              };
+            in
+            {
+              "local" = unmountable; # Data that is replaceable
+              "safe" = unmountable; # Data that is valued. Provides a sync point
+              "local/nix" = filesystem "/nix" // { options.mountpoint = "legacy"; };
+            } // (if impermanence then {
+              "local/etc" = filesystem "/persist/etc";
+              "local/log" = filesystem "/persist/log";
+              "safe/home" = filesystem "/persist/home";
+              "safe/lib" = filesystem "/persist/lib";
+            } else { }) // (if tmpfsRoot then {
+              # Nothing handled above
+            } else {
+              # zfs managed root
+              "local/root" =
+                filesystem "/"
+                // {
+                  postCreateHook = ''
+                    zfs snapshot ${zfsPoolName}/local/root@blank
+                  '';
+                  options.mountpoint = "legacy";
+                };
+            });
         };
       };
     };

@@ -1,6 +1,8 @@
-{pkgs, lib, ...}: let
+{ pkgs, lib, ... }:
+let
   inherit (lib) mkForce;
-in {
+in
+{
   config = {
     dconf.settings = {
       "org/gnome/shell" = {

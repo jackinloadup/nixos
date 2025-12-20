@@ -1,9 +1,10 @@
-{ config, lib, ...}:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
   currentDatabase = config.services.immich.database.name;
   dbUser = config.services.immich.database.user;
-in {
+in
+{
   config = mkIf config.services.immich.enable {
     services.immich = {
       host = "127.0.0.1"; # where to listen

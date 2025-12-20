@@ -1,16 +1,17 @@
-{
-  config,
-  lib,
-  pkgs,
-  nixosConfig,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, nixosConfig
+, ...
+}:
+let
   inherit (lib) mkIf;
   settings = import ../../settings;
   theme = settings.theme;
   font = theme.font;
   swayEnabled = config.wayland.windowManager.sway.enable;
-in {
+in
+{
   config = mkIf config.programs.foot.enable {
     #home.shellAliases = {
     #  ssh = "TERM=xterm-265color ssh";
@@ -18,7 +19,7 @@ in {
 
     systemd.user.services.foot = mkIf swayEnabled {
       Unit.BindsTo = "sway-session.target";
-      Install.WantedBy = ["sway-session.target"];
+      Install.WantedBy = [ "sway-session.target" ];
     };
 
     programs.foot = {

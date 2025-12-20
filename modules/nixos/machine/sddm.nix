@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.displayManager.sddm.enable {
     services.xserver.enable = true;
     programs.xwayland.enable = true;

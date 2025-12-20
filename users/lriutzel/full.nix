@@ -1,8 +1,10 @@
-{ lib, pkgs, config, flake, ... }: let
+{ lib, pkgs, config, flake, ... }:
+let
   inherit (lib) mkDefault getExe;
 
   username = "lriutzel";
-in {
+in
+{
   imports = [
     flake.inputs.self.nixosModules.radio
     flake.inputs.self.nixosModules.hyprland
@@ -84,125 +86,127 @@ in {
     #iptables -A OUTPUT -m owner --uid-owner 1002 -j REJECT
     #    ";
 
-    home-manager.users."${username}" = let
-      homeDir = "/home/${username}";
-    in {
-      imports = [
+    home-manager.users."${username}" =
+      let
+        homeDir = "/home/${username}";
+      in
+      {
+        imports = [
           flake.self.homeModules.video-editor
-      ];
+        ];
 
-      programs.awscli.enable = true;
-      programs.niri.enable = true;
+        programs.awscli.enable = true;
+        programs.niri.enable = true;
 
-      # mic noise removal
-      #programs.noisetorch.enable = true;
+        # mic noise removal
+        #programs.noisetorch.enable = true;
 
-      #programs.openrct2.enable = true; # disabled due to discord-rpc
+        #programs.openrct2.enable = true; # disabled due to discord-rpc
 
-      #programs.thunderbird.enable = false; #true; # Email client
-      #programs.thunderbird.profiles = {
-      #  lriutzel = {
-      #    isDefault = true;
-      #  };
-      #};
+        #programs.thunderbird.enable = false; #true; # Email client
+        #programs.thunderbird.profiles = {
+        #  lriutzel = {
+        #    isDefault = true;
+        #  };
+        #};
 
-      services.syncthing.enable = true;
+        services.syncthing.enable = true;
 
-      #xdg.desktopEntries = mkIf ifGraphical {
-      #  mindforger = {
-      #    name = "MindForger";
-      #    genericName = "Personal knowledge management application";
-      #    comment = "Thinking notebook and Markdown editor";
-      #    icon = "${pkgs.mindforger}/share/icons/hicolor/256x256/apps/mindforger.png";
-      #    exec = "${pkgs.mindforger}/bin/mindforger ${homeDir}/Documents/mindforger-repository";
-      #    terminal = false;
-      #    categories = [
-      #      "Office"
-      #      "Utility"
-      #    ];
-      #    mimeType = [
-      #      "text/markdown"
-      #    ];
-      #  };
-      #};
+        #xdg.desktopEntries = mkIf ifGraphical {
+        #  mindforger = {
+        #    name = "MindForger";
+        #    genericName = "Personal knowledge management application";
+        #    comment = "Thinking notebook and Markdown editor";
+        #    icon = "${pkgs.mindforger}/share/icons/hicolor/256x256/apps/mindforger.png";
+        #    exec = "${pkgs.mindforger}/bin/mindforger ${homeDir}/Documents/mindforger-repository";
+        #    terminal = false;
+        #    categories = [
+        #      "Office"
+        #      "Utility"
+        #    ];
+        #    mimeType = [
+        #      "text/markdown"
+        #    ];
+        #  };
+        #};
 
-      home.packages = [
-        #flake.inputs.scripts.packages.x86_64-linux.disk-burnin
-        pkgs.krusader # Norton/Total Commander clone for KDE
-        pkgs.tor-browser
+        home.packages = [
+          #flake.inputs.scripts.packages.x86_64-linux.disk-burnin
+          pkgs.krusader # Norton/Total Commander clone for KDE
+          pkgs.tor-browser
 
-        ## Spotify - disabling and using webui
-        #spotify-tui # spotifyd ui
-        #spotifyd # music player no ui - spotify broke this i believe
-        ## NonFree
-        #spotify
+          ## Spotify - disabling and using webui
+          #spotify-tui # spotifyd ui
+          #spotifyd # music player no ui - spotify broke this i believe
+          ## NonFree
+          #spotify
 
-        #pkgs.gnome.vinagre # VNC view another computer
-        #pkgs.fractal # matrix client
-        #pkgs.fractal-next # matrix client. isn't compiling
-        #pkgs.nheko # matrix client
+          #pkgs.gnome.vinagre # VNC view another computer
+          #pkgs.fractal # matrix client
+          #pkgs.fractal-next # matrix client. isn't compiling
+          #pkgs.nheko # matrix client
 
-        ## Task/notes
-        # pkgs.mindforger  # qtwebengine-5.15.19 insecure
+          ## Task/notes
+          # pkgs.mindforger  # qtwebengine-5.15.19 insecure
 
-        pkgs.sysbench # benchmarking tool
-        pkgs.postgresql # for psql to maintain nextcloud. Should be in shell
+          pkgs.sysbench # benchmarking tool
+          pkgs.postgresql # for psql to maintain nextcloud. Should be in shell
 
-        # nvd diff /nix/var/nix/profiles/system-{296,297}-link
-        pkgs.nvd # nix tool to diff
+          # nvd diff /nix/var/nix/profiles/system-{296,297}-link
+          pkgs.nvd # nix tool to diff
 
-        #flake.inputs.nix-software-center.packages.x86_64-linux.nix-software-center
-        flake.inputs.scripts.packages.x86_64-linux.rebuild
-        #helvum # pipewire patchbay # failing to build
-        pkgs.easyeffects # Audio effects
-        pkgs.mumble
+          #flake.inputs.nix-software-center.packages.x86_64-linux.nix-software-center
+          flake.inputs.scripts.packages.x86_64-linux.rebuild
+          #helvum # pipewire patchbay # failing to build
+          pkgs.easyeffects # Audio effects
+          pkgs.mumble
 
-        # Media Management
-        # filebot -get-subtitles --lang en -non-strict ./Season\ 03
-        #pkgs.filebot
-        pkgs.mediaelch
+          # Media Management
+          # filebot -get-subtitles --lang en -non-strict ./Season\ 03
+          #pkgs.filebot
+          pkgs.mediaelch
 
-        pkgs.qownnotes # markdown
-        #pkgs.freeoffice # office suite UNFREE
-        #pkgs.tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
+          pkgs.qownnotes # markdown
+          #pkgs.freeoffice # office suite UNFREE
+          #pkgs.tixati # bittorrent client - has been removed from nixpkgs as it is unfree and unmaintained
 
-        ## Video
-        pkgs.lbry
+          ## Video
+          pkgs.lbry
 
-        ## Debugging
-        pkgs.wireshark
-        pkgs.gparted
-        # pkgs.nmapsi4 # QT frontend for nmap -- qtwebengine-5.15.19 insecure
+          ## Debugging
+          pkgs.wireshark
+          pkgs.gparted
+          # pkgs.nmapsi4 # QT frontend for nmap -- qtwebengine-5.15.19 insecure
 
-        ## Wine Apps
-        pkgs.winbox4 # Mikrotik RouterOS GUI
-        #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
+          ## Wine Apps
+          pkgs.winbox4 # Mikrotik RouterOS GUI
+          #nur.repos.milahu.aether-server # Peer-to-peer ephemeral public communities
 
-        pkgs.gnome-maps # map viewer
+          pkgs.gnome-maps # map viewer
 
-        pkgs.ubpm # universal blood pressure monitor
+          pkgs.ubpm # universal blood pressure monitor
 
-        # benchmarking
-        pkgs.geekbench # benchmarking tool
-        pkgs.cpu-x # cpu info
-        pkgs.lm_sensors
+          # benchmarking
+          pkgs.geekbench # benchmarking tool
+          pkgs.cpu-x # cpu info
+          pkgs.lm_sensors
 
-        # Disabled due to lack of use
-        #pkgs.kodi-wayland
-        #pkgs.warp # transfer files between computers gui
-        #pkgs.textsnatcher #  com.github.rajsolai.textsnatcher maybe make alias
-        #pkgs.super-productivity
-        #pkgs.signal-desktop # messaging client
-        #pkgs.magic-wormhole-rs # Get things from one computer to another, safely.
+          # Disabled due to lack of use
+          #pkgs.kodi-wayland
+          #pkgs.warp # transfer files between computers gui
+          #pkgs.textsnatcher #  com.github.rajsolai.textsnatcher maybe make alias
+          #pkgs.super-productivity
+          #pkgs.signal-desktop # messaging client
+          #pkgs.magic-wormhole-rs # Get things from one computer to another, safely.
 
-        #pkgs.libsForQt5.marble # map / globe viewer
-        #pkgs.stellarium # planetarium
+          #pkgs.libsForQt5.marble # map / globe viewer
+          #pkgs.stellarium # planetarium
 
-        #pkgs.anytype # distributed p2p local-first
+          #pkgs.anytype # distributed p2p local-first
 
-        pkgs.mission-center # great cpu/network/disk monitor gui
-      ];
-    };
+          pkgs.mission-center # great cpu/network/disk monitor gui
+        ];
+      };
   };
 
 }

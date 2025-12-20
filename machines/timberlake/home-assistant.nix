@@ -1,7 +1,8 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
-in {
+in
+{
   config = {
     networking.firewall.allowedTCPPorts = [
       1883 # mosquitto
@@ -16,15 +17,15 @@ in {
       extraComponents = [ "mobile_app" ];
 
       config = {
-        sun = {};
+        sun = { };
         # sun.elevation = 247;
         # esphome = {}; # fails
         # camera = [];
-        discovery = {};
+        discovery = { };
         # conversation = {};
         # history = {};
         # logbook = {};
-        config = {};
+        config = { };
         homeassistant = {
           name = "Home";
           #latitude = "!secret latitude";
@@ -33,7 +34,8 @@ in {
           #unit_system = "metric";
           time_zone = "America/Chicago";
           auth_providers = [
-            { type = "trusted_networks";
+            {
+              type = "trusted_networks";
               trusted_networks = [
                 "10.16.1.0/24" # gumdrop
                 "10.100.0.0/24" # wg vpn
@@ -58,9 +60,9 @@ in {
         };
         frontend = { };
         mobile_app = { };
-        rest_command = {};
-        api = {};
-        mqtt = {};
+        rest_command = { };
+        api = { };
+        mqtt = { };
         #mqtt = {
         #  keepalive = 60;
         #  protocol = 3.1;
@@ -166,7 +168,7 @@ in {
             # trusted.
             # TODO make this more secure
             mosquitto = {
-              acl = ["readwrite #"];
+              acl = [ "readwrite #" ];
               password = "mosquitto";
             };
           };
@@ -175,6 +177,6 @@ in {
     };
 
     # TODO submit upstream?
-    systemd.services.mosquitto.after = ["network-online.target"];
+    systemd.services.mosquitto.after = [ "network-online.target" ];
   };
 }

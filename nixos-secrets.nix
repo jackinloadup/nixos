@@ -3,32 +3,32 @@ let
   inherit (lib) attrNames mergeAttrsList mkIf;
   inherit (builtins) readDir filter elem;
 
-  selfLib = import ./lib/secrets.nix {};
+  selfLib = import ./lib/secrets.nix { };
   inherit (selfLib) smachines shostHasService;
 
   hostname = config.networking.hostName;
 
-  servers = ["marulk"];
-  lucasDevHosts = ["reg" "riko"];
+  servers = [ "marulk" ];
+  lucasDevHosts = [ "reg" "riko" ];
 
   mkWgHost = (host: {
-     "wg-vpn-${host}" = mkIf (hostname == host) {
-        file = ./secrets/machines/${host}/wg-vpn/private.age;
-     };
+    "wg-vpn-${host}" = mkIf (hostname == host) {
+      file = ./secrets/machines/${host}/wg-vpn/private.age;
+    };
   });
   wgHosts = filter (host: shostHasService host "wg-vpn") smachines;
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
 
   mkTorHost = (host: {
-     "tor-service-${host}-hostname" = mkIf (hostname == host) {
-        file = ./secrets/machines/${host}/tor-service/hostname.age;
-     };
-     "tor-service-${host}-hs_ed25519_public_key" = mkIf (hostname == host) {
-        file = ./secrets/machines/${host}/tor-service/hs_ed25519_public_key.age;
-     };
-     "tor-service-${host}-hs_ed25519_secret_key" = mkIf (hostname == host) {
-        file = ./secrets/machines/${host}/tor-service/hs_ed25519_secret_key.age;
-     };
+    "tor-service-${host}-hostname" = mkIf (hostname == host) {
+      file = ./secrets/machines/${host}/tor-service/hostname.age;
+    };
+    "tor-service-${host}-hs_ed25519_public_key" = mkIf (hostname == host) {
+      file = ./secrets/machines/${host}/tor-service/hs_ed25519_public_key.age;
+    };
+    "tor-service-${host}-hs_ed25519_secret_key" = mkIf (hostname == host) {
+      file = ./secrets/machines/${host}/tor-service/hs_ed25519_secret_key.age;
+    };
   });
   torHosts = filter (host: shostHasService host "tor-service") smachines;
   torHostsConfig = mergeAttrsList (map mkTorHost torHosts);
@@ -50,7 +50,8 @@ let
   initSshdHosts = filter (host: shostHasService host "init-sshd") smachines;
   initSshdHostsConfig = mergeAttrsList (map mkInitSshdHost initSshdHosts);
 
-in {
+in
+{
   imports = [
     flake.inputs.ragenix.nixosModules.default
   ];
@@ -61,7 +62,7 @@ in {
         file = ./secrets/commonPass.age;
       };
 
-      lyza-frigate = mkIf (elem hostname ["lyza"] ) {
+      lyza-frigate = mkIf (elem hostname [ "lyza" ]) {
         file = ./secrets/machines/lyza/frigate/environment.age;
       };
 

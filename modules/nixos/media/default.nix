@@ -1,17 +1,18 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
-inherit (lib) mkIf;
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
+  inherit (lib) mkIf;
   cfg = config.services.media-services;
   allowSubnets = ''
     allow 127.0.0.1;
     allow 10.100.0.0/24;
     allow 10.16.0.0/16;
   '';
-in {
+in
+{
   imports = [
   ];
 
@@ -111,128 +112,135 @@ in {
     #      };
     #
     #      config = { config, pkgs, lib, ... }: {
-        # Set-up media group
-        users.users.media = {
-          isNormalUser = false;
-          isSystemUser = true;
-          group = "media";
-        };
-        # Set-up media group
-        users.groups.media = { };
+    # Set-up media group
+    users.users.media = {
+      isNormalUser = false;
+      isSystemUser = true;
+      group = "media";
+    };
+    # Set-up media group
+    users.groups.media = { };
 
-        networking.firewall.interfaces.wg0.allowedTCPPorts = [
-          7878
-          8989
-        ];
+    networking.firewall.interfaces.wg0.allowedTCPPorts = [
+      7878
+      8989
+    ];
 
-        services.music-assistant = {
-          enable = true;
-          providers = [
-            #"airplay"  airplay support is missing libraop, a library we will not package because it depends on OpenSSL 1.1.
-            "audible"
-            "audiobookshelf"
-            "chromecast"
-            "dlna"
-            "filesystem_local"
-            "hass"
-            "hass_players"
-            "jellyfin"
-            "musicbrainz"
-            "player_group"
-            "spotify"
-            "spotify_connect"
-            "ytmusic"
-          ];
-        };
+    services.music-assistant = {
+      enable = true;
+      providers = [
+        #"airplay"  airplay support is missing libraop, a library we will not package because it depends on OpenSSL 1.1.
+        "audible"
+        "audiobookshelf"
+        "chromecast"
+        "dlna"
+        "filesystem_local"
+        "hass"
+        "hass_players"
+        "jellyfin"
+        "musicbrainz"
+        "player_group"
+        "spotify"
+        "spotify_connect"
+        "ytmusic"
+      ];
+    };
 
-      # deprecated
-      #services.readarr = {
-      # enable = true;
-      #   openFirewall = false;
-      #};
+    # deprecated
+    #services.readarr = {
+    # enable = true;
+    #   openFirewall = false;
+    #};
 
-        services.audiobookshelf = {
-          enable = true;
-          openFirewall = false; # handle http via nginx
-        };
+    services.audiobookshelf = {
+      enable = true;
+      openFirewall = false; # handle http via nginx
+    };
 
-        services.jellyfin = {
-          enable = true;
-          openFirewall = false; # handle http via nginx
-        };
+    services.jellyfin = {
+      enable = true;
+      openFirewall = false; # handle http via nginx
+    };
 
-        services.sabnzbd = { # nzb downloader
-          enable = true;
-          group = "media";
-          user = "media";
-        };
+    services.sabnzbd = {
+      # nzb downloader
+      enable = true;
+      group = "media";
+      user = "media";
+    };
 
-        services.sonarr = { # Series
-          enable = true;
-          group = "media";
-          user = "media";
-          #  dataDir = "/var/lib/sonarr";
-        };
+    services.sonarr = {
+      # Series
+      enable = true;
+      group = "media";
+      user = "media";
+      #  dataDir = "/var/lib/sonarr";
+    };
 
-        services.radarr = { # Movies
-          enable = true;
-          group = "media";
-          user = "media";
-          #dataDir = "/var/lib/radarr";
-        };
+    services.radarr = {
+      # Movies
+      enable = true;
+      group = "media";
+      user = "media";
+      #dataDir = "/var/lib/radarr";
+    };
 
-          # better indexer apis
-        services.prowlarr = { # Index proxy
-          enable = true;
-#group = "media";
-#          user = "media";
-        };
+    # better indexer apis
+    services.prowlarr = {
+      # Index proxy
+      enable = true;
+      #group = "media";
+      #          user = "media";
+    };
 
-        services.jellyseerr = { # User Friendly media request ui for external users
-          enable = true;
-          port = 5055;
-        };
-        services.bazarr = { # Subtitles
-          enable = true;
-          user = "media";
-          group = "media";
-          listenPort = 6767;
-        };
+    services.jellyseerr = {
+      # User Friendly media request ui for external users
+      enable = true;
+      port = 5055;
+    };
+    services.bazarr = {
+      # Subtitles
+      enable = true;
+      user = "media";
+      group = "media";
+      listenPort = 6767;
+    };
 
-        services.readarr = {
-          enable = true;
-        };
+    services.readarr = {
+      enable = true;
+    };
 
-        services.lidarr = { # Music
-          enable = true;
-          user = "media";
-          group = "media";
-          dataDir = "/var/lib/lidarr";
-        };
+    services.lidarr = {
+      # Music
+      enable = true;
+      user = "media";
+      group = "media";
+      dataDir = "/var/lib/lidarr";
+    };
 
-        #permown."/media/arr" = {
-        #  owner = "media";
-        #  group = "media";
-        #  directory-mode = "770";
-        #  file-mode = "770";
-        #};
+    #permown."/media/arr" = {
+    #  owner = "media";
+    #  group = "media";
+    #  directory-mode = "770";
+    #  file-mode = "770";
+    #};
 
-        #(lib.mkIf cfg.jackett.enable {
-#          services.jackett = {
-#            enable = true;
-#          };
-#
-#          # Jackett wants to eat *all* my RAM if left to its own devices
-#          systemd.services.jackett = {
-#            serviceConfig = {
-#              MemoryHigh = "15%";
-#              MemoryMax = "25%";
-#            };
-#          };
+    #(lib.mkIf cfg.jackett.enable {
+    #          services.jackett = {
+    #            enable = true;
+    #          };
+    #
+    #          # Jackett wants to eat *all* my RAM if left to its own devices
+    #          systemd.services.jackett = {
+    #            serviceConfig = {
+    #              MemoryHigh = "15%";
+    #              MemoryMax = "25%";
+    #            };
+    #          };
 
-        #});
-#      };
-#    };
+    #});
+    #      };
+    #    };
 
     # proxy interfaces
     services.nginx.enable = true;
@@ -362,20 +370,20 @@ in {
       };
 
       "audiobookshelf.lucasr.com" = {
-       forceSSL = true;
-       enableACME = true;
-       acmeRoot = null; # Use DNS challenege
+        forceSSL = true;
+        enableACME = true;
+        acmeRoot = null; # Use DNS challenege
 
-       locations."/" = {
-         proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}/";
-         proxyWebsockets = true;
-         extraConfig = ''
-           proxy_set_header Host localhost;
-         '';
-       };
-     };
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}/";
+          proxyWebsockets = true;
+          extraConfig = ''
+            proxy_set_header Host localhost;
+          '';
+        };
+      };
 
-     "music-assistant.home.lucasr.com" = {
+      "music-assistant.home.lucasr.com" = {
         forceSSL = true;
         enableACME = true;
         acmeRoot = null; # Use DNS Challenege

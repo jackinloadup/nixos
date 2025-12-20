@@ -1,9 +1,8 @@
-{
-  ...
+{ ...
 }: {
   home-manager.sharedModules = [
     {
-      wayland.windowManager ={
+      wayland.windowManager = {
         hyprland.settings = {
           monitor = [
             "DP-8, highres, auto, 1"

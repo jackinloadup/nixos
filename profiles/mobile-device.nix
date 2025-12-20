@@ -1,7 +1,6 @@
-{
-  inputs,
-  pkgs,
-  ...
+{ inputs
+, pkgs
+, ...
 }: {
   imports = [
     #inputs.nixos-hardware.nixosModules.common-pc-laptop # currently being placesd per machine

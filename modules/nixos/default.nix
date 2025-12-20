@@ -15,7 +15,7 @@
       ];
 
       gumdrop.imports = [ ./gumdrop ];
-      gumdropServer.import = [];
+      gumdropServer.import = [ ];
       #timberlake.imports = [ ./timberlake ];
 
       linux.imports = [

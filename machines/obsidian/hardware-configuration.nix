@@ -1,6 +1,8 @@
-{flake, pkgs, config, lib, ...}: let
-inherit (lib) mkForce;
-in {
+{ flake, pkgs, config, lib, ... }:
+let
+  inherit (lib) mkForce;
+in
+{
   imports = [
     flake.inputs.nixos-hardware.nixosModules.common-pc
     flake.inputs.nixos-hardware.nixosModules.common-pc-ssd

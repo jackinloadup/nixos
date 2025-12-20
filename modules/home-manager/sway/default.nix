@@ -1,11 +1,11 @@
-{
-  config,
-  pkgs,
-  nixosConfig,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, nixosConfig
+, lib
+, inputs
+, ...
+}:
+let
   inherit (lib) mkIf getBin getExe optionals;
   inherit (builtins) elem mul;
 
@@ -13,7 +13,7 @@
   hostName = nixosConfig.networking.hostName;
   theme = settings.theme;
   fontConf = {
-    names = [theme.font.mono.family];
+    names = [ theme.font.mono.family ];
     size = mul theme.font.size 1.0; # typecast to float
   };
   swayConfig = config.wayland.windowManager.sway.config;
@@ -80,7 +80,7 @@
     '';
   };
 
-  displayOnOffCmd =  pkgs.writeShellApplication {
+  displayOnOffCmd = pkgs.writeShellApplication {
     name = "displayOnOffCmd";
 
     runtimeInputs = [
@@ -152,7 +152,8 @@
       main "$@"
     '';
   };
-in {
+in
+{
   imports = [
     ../waybar.nix
   ];
@@ -168,21 +169,21 @@ in {
     programs.bash.initExtra = "export SWAYSOCK=$(${getExe pkgs.fd} sway-ipc /run/user/$UID/ -1)";
 
     home.packages = [
-        #pkgs.sway-contrib.grimshot
-        pkgs.wl-clipboard
-        #pkgs.mako
-        #pkgs.dmenu
-        pkgs.ddcutil
-        pkgs.gopsuinfo
+      #pkgs.sway-contrib.grimshot
+      pkgs.wl-clipboard
+      #pkgs.mako
+      #pkgs.dmenu
+      pkgs.ddcutil
+      pkgs.gopsuinfo
 
-        #gksu # gui for root privilages # needed for zenmap # gone in unstable
-        triggerLock
-      ]
-      ++ optionals config.wayland.windowManager.sway.xwayland [
-        # enable  xhost si:localuser:root
-        # disable xhost -si:localuser:root
-        pkgs.xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
-      ];
+      #gksu # gui for root privilages # needed for zenmap # gone in unstable
+      triggerLock
+    ]
+    ++ optionals config.wayland.windowManager.sway.xwayland [
+      # enable  xhost si:localuser:root
+      # disable xhost -si:localuser:root
+      pkgs.xorg.xhost # needed to allow root apps to use gui $ xhost si:localuser:root
+    ];
 
     home.sessionVariables = {
       # Hint to electron apps to use wayland
@@ -215,17 +216,18 @@ in {
         input = import ./input.nix;
         output = import ./output.nix;
         window = import ./window.nix;
-        bars = [];
+        bars = [ ];
 
-        floating.criteria = [{class = "^Wine$";}];
+        floating.criteria = [{ class = "^Wine$"; }];
 
         #menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
         menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
 
-        keybindings = let
-          inherit (swayConfig) left down up right menu terminal modifier;
-          mod = modifier;
-        in
+        keybindings =
+          let
+            inherit (swayConfig) left down up right menu terminal modifier;
+            mod = modifier;
+          in
           {
             "${mod}+Return" = "exec ${terminal}";
             "${mod}+Shift+Return" = "exec kitty";
@@ -304,32 +306,36 @@ in {
             "${mod}+minus" = "scratchpad show";
           };
 
-        modes = let
-          terminal = swayConfig.terminal;
-          Escape = "mode default";
-        in {
-          resize = let
-            Left = "resize shrink width 10 px or 10 ppt";
-            Right = "resize grow width 10 px or 10 ppt";
-            Up = "resize shrink height 10 px or 10 ppt";
-            Down = "resize grow height 10 px or 10 ppt";
-          in {
-            inherit Left Right Up Down Escape;
-            h = Left;
-            j = Down;
-            k = Up;
-            l = Right;
-            Return = Escape;
-          };
+        modes =
+          let
+            terminal = swayConfig.terminal;
+            Escape = "mode default";
+          in
+          {
+            resize =
+              let
+                Left = "resize shrink width 10 px or 10 ppt";
+                Right = "resize grow width 10 px or 10 ppt";
+                Up = "resize shrink height 10 px or 10 ppt";
+                Down = "resize grow height 10 px or 10 ppt";
+              in
+              {
+                inherit Left Right Up Down Escape;
+                h = Left;
+                j = Down;
+                k = Up;
+                l = Right;
+                Return = Escape;
+              };
 
-          # TODO explore editing after taking with pciture with swappy
-          "${mode_record}" = {
-            "p" = ''exec ${getExe pkgs.slurp} | ${getExe pkgs.grim} -g- $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
-            "f" = ''${getExe pkgs.grim} $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
-            Return = Escape;
-            Escape = Escape;
+            # TODO explore editing after taking with pciture with swappy
+            "${mode_record}" = {
+              "p" = ''exec ${getExe pkgs.slurp} | ${getExe pkgs.grim} -g- $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
+              "f" = ''${getExe pkgs.grim} $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
+              Return = Escape;
+              Escape = Escape;
+            };
           };
-        };
 
         startup = [
           # following needed to launch root apps
@@ -350,7 +356,7 @@ in {
           #{ command = "${pkgs.slack}/bin/slack"; }
           #{ command = "${pkgs.element-desktop-wayland}/bin/element-desktop"; }
           #{ command = "${pkgs.spotify}/bin/spotify"; }
-          {command = "discord";}
+          { command = "discord"; }
         ];
 
         assigns = {
@@ -387,15 +393,18 @@ in {
       '';
     };
 
-    home.file."${config.xdg.configHome}/nwg-bar/bar.json".text = let
-      gdmSwitchUser = if nixosConfig.services.displayManager.gdm.enable then ''
-          ,{
-            "label": "Switch User",
-            "exec": "${pkgs.gdm}/bin/gdmflexiserver",
-            "icon": "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-switch-user.svg"
-          }
-        '' else "";
-    in ''      [
+    home.file."${config.xdg.configHome}/nwg-bar/bar.json".text =
+      let
+        gdmSwitchUser =
+          if nixosConfig.services.displayManager.gdm.enable then ''
+            ,{
+              "label": "Switch User",
+              "exec": "${pkgs.gdm}/bin/gdmflexiserver",
+              "icon": "${pkgs.kdePackages.breeze-icons}/share/icons/breeze-dark/actions/32@3x/system-switch-user.svg"
+            }
+          '' else "";
+      in
+      ''      [
        {
          "label": "Lock",
          "exec": "${lockCmd}",
@@ -434,18 +443,20 @@ in {
 
     services.swayidle = {
       enable = true;
-      timeouts = let
-        timeouts = settings.timeouts;
-      in [
-        { timeout = timeouts.screenLock; command = "${getExe lockCmd}"; }
-        {
-          timeout = timeouts.displayOff;
-          #command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
-          command = ''${getExe displayOnOffCmd} off'';
-          #resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
-          resumeCommand = ''${getExe displayOnOffCmd} on'';
-        }
-      ];
+      timeouts =
+        let
+          timeouts = settings.timeouts;
+        in
+        [
+          { timeout = timeouts.screenLock; command = "${getExe lockCmd}"; }
+          {
+            timeout = timeouts.displayOff;
+            #command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+            command = ''${getExe displayOnOffCmd} off'';
+            #resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+            resumeCommand = ''${getExe displayOnOffCmd} on'';
+          }
+        ];
       events = [
         { event = "lock"; command = "${getExe lockCmd}"; }
         { event = "before-sleep"; command = "${getExe lockCmd}"; }

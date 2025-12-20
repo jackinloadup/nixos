@@ -1,16 +1,17 @@
-{
-  lib,
-  pkgs,
-  config,
-  flake,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, flake
+, ...
+}:
+let
   inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem getExe;
   inherit (lib.types) listOf enum;
 
   first_and_last = "Lucas Riutzel";
   username = "lriutzel";
-in {
+in
+{
   config = {
     users.users."${username}" = {
       description = first_and_last;
@@ -23,7 +24,7 @@ in {
         "networkmanager"
       ];
     };
-    nix.settings.trusted-users = [username];
+    nix.settings.trusted-users = [ username ];
 
     hardware.solo2.enable = true;
     hardware.yubikey.enable = true;
@@ -31,48 +32,50 @@ in {
     programs.command-not-found.enable = true;
     programs.yazi.enable = true;
 
-    home-manager.users."${username}" = let
-      homeDir = "/home/${username}";
-    in {
-      imports = [
+    home-manager.users."${username}" =
+      let
+        homeDir = "/home/${username}";
+      in
+      {
+        imports = [
           flake.self.homeModules.common
           ./ssh.nix
           flake.inputs.nix-index-database.homeModules.nix-index
           flake.self.homeModules.tui
-      ]
-      ++ optionals config.machine.impermanence [
-        ./impermanence.nix
-      ];
+        ]
+        ++ optionals config.machine.impermanence [
+          ./impermanence.nix
+        ];
 
-      home.username = username;
-      home.homeDirectory = mkOverride 10 homeDir;
+        home.username = username;
+        home.homeDirectory = mkOverride 10 homeDir;
 
-      # pretty sure this is disable because useDefaultShell = false; doesn't
-      # resolve some issue I was having
-      #programs.bash.enable = true;
-      # The 'programs.command-not-found.enable' option is mutually exclusive
-      # with the 'programs.nix-index.enableBashIntegration' option.
-      #programs.command-not-found.enable = true;
+        # pretty sure this is disable because useDefaultShell = false; doesn't
+        # resolve some issue I was having
+        #programs.bash.enable = true;
+        # The 'programs.command-not-found.enable' option is mutually exclusive
+        # with the 'programs.nix-index.enableBashIntegration' option.
+        #programs.command-not-found.enable = true;
 
-      programs.nix-index.enable = true;
-      #programs.nix-index.enableBashIntegration = config.programs.bash.enable;
-      programs.nix-index.enableZshIntegration = config.programs.zsh.enable;
-      programs.nix-index-database.comma.enable = true;
+        programs.nix-index.enable = true;
+        #programs.nix-index.enableBashIntegration = config.programs.bash.enable;
+        programs.nix-index.enableZshIntegration = config.programs.zsh.enable;
+        programs.nix-index-database.comma.enable = true;
 
-      programs.fzf.enable = true;
+        programs.fzf.enable = true;
 
-      programs.ssh.enable = true;
-      programs.starship.enable = true;
-      programs.zsh.enable = true;
+        programs.ssh.enable = true;
+        programs.starship.enable = true;
+        programs.zsh.enable = true;
 
-      # per https://github.com/solokeys/solo2/discussions/108#discussioncomment-12253610
-      # gpg doesn't support resident keys
-      #services.gpg-agent.enable = true;
-      # is the agent needed anyway with services.gpg-agent?
-      # yes, gpg-agent doesn't support resident keys. at least not the solo2.
-      services.ssh-agent.enable = true;
+        # per https://github.com/solokeys/solo2/discussions/108#discussioncomment-12253610
+        # gpg doesn't support resident keys
+        #services.gpg-agent.enable = true;
+        # is the agent needed anyway with services.gpg-agent?
+        # yes, gpg-agent doesn't support resident keys. at least not the solo2.
+        services.ssh-agent.enable = true;
 
-      home.packages = [
+        home.packages = [
           pkgs.isd # systemd tui
 
           #pkgs.inxi # cli extensive system information
@@ -130,9 +133,9 @@ in {
 
           # mprocs # run multiple log running commands at once and see output
           # presenterm # Presentations
-      ];
+        ];
 
-    };
+      };
   };
 
 }

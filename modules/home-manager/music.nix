@@ -1,11 +1,12 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: let
+{ pkgs
+, lib
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
-in {
+in
+{
   # Repo with lots of radio stations
   # https://github.com/junguler/m3u-radio-music-playlists.git
   config = mkIf config.services.mopidy.enable {
@@ -19,10 +20,10 @@ in {
     services.mpris-proxy.enable = true;
 
     # Configure a MPD client.
-#    programs.ncmpcpp = {
-#      enable = true;
-#      mpdMusicDir = musicDir;
-#    };
+    #    programs.ncmpcpp = {
+    #      enable = true;
+    #      mpdMusicDir = musicDir;
+    #    };
 
     services.mopidy = {
       extensionPackages = [
@@ -79,13 +80,13 @@ in {
           ];
         };
 
-#        m3u = {
-#          enabled = true;
-#          base_dir = musicDir;
-#          playlists_dir = playlistsDir;
-#          default_encoding = "utf-8";
-#          default_extension = ".m3u8";
-#        };
+        #        m3u = {
+        #          enabled = true;
+        #          base_dir = musicDir;
+        #          playlists_dir = playlistsDir;
+        #          default_encoding = "utf-8";
+        #          default_extension = ".m3u8";
+        #        };
       };
     };
   };

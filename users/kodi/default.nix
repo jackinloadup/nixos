@@ -1,20 +1,21 @@
-{
-  flake,
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ flake
+, lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkOption types;
   inherit (builtins) elem;
   home-manager = flake.inputs.home-manager;
-in {
+in
+{
   imports = [
   ];
 
   # Make user available in user list
   options.machine.users = mkOption {
-    type = with types; listOf (enum ["kodi"]);
+    type = with types; listOf (enum [ "kodi" ]);
   };
 
   # If user is enabled

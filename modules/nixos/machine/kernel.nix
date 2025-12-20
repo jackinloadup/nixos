@@ -1,13 +1,14 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkOption mkEnableOption types optional;
   cfg = config.machine.kernel;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   # TODO refactor into config.boot.kernel*(something)
   options.machine.kernel = {
@@ -30,7 +31,7 @@ in {
   };
 
   config.boot.kernelParams =
-    []
+    [ ]
     # Allow time for vmcore memory image to be saved
     # time require is related to memory size and storage speed.
     # 30 secs was recommended

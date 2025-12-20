@@ -1,21 +1,22 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) attrNames mkIf mkEnableOption genAttrs types;
   cfg = config.machine;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
+  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
   printer = {
     make = "Brother";
     model = "MFC-9130CW";
     address = "printer.home.lucasr.com";
     location = "Office";
   };
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   options.gumdrop.printerScanner = mkEnableOption "Setup using the printer and scanner";
 
@@ -32,8 +33,8 @@ in {
 
     services.colord.enable = true;
 
-    systemd.services."paperless-task-queue.servicepaperless-scheduler.service".requires = ["network-online.target"];
-    systemd.services."paperless-task-queue.service".requires = ["network-online.target"];
+    systemd.services."paperless-task-queue.servicepaperless-scheduler.service".requires = [ "network-online.target" ];
+    systemd.services."paperless-task-queue.service".requires = [ "network-online.target" ];
 
     hardware.printers.ensurePrinters = with printer; [
       {
@@ -58,6 +59,6 @@ in {
       };
     };
 
-    users.users = addExtraGroups normalUsers ["scanner" "lp"];
+    users.users = addExtraGroups normalUsers [ "scanner" "lp" ];
   };
 }

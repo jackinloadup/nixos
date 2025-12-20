@@ -1,14 +1,15 @@
-{
-  config,
-  pkgs,
-  nixosConfig,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, nixosConfig
+, lib
+, inputs
+, ...
+}:
+let
   settings = import ../../settings;
   isGraphical = nixosConfig.machine.sizeTarget > 1;
-in {
+in
+{
   config = lib.mkIf config.services.dunst.enable {
     # Display desktop notfications.
     services.dunst = {

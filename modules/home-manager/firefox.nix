@@ -1,13 +1,14 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: let
-  inherit (lib) mkIf; #makeDesktopItem;
+{ config
+, pkgs
+, lib
+, inputs
+, ...
+}:
+let
+  inherit (lib) mkIf;#makeDesktopItem;
   inherit (lib.attrsets) genAttrs;
-in {
+in
+{
   config = mkIf config.programs.firefox.enable {
     home.packages = [
       pkgs.speechd # for speech synthesis
@@ -36,7 +37,8 @@ in {
         "x-scheme-handler/https"
         "x-scheme-handler/about"
         "x-scheme-handler/unknown"
-      ] (name: "firefox.desktop");
+      ]
+        (name: "firefox.desktop");
     };
 
     wayland.windowManager.sway.config.floating.criteria = [

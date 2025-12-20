@@ -1,13 +1,13 @@
-
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, inputs
+, ...
+}:
+let
   inherit (lib) mkIf optionalString;
-in {
+in
+{
   config = mkIf config.programs.bash.enable {
     programs.bash = {
       historyFile = "~/.local/state/bash/history";
@@ -15,7 +15,7 @@ in {
         "ignoredups"
         "ignorespace"
       ];
-      historyIgnore = ["l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit"];
+      historyIgnore = [ "l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit" ];
       initExtra =
         ''
         ''

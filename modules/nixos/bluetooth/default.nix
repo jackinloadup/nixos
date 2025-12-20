@@ -1,12 +1,13 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf;
   ifGraphical = config.machine.sizeTarget > 1;
-in {
+in
+{
   config = mkIf config.hardware.bluetooth.enable {
     # this is likely only needed on interactive computers?
     # https://github.com/bluez/bluez/issues/319#issuecomment-1795890729
@@ -57,7 +58,7 @@ in {
       };
     };
 
-    home-manager.sharedModules = [ {
+    home-manager.sharedModules = [{
       # a proxy forwarding Bluetooth MIDI controls via MPRIS2
       # to control media players.
       services.mpris-proxy.enable = true;

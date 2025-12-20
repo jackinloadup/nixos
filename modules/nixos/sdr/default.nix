@@ -1,20 +1,21 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf attrNames genAttrs;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
-in {
+  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+in
+{
   imports = [
     ./rtl_433.nix
     ./chirp.nix
   ];
 
   config = mkIf config.hardware.rtl-sdr.enable {
-    users.users = addExtraGroups normalUsers ["plugdev"];
+    users.users = addExtraGroups normalUsers [ "plugdev" ];
 
     environment.systemPackages = with pkgs; [
       cubicsdr

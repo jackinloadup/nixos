@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, ... }:
+{ pkgs ? import <nixpkgs> { }, ... }:
 
 # https://jjjollyjim.github.io/arewehackersyet/index.html
 pkgs.mkShell {

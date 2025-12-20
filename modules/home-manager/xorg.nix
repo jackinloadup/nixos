@@ -1,13 +1,14 @@
-{
-  config,
-  pkgs,
-  nixosConfig,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, nixosConfig
+, lib
+, inputs
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
-in {
+in
+{
   #config = mkIf nixosConfig.services.xserver.enable {
   #  home.keyboard = null; # only works with x11 i believe
   #  home.pointerCursor.x11.enable = mkDefault true;

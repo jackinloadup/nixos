@@ -2,7 +2,8 @@
 let
   inherit (lib) mkIf;
   unstable = flake.inputs.nixpkgs-unstable;
-in {
+in
+{
   imports = [
     {
       disabledModules = [
@@ -94,7 +95,7 @@ in {
       };
 
       config = {
-        sun = {};
+        sun = { };
         # sun.elevation = 247;
         # esphome = {}; # fails
         # camera = [];
@@ -102,7 +103,7 @@ in {
         # conversation = {};
         # history = {};
         # logbook = {};
-        config = {};
+        config = { };
         homeassistant = {
           name = "Home";
           #latitude = "!secret latitude";
@@ -111,7 +112,8 @@ in {
           #unit_system = "metric";
           time_zone = "America/Chicago";
           auth_providers = [
-            { type = "trusted_networks";
+            {
+              type = "trusted_networks";
               trusted_networks = [
                 "10.16.1.0/24"
                 "10.100.0.0/24"
@@ -136,9 +138,9 @@ in {
         };
         frontend = { };
         mobile_app = { };
-        rest_command = {};
-        api = {};
-        mqtt = {};
+        rest_command = { };
+        api = { };
+        mqtt = { };
         #mqtt = {
         #  keepalive = 60;
         #  protocol = 3.1;
@@ -180,7 +182,7 @@ in {
             use_blueprint = {
               path = "SgtBatten/Stable.yaml";
               input = {
-                presence_filter = [""];
+                presence_filter = [ "" ];
                 camera = [
                   "camera.front"
                 ];
@@ -241,12 +243,12 @@ in {
       enable = true;
       settings = {
         homeassistant = mkIf config.services.home-assistant.enable {
-           # Optional: Home Assistant discovery topic (default: shown below)
-           # Note: should be different from [MQTT base topic](../mqtt.md) to prevent errors in HA software
-           discovery_topic = "homeassistant";
-           # Optional: Home Assistant status topic (default: shown below)
-           # Note: in addition to the `status_topic`, 'homeassistant/status' will also be used
-           status_topic = "hass/status";
+          # Optional: Home Assistant discovery topic (default: shown below)
+          # Note: should be different from [MQTT base topic](../mqtt.md) to prevent errors in HA software
+          discovery_topic = "homeassistant";
+          # Optional: Home Assistant status topic (default: shown below)
+          # Note: in addition to the `status_topic`, 'homeassistant/status' will also be used
+          status_topic = "hass/status";
         };
         frontend = {
           port = 8080;
@@ -271,10 +273,10 @@ in {
           # Optional: ZigBee pan ID (default: shown below)
           # Setting pan_id: GENERATE will make Zigbee2MQTT generate a new panID on next startup
           #pan_id =  "0x1a62";
-          pan_id =  4695;
+          pan_id = 4695;
           # Optional: Zigbee extended pan ID, GENERATE will make Zigbee2MQTT generate a new extended panID on next startup (default: shown below)
           #ext_pan_id = ["0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD" "0xDD"];
-          ext_pan_id = [3422 9650 3893 1478 2004 8834 4356 9974];
+          ext_pan_id = [ 3422 9650 3893 1478 2004 8834 4356 9974 ];
           # Optional: ZigBee channel, changing requires re-pairing of all devices. (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid Problems)
           # (default: 11)
           channel = 11;
@@ -310,7 +312,7 @@ in {
             # trusted.
             # TODO make this more secure
             mosquitto = {
-              acl = ["readwrite #"];
+              acl = [ "readwrite #" ];
               password = "mosquitto";
             };
           };
@@ -319,6 +321,6 @@ in {
     };
 
     # TODO submit upstream?
-    systemd.services.mosquitto.after = ["network-online.target"];
+    systemd.services.mosquitto.after = [ "network-online.target" ];
   };
 }

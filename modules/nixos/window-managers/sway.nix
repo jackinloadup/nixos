@@ -1,13 +1,15 @@
-{ lib, pkgs, config, ... }: let
+{ lib, pkgs, config, ... }:
+let
   inherit (lib) mkIf mkDefault;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   config = mkIf config.programs.sway.enable {
- #   environment.sessionVariables = {
- #     # Hint to electron apps to use wayland
- #     NIXOS_OZONE_WL = "1";
- #   };
+    #   environment.sessionVariables = {
+    #     # Hint to electron apps to use wayland
+    #     NIXOS_OZONE_WL = "1";
+    #   };
     # I think this comes for free when enabling programs.sway.enable
     #programs.xwayland.enable = mkDefault true;
 
@@ -55,10 +57,10 @@ in {
           enable = mkDefault true;
           settings = {
             screencast = {
-            #  OUTPUT_NAME = "HDMI-A-1";
-            #  MAX_FPS = 30;
-            #  exec_before = "disable_notifications.sh";
-            #  exec_after = "enable_notifications.sh";
+              #  OUTPUT_NAME = "HDMI-A-1";
+              #  MAX_FPS = 30;
+              #  exec_before = "disable_notifications.sh";
+              #  exec_after = "enable_notifications.sh";
               chooser_type = "simple";
               chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
             };

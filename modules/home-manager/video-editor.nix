@@ -1,33 +1,34 @@
-{
-  flake,
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ flake
+, pkgs
+, config
+, lib
+, ...
+}:
+let
   inherit (lib) mkDefault;
-in {
+in
+{
   imports = [
     ./flatpak.nix
   ];
 
   config = {
-     # If kdenlive give more grief, maybe look into distrobox
-     services.flatpak.enable = mkDefault true;
-     services.flatpak.packages = [
-       #{ appId = "com.brave.Browser"; origin = "flathub";  }
-       #"com.obsproject.Studio"
-       #"im.riot.Riot"
-       "org.kde.kdenlive"
-       #"org.gnome.gitlab.somas.Apostrophe" # distraction-free markdown editor
-     ];
-     programs.obs-studio = {
-       enable = mkDefault true;
-       plugins = [
-         pkgs.obs-studio-plugins.wlrobs
-         pkgs.obs-studio-plugins.obs-multi-rtmp
-       ];
-     };
+    # If kdenlive give more grief, maybe look into distrobox
+    services.flatpak.enable = mkDefault true;
+    services.flatpak.packages = [
+      #{ appId = "com.brave.Browser"; origin = "flathub";  }
+      #"com.obsproject.Studio"
+      #"im.riot.Riot"
+      "org.kde.kdenlive"
+      #"org.gnome.gitlab.somas.Apostrophe" # distraction-free markdown editor
+    ];
+    programs.obs-studio = {
+      enable = mkDefault true;
+      plugins = [
+        pkgs.obs-studio-plugins.wlrobs
+        pkgs.obs-studio-plugins.obs-multi-rtmp
+      ];
+    };
     # kdenlive is disabled below because it simply doesn't appear to work. I
     # couldn't get Christine's save files to open. I put her on flatpak because
     # of issues and after trying to figure it out again, flatpak is the way to
@@ -38,7 +39,7 @@ in {
       pkgs.blender # 3D render
       #pkgs.kdenlive # video editor
       #pkgs.libsForQt5.kdenlive
-          #wrapProgram $out/bin/kdenlive --prefix LADSPA_PATH : ${pkgs.rnnoise-plugin}/lib/ladspa
+      #wrapProgram $out/bin/kdenlive --prefix LADSPA_PATH : ${pkgs.rnnoise-plugin}/lib/ladspa
       #(pkgs.kdenlive.overrideAttrs (prevAttrs: {
       #  nativeBuildInputs = (prevAttrs.nativeBuildInputs or [ ]) ++ [ pkgs.makeBinaryWrapper ];
       #  postInstall = (prevAttrs.postInstall or "") + ''

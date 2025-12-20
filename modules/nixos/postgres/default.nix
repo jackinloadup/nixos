@@ -1,14 +1,15 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
+{ lib
+, config
+, pkgs
+, ...
+}:
+let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.postgresql.enable {
     # Open port to nextwork
-    networking.firewall.allowedTCPPorts = [config.services.postgresql.settings.port];
+    networking.firewall.allowedTCPPorts = [ config.services.postgresql.settings.port ];
 
     services.postgresql = {
       package = pkgs.postgresql_16;
@@ -91,7 +92,7 @@ in {
     };
     #
     # Mount Nextcloud Storage
-    system.fsPackages = [pkgs.sshfs];
+    system.fsPackages = [ pkgs.sshfs ];
     fileSystems.postgresqlBackup = {
       mountPoint = "/mnt/postgres";
       device = "postgres@truenas.home.lucasr.com:/mnt/storage/backed-up/postgres/";

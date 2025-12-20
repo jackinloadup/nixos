@@ -1,6 +1,5 @@
-{
-  flake,
-  ...
+{ flake
+, ...
 }: {
   imports = [
     ../../profiles/intel.nix
@@ -8,7 +7,7 @@
   ];
 
   config = {
-    boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+    boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     boot.loader.efi.efiSysMountPoint = "/boot/EFI";
     boot.loader.efi.canTouchEfiVariables = true;
 

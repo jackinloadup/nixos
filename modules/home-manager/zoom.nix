@@ -1,13 +1,14 @@
-{
-  config,
-  pkgs,
-  nixosConfig,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, nixosConfig
+, lib
+, inputs
+, ...
+}:
+let
   cfg = config.programs.zoom-us;
-in {
+in
+{
   options = {
     programs.zoom-us.enable = lib.mkEnableOption "Enable Zoom-us application and settings";
   };

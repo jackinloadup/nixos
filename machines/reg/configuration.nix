@@ -1,14 +1,14 @@
-{
-  flake,
-  pkgs,
-  lib,
-  config,
-  ...
+{ flake
+, pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib) mkForce mkDefault getExe;
   debug = false;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelFull
@@ -94,7 +94,7 @@ in {
         };
         Discovery = {
           MDNS.Enabled = true;
-         #Swarm.AddrFilters = null;
+          #Swarm.AddrFilters = null;
         };
         Addresses.API = "/ip4/127.0.0.1/tcp/5001";
         Experimental.FilestoreEnabled = true;
@@ -175,15 +175,15 @@ in {
 
     environment.profileRelativeEnvVars = {
       QT_PLUGIN_PATH = [
-      #  ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix)
+        #  ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix)
         ("/run/current-system/sw/" + pkgs.qt6.qtbase.qtPluginPrefix)
       ];
 
       QML2_IMPORT_PATH = [
-       # ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtqmlprefix)
+        # ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtqmlprefix)
         ("/run/current-system/sw/" + pkgs.qt6.qtbase.qtPluginPrefix)
       ];
-      XDG_DATA_DIRS = ["/run/current-system/sw/share"];
+      XDG_DATA_DIRS = [ "/run/current-system/sw/share" ];
     };
 
     environment.variables = {
@@ -214,10 +214,10 @@ in {
       vpn.client.ip = "10.100.0.11/24";
     };
 
-    networking.bridges.br0.interfaces = ["eno1"];
+    networking.bridges.br0.interfaces = [ "eno1" ];
     networking.interfaces.br0.useDHCP = true;
     networking.enableIPv6 = false;
-    virtualisation.libvirtd.allowedBridges = ["br0"];
+    virtualisation.libvirtd.allowedBridges = [ "br0" ];
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.

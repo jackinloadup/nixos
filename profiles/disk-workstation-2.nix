@@ -1,10 +1,10 @@
-{
-  lib,
-  flake,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, flake
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
   inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
@@ -22,7 +22,8 @@
   rootPartionName = "nixos_${hostname}";
   impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
-in {
+in
+{
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}
   imports = [
     flake.inputs.disko.nixosModules.disko
@@ -118,34 +119,36 @@ in {
           #mountpoint = "/persist";
           mountOptions = [ "x-gvfs-hide" ]; # didn't seem to work
 
-          datasets = let
-            unmountable = {
-              type = "zfs_fs";
-              mountpoint = null;
-              options.canmount = "off";
-            };
-            filesystem = mountpoint: {
-              type = "zfs_fs";
-              inherit mountpoint;
-              #  options."com.sun:auto-snapshot" = "true";
-            };
-          in {
-            "local" = unmountable;
-            "safe" = unmountable;
-            "local/nix" = filesystem "/nix" // {options.mountpoint = "legacy";};
-            #} // mkIf impermanence {
-            "local/etc" = filesystem "/persist/etc";
-            "local/lib" = filesystem "/persist/lib";
-            "local/log" = filesystem "/persist/log";
-            "safe/home" = filesystem "/persist/home";
-            #} // mkIf (!tmpfsRoot) {
-            "local/root" =
-              filesystem "/"
-              // {
-                postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
-                options.mountpoint = "legacy";
+          datasets =
+            let
+              unmountable = {
+                type = "zfs_fs";
+                mountpoint = null;
+                options.canmount = "off";
               };
-          };
+              filesystem = mountpoint: {
+                type = "zfs_fs";
+                inherit mountpoint;
+                #  options."com.sun:auto-snapshot" = "true";
+              };
+            in
+            {
+              "local" = unmountable;
+              "safe" = unmountable;
+              "local/nix" = filesystem "/nix" // { options.mountpoint = "legacy"; };
+              #} // mkIf impermanence {
+              "local/etc" = filesystem "/persist/etc";
+              "local/lib" = filesystem "/persist/lib";
+              "local/log" = filesystem "/persist/log";
+              "safe/home" = filesystem "/persist/home";
+              #} // mkIf (!tmpfsRoot) {
+              "local/root" =
+                filesystem "/"
+                // {
+                  postCreateHook = "zfs snapshot ${zfsPoolName}/local/root@blank";
+                  options.mountpoint = "legacy";
+                };
+            };
         };
       };
     };

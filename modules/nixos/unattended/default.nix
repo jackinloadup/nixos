@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkForce mkEnableOption;
-in {
+in
+{
   options.boot.unattended = mkEnableOption "Optimise for an unattended machine";
 
   #imports = mkIf config.boot.unattended [

@@ -3,7 +3,8 @@
 let
   inherit (lib) mkDefault mkForce;
   isUserFacing = false;
-in {
+in
+{
 
   imports = [
     flake.self.nixosModules.default
@@ -28,17 +29,17 @@ in {
     boot.initrd = {
       #preFailCommands = lib.mkOrder 400 ''echo "preFailCommands WOOT"'';
       #preLVMCommands = lib.mkOrder 400 "sleep 1";
-    #  network.enable = true;
-    #  network.ssh.enable = true;
-    #  network.tor.enable = true;
-    #  network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
-    #  systemd.network.enable = true;
-    #  systemd.network.wait-online.enable = true;
-  #   systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
-    #  systemd.extraBin = {
-    #    ip = "${pkgs.iproute2}/bin/ip";
-    #    #ps = "${pkgs.procps}/bin/ps";
-    #  };
+      #  network.enable = true;
+      #  network.ssh.enable = true;
+      #  network.tor.enable = true;
+      #  network.ntpd.address = "5.78.71.97"; # ip of 0.north-america.pool.ntp.org
+      #  systemd.network.enable = true;
+      #  systemd.network.wait-online.enable = true;
+      #   systemd.network.wait-online.ignoredInterfaces = [ "lo" ];
+      #  systemd.extraBin = {
+      #    ip = "${pkgs.iproute2}/bin/ip";
+      #    #ps = "${pkgs.procps}/bin/ps";
+      #  };
 
       # TODO I haven't figured out get wifi working
       # Network card drivers. Check `lshw` if unsure.
@@ -71,7 +72,8 @@ in {
     hardware.bluetooth.enable = isUserFacing;
 
     networking.firewall.allowedTCPPorts = [
-      80 443 # nginx
+      80
+      443 # nginx
       5000 # un authenticated frigate
     ];
 
@@ -111,10 +113,10 @@ in {
     };
 
     gumdrop = {
-    #  printerScanner = false;
-    #  storageServer.enable = false;
-    #  storageServer.media = true;
-    #  storageServer.roms = true;
+      #  printerScanner = false;
+      #  storageServer.enable = false;
+      #  storageServer.media = true;
+      #  storageServer.roms = true;
 
       vpn.server.endpoint = "vpn.lucasr.com:51820";
       vpn.client.enable = true;

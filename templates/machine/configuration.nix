@@ -1,14 +1,14 @@
-{
-  self,
-  flake,
-  pkgs,
-  lib,
-  ...
+{ self
+, flake
+, pkgs
+, lib
+, ...
 }:
 # Machine runs DNS and home-assistant vm
 let
   inherit (lib) mkForce mkDefault;
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
   ];

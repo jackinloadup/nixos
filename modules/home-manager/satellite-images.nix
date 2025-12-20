@@ -1,14 +1,13 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 
 let
   inherit (lib) mkEnableOption mkOption mkIf types;
   cfg = config.services.satellite-images;
-  script =  pkgs.writeShellApplication {
+  script = pkgs.writeShellApplication {
     name = "satellite-image-downloader";
 
     runtimeInputs = [
@@ -63,10 +62,10 @@ let
 
     '';
   };
-      #convert "$input" -resize "${width}x${height}^" -gravity center -crop "${width}x${height}+0+0" $output
-      #3440x1440
+  #convert "$input" -resize "${width}x${height}^" -gravity center -crop "${width}x${height}+0+0" $output
+  #3440x1440
 
-  createTimelapseScript =  pkgs.writeShellApplication {
+  createTimelapseScript = pkgs.writeShellApplication {
     name = "satellite-image-timelapse";
 
     runtimeInputs = [
@@ -84,7 +83,7 @@ let
     '';
   };
 
-  deleteOldFilesScript =  pkgs.writeShellApplication {
+  deleteOldFilesScript = pkgs.writeShellApplication {
     name = "satellite-image-cleaner";
 
     runtimeInputs = [
@@ -103,7 +102,7 @@ let
     '';
   };
 
-  loopImagesScript =  pkgs.writeShellApplication {
+  loopImagesScript = pkgs.writeShellApplication {
     name = "satellite-image-loop";
 
     runtimeInputs = [
@@ -144,7 +143,8 @@ let
     '';
   };
 
-in {
+in
+{
   options = {
     services.satellite-images = {
       enable = mkEnableOption "Enable service to grab latest satellite images";

@@ -1,7 +1,7 @@
-{
-  pkgs,
-  ...
-}: let
+{ pkgs
+, ...
+}:
+let
   interactive = ''
       bindkey '^a' beginning-of-line
 
@@ -56,72 +56,73 @@
       }
       zle -N fancy-ctrl-z
       bindkey '^Z' fancy-ctrl-z
-    ''
+  ''
 
-    # interrupts `nix store ping` and some ssh sessions when in
-    #   environment.sessionVariables
-    # might need to be interactive only.
-    # less.envVariables is worse than environment.sessionVariables
-    # the commands aren't evaluated. They are printed in place.
-    + ''
-         export LESS_TERMCAP_mb="$(tput bold; tput setaf 2)";
-         export LESS_TERMCAP_md="$(tput bold; tput setaf 3)";
-         export LESS_TERMCAP_me="$(tput sgr0)";
-         export LESS_TERMCAP_so="$(tput bold; tput setaf 3; tput setab 4)";
-         export LESS_TERMCAP_se="$(tput rmso; tput sgr0)";
-         export LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 2)";
-         export LESS_TERMCAP_ue="$(tput rmul; tput sgr0)";
-         export LESS_TERMCAP_mr="$(tput rev)";
-         export LESS_TERMCAP_mh="$(tput dim)";
-         export LESS_TERMCAP_ZN="$(tput ssubm)";
-         export LESS_TERMCAP_ZV="$(tput rsubm)";
-         export LESS_TERMCAP_ZO="$(tput ssupm)";
-         export LESS_TERMCAP_ZW="$(tput rsupm)";
-    '';
-in {
-    # might break current auto start sway script
-    #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
+  # interrupts `nix store ping` and some ssh sessions when in
+  #   environment.sessionVariables
+  # might need to be interactive only.
+  # less.envVariables is worse than environment.sessionVariables
+  # the commands aren't evaluated. They are printed in place.
+  + ''
+    export LESS_TERMCAP_mb="$(tput bold; tput setaf 2)";
+    export LESS_TERMCAP_md="$(tput bold; tput setaf 3)";
+    export LESS_TERMCAP_me="$(tput sgr0)";
+    export LESS_TERMCAP_so="$(tput bold; tput setaf 3; tput setab 4)";
+    export LESS_TERMCAP_se="$(tput rmso; tput sgr0)";
+    export LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 2)";
+    export LESS_TERMCAP_ue="$(tput rmul; tput sgr0)";
+    export LESS_TERMCAP_mr="$(tput rev)";
+    export LESS_TERMCAP_mh="$(tput dim)";
+    export LESS_TERMCAP_ZN="$(tput ssubm)";
+    export LESS_TERMCAP_ZV="$(tput rsubm)";
+    export LESS_TERMCAP_ZO="$(tput ssupm)";
+    export LESS_TERMCAP_ZW="$(tput rsupm)";
+  '';
+in
+{
+  # might break current auto start sway script
+  #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
 
-    #environment.systemPackages = with pkgs; [
-    #  starship
-    #];
+  #environment.systemPackages = with pkgs; [
+  #  starship
+  #];
 
-    environment.pathsToLink = [ "/share/zsh" ];
-    environment.shells = [ pkgs.zsh ];
+  environment.pathsToLink = [ "/share/zsh" ];
+  environment.shells = [ pkgs.zsh ];
 
-    programs.zsh = {
-      enable = true;
+  programs.zsh = {
+    enable = true;
 
-      syntaxHighlighting = {
-        enable = false;
-        highlighters = [
-          "main"
-          "brackets"
-          "root"
-          #"pattern"
-          #"line"
-        ];
-      };
-      autosuggestions.enable = false; #for systemwide?
-      autosuggestions.extraConfig.ZSH_AUTOSUGGEST_USE_ASYNC = "y";
-
-      setOptions = [
-        "noautomenu"
-        "nomenucomplete"
-        "AUTO_CD"
-        "BANG_HIST"
-        "EXTENDED_HISTORY"
-        "HIST_EXPIRE_DUPS_FIRST"
-        "HIST_FIND_NO_DUPS"
-        "HIST_IGNORE_ALL_DUPS"
-        "HIST_IGNORE_DUPS"
-        "HIST_IGNORE_SPACE"
-        "HIST_REDUCE_BLANKS"
-        "HIST_SAVE_NO_DUPS"
-        "INC_APPEND_HISTORY"
-        "SHARE_HISTORY"
+    syntaxHighlighting = {
+      enable = false;
+      highlighters = [
+        "main"
+        "brackets"
+        "root"
+        #"pattern"
+        #"line"
       ];
-
-      interactiveShellInit = interactive;
     };
-  }
+    autosuggestions.enable = false; #for systemwide?
+    autosuggestions.extraConfig.ZSH_AUTOSUGGEST_USE_ASYNC = "y";
+
+    setOptions = [
+      "noautomenu"
+      "nomenucomplete"
+      "AUTO_CD"
+      "BANG_HIST"
+      "EXTENDED_HISTORY"
+      "HIST_EXPIRE_DUPS_FIRST"
+      "HIST_FIND_NO_DUPS"
+      "HIST_IGNORE_ALL_DUPS"
+      "HIST_IGNORE_DUPS"
+      "HIST_IGNORE_SPACE"
+      "HIST_REDUCE_BLANKS"
+      "HIST_SAVE_NO_DUPS"
+      "INC_APPEND_HISTORY"
+      "SHARE_HISTORY"
+    ];
+
+    interactiveShellInit = interactive;
+  };
+}

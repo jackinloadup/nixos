@@ -1,13 +1,18 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault mkEnableOption;
   cfg = config.machine;
-in {
-  #(inputs.nixpkgs + "nixos/modules/profiles/minimal.nix")
+in
+{
+  imports = [
+    # causing infinite recursion
+    #(inputs.nixpkgs + "nixos/modules/profiles/minimal.nix")
+  ];
+
   options.machine.minimal = mkEnableOption "Disable stuff not needed on minimal systems";
 
   config = mkIf cfg.minimal {
@@ -26,7 +31,7 @@ in {
     # Remove unnessisary vpn plugins mostly
     # I don't think this is having the impact I expect
     # Still see openvpn and other things
-    networking.networkmanager.plugins = mkDefault [];
+    networking.networkmanager.plugins = mkDefault [ ];
 
     # This may be undesirable if Nix commands are not going to be run on the
     # built system since it adds nixpkgs to the system closure. For such

@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   inherit (lib) getExe mkDefault;
-in {
+in
+{
   config = {
     home-manager.sharedModules = [
-      ({config, ... }: {
+      ({ config, ... }: {
         home.packages = [
           # conflicted with k3s, which provides a variation of the package
           #pkgs.kubectl
@@ -21,24 +23,26 @@ in {
           pkgs.nur.repos.rycee.firefox-addons.zoom-redirector
         ];
 
-        xdg.desktopEntries.gather = let
-          url = "https://app.v2.gather.town/app/obsidian-3812d4d3-1a3e-4e30-b603-b31c7b22e94f/join";
-          icon = builtins.fetchurl {
-            url = "https://framerusercontent.com/images/P5hrzskVvpcfIIXVKNXfzAkXLw.png";
-            sha256 = "7c089864357290503eafa7ad216d78a6d4118ae70d07683745e1db1c7893e4c2";
+        xdg.desktopEntries.gather =
+          let
+            url = "https://app.v2.gather.town/app/obsidian-3812d4d3-1a3e-4e30-b603-b31c7b22e94f/join";
+            icon = builtins.fetchurl {
+              url = "https://framerusercontent.com/images/P5hrzskVvpcfIIXVKNXfzAkXLw.png";
+              sha256 = "7c089864357290503eafa7ad216d78a6d4118ae70d07683745e1db1c7893e4c2";
+            };
+            chromium = getExe config.programs.chromium.package;
+          in
+          {
+            name = "Gather";
+            genericName = "Gather";
+            comment = "Open Gather in a chromeless browser";
+            exec = "${pkgs.systemd}/bin/systemd-cat --identifier=gather-browser ${chromium} --app=${url}";
+            icon = icon;
+            terminal = false;
+            categories = [
+              "Utility"
+            ];
           };
-          chromium = getExe config.programs.chromium.package;
-        in {
-          name = "Gather";
-          genericName = "Gather";
-          comment = "Open Gather in a chromeless browser";
-          exec = "${pkgs.systemd}/bin/systemd-cat --identifier=gather-browser ${chromium} --app=${url}";
-          icon = icon;
-          terminal = false;
-          categories = [
-            "Utility"
-          ];
-        };
       })
     ];
 

@@ -1,13 +1,13 @@
-{
-  config,
-  flake,
-  lib,
-  ...
+{ config
+, flake
+, lib
+, ...
 }:
 # Machine is a work computer for obsidian.systems
 let
   inherit (lib) mkForce mkDefault;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.common
     flake.self.nixosModules.linux

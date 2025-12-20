@@ -1,15 +1,16 @@
-{
-  config,
-  pkgs,
-  nixosConfig,
-  lib,
-  flake,
-  ...
-}: let
+{ config
+, pkgs
+, nixosConfig
+, lib
+, flake
+, ...
+}:
+let
   inherit (lib) mkDefault getBin;
   settings = import ../../settings;
   ifGraphical = nixosConfig.machine.sizeTarget > 1;
-in {
+in
+{
   imports = [
     flake.inputs.stylix.homeModules.stylix
     ./navigation.nix
@@ -173,53 +174,53 @@ in {
     };
 
     home.packages = [
-        pkgs.drm_info # Small cli utility to dump info about DRM devices
+      pkgs.drm_info # Small cli utility to dump info about DRM devices
 
-        pkgs.gnomeExtensions.user-themes
-        pkgs.gnomeExtensions.tray-icons-reloaded
-        pkgs.gnomeExtensions.vitals
-        pkgs.gnomeExtensions.dash-to-panel
-        pkgs.gnomeExtensions.sound-output-device-chooser
-        pkgs.gnomeExtensions.space-bar
+      pkgs.gnomeExtensions.user-themes
+      pkgs.gnomeExtensions.tray-icons-reloaded
+      pkgs.gnomeExtensions.vitals
+      pkgs.gnomeExtensions.dash-to-panel
+      pkgs.gnomeExtensions.sound-output-device-chooser
+      pkgs.gnomeExtensions.space-bar
 
-        pkgs.gtk-engine-murrine # Unable to locate theme engine in module_path: "murrine"
-        pkgs.clearlooks-phenix
-      ]
-      ++ lib.optionals ifGraphical [
-        #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      pkgs.gtk-engine-murrine # Unable to locate theme engine in module_path: "murrine"
+      pkgs.clearlooks-phenix
+    ]
+    ++ lib.optionals ifGraphical [
+      #(aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
-        # GUI
-        # ---------------------------------------
+      # GUI
+      # ---------------------------------------
 
-        pkgs.libreoffice # Office suite
-        pkgs.libnotify # for notify-send
-        # darktile # alternative PTY to try out. GPU + go
+      pkgs.libreoffice # Office suite
+      pkgs.libnotify # for notify-send
+      # darktile # alternative PTY to try out. GPU + go
 
-        # Spelling
-        pkgs.hunspell
-        pkgs.hunspellDicts.en_US-large
-        pkgs.hyphen
+      # Spelling
+      pkgs.hunspell
+      pkgs.hunspellDicts.en_US-large
+      pkgs.hyphen
 
-        pkgs.xfce.thunar # File manager
-        #pantheon.elementary-files
-        #cinnamon.nemo # File manager
-        #pkgs.flameshot
-        pkgs.nautilus
-        pkgs.ffmpegthumbnailer # Video preview in file manager
-        pkgs.gnome-disk-utility
-        #calibre # ebook tool,  assist with kindle
-        #obsidian # Markdown information archive
+      pkgs.xfce.thunar # File manager
+      #pantheon.elementary-files
+      #cinnamon.nemo # File manager
+      #pkgs.flameshot
+      pkgs.nautilus
+      pkgs.ffmpegthumbnailer # Video preview in file manager
+      pkgs.gnome-disk-utility
+      #calibre # ebook tool,  assist with kindle
+      #obsidian # Markdown information archive
 
-        ## Audio
-        #pavucontrol # GUI volume source/sink manager
-        pkgs.pwvucontrol # GUI volume source/sink manager pipewire
+      ## Audio
+      #pavucontrol # GUI volume source/sink manager
+      pkgs.pwvucontrol # GUI volume source/sink manager pipewire
 
 
-        ## Fun
-        # cavalier # build failure
+      ## Fun
+      # cavalier # build failure
 
-        pkgs.usbview # GUI for usb devices
-      ];
+      pkgs.usbview # GUI for usb devices
+    ];
 
     programs.chromium.enable = true;
 
@@ -238,9 +239,9 @@ in {
 
 
       # Add the audio manager to the status bar.
-        # when using gnome the message that the monitor
-        # speaker disapeared would wake the system. This would start a cycle
-        # keeping the montior on
+      # when using gnome the message that the monitor
+      # speaker disapeared would wake the system. This would start a cycle
+      # keeping the montior on
       pasystray.enable = false;
 
       # Set a background image.

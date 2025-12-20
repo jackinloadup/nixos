@@ -1,15 +1,16 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
+{ lib
+, config
+, pkgs
+, ...
+}:
+let
   inherit (lib) mkIf;
   mountPoint = "/mnt/nextcloud";
   currentDatabase = "nextcloud31";
-in {
+in
+{
   config = mkIf config.services.nextcloud.enable {
-    networking.firewall.allowedTCPPorts = [80 443];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
 
     services.onlyoffice = {
       enable = false;
@@ -30,16 +31,16 @@ in {
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
         inherit calendar contacts notes tasks cookbook qownnotesapi
-          richdocuments # Collabora Online for Nextcloud - https://apps.nextcloud.com/apps/richdocuments
+          richdocuments# Collabora Online for Nextcloud - https://apps.nextcloud.com/apps/richdocuments
           ;
-# onlyoffice
+        # onlyoffice
         # Custom app example.
-#        socialsharing_telegram = pkgs.fetchNextcloudApp rec {
-#          url =
-#            "https://github.com/nextcloud-releases/socialsharing/releases/download/v3.0.1/socialsharing_telegram-v3.0.1.tar.gz";
-#          license = "agpl3";
-#          sha256 = "sha256-8XyOslMmzxmX2QsVzYzIJKNw6rVWJ7uDhU1jaKJ0Q8k=";
-#        };
+        #        socialsharing_telegram = pkgs.fetchNextcloudApp rec {
+        #          url =
+        #            "https://github.com/nextcloud-releases/socialsharing/releases/download/v3.0.1/socialsharing_telegram-v3.0.1.tar.gz";
+        #          license = "agpl3";
+        #          sha256 = "sha256-8XyOslMmzxmX2QsVzYzIJKNw6rVWJ7uDhU1jaKJ0Q8k=";
+        #        };
       };
       home = "${mountPoint}/lib";
       datadir = "${mountPoint}/data";
@@ -51,7 +52,7 @@ in {
         apcu = true;
       };
       settings = {
-        trusted_proxies = ["127.0.0.1/32" "10.16.1.0/24" "10.100.0.0/24"];
+        trusted_proxies = [ "127.0.0.1/32" "10.16.1.0/24" "10.100.0.0/24" ];
         csrf.optout = [ "/Nextcloud-android/" ];
         default_phone_region = "US";
 
@@ -145,7 +146,7 @@ in {
     users.groups.nextcloud.gid = 20000;
 
     # Mount Nextcloud Storage
-    system.fsPackages = [pkgs.sshfs];
+    system.fsPackages = [ pkgs.sshfs ];
     fileSystems.nextcloud = {
       inherit mountPoint;
       device = "nextcloud@truenas.home.lucasr.com:/mnt/storage/backed-up/nextcloud/";
@@ -184,9 +185,9 @@ in {
 
     # ensure that postgres is running *before* running the setup
     systemd.services."nextcloud-setup" = {
-      requires = ["postgresql.service" "network-online.target"];
-      after = ["postgresql.service" "mnt-nextcloud.mount"];
-      bindsTo = ["mnt-nextcloud.mount"];
+      requires = [ "postgresql.service" "network-online.target" ];
+      after = [ "postgresql.service" "mnt-nextcloud.mount" ];
+      bindsTo = [ "mnt-nextcloud.mount" ];
     };
 
     # response to depriciation
@@ -198,28 +199,29 @@ in {
     #'';
 
     services.postgresql =
-    let
-      dbUser = config.services.nextcloud.config.dbuser;
-    in {
-      enable = true;
-      ensureDatabases = [ currentDatabase ];
-      ensureUsers = [
-        {
-          name = "nextcloud";
-          # Depriciated
-          #ensurePermissions."database.nextcloud26" = "ALL PRIVILEGES";
-          #ensurePermissions."database.postgres" = "ALL PRIVILEGES";
-        }
-      ];
-      # allowing whole subnet as marulk uses dhcp
-      authentication = ''
-        host ${currentDatabase} ${dbUser} 10.16.1.0/24 md5
-        host postgres ${dbUser} 10.16.1.0/24 md5
-        host postgres ${dbUser} 127.0.0.1/32 md5
-      '';
-    };
+      let
+        dbUser = config.services.nextcloud.config.dbuser;
+      in
+      {
+        enable = true;
+        ensureDatabases = [ currentDatabase ];
+        ensureUsers = [
+          {
+            name = "nextcloud";
+            # Depriciated
+            #ensurePermissions."database.nextcloud26" = "ALL PRIVILEGES";
+            #ensurePermissions."database.postgres" = "ALL PRIVILEGES";
+          }
+        ];
+        # allowing whole subnet as marulk uses dhcp
+        authentication = ''
+          host ${currentDatabase} ${dbUser} 10.16.1.0/24 md5
+          host postgres ${dbUser} 10.16.1.0/24 md5
+          host postgres ${dbUser} 127.0.0.1/32 md5
+        '';
+      };
     services.postgresqlBackup.databases = [ currentDatabase ];
-        # Nightly database backups.
+    # Nightly database backups.
     #postgresqlBackup = {
     #  enable = true;
     #  startAt = "*-*-* 01:15:00";
@@ -247,7 +249,7 @@ in {
     };
 
     security.acme = {
-    #  acceptTerms = true;
+      #  acceptTerms = true;
       certs = {
         ${config.services.nextcloud.hostName}.email = "lriutzel@gmail.com";
       };
@@ -266,13 +268,13 @@ in {
         # Listen on loopback interface only, and accept requests from ::1
         net = {
           listen = "loopback";
-          post_allow.host = ["::1"];
+          post_allow.host = [ "::1" ];
         };
 
         # Restrict loading documents from WOPI Host nextcloud.example.com
         storage.wopi = {
           "@allow" = true;
-          host = ["nextcloud.lucasr.com"];
+          host = [ "nextcloud.lucasr.com" ];
         };
 
         # Set FQDN of server
@@ -280,30 +282,32 @@ in {
       };
     };
 
-    systemd.services.nextcloud-config-collabora = let
-      inherit (config.services.nextcloud) occ;
+    systemd.services.nextcloud-config-collabora =
+      let
+        inherit (config.services.nextcloud) occ;
 
-      wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
-      public_wopi_url = "https://collabora.lucasr.com";
-      wopi_allowlist = lib.concatStringsSep "," [
-        "127.0.0.1"
-        "::1"
-        "10.16.1.0/24" # pretty sure these two are needed
-        "10.100.0.0/24"
-      ];
-    in {
-      wantedBy = ["multi-user.target"];
-      after = ["nextcloud-setup.service" "coolwsd.service"];
-      requires = ["coolwsd.service"];
-      script = ''
-        ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_url --value ${lib.escapeShellArg wopi_url}
-        ${occ}/bin/nextcloud-occ config:app:set richdocuments public_wopi_url --value ${lib.escapeShellArg public_wopi_url}
-        ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_allowlist --value ${lib.escapeShellArg wopi_allowlist}
-        ${occ}/bin/nextcloud-occ richdocuments:setup
-      '';
-      serviceConfig = {
-        Type = "oneshot";
+        wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
+        public_wopi_url = "https://collabora.lucasr.com";
+        wopi_allowlist = lib.concatStringsSep "," [
+          "127.0.0.1"
+          "::1"
+          "10.16.1.0/24" # pretty sure these two are needed
+          "10.100.0.0/24"
+        ];
+      in
+      {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "nextcloud-setup.service" "coolwsd.service" ];
+        requires = [ "coolwsd.service" ];
+        script = ''
+          ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_url --value ${lib.escapeShellArg wopi_url}
+          ${occ}/bin/nextcloud-occ config:app:set richdocuments public_wopi_url --value ${lib.escapeShellArg public_wopi_url}
+          ${occ}/bin/nextcloud-occ config:app:set richdocuments wopi_allowlist --value ${lib.escapeShellArg wopi_allowlist}
+          ${occ}/bin/nextcloud-occ richdocuments:setup
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+        };
       };
-    };
   };
 }

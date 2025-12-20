@@ -1,12 +1,12 @@
-{
-  options,
-  res,
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}: let
+{ options
+, res
+, config
+, lib
+, pkgs
+, inputs
+, ...
+}:
+let
   inherit (lib) mkIf mkOption mkEnableOption mkMerge types readFile configDir dotFilesDir;
   cfg = config.modules.browsers.firefox;
   # use a custom build of firefox
@@ -49,7 +49,8 @@
       ${pkgs.mozlz4a}/bin/mozlz4a ./firefox.search.json $out
     '';
   };
-in {
+in
+{
   options.modules.browsers.firefox = with types; {
     enable = mkEnableOption "Enable firefox customizations";
     profileName = mkOption {
@@ -58,8 +59,8 @@ in {
     };
 
     settings = mkOption {
-      type = attrsOf (oneOf [bool int str]);
-      default = {};
+      type = attrsOf (oneOf [ bool int str ]);
+      default = { };
       description = ''
         Firefox preferences to set in <filename>user.js</filename>
       '';

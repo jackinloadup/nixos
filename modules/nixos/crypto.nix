@@ -1,6 +1,5 @@
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
   config = {
     services.trezord.enable = true;

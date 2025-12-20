@@ -1,7 +1,6 @@
-{
-  lib,
-  config,
-  ...
+{ lib
+, config
+, ...
 }:
 
 let
@@ -16,10 +15,12 @@ let
 
   modifier = "Mod4";
 
-  keybindings = let # Sway and I3 common keybindings
-    inherit (swayConfig) left down up right modifier;
-    mod = modifier;
-  in {
+  keybindings =
+    let # Sway and I3 common keybindings
+      inherit (swayConfig) left down up right modifier;
+      mod = modifier;
+    in
+    {
       ## Focus
       # Vim keys
       "${mod}+${left}" = "focus left";
@@ -68,8 +69,9 @@ let
       "${mod}+Shift+8" = "move container to workspace number 8";
       "${mod}+Shift+9" = "move container to workspace number 9";
       "${mod}+Shift+0" = "move container to workspace number 10";
-  };
-in {
+    };
+in
+{
   config = {
     wayland.windowManager.sway = {
       config = {

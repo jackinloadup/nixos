@@ -1,4 +1,4 @@
-{flake, pkgs, config, lib, ...}: {
+{ flake, pkgs, config, lib, ... }: {
   imports = [
     flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
     flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1
@@ -13,7 +13,7 @@
   ];
 
   config = {
-    boot.initrd.availableKernelModules = ["ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod"];
+    boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
     boot.loader.efi.canTouchEfiVariables = true;
 
     nixpkgs.hostPlatform = "x86_64-linux";

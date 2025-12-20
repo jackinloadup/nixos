@@ -1,6 +1,8 @@
-{ pkgs, config, lib, ...}: let
+{ pkgs, config, lib, ... }:
+let
   inherit (lib) mkEnableOption mkIf types mkOption optionals optionalAttrs;
-in {
+in
+{
   # Makes a hub and spoke vpn
   options.gumdrop.vpn = {
     server = {
@@ -21,25 +23,27 @@ in {
       };
     };
   };
-  config = let
-    cfg = config.gumdrop.vpn;
-  in {
-    # enable NAT
-    networking.nat = mkIf cfg.server.enable {
-      enable = true;
-      internalInterfaces = [ "wg0" ];
-      externalInterface = "br0";
-    };
+  config =
+    let
+      cfg = config.gumdrop.vpn;
+    in
+    {
+      # enable NAT
+      networking.nat = mkIf cfg.server.enable {
+        enable = true;
+        internalInterfaces = [ "wg0" ];
+        externalInterface = "br0";
+      };
 
-    networking.firewall = {
-      allowedTCPPorts = mkIf cfg.server.enable [ 53 ];
-      allowedUDPPorts = [ 51820 ]
-        ++ optionals cfg.server.enable [ 53 ];
-    };
+      networking.firewall = {
+        allowedTCPPorts = mkIf cfg.server.enable [ 53 ];
+        allowedUDPPorts = [ 51820 ]
+          ++ optionals cfg.server.enable [ 53 ];
+      };
 
-    networking.wireguard.enable = cfg.server.enable || cfg.client.enable;
-    networking.wireguard.interfaces = {}
-      // optionalAttrs cfg.server.enable {
+      networking.wireguard.enable = cfg.server.enable || cfg.client.enable;
+      networking.wireguard.interfaces = { }
+        // optionalAttrs cfg.server.enable {
         # "wg0" is the network interface name. You can name the interface arbitrarily.
         wg0 = {
           # Determines the IP address and subnet of the server's end of the tunnel interface.
@@ -61,7 +65,8 @@ in {
 
           peers = [
             # List of allowed peers.
-            { # Feel free to give a meaning full name
+            {
+              # Feel free to give a meaning full name
               name = "lucas-phone";
               # Public key of the peer (not a file path).
               #publicKey = "Pk4PfIDAhuctWOBHjUu8RvLQUb8TWGQmtv+x0iDLW1E=";
@@ -124,7 +129,7 @@ in {
 
         };
       }
-      // optionalAttrs cfg.client.enable {
+        // optionalAttrs cfg.client.enable {
         # "wg0" is the network interface name. You can name the interface arbitrarily.
         wg0 = {
           # Determines the IP address and subnet of the server's end of the tunnel interface.
@@ -149,137 +154,137 @@ in {
         };
       };
 
-    systemd.network.networks.wg0.dns = mkIf cfg.client.enable ["10.100.0.1"];
-    # systemd.network.wait-online.ignoredInterfaces = [ "wg0" ];
+      systemd.network.networks.wg0.dns = mkIf cfg.client.enable [ "10.100.0.1" ];
+      # systemd.network.wait-online.ignoredInterfaces = [ "wg0" ];
 
-    # replace dnsmasq with something that allows CNAME
-    # Look into Technitium and unbound
-    # goal is to only return the addresses below. No other hosts
-    services.dnsmasq = mkIf cfg.server.enable {
-      enable = true;
-      resolveLocalQueries = false;
-      settings = {
-        bind-interfaces = true;
-        interface = "wg0";
-        no-hosts = true; # don't read /etc/hosts
-        no-resolv = true; # don't use /etc/resolve.conf
-        listen-address = "10.100.0.1";
-        # doesn't seem to help how I would want
-        #domain = "home.lucasr.com";
-        #expand-hosts = true;
-        address = [
-          "/marulk.home.lucasr.com/10.100.0.1" # server
-          "/lucas-phone/10.100.0.2"
-          "/riko.home.lucasr.com/10.100.0.3" # Christine's laptop
-          "/lyza.home.lucasr.com/10.100.0.4" # Christine's studio
-          "/kanye.home.lucasr.com/10.100.0.5"
-          "/zen.home.lucasr.com/10.100.0.6" # Christine Desktop
-          "/christine-phone/10.100.0.7"
-          "/timberlake.home.lucasr.com/10.100.0.8"
-          "/nat.home.lucasr.com/10.100.0.9" # Nathan Kodi
-          "/christine-ipad/10.100.0.10"
-          "/reg.home.lucasr.com/10.100.0.11" # Desktop
+      # replace dnsmasq with something that allows CNAME
+      # Look into Technitium and unbound
+      # goal is to only return the addresses below. No other hosts
+      services.dnsmasq = mkIf cfg.server.enable {
+        enable = true;
+        resolveLocalQueries = false;
+        settings = {
+          bind-interfaces = true;
+          interface = "wg0";
+          no-hosts = true; # don't read /etc/hosts
+          no-resolv = true; # don't use /etc/resolve.conf
+          listen-address = "10.100.0.1";
+          # doesn't seem to help how I would want
+          #domain = "home.lucasr.com";
+          #expand-hosts = true;
+          address = [
+            "/marulk.home.lucasr.com/10.100.0.1" # server
+            "/lucas-phone/10.100.0.2"
+            "/riko.home.lucasr.com/10.100.0.3" # Christine's laptop
+            "/lyza.home.lucasr.com/10.100.0.4" # Christine's studio
+            "/kanye.home.lucasr.com/10.100.0.5"
+            "/zen.home.lucasr.com/10.100.0.6" # Christine Desktop
+            "/christine-phone/10.100.0.7"
+            "/timberlake.home.lucasr.com/10.100.0.8"
+            "/nat.home.lucasr.com/10.100.0.9" # Nathan Kodi
+            "/christine-ipad/10.100.0.10"
+            "/reg.home.lucasr.com/10.100.0.11" # Desktop
 
-          # imitation CNAMEs
-          "/ha.home.lucasr.com/10.100.0.1"
-          "/jellyfin.home.lucasr.com/10.100.0.1"
-          "/mqtt.home.lucasr.com/10.100.0.1"
-          "/nextcloud.lucasr.com/10.100.0.1"
-          "/postgres.home.lucasr.com/10.100.0.1"
-          "/paperless.home.lucasr.com/10.100.0.1"
-          "/searx.home.lucasr.com/10.100.0.1"
-          "/chat.lucasr.com/10.100.0.1"
-          "/jellyseer.lucasr.com/10.100.0.1"
-          "/immich.lucasr.com/10.100.0.1"
-          "/collabora.lucasr.com/10.100.0.1"
-          "/homepage.lucasr.com/10.100.0.1"
-          "/radarr.lucasr.com/10.100.0.1"
-          "/prowlarr.lucasr.com/10.100.0.1"
-          "/bazarr.lucasr.com/10.100.0.1"
-          "/lidarr.lucasr.com/10.100.0.1"
-          "/sonarr.lucasr.com/10.100.0.1"
-          "/sabnzb.lucasr.com/10.100.0.1"
-          "/smokeping.lucasr.com/10.100.0.1"
-          "/go2rtc.home.lucasr.com/10.100.0.1"
-          "/frigate.home.lucasr.com/10.100.0.1"
-          "/music-assistant.home.lucasr.com/10.100.0.1"
-          "/music-assistant-streams.home.lucasr.com/10.100.0.1"
-          "/vaultwarden.lucasr.com/10.100.0.1"
-        ];
-        # cnames apparently only work if the value is in /etc/hosts?? crazy.
-        # Maybe look for alternative to dnsmasq
-        #cname = [
-        #  "ha.home.lucasr.com,marulk.home.lucasr.com"
-        #  "jellyfin.home.lucasr.com,marulk.home.lucasr.com"
-        #];
+            # imitation CNAMEs
+            "/ha.home.lucasr.com/10.100.0.1"
+            "/jellyfin.home.lucasr.com/10.100.0.1"
+            "/mqtt.home.lucasr.com/10.100.0.1"
+            "/nextcloud.lucasr.com/10.100.0.1"
+            "/postgres.home.lucasr.com/10.100.0.1"
+            "/paperless.home.lucasr.com/10.100.0.1"
+            "/searx.home.lucasr.com/10.100.0.1"
+            "/chat.lucasr.com/10.100.0.1"
+            "/jellyseer.lucasr.com/10.100.0.1"
+            "/immich.lucasr.com/10.100.0.1"
+            "/collabora.lucasr.com/10.100.0.1"
+            "/homepage.lucasr.com/10.100.0.1"
+            "/radarr.lucasr.com/10.100.0.1"
+            "/prowlarr.lucasr.com/10.100.0.1"
+            "/bazarr.lucasr.com/10.100.0.1"
+            "/lidarr.lucasr.com/10.100.0.1"
+            "/sonarr.lucasr.com/10.100.0.1"
+            "/sabnzb.lucasr.com/10.100.0.1"
+            "/smokeping.lucasr.com/10.100.0.1"
+            "/go2rtc.home.lucasr.com/10.100.0.1"
+            "/frigate.home.lucasr.com/10.100.0.1"
+            "/music-assistant.home.lucasr.com/10.100.0.1"
+            "/music-assistant-streams.home.lucasr.com/10.100.0.1"
+            "/vaultwarden.lucasr.com/10.100.0.1"
+          ];
+          # cnames apparently only work if the value is in /etc/hosts?? crazy.
+          # Maybe look for alternative to dnsmasq
+          #cname = [
+          #  "ha.home.lucasr.com,marulk.home.lucasr.com"
+          #  "jellyfin.home.lucasr.com,marulk.home.lucasr.com"
+          #];
+        };
       };
     };
-  };
-        # Sean's networkk
-#        wg1 = {
-#          # Determines the IP address and subnet of the server's end of the tunnel interface.
-#          ips = [ "10.9.0.12/24" ];
-## DNS = 10.8.0.1, 10.8.1.250
-#
-#
-#          # The port that WireGuard listens to. Must be accessible by the client.
-#          listenPort = 51820;
-#
-#          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
-#          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
-#          postSetup = ''
-#            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
-#          '';
-#
-#          # This undoes the above command
-#          postShutdown = ''
-#            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
-#          '';
-#
-#          peers = [
-#            {
-#              name = "sean-mcgee";
-#              publicKey = "y//Flcqb/RQbmuDTK6aOMW+pCFVF80idEWDqPkG3tik=";
-#              endpoint = "mcgee.starn.es:51820";
-#              allowedIPs = [
-#                "10.9.0.0/24"
-#                "10.8.0.0/16"
-#                "192.168.107.0/24"
-#              ];
-#            }
-#          ];
-#        };
-#        wgmcgee = {
-#          # Determines the IP address and subnet of the server's end of the tunnel interface.
-#          ips = [ "10.9.0.13/24" ];
-## DNS = 10.8.0.1, 10.8.1.250
-#
-#
-#          # The port that WireGuard listens to. Must be accessible by the client.
-#          listenPort = 51820;
-#
-#          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
-#          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
-#          postSetup = ''
-#            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
-#          '';
-#
-#          # This undoes the above command
-#          postShutdown = ''
-#            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
-#          '';
-#
-#          peers = [
-#            {
-#              name = "sean-mcgee";
-#              publicKey = "y//Flcqb/RQbmuDTK6aOMW+pCFVF80idEWDqPkG3tik=";
-#              endpoint = "mcgee.starn.es:51820";
-#              allowedIPs = [
-#                "10.9.0.0/24"
-#                "10.8.0.0/16"
-#                "192.168.107.0/24"
-#              ];
-#            }
-#          ];
-#        };
+  # Sean's networkk
+  #        wg1 = {
+  #          # Determines the IP address and subnet of the server's end of the tunnel interface.
+  #          ips = [ "10.9.0.12/24" ];
+  ## DNS = 10.8.0.1, 10.8.1.250
+  #
+  #
+  #          # The port that WireGuard listens to. Must be accessible by the client.
+  #          listenPort = 51820;
+  #
+  #          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+  #          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+  #          postSetup = ''
+  #            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+  #          '';
+  #
+  #          # This undoes the above command
+  #          postShutdown = ''
+  #            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+  #          '';
+  #
+  #          peers = [
+  #            {
+  #              name = "sean-mcgee";
+  #              publicKey = "y//Flcqb/RQbmuDTK6aOMW+pCFVF80idEWDqPkG3tik=";
+  #              endpoint = "mcgee.starn.es:51820";
+  #              allowedIPs = [
+  #                "10.9.0.0/24"
+  #                "10.8.0.0/16"
+  #                "192.168.107.0/24"
+  #              ];
+  #            }
+  #          ];
+  #        };
+  #        wgmcgee = {
+  #          # Determines the IP address and subnet of the server's end of the tunnel interface.
+  #          ips = [ "10.9.0.13/24" ];
+  ## DNS = 10.8.0.1, 10.8.1.250
+  #
+  #
+  #          # The port that WireGuard listens to. Must be accessible by the client.
+  #          listenPort = 51820;
+  #
+  #          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+  #          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+  #          postSetup = ''
+  #            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+  #          '';
+  #
+  #          # This undoes the above command
+  #          postShutdown = ''
+  #            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.9.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+  #          '';
+  #
+  #          peers = [
+  #            {
+  #              name = "sean-mcgee";
+  #              publicKey = "y//Flcqb/RQbmuDTK6aOMW+pCFVF80idEWDqPkG3tik=";
+  #              endpoint = "mcgee.starn.es:51820";
+  #              allowedIPs = [
+  #                "10.9.0.0/24"
+  #                "10.8.0.0/16"
+  #                "192.168.107.0/24"
+  #              ];
+  #            }
+  #          ];
+  #        };
 }

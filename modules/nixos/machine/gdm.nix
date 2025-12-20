@@ -1,14 +1,15 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) attrNames mkIf mkOption mkForce types;
   inherit (lib.strings) concatStringsSep;
   normalUsers = attrNames config.home-manager.users;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   config = mkIf config.services.displayManager.gdm.enable {
     #programs.dconf.enable = true;
@@ -42,15 +43,17 @@ in {
       overlays = [
         (self: super: {
           #gnome = super.gnome.overrideScope' (selfg: superg: {
-            gnome-shell = super.gnome-shell.overrideAttrs (old: {
-              patches = (old.patches or []) ++ [
-                (let
+          gnome-shell = super.gnome-shell.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [
+              (
+                let
                   #bg = pkgs.fetchurl {
                   #  url = "https://orig00.deviantart.net/0054/f/2015/129/b/9/reflection_by_yuumei-d8sqdu2.jpg";
                   #  sha256 = "0f0vlmdj5wcsn20qg79ir5cmpmz5pysypw6a711dbaz2r9x1c79l";
                   #};
                   bg = "${pkgs.gnome-backgrounds}/share/backgrounds/gnome/blobs-d.svg";
-                in pkgs.writeText "bg.patch" ''
+                in
+                pkgs.writeText "bg.patch" ''
                   --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
                   +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
                   @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
@@ -59,8 +62,9 @@ in {
                      background-color: $_gdm_bg;
                   +  background-image: url('file://${bg}');
                    }
-                '')
-              ];
+                ''
+              )
+            ];
             #});
           });
         })

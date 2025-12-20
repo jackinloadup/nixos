@@ -1,9 +1,10 @@
-{lib, pkgs, config, ...}:
+{ lib, pkgs, config, ... }:
 let
   inherit (lib) mkForce;
-in {
+in
+{
   config = {
-    boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod"];
+    boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "uas" "sd_mod" ];
     boot.loader.efi.canTouchEfiVariables = true;
     # machine isn't physically moving. Keep same dhcp issued address
     networking.networkmanager.wifi.macAddress = mkForce "permanent";

@@ -1,9 +1,10 @@
 # This only work on i686-linux and x86_64-linux as far as i know. Maybe i386 as well. unsure about aarch
 # isAllowedArch = source: builtins.any (x: source == x) [ "i686-linux" "x86_64-linux" ];
-{
-  pkgs,
-  system,
-}: let
+{ pkgs
+, system
+,
+}:
+let
   source = builtins.fetchFromGitHub {
     owner = "goatpig";
     repo = "BitcoinArmory";
@@ -28,7 +29,7 @@
     };
   };
 in
-  pkgs.symlinkJoin {
-    name = "armory";
-    paths = [bin desktop];
-  }
+pkgs.symlinkJoin {
+  name = "armory";
+  paths = [ bin desktop ];
+}

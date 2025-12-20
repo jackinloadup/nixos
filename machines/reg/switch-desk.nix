@@ -1,10 +1,10 @@
-{
-  self,
-  inputs,
-  pkgs,
-  lib,
-  ...
-}: let
+{ self
+, inputs
+, pkgs
+, lib
+, ...
+}:
+let
   script = pkgs.writeShellScript "switch-desktop" ''
     # strict
     set -euo pipefail
@@ -120,10 +120,11 @@
   '';
 
   package = pkgs.stdenv.mkDerivation {
-     name = "switch-desktop";
-     builder = script;
+    name = "switch-desktop";
+    builder = script;
   };
-in {
+in
+{
   config = {
     home-manager.sharedModules = [
       {

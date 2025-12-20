@@ -1,14 +1,14 @@
-{
-  flake,
-  pkgs,
-  lib,
-  config,
-  ...
+{ flake
+, pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib) mkForce mkDefault getExe;
   debug = false;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelGui
@@ -97,15 +97,15 @@ in {
 
     environment.profileRelativeEnvVars = {
       QT_PLUGIN_PATH = [
-      #  ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix)
+        #  ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix)
         ("/run/current-system/sw/" + pkgs.qt6.qtbase.qtPluginPrefix)
       ];
 
       QML2_IMPORT_PATH = [
-       # ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtqmlprefix)
+        # ("/run/current-system/sw/" + pkgs.qt5.qtbase.qtqmlprefix)
         ("/run/current-system/sw/" + pkgs.qt6.qtbase.qtPluginPrefix)
       ];
-      XDG_DATA_DIRS = ["/run/current-system/sw/share"];
+      XDG_DATA_DIRS = [ "/run/current-system/sw/share" ];
     };
 
     environment.variables = {

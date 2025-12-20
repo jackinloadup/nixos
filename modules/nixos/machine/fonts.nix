@@ -1,29 +1,30 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault;
   settings = import ../../../settings;
   ifTui = config.machine.sizeTarget > 0;
   ifGraphical = config.machine.sizeTarget > 1;
-in {
+in
+{
   config = with settings.theme.font; {
     #console.font = mkIf ifTui console;
     console.packages = [ pkgs.terminus_font ];
     console.font = "ter-v12n";
-      ## High-DPI console.
-      #console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+    ## High-DPI console.
+    #console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
     fonts = mkIf ifGraphical {
       fontconfig = {
         enable = mkDefault true;
         antialias = mkDefault true;
         defaultFonts = {
-          serif = [serif.family];
-          sansSerif = [normal.family];
-          monospace = [mono.family];
-          emoji = [emoji.family];
+          serif = [ serif.family ];
+          sansSerif = [ normal.family ];
+          monospace = [ mono.family ];
+          emoji = [ emoji.family ];
         };
 
         localConf = ''

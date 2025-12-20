@@ -1,17 +1,18 @@
-{
-  lib,
-  pkgs,
-  config,
-  flake,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, flake
+, ...
+}:
+let
   inherit (lib) mkOption mkEnableOption mkDefault mkIf;
   inherit (lib.types) listOf enum nullOr str ints;
   cfg = config.machine;
   settings = import ../../../settings;
   ifTui = config.machine.sizeTarget > 0;
   ifGraphical = config.machine.sizeTarget > 1;
-in {
+in
+{
   imports = [
     #flake.inputs.home-manager.nixosModules.home-manager
     #{
@@ -56,9 +57,9 @@ in {
       description = "Hint for module to allow for smaller built outputs. 0=Minimal 1=Tui 2=Graphical 3=Full";
     };
     users = mkOption {
-      type = listOf (enum []);
-      default = [];
-      example = ["john" "jane" "liljohn"];
+      type = listOf (enum [ ]);
+      default = [ ];
+      example = [ "john" "jane" "liljohn" ];
       description = "What users will be loaded onto the machine";
     };
   };
@@ -107,7 +108,7 @@ in {
       };
 
       # Imporved networking
-      kernelModules = ["tcp_bbr"];
+      kernelModules = [ "tcp_bbr" ];
       kernel.sysctl."net.ipv4.tcp_congestion_control" = "bbr";
       kernel.sysctl."net.core.default_qdisc" = "fq";
     };
@@ -151,8 +152,8 @@ in {
       #opengl.driSupport = mkDefault ifGraphical;
       #opengl.driSupport32Bit = mkDefault ifGraphical;
 
-# look into this more
-# saw this on "Exploring AMD Error Correction RAS Engineering - Level1Techs"
+      # look into this more
+      # saw this on "Exploring AMD Error Correction RAS Engineering - Level1Techs"
       rasdaemon.enable = false;
     };
 
@@ -209,7 +210,7 @@ in {
     # Enable network discovery
     services.avahi = {
       enable = mkDefault ifGraphical;
-    # resolve .local names
+      # resolve .local names
       nssmdns4 = true;
       openFirewall = true;
       publish.enable = true;

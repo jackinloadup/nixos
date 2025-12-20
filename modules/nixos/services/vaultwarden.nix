@@ -1,9 +1,11 @@
-{lib, config, ...}: let
+{ lib, config, ... }:
+let
   inherit (lib) mkIf;
   inherit (builtins) replaceStrings;
   cfg = config.services.vaultwarden;
   #vaultHost = replaceStrings ["https://"] [""] cfg.config.DOMAIN;
-in {
+in
+{
   config = mkIf cfg.enable {
     services = {
       vaultwarden = {
@@ -15,7 +17,7 @@ in {
           ROCKET_ADDRESS = "127.0.0.1";
           ROCKET_PORT = 8222;
           ROCKET_LOG = "critical";
-      #    PASSWORD_ITERATIONS = 600000;
+          #    PASSWORD_ITERATIONS = 600000;
 
           SMTP_HOST = "127.0.0.1";
           SMTP_PORT = 25;

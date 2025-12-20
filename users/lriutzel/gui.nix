@@ -1,6 +1,8 @@
-{ lib, pkgs, config, flake, ... }: let
+{ lib, pkgs, config, flake, ... }:
+let
   username = "lriutzel";
-in {
+in
+{
   imports = [
     #flake.inputs.self.nixosModules.hyprland
     flake.inputs.self.nixosModules.windowManagers
@@ -22,43 +24,45 @@ in {
     #programs.captive-browser.enable = true;
     programs.chromium.enable = true;
 
-    home-manager.users."${username}" = let
-      homeDir = "/home/${username}";
-    in {
-      imports = [
+    home-manager.users."${username}" =
+      let
+        homeDir = "/home/${username}";
+      in
+      {
+        imports = [
           flake.self.homeModules.gui
           ./gnome.nix
-      ];
+        ];
 
-      #home.persistence."/persist/home/${username}".enable = true;
-      #programs.waybar.settings."custom/pkgwatt" = {
-      #  format = "{} Watts";
-      #  max-length = 7;
-      #  interval = 10;
-      #  exec = pkgs.writeShellScript "pkgs-watts" ''
-      #    sudo turbostat --Summary --quiet --show PkgWatt --num_iterations 1 | sed -n 2p
-      #  '';
-      #};
+        #home.persistence."/persist/home/${username}".enable = true;
+        #programs.waybar.settings."custom/pkgwatt" = {
+        #  format = "{} Watts";
+        #  max-length = 7;
+        #  interval = 10;
+        #  exec = pkgs.writeShellScript "pkgs-watts" ''
+        #    sudo turbostat --Summary --quiet --show PkgWatt --num_iterations 1 | sed -n 2p
+        #  '';
+        #};
 
-      #programs.neovim.enable = true;
+        #programs.neovim.enable = true;
 
-      programs.mpv.enable = true;
-      programs.firefox.enable = true;
+        programs.mpv.enable = true;
+        programs.firefox.enable = true;
 
-      # unofficial bitwarden cli
-      #programs.rbw = {
-      #  enable = true;
-      #  settings = {
-      #    inherit email;
-      #    lock_timeout = 300;
-      #    pinentry = "gnome3";
-      #  };
-      #};
+        # unofficial bitwarden cli
+        #programs.rbw = {
+        #  enable = true;
+        #  settings = {
+        #    inherit email;
+        #    lock_timeout = 300;
+        #    pinentry = "gnome3";
+        #  };
+        #};
 
-      services.mopidy.enable = true;
+        services.mopidy.enable = true;
 
-      #stylix.image = /home/lriutzel/Pictures/background.jpg;
-      home.packages = [
+        #stylix.image = /home/lriutzel/Pictures/background.jpg;
+        home.packages = [
           pkgs.bc
           #pkgs.pipexec # a neat tool to help with named pipes
           pkgs.emulsion # mimimal linux image viewer built in rust
@@ -94,7 +98,7 @@ in {
           pkgs.terminal-parrot # parrot in your terminal
           pkgs.pipes-rs # pipes terminal screensaver
           # https://tattoy.sh/ not yet in nixpkgs
-      ];
-    };
+        ];
+      };
   };
 }

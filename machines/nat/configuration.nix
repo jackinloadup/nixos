@@ -3,7 +3,8 @@
 let
   inherit (lib) mkDefault mkForce;
   kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelTui
@@ -14,25 +15,25 @@ in {
 
   config = {
     boot.initrd.verbose = false;
-      #boot.kernelPatches = [
-      #  {
-      #    name = "sony-bd-remote-buttons";
-      #    patch = ../../patches/linux-sony-bd-remote.patch;
-      #  }
-      #];
+    #boot.kernelPatches = [
+    #  {
+    #    name = "sony-bd-remote-buttons";
+    #    patch = ../../patches/linux-sony-bd-remote.patch;
+    #  }
+    #];
     boot.plymouth.enable = false;
 
     services.fwupd.enable = mkForce false;
-      #services.getty = {
-      #  autologinUser = "kodi";
-      #  extraArgs = [
-      #    "--noissue"
-      #    "--noclear"
-      #    "--nohints"
-      #    "--nohostname"
-      #    "--skip-login"
-      #  ];
-      #};
+    #services.getty = {
+    #  autologinUser = "kodi";
+    #  extraArgs = [
+    #    "--noissue"
+    #    "--noclear"
+    #    "--nohints"
+    #    "--nohostname"
+    #    "--skip-login"
+    #  ];
+    #};
     services.pipewire.enable = true;
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "kodi";
@@ -57,11 +58,11 @@ in {
     };
 
     gumdrop = {
-    #  storageServer.enable = true;
-    #  storageServer.media = true;
-    #  storageServer.roms = true;
+      #  storageServer.enable = true;
+      #  storageServer.media = true;
+      #  storageServer.roms = true;
       vpn.server.endpoint = "vpn.lucasr.com:51820";
-      vpn.client.enable = true;
+      vpn.client.enable = false;
       vpn.client.ip = "10.100.0.9/24";
     };
 
@@ -70,7 +71,7 @@ in {
         networking.hostName = mkForce "natvm";
         #services.xserver.displayManager.defaultSession = mkForce "none+i3"a;
         boot.loader.efi.efiSysMountPoint = mkForce "/boot";
-        boot.initrd.kernelModules = [];
+        boot.initrd.kernelModules = [ ];
 
         virtualisation = {
           #useEFIBoot = true;
@@ -80,7 +81,7 @@ in {
           cores = 4;
           graphics = true;
           memorySize = 2048;
-          qemu.networkingOptions = ["-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper"];
+          qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
           qemu.options = [
             #"-device virtio-gpu-pci"
             #"-device virtio-gpu-gl-pci"
@@ -113,8 +114,8 @@ in {
       interfaces.enp1s0.useDHCP = true;
       firewall = {
         # for the Kodi web interface
-        allowedTCPPorts = [8080];
-        allowedUDPPorts = [8080];
+        allowedTCPPorts = [ 8080 ];
+        allowedUDPPorts = [ 8080 ];
       };
     };
 

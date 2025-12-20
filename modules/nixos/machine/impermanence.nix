@@ -1,16 +1,16 @@
-{
-  lib,
-  pkgs,
-  config,
-  flake,
-  ...
+{ lib
+, pkgs
+, config
+, flake
+, ...
 }:
 # If extraOpts can be expressed in home-manager that
 # would be more ideal or at least an alterate if using
 # nix seporate from nixos
 let
   inherit (lib) mkIf mkEnableOption optionals;
-in {
+in
+{
   imports = [
     flake.inputs.impermanence.nixosModules.impermanence
   ];
@@ -53,10 +53,10 @@ in {
           ++ optionals config.services.blueman.enable [
             "/var/lib/blueman"
           ]
-          ++ optionals config.services.open-webui.enable  [
+          ++ optionals config.services.open-webui.enable [
             "/var/lib/private/open-webui"
           ]
-          ++ optionals config.services.ollama.enable  [
+          ++ optionals config.services.ollama.enable [
             # unsure if one should be deleted or if they are both used
             "/var/lib/private/ollama"
             "/var/lib/ollama"
@@ -69,8 +69,9 @@ in {
               mode = "u=rwx,g=rx,o=";
             }
           ]
-          ++ optionals config.services.chrony.enable ["/var/lib/chrony"]
-          ++ optionals config.services.kubo.enable [ # ipfs
+          ++ optionals config.services.chrony.enable [ "/var/lib/chrony" ]
+          ++ optionals config.services.kubo.enable [
+            # ipfs
             config.services.kubo.dataDir
           ]
           ++ optionals config.services.fwupd.enable [
@@ -116,7 +117,7 @@ in {
           #"/etc/machine-id"
           {
             file = "/etc/nix/id_rsa";
-            parentDirectory = {mode = "u=rwx,g=rx,o=rx";};
+            parentDirectory = { mode = "u=rwx,g=rx,o=rx"; };
           }
         ];
       };

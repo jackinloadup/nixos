@@ -1,6 +1,8 @@
-{pkgs, lib, config, flake,  ...}: let
+{ pkgs, lib, config, flake, ... }:
+let
   inherit (lib) optionals mkIf;
-in {
+in
+{
   # workaround for https://github.com/e-tho/ucodenix/issues/59
   disabledModules = [ "hardware/cpu/amd-microcode.nix" ];
   imports = [
@@ -10,8 +12,8 @@ in {
 
   config = {
     boot = {
-      initrd.kernelModules = ["kvm-amd" "amdgpu"];
-      kernelModules = ["kvm-amd" "amdgpu" "amd_gpio" ];
+      initrd.kernelModules = [ "kvm-amd" "amdgpu" ];
+      kernelModules = [ "kvm-amd" "amdgpu" "amd_gpio" ];
 
       # ucodenix: Kernel microcode checksum verification is active. This may prevent microcode from loading. Consider disabling it by setting
       kernelParams = [ "microcode.amd_sha_check=off" ];
@@ -26,7 +28,7 @@ in {
       #];
       #extraModprobeConfig = "options snd-hda-intel enable_msi=1";
     };
-    services.xserver.videoDrivers = ["amdgpu"];
+    services.xserver.videoDrivers = [ "amdgpu" ];
 
     #nixpkgs.config.rocmSupport = true;
 
@@ -78,19 +80,19 @@ in {
     ];
 
     #nixpkgs.overlays = [
-      # Math libraries for AMD CPUs
-      # causes rebuilds, ran into a lot of failed python tests
-      #(self: super:
-      #  {
-      #    blas = super.blas.override {
-      #      blasProvider = self.amd-blis;
-      #    };
-      #
-      #    lapack = super.lapack.override {
-      #      lapackProvider = self.amd-libflame;
-      #    };
-      #  }
-      #)
+    # Math libraries for AMD CPUs
+    # causes rebuilds, ran into a lot of failed python tests
+    #(self: super:
+    #  {
+    #    blas = super.blas.override {
+    #      blasProvider = self.amd-blis;
+    #    };
+    #
+    #    lapack = super.lapack.override {
+    #      lapackProvider = self.amd-libflame;
+    #    };
+    #  }
+    #)
     #];
 
     services.ucodenix.enable = true;

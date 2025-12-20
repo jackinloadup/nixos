@@ -1,13 +1,14 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption mkDefault mkForce;
   cfg = config.machine;
   settings = import ../../../settings;
-in {
+in
+{
   imports = [
     ./openrct2.nix
   ];
@@ -36,7 +37,7 @@ in {
     ];
 
     services.xserver = {
-      modules = [pkgs.xorg.xf86inputjoystick];
+      modules = [ pkgs.xorg.xf86inputjoystick ];
     };
 
     home-manager.sharedModules = [

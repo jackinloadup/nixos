@@ -1,14 +1,15 @@
-{
-  config,
-  pkgs,
-  nixosConfig,
-  lib,
-  inputs,
-  ...
-}: let
+{ config
+, pkgs
+, nixosConfig
+, lib
+, inputs
+, ...
+}:
+let
   inherit (lib) mkIf getExe concatStrings mkForce mkDefault optionals;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
-in {
+in
+{
   config = mkIf config.programs.zsh.enable {
     home.sessionVariables = {
       _Z_DATA = "${config.home.homeDirectory}/.local/state/z";
@@ -26,25 +27,27 @@ in {
       defaultKeymap = "viins";
       historySubstringSearch.enable = true;
 
-      initContent = let
-        setWindowTitle = lib.mkOrder 100 ''
-          function set_win_title(){
-            echo -ne "\033]0; $(basename "$PWD") \007"
-          }
-          precmd_functions+=(set_win_title)
+      initContent =
+        let
+          setWindowTitle = lib.mkOrder 100 ''
+            function set_win_title(){
+              echo -ne "\033]0; $(basename "$PWD") \007"
+            }
+            precmd_functions+=(set_win_title)
 
-          ## https://discourse.nixos.org/t/nix-flamegraph-or-profiling-tool/33333/2
-          #function nixFunctionCalls {
-          #  local WORKDIR=$(mktemp -d /tmp/nix-fun-calls-XXXXX)
-          #  nix-instantiate --trace-function-calls "$1" -A "$2" 2> $WORKDIR/nix-function-calls.trace 1>/dev/null
-          #  ~/nixgits/nix/contrib/stack-collapse.py $WORKDIR/nix-function-calls.trace > $WORKDIR/nix-function-calls.folded
-          #  nix-shell -p flamegraph --run "flamegraph.pl $WORKDIR/nix-function-calls.folded > $WORKDIR/nix-function-calls.svg"
-          #  echo "$WORKDIR/nix-function-calls.svg"
-          #}
-        '';
+            ## https://discourse.nixos.org/t/nix-flamegraph-or-profiling-tool/33333/2
+            #function nixFunctionCalls {
+            #  local WORKDIR=$(mktemp -d /tmp/nix-fun-calls-XXXXX)
+            #  nix-instantiate --trace-function-calls "$1" -A "$2" 2> $WORKDIR/nix-function-calls.trace 1>/dev/null
+            #  ~/nixgits/nix/contrib/stack-collapse.py $WORKDIR/nix-function-calls.trace > $WORKDIR/nix-function-calls.folded
+            #  nix-shell -p flamegraph --run "flamegraph.pl $WORKDIR/nix-function-calls.folded > $WORKDIR/nix-function-calls.svg"
+            #  echo "$WORKDIR/nix-function-calls.svg"
+            #}
+          '';
 
-        interactiveOrder = lib.mkOrder 800 interactive;
-      in lib.mkMerge [ setWindowTitle interactiveOrder ];
+          interactiveOrder = lib.mkOrder 800 interactive;
+        in
+        lib.mkMerge [ setWindowTitle interactiveOrder ];
 
       shellAliases = nixosConfig.environment.shellAliases;
 
@@ -54,19 +57,21 @@ in {
         alias -s json=jq
       '';
 
-      shellGlobalAliases = let
-        successSound = "/run/current-system/sw/share/sounds/freedesktop/stereo/complete.oga";
-        failureSound = "/run/current-system/sw/share/sounds/freedesktop/stereo/suspend-error.oga";
-      in {
-        UUID = "$(uuidgen | tr -d \\n)";
-        G = "| grep";
-        L = "| less";
-        "@noerr" = "2> /dev/null";
-        "@noboth" = "&> /dev/null";
-        "@errtostd" = "2&>1";
-        "bell" = "tput bel && sleep 0.1 && tput bel && sleep 0.1 && tput bel";
-        "@notify" = "&& pw-play ${successSound} || pw-play ${failureSound}";
-      };
+      shellGlobalAliases =
+        let
+          successSound = "/run/current-system/sw/share/sounds/freedesktop/stereo/complete.oga";
+          failureSound = "/run/current-system/sw/share/sounds/freedesktop/stereo/suspend-error.oga";
+        in
+        {
+          UUID = "$(uuidgen | tr -d \\n)";
+          G = "| grep";
+          L = "| less";
+          "@noerr" = "2> /dev/null";
+          "@noboth" = "&> /dev/null";
+          "@errtostd" = "2&>1";
+          "bell" = "tput bel && sleep 0.1 && tput bel && sleep 0.1 && tput bel";
+          "@notify" = "&& pw-play ${successSound} || pw-play ${failureSound}";
+        };
 
       dirHashes = {
         docs = "$HOME/Documents";

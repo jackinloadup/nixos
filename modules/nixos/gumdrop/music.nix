@@ -1,12 +1,13 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   musicDir = config.xdg.userDirs.music;
   playlistsDir = "${musicDir}/playlists";
-in {
+in
+{
   imports = [
   ];
 

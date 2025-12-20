@@ -1,6 +1,8 @@
-{ lib, ... }: let
+{ lib, ... }:
+let
   inherit (lib) mkDefault;
-in {
+in
+{
   # explore locking ssh capabilities by user
   # debug1: Remote: /etc/ssh/authorized_keys.d/lriutzel:1: key options: agent-forwarding port-forwarding pty user-rc x11-forwarding
 

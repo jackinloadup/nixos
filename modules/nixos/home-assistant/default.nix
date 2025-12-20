@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption mkForce;
-in {
+in
+{
   options.machine.home-assistant = mkEnableOption "Enable Home Assistant config";
   config = mkIf config.machine.home-assistant {
     #services.postgresql = {
@@ -26,7 +27,7 @@ in {
     #];
 
     # Allow communication with zigbee
-    users.users.lriutzel.extraGroups = ["dialout"];
+    users.users.lriutzel.extraGroups = [ "dialout" ];
 
     # Open port for mqtt
     networking.firewall = {
@@ -55,7 +56,7 @@ in {
             # trusted.
             # TODO make this more secure
             mosquitto = {
-              acl = ["readwrite #"];
+              acl = [ "readwrite #" ];
               password = "mosquitto";
             };
           };
@@ -64,8 +65,8 @@ in {
     };
 
     # TODO submit upstream?
-    systemd.services.mosquitto.requires = ["network-online.target"];
-    systemd.services.libvirtd.requires = ["network-online.target"];
+    systemd.services.mosquitto.requires = [ "network-online.target" ];
+    systemd.services.libvirtd.requires = [ "network-online.target" ];
 
     virtualisation.libvirtd.enable = mkForce true;
     virtualisation.libvirtd.onShutdown = "shutdown";

@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   config = {
     # Playing with iwd
-    environment.systemPackages = [pkgs.iwgtk];
+    environment.systemPackages = [ pkgs.iwgtk ];
     networking.networkmanager.wifi.backend = "iwd";
     networking.wireless.iwd.enable = true;
     networking.wireless.iwd.settings = {

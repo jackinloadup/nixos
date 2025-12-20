@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   config = {
     #programs.nix-ld.dev.enable = isFullSystem; # dev = using flake vs nixpkgs
     # TODO when possible pull from programs.myapp.package

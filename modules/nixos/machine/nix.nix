@@ -1,10 +1,10 @@
-{
-  lib,
-  pkgs,
-  config,
-  flake,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, flake
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault optionals;
   inherit (builtins) elem hasAttr;
 
@@ -24,7 +24,8 @@
   maximumFreeSpace = MBtoBytes 1024; # 1GB
 
   repoRoot = toString ../../../.;
-in {
+in
+{
   config = {
     environment.variables = {
       NIXPKGS_ALLOW_UNFREE = "1";
@@ -99,18 +100,18 @@ in {
     #   `nix shell nixpkgs#hello-world`
     nix.registry.nixpkgs.flake = flake.inputs.nixpkgs;
     nix.registry.nixpkgs-unstable.flake = flake.inputs.nixpkgs-unstable;
-      # nix.registry =
-      #   lib.mapAttrs (id: flake: {
-      #     inherit flake;
-      #     from = {
-      #       inherit id;
-      #       type = "indirect";
-      #     };
-      #   })
-      #   ({nixpkgs = flake.inputs.nixpkgs;}
-      #     // {nixpkgs-unstable = flake.inputs.nixpkgs-unstable;} ); # alias for convenience
-      # #(flake.inputs # Expose all flakes
-      # #    // {pkgs = flake.inputs.nixpkgs;}); # alias for convenience
+    # nix.registry =
+    #   lib.mapAttrs (id: flake: {
+    #     inherit flake;
+    #     from = {
+    #       inherit id;
+    #       type = "indirect";
+    #     };
+    #   })
+    #   ({nixpkgs = flake.inputs.nixpkgs;}
+    #     // {nixpkgs-unstable = flake.inputs.nixpkgs-unstable;} ); # alias for convenience
+    # #(flake.inputs # Expose all flakes
+    # #    // {pkgs = flake.inputs.nixpkgs;}); # alias for convenience
 
     # enable flakes
     # set the min free disk space.

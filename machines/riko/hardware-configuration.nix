@@ -1,4 +1,4 @@
-{pkgs, flake, ...}: {
+{ pkgs, flake, ... }: {
   imports = [
     flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
     flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1
@@ -11,7 +11,7 @@
     facter.reportPath = ./facter.json;
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    boot.initrd.availableKernelModules = ["ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod"];
+    boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ahci" "sd_mod" "sr_mod" ];
     boot.loader.efi.canTouchEfiVariables = true;
 
     boot.resumeDevice = "/dev/disk/by-label/nixos";

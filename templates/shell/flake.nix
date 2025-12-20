@@ -9,15 +9,18 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-  }:
+  outputs =
+    { self
+    , nixpkgs
+    , flake-utils
+    ,
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
+      system:
+      let
         pkgs = nixpkgs.legacyPackages.${system};
-      in rec {
+      in
+      rec {
         devShells = flake-utils.lib.flattenTree {
           default = pkgs.mkShell {
             name = "Project";

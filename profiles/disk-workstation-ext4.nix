@@ -1,9 +1,8 @@
 { device ? "/dev/nvme0n1" }:
-{
-  flake,
-  pkgs,
-  config,
-  ...
+{ flake
+, pkgs
+, config
+, ...
 }:
 # simple error checking to ensure garbage isn't passed in
 #assert lib.asserts.assertOneOf "device" device [

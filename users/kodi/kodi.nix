@@ -1,14 +1,15 @@
-{
-  self,
-  inputs,
-  pkgs,
-  lib,
-  config,
-  ...
-}: let
+{ self
+, inputs
+, pkgs
+, lib
+, config
+, ...
+}:
+let
   swayConfig = config.wayland.windowManager.sway.config;
   kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";
-in {
+in
+{
   imports = [
   ];
 
@@ -59,7 +60,7 @@ in {
       };
 
       #Install.WantedBy = ["graphical-session.target"];
-      Install.After = ["sway-session.target"];
+      Install.After = [ "sway-session.target" ];
 
       Service = {
         Type = "simple";

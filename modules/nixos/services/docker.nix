@@ -1,16 +1,17 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf genAttrs attrNames;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
-in {
+  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+in
+{
   config = mkIf config.virtualisation.docker.enable {
     networking.hosts = {
-      "172.17.0.1" = ["host.docker.internal"];
+      "172.17.0.1" = [ "host.docker.internal" ];
     };
     virtualisation.docker = {
       autoPrune.enable = true;
@@ -21,7 +22,7 @@ in {
       pkgs.dive # image inspector
     ];
 
-    users.users = addExtraGroups normalUsers ["docker"];
+    users.users = addExtraGroups normalUsers [ "docker" ];
 
     #systemd.services."docker-network-paperless" = {
     #  serviceConfig.Type = "oneshot";

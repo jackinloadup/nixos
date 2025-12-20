@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.dnsmasq.enable {
 
     # No current use-case

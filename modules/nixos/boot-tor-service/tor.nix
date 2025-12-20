@@ -1,9 +1,9 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkDefault mkIf mkOption mkOrder getBin getExe optionalString types literalExpression;
   inherit (builtins) hasAttr;
   cfg = config.boot.initrd.network.tor;
@@ -14,7 +14,8 @@
     HiddenServiceDir /etc/tor/onion/bootup
     HiddenServicePort 22 127.0.0.1:22
   '');
-in {
+in
+{
   options.boot.initrd.network.tor = {
     enable = mkOption {
       type = types.bool;
@@ -90,11 +91,11 @@ in {
       services.tor = {
         description = "Tor Daemon";
 
-        wantedBy = ["initrd.target"];
-        conflicts = ["basic.target"];
-        after = ["network.target" "initrd-nixos-copy-secrets.service" "ntpd.service" "haveged.service"];
+        wantedBy = [ "initrd.target" ];
+        conflicts = [ "basic.target" ];
+        after = [ "network.target" "initrd-nixos-copy-secrets.service" "ntpd.service" "haveged.service" ];
 
-        preStart =  ''
+        preStart = ''
           /bin/chmod 0600 "/etc/tor/onion/bootup"
         '';
 
@@ -155,13 +156,13 @@ in {
           RuntimeDirectoryMode = "0710";
           StateDirectoryMode = "0700";
           StateDirectory = [
-              "tor"
-              "tor/onion"
-            ];
-            #++
-            #flatten (mapAttrsToList (name: onion:
-            #  optional (onion.secretKey == null) "tor/onion/${name}"
-            #) cfg.relay.onionServices);
+            "tor"
+            "tor/onion"
+          ];
+          #++
+          #flatten (mapAttrsToList (name: onion:
+          #  optional (onion.secretKey == null) "tor/onion/${name}"
+          #) cfg.relay.onionServices);
           # The following options are only to optimize:
           # systemd-analyze security tor
           #RootDirectory = runDir + "/root";
@@ -170,11 +171,11 @@ in {
           UMask = "0066";
           #BindPaths = [ stateDir ];
           #BindReadOnlyPaths = [ storeDir "/etc" ];
-            # ++
-            # optionals config.services.resolved.enable [
-            #   "/run/systemd/resolve/stub-resolv.conf"
-            #   "/run/systemd/resolve/resolv.conf"
-            # ];
+          # ++
+          # optionals config.services.resolved.enable [
+          #   "/run/systemd/resolve/stub-resolv.conf"
+          #   "/run/systemd/resolve/resolv.conf"
+          # ];
           #AmbientCapabilities   = [""] ++ lib.optional bindsPrivilegedPort "CAP_NET_BIND_SERVICE";
           #CapabilityBoundingSet = [""] ++ lib.optional bindsPrivilegedPort "CAP_NET_BIND_SERVICE";
           # ProtectClock= adds DeviceAllow=char-rtc r
@@ -210,7 +211,13 @@ in {
             # Groups in @system-service which do not contain a syscall listed by:
             # perf stat -x, 2>perf.log -e 'syscalls:sys_enter_*' tor
             # in tests, and seem likely not necessary for tor.
-            "~@aio" "~@chown" "~@keyring" "~@memlock" "~@resources" "~@setuid" "~@timer"
+            "~@aio"
+            "~@chown"
+            "~@keyring"
+            "~@memlock"
+            "~@resources"
+            "~@setuid"
+            "~@timer"
           ];
           SystemCallArchitectures = "native";
           SystemCallErrorNumber = "EPERM";

@@ -1,7 +1,8 @@
-{ config, lib, ...}:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.murmur.enable {
     services.murmur = {
       openFirewall = true;

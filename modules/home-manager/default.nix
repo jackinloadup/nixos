@@ -1,8 +1,7 @@
 # flake-parts module
-{
-  self,
-  inputs,
-  ...
+{ self
+, inputs
+, ...
 }:
 {
   flake = {
@@ -25,10 +24,10 @@
         ];
       };
       tui.imports = [
-          ./bash.nix
-          ./tui.nix
-          ./zsh.nix
-          inputs.nixvim.homeModules.nixvim
+        ./bash.nix
+        ./tui.nix
+        ./zsh.nix
+        inputs.nixvim.homeModules.nixvim
       ];
 
       gui.imports = [

@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) attrNames mkIf mkEnableOption genAttrs types;
-in {
+in
+{
   options.gumdrop.scanned-document-handling.enable = mkEnableOption "Setup services to handle scanned document collection and handling";
   config = mkIf config.gumdrop.scanned-document-handling.enable {
 
@@ -17,11 +18,11 @@ in {
       home = "/mnt/gumdrop/printerScanShare";
     };
 
-    users.groups.serviceftp = {};
+    users.groups.serviceftp = { };
 
     networking.firewall = {
       allowedTCPPorts = [ 21 ]; # ftp
-      allowedTCPPortRanges = [ { from = 56250; to = 56260; } ];
+      allowedTCPPortRanges = [{ from = 56250; to = 56260; }];
     };
 
     #systemd.tmpfiles.rules = [ "d /var/ftp 2770 vsftpd vsftpd - -" ];
@@ -38,7 +39,7 @@ in {
       '';
 
       localUsers = true;
-      userlist = ["serviceftp"];
+      userlist = [ "serviceftp" ];
       chrootlocalUser = true;
 
       localRoot = "/mnt/gumdrop/printerScanShare";

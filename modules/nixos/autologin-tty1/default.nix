@@ -1,8 +1,7 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
+{ lib
+, pkgs
+, config
+, ...
 }:
 # @TODO start something like agetty@tty1.service after autovt@tty1 stops
 let
@@ -11,8 +10,9 @@ let
 
   cfg = config.machine.autologin-tty1;
   settings = import ../../../settings;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   options.machine.autologin-tty1 = {
     enable = mkEnableOption "Enable auto login on tty1";
@@ -26,8 +26,8 @@ in {
   config = mkIf cfg.enable {
     systemd.targets = {
       "autologin-tty1" = {
-        requires = ["multi-user.target"];
-        after = ["multi-user.target"];
+        requires = [ "multi-user.target" ];
+        after = [ "multi-user.target" ];
         unitConfig.AllowIsolate = "yes";
       };
     };
@@ -37,8 +37,8 @@ in {
         enable = true;
         restartIfChanged = false;
         description = "autologin service at tty1";
-        after = ["suppress-kernel-logging.service"];
-        wantedBy = ["autologin-tty1.target"];
+        after = [ "suppress-kernel-logging.service" ];
+        wantedBy = [ "autologin-tty1.target" ];
         serviceConfig = {
           ExecStart = concatStringsSep " " [
             "@${pkgs.util-linux}/sbin/agetty"
@@ -53,8 +53,8 @@ in {
         enable = true;
         restartIfChanged = false;
         description = "suppress kernel logging to the console";
-        after = ["multi-user.target"];
-        wantedBy = ["autologin-tty1.target"];
+        after = [ "multi-user.target" ];
+        wantedBy = [ "autologin-tty1.target" ];
         serviceConfig = {
           ExecStart = "${pkgs.util-linux}/sbin/dmesg -n 1";
           Type = "oneshot";

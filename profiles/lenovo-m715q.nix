@@ -1,7 +1,8 @@
-{lib, pkgs, ...}:
+{ lib, pkgs, ... }:
 let
   inherit (lib) mkForce mkDefault;
-in {
+in
+{
   imports = [
     ./amd.nix
   ];

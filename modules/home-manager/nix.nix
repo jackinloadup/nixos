@@ -1,10 +1,9 @@
-{
-  flake,
-  pkgs,
-  config,
-  lib,
-  nixosConfig,
-  ...
+{ flake
+, pkgs
+, config
+, lib
+, nixosConfig
+, ...
 }: {
   config = {
     # doesn't work when home-manager.useGlobalPkgs is true

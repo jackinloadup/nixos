@@ -1,13 +1,14 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkOption mkOrder getBin getExe optionalString types literalExpression;
   inherit (builtins) toString;
   cfg = config.boot.initrd.network.haveged;
-in {
+in
+{
   options.boot.initrd.network.haveged = {
     enable = mkOption {
       type = types.bool;
@@ -54,9 +55,9 @@ in {
     boot.initrd.systemd.services.haveged = {
       description = "Haveged Generate Entropy";
 
-      wantedBy = ["initrd.target"];
-      conflicts = ["basic.target"];
-      after = ["network.target" "initrd-nixos-copy-secrets.service"];
+      wantedBy = [ "initrd.target" ];
+      conflicts = [ "basic.target" ];
+      after = [ "network.target" "initrd-nixos-copy-secrets.service" ];
 
       unitConfig.DefaultDependencies = false;
       serviceConfig = {

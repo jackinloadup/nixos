@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkOption types;
-in {
+in
+{
   config = mkIf config.services.xserver.windowManager.i3.enable {
     programs.dconf.enable = true;
 

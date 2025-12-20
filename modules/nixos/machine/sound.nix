@@ -1,11 +1,12 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption;
-in {
+in
+{
   config = mkIf config.services.pipewire.enable {
     security.rtkit.enable = true; # Allows pipewire to run "realtime"
     services.pulseaudio.enable = false; # Disable pulseaudio

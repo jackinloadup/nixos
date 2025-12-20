@@ -137,8 +137,8 @@
     niri.url = "github:sodiboo/niri-flake";
   };
 
-  outputs = {self, ...} @ inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs; } {
+  outputs = { self, ... } @ inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         #"i686-linux"
         "x86_64-linux"
@@ -151,21 +151,22 @@
         ./modules/home-manager
         ./users
       ];
-      flake = let
-        inherit (inputs.nixpkgs.lib) mapAttrs;
-        inherit (inputs.flake-utils.lib) eachDefaultSystem eachSystem flattenTree mkApp;
-        defaultPkgs = inputs.nixpkgs;
+      flake =
+        let
+          inherit (inputs.nixpkgs.lib) mapAttrs;
+          inherit (inputs.flake-utils.lib) eachDefaultSystem eachSystem flattenTree mkApp;
+          defaultPkgs = inputs.nixpkgs;
 
-        selfLib = import ./lib/default.nix {
-          lib = defaultPkgs.lib;
-          flake = self;
-          inherit inputs;
-        };
-        inherit (selfLib) importDirOfOverlays allNixosSystems mkNixosSystemGenerator;
+          selfLib = import ./lib/default.nix {
+            lib = defaultPkgs.lib;
+            flake = self;
+            inherit inputs;
+          };
+          inherit (selfLib) importDirOfOverlays allNixosSystems mkNixosSystemGenerator;
 
-        supportedX86Systems = [ "i686-linux" "x86_64-linux" ];
-        supportedSystems = supportedX86Systems ++ [ "aarch64-linux" ];
-      in
+          supportedX86Systems = [ "i686-linux" "x86_64-linux" ];
+          supportedSystems = supportedX86Systems ++ [ "aarch64-linux" ];
+        in
         {
           # Expose overlay to flake outputs, to allow using it from other flakes.
           overlays = importDirOfOverlays "overlays";
@@ -188,33 +189,39 @@
 
         }
         // (eachSystem supportedSystems)
-        (system: let
-          pkgs = import defaultPkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-        in {
-          devShells = flattenTree {
-            rust = import ./shells/rust.nix {inherit pkgs;};
-            hack = import ./shells/hack.nix {inherit pkgs;};
-            secrets = import ./shells/secrets.nix {inherit pkgs;};
-          };
-        })
+          (system:
+            let
+              pkgs = import defaultPkgs {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            in
+            {
+              devShells = flattenTree {
+                rust = import ./shells/rust.nix { inherit pkgs; };
+                hack = import ./shells/hack.nix { inherit pkgs; };
+                secrets = import ./shells/secrets.nix { inherit pkgs; };
+              };
+            })
         // (eachSystem supportedX86Systems)
-        (system: let
-          pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
-        in rec {
-          # Custom packages added via the overlay are selectively added here, to
-          # allow using them from other flakes that import this one.
-          packages = flattenTree {
-            rtl_433-dev = pkgs.rtl_433-dev;
-            ragenix = inputs.ragenix.packages.${system}.default;
-          };
+          (system:
+            let
+              pkgs = defaultPkgs.legacyPackages.${system}.extend self.overlays.default;
+            in
+            rec {
+              # Custom packages added via the overlay are selectively added here, to
+              # allow using them from other flakes that import this one.
+              packages = flattenTree {
+                rtl_433-dev = pkgs.rtl_433-dev;
+                ragenix = inputs.ragenix.packages.${system}.default;
+              };
 
-          apps = {
-            rtl_433-dev = mkApp {drv = packages.rtl_433-dev;};
-          };
-        })
+              apps = {
+                rtl_433-dev = mkApp { drv = packages.rtl_433-dev; } // {
+                  meta = packages.rtl_433-dev.meta;
+                };
+              };
+            })
         // {
           packages.x86_64-linux.install-iso = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
           #packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "zen";
@@ -230,7 +237,8 @@
           };
         };
 
-      perSystem = { self', system, pkgs, lib, config, inputs', ... }: let
+      perSystem = { self', system, pkgs, lib, config, inputs', ... }:
+        let
           nixvimLib = inputs.nixvim.lib.${system};
           nixvimPkgs = inputs.nixvim.legacyPackages.${system};
           nixvimBasicModule = {
@@ -243,40 +251,42 @@
           };
           nvimBasic = nixvimPkgs.makeNixvimWithModule nixvimBasicModule;
           nvimFull = nixvimPkgs.makeNixvimWithModule nixvimFullModule;
-      in {
-        nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" "nixos-unified" ];
+        in
+        {
+          nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" "nixos-unified" ];
 
-        treefmt.config = {
-          projectRootFile = "flake.nix";
-          programs.nixpkgs-fmt.enable = true;
-          #formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
+          treefmt.config = {
+            projectRootFile = "flake.nix";
+            programs.nixpkgs-fmt.enable = true;
+            #formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
+          };
+
+
+          devShells.default = pkgs.mkShell {
+            inputsFrom = with self.outputs.devShells.${system}; [ secrets ];
+            buildInputs = [
+              pkgs.nixpkgs-fmt
+              #pkgs.sops
+              #pkgs.ssh-to-age
+            ];
+            packages = [
+              #pkgs.
+            ];
+          };
+
+          formatter = config.treefmt.build.wrapper;
+
+          checks = {
+            # Run `nix flake check .` to verify that your config is not broken
+            nvimBasic = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimBasicModule;
+            nvimFull = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimFullModule;
+          };
+
+          packages = {
+            nvimBasic = nvimBasic;
+            nvimFull = nvimFull;
+          };
         };
-
-        devShells.default = pkgs.mkShell {
-          inputsFrom = with self.outputs.devShells.${system}; [ secrets ];
-          buildInputs = [
-            pkgs.nixpkgs-fmt
-            #pkgs.sops
-            #pkgs.ssh-to-age
-          ];
-          packages = [
-            #pkgs.
-          ];
-        };
-
-        formatter = config.treefmt.build.wrapper;
-
-        checks = {
-          # Run `nix flake check .` to verify that your config is not broken
-          nvimBasic = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimBasicModule;
-          nvimFull = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimFullModule;
-        };
-
-        packages = {
-          nvimBasic = nvimBasic;
-          nvimFull = nvimFull;
-        };
-      };
     };
 
   nixConfig = {

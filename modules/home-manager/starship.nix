@@ -1,10 +1,11 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   inherit (pkgs.lib) mkIf concatStrings;
-in {
+in
+{
   config = {
     programs.starship = mkIf config.programs.starship.enable {
       package = pkgs.starship;

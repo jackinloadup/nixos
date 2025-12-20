@@ -1,5 +1,5 @@
 let
-  selfLib = import ./lib/secrets.nix {};
+  selfLib = import ./lib/secrets.nix { };
   inherit (selfLib) machines hostHasService smachines shostHasService;
   inherit (builtins) filter readFile pathExists;
   lib = (import <nixpkgs> { }).pkgs.lib;
@@ -12,13 +12,13 @@ let
   lriutzel = [ lriutzel_ed25519 ];
   users = lriutzel;
 
-  cleanKey = str: replaceStrings ["\n"] [" "] str;
+  cleanKey = str: replaceStrings [ "\n" ] [ " " ] str;
   # Read key  if file exists
   readKey = path: if pathExists path then cleanKey (readFile path) else null;
 
   # public ssh key
-  machineSshKey = (host: readKey ./machines/${host}/sshd/public_key) ;
-  sshKeyMap = (host: uniqueStrings (filter (x: x != null ) (map machineSshKey host)));
+  machineSshKey = (host: readKey ./machines/${host}/sshd/public_key);
+  sshKeyMap = (host: uniqueStrings (filter (x: x != null) (map machineSshKey host)));
   machinesWithHostKeys = filter (host: hostHasService host "sshd") machines;
   machineKeys = sshKeyMap machinesWithHostKeys;
 
@@ -27,37 +27,37 @@ let
   all = users ++ machineKeys;
   allBoot = users ++ machineBootKeys;
 
-  servers = users ++ (sshKeyMap ["marulk" "reg"]);
-  studio = users ++ (sshKeyMap ["lyza"]);
+  servers = users ++ (sshKeyMap [ "marulk" "reg" ]);
+  studio = users ++ (sshKeyMap [ "lyza" ]);
 
-  lucasDevHosts = lriutzel ++ (sshKeyMap ["reg" "riko"]);
-  vpnServers = ["marulk"];
+  lucasDevHosts = lriutzel ++ (sshKeyMap [ "reg" "riko" ]);
+  vpnServers = [ "marulk" ];
 
   mkWgHost = (host: {
     "secrets/machines/${host}/wg-vpn/private.age".publicKeys = users ++
-      (sshKeyMap ([host] ++ vpnServers));
+      (sshKeyMap ([ host ] ++ vpnServers));
     "secrets/machines/${host}/wg-vpn/public.age".publicKeys = users ++
-      (sshKeyMap ([host] ++ vpnServers));
+      (sshKeyMap ([ host ] ++ vpnServers));
   });
   wgHosts = filter (host: shostHasService host "wg-vpn") smachines;
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
 
   mkTorHost = (host: {
-    "secrets/machines/${host}/tor-service/hostname.age".publicKeys = users ++ (sshKeyMap [host]);
+    "secrets/machines/${host}/tor-service/hostname.age".publicKeys = users ++ (sshKeyMap [ host ]);
     "secrets/machines/${host}/tor-service/hs_ed25519_public_key.age".publicKeys = all;
-    "secrets/machines/${host}/tor-service/hs_ed25519_secret_key.age".publicKeys = users ++ (sshKeyMap [host]);
+    "secrets/machines/${host}/tor-service/hs_ed25519_secret_key.age".publicKeys = users ++ (sshKeyMap [ host ]);
   });
   torHosts = filter (host: shostHasService host "tor-service") smachines;
   torHostsConfig = mergeAttrsList (map mkTorHost torHosts);
 
   mkSshdHost = (host: {
-    "secrets/machines/${host}/sshd/private_key.age".publicKeys = users ++ (sshKeyMap [host]);
+    "secrets/machines/${host}/sshd/private_key.age".publicKeys = users ++ (sshKeyMap [ host ]);
   });
   sshdHosts = filter (host: shostHasService host "sshd") smachines;
   sshdHostsConfig = mergeAttrsList (map mkSshdHost sshdHosts);
 
   mkInitSshdHost = (host: {
-    "secrets/machines/${host}/init-sshd/private_key.age".publicKeys = users ++ (sshKeyMap [host]);
+    "secrets/machines/${host}/init-sshd/private_key.age".publicKeys = users ++ (sshKeyMap [ host ]);
   });
   initSshdHosts = filter (host: shostHasService host "init-sshd") smachines;
   initSshdHostsConfig = mergeAttrsList (map mkInitSshdHost initSshdHosts);
@@ -68,7 +68,7 @@ in
 
   #"secrets/services/ssh_nextcloud_ed25519_key.age".publicKeys = all;
   #"secrets/services/ssh_nextcloud_ed25519_key.pub.age".publicKeys = all;
-#  "secrets/services/boot.age".publicKeys = allBoot;
+  #  "secrets/services/boot.age".publicKeys = allBoot;
 
   "secrets/services/nextcloud/db-pass.age".publicKeys = servers;
 
@@ -96,5 +96,5 @@ in
 // wgHostsConfig
 // torHostsConfig
 // sshdHostsConfig
-// initSshdHostsConfig
+  // initSshdHostsConfig
 #// mkWgHost "mike-laptop"

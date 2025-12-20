@@ -1,15 +1,16 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkDefault mkEnableOption mkOption types attrNames genAttrs optional literalExpression;
   cfg = config.services.rtl_433;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: {extraGroups = groups;}));
+  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
   configFile = pkgs.writeText "rtl_433.conf" cfg.configText;
-in {
+in
+{
   options.services.rtl_433 = {
     enable = mkEnableOption "Enable rtl_433 services";
     package = mkOption {
@@ -38,12 +39,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [cfg.package];
+    environment.systemPackages = [ cfg.package ];
 
     users.users.rtl_433 = {
       name = "rtl_433";
       group = "rtl_433";
-      extraGroups = ["plugdev"];
+      extraGroups = [ "plugdev" ];
       uid = 20001; # should be config.ids.uids.rtl_433;
       description = "rtl_444 daemon user";
       isSystemUser = true;
@@ -53,8 +54,8 @@ in {
     systemd.services.rtl_433 = {
       description = "rtl_433 server daemon";
 
-      wantedBy = ["multi-user.target"];
-      after = ["network.target"];
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
       restartIfChanged = true;
 

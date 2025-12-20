@@ -1,42 +1,43 @@
-{
-  pkgs,
-  lib,
-  nixosConfig,
-  ...
-}: let
+{ pkgs
+, lib
+, nixosConfig
+, ...
+}:
+let
   inherit (lib) mkIf;
   settings = import ../../settings;
   sizeTarget = nixosConfig.machine.sizeTarget;
   ifGraphical = sizeTarget > 1;
-in {
+in
+{
   # TO REVIEW https://www.brendangregg.com/blog/2024-03-24/linux-crisis-tools.html
   home.packages = mkIf ifGraphical [
-      pkgs.gdb # debugger
-      pkgs.hyperfine
-      pkgs.valgrind
-      #pkgs.rr # time traveling debugger # failed on unstable
-      #pkgs.allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
-      #pkgs.unityhub # Game development tool
-      pkgs.nurl # Generate Nix fetcher calls from repository URLs
-      # zeal-qt6 # offline documentation browser
-      pkgs.fx # command-line JSON viewer
-      pkgs.fq # for binary formats - tool, language and decoders for working with binary and text formats
-      #pkgs.kubediff
+    pkgs.gdb # debugger
+    pkgs.hyperfine
+    pkgs.valgrind
+    #pkgs.rr # time traveling debugger # failed on unstable
+    #pkgs.allocscope # a memory tracking tool https://github.com/matt-kimball/allocscope
+    #pkgs.unityhub # Game development tool
+    pkgs.nurl # Generate Nix fetcher calls from repository URLs
+    # zeal-qt6 # offline documentation browser
+    pkgs.fx # command-line JSON viewer
+    pkgs.fq # for binary formats - tool, language and decoders for working with binary and text formats
+    #pkgs.kubediff
 
-      #python39Packages.xdot # graphviz viewer # erro with pycairio compile
-      pkgs.graphviz
-      pkgs.rustscan # faster than nmap port scanner
+    #python39Packages.xdot # graphviz viewer # erro with pycairio compile
+    pkgs.graphviz
+    pkgs.rustscan # faster than nmap port scanner
 
-      #    # TUI tools but loading if graphical
-      #    mqttui # mqtt tui
+    #    # TUI tools but loading if graphical
+    #    mqttui # mqtt tui
 
-      #    # markdown tools
-      #    mdcat # tui viewer
-      #    mdp # markdown presentation
-      #    mdr # tui viewer
-      #    # mdv # tui viewer not in nixpkgs yet
-      #pkgs.mr # multi repo
-    ];
+    #    # markdown tools
+    #    mdcat # tui viewer
+    #    mdp # markdown presentation
+    #    mdr # tui viewer
+    #    # mdv # tui viewer not in nixpkgs yet
+    #pkgs.mr # multi repo
+  ];
 
   home.file.".gdbinit".text = ''
     set disassembly-flavor intel

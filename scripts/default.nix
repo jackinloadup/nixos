@@ -3,7 +3,6 @@
 {
   # Configuration common to all Linux systems
   perSystem = { config, ... }: {
-    apps = {
-    };
+    apps = { };
   };
 }

@@ -1,18 +1,22 @@
-{ lib, config, ... }: let
+{ lib, config, ... }:
+let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.searx.enable {
     services.nginx.virtualHosts."searx.home.lucasr.com" = {
       forceSSL = true;
       enableACME = true;
       acmeRoot = null; # Use DNS Challenege
 
-      locations."/" = let
+      locations."/" =
+        let
           port = toString config.services.searx.settings.server.port;
-      in {
-        proxyPass = "http://127.0.0.1:${port}/";
-        proxyWebsockets = true;
-      };
+        in
+        {
+          proxyPass = "http://127.0.0.1:${port}/";
+          proxyWebsockets = true;
+        };
     };
 
     services.searx = {
@@ -35,30 +39,32 @@ in {
         };
         #ui.default_theme = "oscar";
         #ui.theme_args.oscar_style = "logicodev-dark";
-        engines = lib.mapAttrsToList (name: value: {
-          inherit name;
-        } // value) {
+        engines = lib.mapAttrsToList
+          (name: value: {
+            inherit name;
+          } // value)
+          {
             #"bitbucket".disabled = false;
             #"ccc-tv".disabled = false;
-          "ddg definitions".disabled = false;
+            "ddg definitions".disabled = false;
             #"erowid".disabled = false;
-          "duckduckgo".disabled = false;
-          "duckduckgo images".disabled = false;
-          "fdroid".disabled = false;
-          "gitlab".disabled = false;
+            "duckduckgo".disabled = false;
+            "duckduckgo images".disabled = false;
+            "fdroid".disabled = false;
+            "gitlab".disabled = false;
             #"google play apps".disabled = false;
             #"nyaa".disabled = false;
-          "openrepos".disabled = false;
+            "openrepos".disabled = false;
             # "qwant".disabled = false;
-          "reddit".disabled = false;
-          "searchcode code".disabled = false;
+            "reddit".disabled = false;
+            "searchcode code".disabled = false;
             #"framalibre".disabled = false;
-          "wikibooks".disabled = false;
-          "wikinews".disabled = false;
-          "wikiquote".disabled = false;
-          "wikisource".disabled = false;
-          "wiktionary".disabled = false;
-        };
+            "wikibooks".disabled = false;
+            "wikinews".disabled = false;
+            "wikiquote".disabled = false;
+            "wikisource".disabled = false;
+            "wiktionary".disabled = false;
+          };
       };
 
       limiterSettings = {

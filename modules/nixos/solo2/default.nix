@@ -1,12 +1,13 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.hardware.solo2;
-in {
+in
+{
   # TODO: upstream to nixpkgs
   options.hardware.solo2.enable = mkEnableOption "Enable udev rules for Solo2 seciruty key";
 

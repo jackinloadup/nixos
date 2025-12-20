@@ -1,13 +1,13 @@
-{
-  flake,
-  pkgs,
-  lib,
-  config,
-  ...
+{ flake
+, pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib) mkIf mkDefault;
-in {
+in
+{
   imports = [
     flake.inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];

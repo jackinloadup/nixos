@@ -1,16 +1,14 @@
 { inputs, flake, pkgs, lib, ... }:
 let
   inherit (lib) mkIf mkDefault mkForce mkSetuidRoot;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     ./hardware-configuration.nix
   ];
 
   machine = {
-    users = [
-      #      "lriutzel"
-    ];
     tui = false;
     sizeTarget = 0;
     encryptedRoot = false;
@@ -25,20 +23,21 @@ in {
   #security.wrappers.fusermount = mkForce null;
   #security.wrappers = builtins.removeAttrs config.security.wrappers [ "fusermount" ];
 
-  security.wrappers = let
-    mkSetuidRoot = source: {
-      setuid = true;
-      owner = "root";
-      group = "root";
-      inherit source;
-    };
-  in
+  security.wrappers =
+    let
+      mkSetuidRoot = source: {
+        setuid = true;
+        owner = "root";
+        group = "root";
+        inherit source;
+      };
+    in
     mkForce {
       mount = mkSetuidRoot "${lib.getBin pkgs.util-linux}/bin/mount";
       umount = mkSetuidRoot "${lib.getBin pkgs.util-linux}/bin/umount";
     };
 
-  environment.defaultPackages = mkForce [];
+  environment.defaultPackages = mkForce [ ];
 
   boot.enableContainers = false;
   xdg.menus.enable = false;
@@ -46,7 +45,7 @@ in {
 
   hardware.enableAllFirmware = mkForce false;
   hardware.enableRedistributableFirmware = mkForce false;
-  i18n.supportedLocales = ["en_US.UTF-8/UTF-8"];
+  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" ];
   programs.command-not-found.enable = mkDefault false;
 
   services.timesyncd.enable = false; # systemdMinimal doesn't have timesyncd

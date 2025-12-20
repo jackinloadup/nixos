@@ -2,7 +2,8 @@
 let
   inherit (lib) mkDefault mkForce;
   isUserFacing = false;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelTui
@@ -80,10 +81,10 @@ in {
     };
 
     gumdrop = {
-    #  printerScanner = false;
-    #  storageServer.enable = false;
-    #  storageServer.media = true;
-    #  storageServer.roms = true;
+      #  printerScanner = false;
+      #  storageServer.enable = false;
+      #  storageServer.media = true;
+      #  storageServer.roms = true;
 
       vpn.server.endpoint = "vpn.lucasr.com:51820";
       vpn.client.enable = true;
@@ -94,7 +95,7 @@ in {
       vmVariant = {
         networking.hostName = mkForce "timberlake-vm";
         #services.xserver.displayManager.defaultSession = mkForce "none+i3";
-        boot.initrd.kernelModules = [];
+        boot.initrd.kernelModules = [ ];
 
         virtualisation = {
           #useEFIBoot = true;
@@ -104,7 +105,7 @@ in {
           cores = 4;
           graphics = true;
           memorySize = 2048;
-          qemu.networkingOptions = ["-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper"];
+          qemu.networkingOptions = [ "-nic bridge,br=br0,model=virtio-net-pci,mac=30:9c:23:01:2f:82,helper=/run/wrappers/bin/qemu-bridge-helper" ];
           qemu.options = [
             #"-device virtio-gpu-pci"
             #"-device virtio-gpu-gl-pci"

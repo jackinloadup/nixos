@@ -1,7 +1,8 @@
 { pkgs, lib, flake, config, ... }:
 let
   inherit (lib) mkDefault mkForce;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelFull
@@ -66,7 +67,7 @@ in {
     #systemd.network.networks.wlan0.DHCP = "yes";
 
     machine = {
-      users = ["lriutzel"];
+      users = [ "lriutzel" ];
       tui = true;
       sizeTarget = 2;
       encryptedRoot = true;

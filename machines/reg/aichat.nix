@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   config = {
     # ollama.home.lucasr.com in mirotik static dns

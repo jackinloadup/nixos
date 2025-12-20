@@ -2,7 +2,8 @@
 # Machine runs DNS and home-assistant vm
 let
   inherit (lib) mkForce mkDefault;
-in {
+in
+{
   imports = [
     flake.self.nixosModules.default
     flake.self.nixosModules.lriutzelTui
@@ -56,13 +57,13 @@ in {
     #];
 
     networking.networkmanager.enable = mkForce false;
-    networking.bridges.br0.interfaces = ["enp1s0f0"];
+    networking.bridges.br0.interfaces = [ "enp1s0f0" ];
     networking.interfaces.br0.useDHCP = true;
 
     # because we are the dns, force upstream
-#   networking.resolvconf.extraConfig = ''
-#     name_servers 10.16.1.1
-#   '';
+    #   networking.resolvconf.extraConfig = ''
+    #     name_servers 10.16.1.1
+    #   '';
 
     networking.dhcpcd.persistent = true;
 

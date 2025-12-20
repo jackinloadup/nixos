@@ -1,22 +1,23 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
+{ lib
+, pkgs
+, config
+, ...
+}:
+let
   inherit (lib) attrNames mkIf mkDefault;
   inherit (lib.types) nullOr enum;
   inherit (builtins) filter readFile elem pathExists hasAttr;
-  selfLib = import ../../../lib/secrets.nix {};
+  selfLib = import ../../../lib/secrets.nix { };
   inherit (selfLib) machines hostExists hostHasService
-                    smachine shostExists shostHasService;
+    smachine shostExists shostHasService;
 
 
   hostname = config.networking.hostName;
   settings = import ../../../settings;
-  normalUsers = if (hasAttr "home-manager" config)
+  normalUsers =
+    if (hasAttr "home-manager" config)
     then attrNames config.home-manager.users
-    else [];
+    else [ ];
 
   machinesWithHostKeys = filter (host: hostHasService host "sshd") machines;
   machineKeys = map (host: readFile ../../../machines/${host}/sshd/public_key) machinesWithHostKeys;
@@ -31,7 +32,8 @@
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINmfKdhabJag/k0w78kqBG1PL8w+WMv7xWp4VbkdhtINAAAABHNzaDo= black"
   ];
 
-in {
+in
+{
   imports = [
     ./adguard.nix
     ./frigate.nix
@@ -75,7 +77,7 @@ in {
 
     # may not be nessisary if multiple dhcp search/domain things stack
     # as the machine is connected to more networks
-    networking.search = ["home.lucasr.com"];
+    networking.search = [ "home.lucasr.com" ];
 
     networking.wireless.secretsFile = config.age.secrets.system-wireless-networking.path;
     networking.wireless.networks = {
@@ -89,8 +91,8 @@ in {
 
     # "wg0" is the network interface name. You can name the interface arbitrarily.
     networking.wireguard.interfaces.wg0 = mkIf (shostHasService hostname "wg-vpn") {
-    #networking.wg-quick.interfaces.wg0 = mkIf (shostHasService hostname "wg-vpn") {
-        privateKeyFile = config.age.secrets."wg-vpn-${hostname}".path;
+      #networking.wg-quick.interfaces.wg0 = mkIf (shostHasService hostname "wg-vpn") {
+      privateKeyFile = config.age.secrets."wg-vpn-${hostname}".path;
     };
 
     nix.sshServe.keys = machineKeys;
@@ -101,32 +103,34 @@ in {
 
     # we could have new hosts added automatically if the dir was scanned
     # TODO add tor hosts
-    programs.ssh.knownHosts = let
-      addNixosHost = (name: {
-        extraHostNames = [ "${name}.home.lucasr.com" ];
-        publicKeyFile = ../../../machines/${name}/sshd/public_key;
-      });
-    in {
-      reg = addNixosHost "reg";
-      riko = addNixosHost "riko";
-      lyza = addNixosHost "lyza";
-      marulk = addNixosHost "marulk";
-      nat = addNixosHost "nat";
-      zen = addNixosHost "zen";
-      timberlake = addNixosHost "timberlake";
-      "truenas" = {
-        extraHostNames = [ "truenas.home.lucasr.com" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMgiC6kYG2AKcv1Uv9sb3tDxcFL+QFt23HcHVJOKn1pi";
+    programs.ssh.knownHosts =
+      let
+        addNixosHost = (name: {
+          extraHostNames = [ "${name}.home.lucasr.com" ];
+          publicKeyFile = ../../../machines/${name}/sshd/public_key;
+        });
+      in
+      {
+        reg = addNixosHost "reg";
+        riko = addNixosHost "riko";
+        lyza = addNixosHost "lyza";
+        marulk = addNixosHost "marulk";
+        nat = addNixosHost "nat";
+        zen = addNixosHost "zen";
+        timberlake = addNixosHost "timberlake";
+        "truenas" = {
+          extraHostNames = [ "truenas.home.lucasr.com" ];
+          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMgiC6kYG2AKcv1Uv9sb3tDxcFL+QFt23HcHVJOKn1pi";
+        };
+        "mikrotik" = {
+          extraHostNames = [ "mikrotik.home.lucasr.com" "10.16.1.1" ];
+          publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABAwAAAQEA7LFCcWkaZimEONjBTPXAHO3PQpa9xtSWof2uyzNyIPWQm8hWuLKb3zIm82zRiLz/Hw5da6QHG7EXxI0RANYQ+uHHypYUWHw8z/JJ0XLwUYJHvOHc9I14wq5p9BxSg3NXP1dKDl5buygbQxMfbpA9J6qlTTVgq4grSH3G6KvfcC2s1mEjnKYzaEhp7r1/MQ/WaRF5PoZBOXCvnkRFeQXjKryj2vZ/92sB/eliYfyQ3SwKJe+NwSK6pGrgyqfnUoXbNcxSgOWChI2ejs5mm5svpv+Kznc13YOGRNxmdvWmusxP6CHxBBYdvGEngGy0EFc4a2GHx7neQRy4sdqRmDewyw==";
+        };
+        "seedbox" = {
+          extraHostNames = [ "seed.tac0bell.com" "seed.lucasr.com" ];
+          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQq/HzkzQYDxbfKByoul/hQtrvIcCS7Xrwh+n2Om83C";
+        };
       };
-      "mikrotik" = {
-        extraHostNames = [ "mikrotik.home.lucasr.com" "10.16.1.1" ];
-        publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAABAwAAAQEA7LFCcWkaZimEONjBTPXAHO3PQpa9xtSWof2uyzNyIPWQm8hWuLKb3zIm82zRiLz/Hw5da6QHG7EXxI0RANYQ+uHHypYUWHw8z/JJ0XLwUYJHvOHc9I14wq5p9BxSg3NXP1dKDl5buygbQxMfbpA9J6qlTTVgq4grSH3G6KvfcC2s1mEjnKYzaEhp7r1/MQ/WaRF5PoZBOXCvnkRFeQXjKryj2vZ/92sB/eliYfyQ3SwKJe+NwSK6pGrgyqfnUoXbNcxSgOWChI2ejs5mm5svpv+Kznc13YOGRNxmdvWmusxP6CHxBBYdvGEngGy0EFc4a2GHx7neQRy4sdqRmDewyw==";
-      };
-      "seedbox" = {
-        extraHostNames = [ "seed.tac0bell.com" "seed.lucasr.com" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQq/HzkzQYDxbfKByoul/hQtrvIcCS7Xrwh+n2Om83C";
-      };
-    };
 
     security.acme.acceptTerms = true;
     security.acme.defaults = {

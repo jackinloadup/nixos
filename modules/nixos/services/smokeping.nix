@@ -1,6 +1,8 @@
-{ lib, config, pkgs, ... }: let
+{ lib, config, pkgs, ... }:
+let
   inherit (lib) mkIf;
-in {
+in
+{
   config = mkIf config.services.smokeping.enable {
 
     services.nginx.virtualHosts.smokeping = {
