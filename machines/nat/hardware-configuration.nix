@@ -1,5 +1,8 @@
-{...}: {
+{flake, ...}: {
   imports = [
+    flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
+    flake.inputs.nixos-hardware.nixosModules.common-pc
+    flake.inputs.nixos-hardware.nixosModules.common-cpu-intel
     ../../profiles/intel.nix
     ( import ../../profiles/disk-workstation-ext4.nix { device = "/dev/sda"; })
   ];

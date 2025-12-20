@@ -3,7 +3,6 @@ let
   inherit (lib) mkIf mkDefault mkForce mkSetuidRoot;
 in {
   imports = [
-    (inputs.nixpkgs + "/nixos/modules/profiles/minimal.nix")
     flake.self.nixosModules.default
     ./hardware-configuration.nix
   ];

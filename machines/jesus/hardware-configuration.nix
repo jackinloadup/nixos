@@ -1,5 +1,7 @@
 {flake, pkgs, config, lib, ...}: {
   imports = [
+    flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
+    flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1
     ../../profiles/intel.nix
     (import ../../profiles/disk-laptop-1.nix {
       inherit flake pkgs config lib;

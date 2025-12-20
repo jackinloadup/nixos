@@ -1,5 +1,7 @@
 {pkgs, flake, ...}: {
   imports = [
+    flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
+    flake.inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1
     flake.inputs.nixos-facter-modules.nixosModules.facter
     ../../profiles/intel.nix
     ../../profiles/mobile-device.nix

@@ -2,6 +2,12 @@
 inherit (lib) mkForce;
 in {
   imports = [
+    flake.inputs.nixos-hardware.nixosModules.common-pc
+    flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
+    flake.inputs.nixos-hardware.nixosModules.common-cpu-amd
+    flake.inputs.nixos-hardware.nixosModules.common-gpu-amd
+    flake.inputs.nixos-hardware.nixosModules.common-gpu-amd
+    flake.inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
     #flake.inputs.nixos-facter-modules.nixosModules.facter
     (import ../../profiles/disk-laptop-2.nix {
       inherit flake pkgs config lib;

@@ -1,5 +1,9 @@
 {pkgs, flake, config, ...}: {
   imports = [
+    flake.inputs.nixos-hardware.nixosModules.common-pc-ssd
+    flake.inputs.nixos-hardware.nixosModules.common-pc
+    flake.inputs.nixos-hardware.nixosModules.common-cpu-amd
+    flake.inputs.nixos-hardware.nixosModules.common-gpu-amd
     flake.inputs.nixos-facter-modules.nixosModules.facter
     ../../profiles/disk-workstation-2.nix
     ../../profiles/amd.nix
