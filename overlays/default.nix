@@ -61,6 +61,7 @@ self: super: {
   openrct2 = self.unstable.openrct2;
   obsidian = self.unstable.obsidian;
   bark = self.unstable.bark;
+  claude-code = self.unstable.claude-code;
   rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix { };
 
   ragenix = flake.inputs.ragenix.packages."x86_64-linux".default;
