@@ -1,11 +1,11 @@
-{ pkgs, lib, flake, config, ... }:
+{ pkgs, lib, inputs, config, ... }:
 let
   inherit (lib) mkDefault mkForce;
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelFull
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelFull
     ./hardware-configuration.nix
     ./monitor-setup.nix
     ./iwd.nix

@@ -1,5 +1,5 @@
 { config
-, flake
+, inputs
 , lib
 , ...
 }:
@@ -9,13 +9,13 @@ let
 in
 {
   imports = [
-    flake.self.nixosModules.common
-    flake.self.nixosModules.linux
-    flake.self.nixosModules.tui
-    flake.self.nixosModules.gumdrop
-    flake.self.nixosModules.gui
-    flake.self.nixosModules.work
-    flake.self.nixosModules.lriutzelGui
+    inputs.self.nixosModules.common
+    inputs.self.nixosModules.linux
+    inputs.self.nixosModules.tui
+    inputs.self.nixosModules.gumdrop
+    inputs.self.nixosModules.gui
+    inputs.self.nixosModules.work
+    inputs.self.nixosModules.lriutzelGui
     ./hardware-configuration.nix
   ];
 

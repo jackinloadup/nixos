@@ -1,10 +1,10 @@
-{ inputs, flake, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 let
   inherit (lib) mkIf mkDefault mkForce mkSetuidRoot;
 in
 {
   imports = [
-    flake.self.nixosModules.default
+    inputs.self.nixosModules.default
     ./hardware-configuration.nix
   ];
 

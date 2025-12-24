@@ -1,4 +1,4 @@
-{ flake, lib, ... }:
+{ inputs, lib, ... }:
 # machine runs ?
 let
   inherit (lib) mkDefault mkForce;
@@ -7,8 +7,8 @@ in
 {
 
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelTui
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelTui
     ./hardware-configuration.nix
     ./home-assistant.nix
     ./frigate.nix

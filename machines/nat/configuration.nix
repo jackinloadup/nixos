@@ -1,4 +1,4 @@
-{ flake, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 # machine runs kodi
 let
   inherit (lib) mkDefault mkForce;
@@ -6,9 +6,9 @@ let
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelTui
-    flake.self.nixosModules.kodi
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelTui
+    inputs.self.nixosModules.kodi
     ./hardware-configuration.nix
     #  ./auto-pair-ps3-remote.nix
   ];

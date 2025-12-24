@@ -2,7 +2,7 @@
 , pkgs
 , nixosConfig
 , lib
-, flake
+, inputs
 , ...
 }:
 let
@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    flake.inputs.stylix.homeModules.stylix
+    inputs.stylix.homeModules.stylix
     ./navigation.nix
   ];
 

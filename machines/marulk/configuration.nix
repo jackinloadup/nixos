@@ -1,13 +1,13 @@
-{ flake, lib, config, ... }:
+{ inputs, lib, config, ... }:
 # Machine runs DNS and home-assistant vm
 let
   inherit (lib) mkForce mkDefault;
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelTui
-    flake.self.nixosModules.server
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelTui
+    inputs.self.nixosModules.server
     ./hardware-configuration.nix
   ];
 

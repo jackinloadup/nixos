@@ -2,6 +2,7 @@
 , pkgs
 , lib
 , config
+, inputs
 , ...
 }:
 let
@@ -10,9 +11,9 @@ let
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelFull
-    flake.self.nixosModules.work
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelFull
+    inputs.self.nixosModules.work
     ./hardware-configuration.nix
     ./usb-switch-monitor-input.nix
     ./rename-pipewire-sinks.nix

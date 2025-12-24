@@ -1,4 +1,4 @@
-{ flake
+{ inputs
 , pkgs
 , lib
 , config
@@ -10,9 +10,9 @@ let
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelGui
-    flake.self.nixosModules.criutzel
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelGui
+    inputs.self.nixosModules.criutzel
     #./control-monitor-backlight.nix
     ./hardware-configuration.nix
     #./rename-pipewire-sinks.nix # isn't working and caused build error on

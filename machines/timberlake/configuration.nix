@@ -1,12 +1,12 @@
-{ lib, flake, ... }:
+{ lib, inputs, ... }:
 let
   inherit (lib) mkDefault mkForce;
   isUserFacing = false;
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelTui
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelTui
     ./hardware-configuration.nix
     ./home-assistant.nix
   ];

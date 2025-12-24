@@ -1,12 +1,12 @@
-{ lib, flake, ... }:
+{ lib, inputs, ... }:
 let
   inherit (lib) mkDefault mkForce;
 in
 {
   imports = [
-    flake.self.nixosModules.default
-    flake.self.nixosModules.lriutzelGui
-    flake.self.nixosModules.criutzel
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.lriutzelGui
+    inputs.self.nixosModules.criutzel
     ./hardware-configuration.nix
     ./iwd.nix
   ];
