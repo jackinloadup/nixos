@@ -27,6 +27,9 @@ in
 
     home-manager.sharedModules = [
       {
+        programs.niri.settings.outputs."eDP-1".scale = mkForce 1.5;
+      }
+      {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
         wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
         programs.niri.enable = config.programs.niri.enable;

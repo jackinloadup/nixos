@@ -81,9 +81,9 @@ in
                 };
 
                 # LG 4k 42in
-                outputs."DP-2".scale = 1.0;
+                outputs."DP-2".scale = mkDefault 1.0;
                 # laptop monitor
-                outputs."eDP-1".scale = 1.0;
+                outputs."eDP-1".scale = mkDefault 1.0;
 
                 prefer-no-csd = true;
 
