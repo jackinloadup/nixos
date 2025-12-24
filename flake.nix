@@ -168,7 +168,7 @@
           };
           inherit (selfLib) importDirOfOverlays allNixosSystems mkNixosSystemGenerator;
 
-          supportedX86Systems = [ "i686-linux" "x86_64-linux" ];
+          supportedX86Systems = [ "x86_64-linux" ];
           supportedSystems = supportedX86Systems ++ [ "aarch64-linux" ];
         in
         {
