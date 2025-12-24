@@ -66,7 +66,7 @@ in
             all-outputs = false;
             current-only = false;
             format = "{index}";
-            disable-click = true;
+            disable-click = false;
             disable-markup = true;
           };
           "hyprland/window" = {
