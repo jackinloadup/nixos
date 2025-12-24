@@ -4,10 +4,12 @@
 , ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkDefault;
 in
 {
   config = {
+    environment.systemPackages = [ pkgs.xwayland-satellite ];
+
     security.pam.services.hyprlock = {
       text = "auth include login";
       enableGnomeKeyring = true;
