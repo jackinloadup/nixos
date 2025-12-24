@@ -61,9 +61,20 @@ rec {
   allNixosSystems = genAttrs machinesWithConfig mkNixosSystem;
 
   mkNixosSystem = (name:
-    flake.nixos-unified.lib.mkLinuxSystem
-      { home-manager = true; }
-      { imports = [ (rootPath + "/machines/${name}/configuration.nix") ]; }
+    let
+      flakeArg = { inherit inputs; self = inputs.self; };
+    in
+    inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; inherit (inputs) self; flake = flakeArg; };
+      modules = [
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.extraSpecialArgs = { inherit inputs; flake = flakeArg; };
+          home-manager.useGlobalPkgs = true;
+        }
+        (rootPath + "/machines/${name}/configuration.nix")
+      ];
+    }
   );
 
   mkNixosSystemGenerator = pkgs: system: hostname:

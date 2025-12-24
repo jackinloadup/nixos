@@ -172,6 +172,8 @@
           supportedSystems = supportedX86Systems ++ [ "aarch64-linux" ];
         in
         {
+          nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" ];
+
           # Expose overlay to flake outputs, to allow using it from other flakes.
           overlays = importDirOfOverlays "overlays";
 
@@ -257,8 +259,6 @@
           nvimFull = nixvimPkgs.makeNixvimWithModule nixvimFullModule;
         in
         {
-          nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" "nixos-unified" ];
-
           treefmt.config = {
             projectRootFile = "flake.nix";
             programs.nixpkgs-fmt.enable = true;

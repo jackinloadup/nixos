@@ -1,31 +1,64 @@
 # flake-parts module
 { self, inputs, ... }:
+let
+  # Define services module inline to avoid self-reference
+  servicesModule.imports = [
+    ./services/searx.nix
+    ./services/smokeping.nix
+    ./services/docker.nix
+    ./services/syncthing.nix
+    ./services/vaultwarden.nix
+  ];
+
+  # Define individual window manager modules
+  hyprlandModule.imports = [ ./window-managers/hyprland.nix ];
+  i3Module.imports = [ ./window-managers/i3.nix ];
+  niriModule.imports = [ ./window-managers/niri.nix ];
+  swayModule.imports = [ ./window-managers/sway.nix ];
+
+  # Define component modules
+  commonModule.imports = [
+    ./bluetooth
+    ./browsers
+    ./dnsmasq
+    ./../../insecure-packages.nix
+    ./solo2
+    ./yubikey
+    ./../../nixos-secrets.nix
+  ];
+
+  gumdropModule.imports = [ ./gumdrop ];
+
+  linuxModule.imports = [
+    ./boot-tor-service
+    #./autologin-tty1
+    ./k3s
+    ./machine
+    ./media
+    servicesModule
+  ];
+
+  tuiModule.imports = [
+    ./tmux.nix
+    ./zsh
+  ];
+
+  guiModule.imports = [
+    inputs.stylix.nixosModules.stylix
+    ./control-monitor-backlight.nix
+  ];
+in
 {
   flake = {
     nixosModules = {
       # For modules that work on both Linux and Darwin
-      common.imports = [
-        ./bluetooth
-        ./browsers
-        ./dnsmasq
-        ./../../insecure-packages.nix
-        ./solo2
-        ./yubikey
-        ./../../nixos-secrets.nix
-      ];
+      common = commonModule;
 
-      gumdrop.imports = [ ./gumdrop ];
+      gumdrop = gumdropModule;
       gumdropServer.import = [ ];
       #timberlake.imports = [ ./timberlake ];
 
-      linux.imports = [
-        ./boot-tor-service
-        #./autologin-tty1
-        ./k3s
-        ./machine
-        ./media
-        inputs.self.nixosModules.services
-      ];
+      linux = linuxModule;
 
       server.imports = [
         ./home-assistant
@@ -33,30 +66,18 @@
         ./nextcloud
         ./postgres
         ./unattended
-        inputs.self.nixosModules.services
+        servicesModule
       ];
 
-      services.imports = [
-        ./services/searx.nix
-        ./services/smokeping.nix
-        ./services/docker.nix
-        ./services/syncthing.nix
-        ./services/vaultwarden.nix
-      ];
+      services = servicesModule;
 
       radio.imports = [
         ./sdr
       ];
 
-      tui.imports = [
-        ./tmux.nix
-        ./zsh
-      ];
+      tui = tuiModule;
 
-      gui.imports = [
-        inputs.stylix.nixosModules.stylix
-        ./control-monitor-backlight.nix
-      ];
+      gui = guiModule;
 
       gaming.imports = [
         ./steam
@@ -67,26 +88,26 @@
 
       work.imports = [ ./obsidian.nix ];
 
-      hyprland.imports = [ ./window-managers/hyprland.nix ];
-      i3.imports = [ ./window-managers/i3.nix ];
-      niri.imports = [ ./window-managers/niri.nix ];
-      sway.imports = [ ./window-managers/sway.nix ];
+      hyprland = hyprlandModule;
+      i3 = i3Module;
+      niri = niriModule;
+      sway = swayModule;
 
       windowManagers.imports = [
-        inputs.self.nixosModules.hyprland
-        #inputs.self.nixosModules.i3
-        inputs.self.nixosModules.niri
-        inputs.self.nixosModules.sway
+        hyprlandModule
+        #i3Module
+        niriModule
+        swayModule
       ];
 
       #darwin.imports = [];
 
       default.imports = [
-        inputs.self.nixosModules.common
-        inputs.self.nixosModules.linux
-        inputs.self.nixosModules.tui
-        inputs.self.nixosModules.gui
-        inputs.self.nixosModules.gumdrop
+        commonModule
+        linuxModule
+        tuiModule
+        guiModule
+        gumdropModule
       ];
     };
   };
