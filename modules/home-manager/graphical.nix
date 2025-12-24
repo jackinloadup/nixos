@@ -43,6 +43,10 @@ in
       };
       opacity = {
         terminal = 0.9;
+        desktop = 1.0; # The opacity of the windows of bars/widgets
+        popups = 1.0; # The opacity of the windows of notifications/popups
+        applications = 0.95; # The opacity of the windows of application
+
       };
       targets.firefox.profileNames = [ "${config.home.username}" ];
     };
