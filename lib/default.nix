@@ -84,7 +84,7 @@ rec {
       modules = [
         (rootPath + "/modules/nixos/machine/nix.nix")
         (rootPath + "/nixos-secrets.nix")
-        ({ pkgs, config, ... }: {
+        ({ pkgs, config, lib, ... }: {
           config =
             let
               lriutzelKeys = [
@@ -100,6 +100,7 @@ rec {
             {
               users.users.nixos = {
                 hashedPasswordFile = config.age.secrets.lriutzel-hashed-password.path;
+                initialHashedPassword = lib.mkForce null;
                 openssh.authorizedKeys.keys = lriutzelKeys;
               };
 
