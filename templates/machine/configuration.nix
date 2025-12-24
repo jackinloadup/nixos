@@ -1,5 +1,5 @@
 { self
-, flake
+, inputs
 , pkgs
 , lib
 , ...
