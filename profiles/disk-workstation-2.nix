@@ -5,8 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
-  inherit (builtins) hasAttr;
+  inherit (lib) mkIf;
   inherit (pkgs) writeScriptBin;
 
   ## TODOS
@@ -20,7 +19,6 @@ let
   device = "/dev/nvme0n1"; # TODO change per host
   zfsPoolName = "zroot_${hostname}";
   rootPartionName = "nixos_${hostname}";
-  impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
 in
 {

@@ -1,9 +1,4 @@
-{ self
-, inputs
-, pkgs
-, lib
-, ...
-}: {
+_: {
   environment.etc."wireplumber/main.lua.d/51-device-rename.lua" = {
     text = ''
       motherboard = {

@@ -1,12 +1,10 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
   inherit (lib) mkIf mkEnableOption mkOption mkMerge mkForce types optional;
   cfg = config.gumdrop.storageServer;
-  settings = import ../../../settings;
   address = "truenas.home.lucasr.com";
 in
 {
@@ -74,8 +72,7 @@ in
       services.rpcbind.enable = mkForce false;
 
       home-manager.sharedModules = [{
-        gtk.gtk3.bookmarks = [ ]
-          ++ optional cfg.media "file:///mnt/gumdrop/media Media"
+        gtk.gtk3.bookmarks = optional cfg.media "file:///mnt/gumdrop/media Media"
           ++ optional cfg.roms "file:///mnt/gumdrop/roms Roms"
           ++ optional cfg.backup "file:///mnt/gumdrop/backup Backup"
           ++ optional cfg.family "file:///mnt/gumdrop/family Family";

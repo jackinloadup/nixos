@@ -1,12 +1,11 @@
 { flake
-, pkgs
 , config
 , lib
 , ...
 }:
 let
-  inherit (lib) mkIf optionals;
-  username = config.home.username;
+  inherit (lib) optionals;
+  inherit (config.home) username;
 in
 {
   imports = [

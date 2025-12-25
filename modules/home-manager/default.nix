@@ -1,6 +1,5 @@
 # flake-parts module
-{ self
-, inputs
+{ inputs
 , ...
 }:
 {

@@ -1,13 +1,10 @@
 { config
 , pkgs
-, nixosConfig
 , lib
-, inputs
 , ...
 }:
 let
   settings = import ../../settings;
-  isGraphical = nixosConfig.machine.sizeTarget > 1;
 in
 {
   config = lib.mkIf config.services.dunst.enable {
@@ -21,7 +18,7 @@ in
       settings = {
         global = with settings.theme; {
           follow = "keyboard"; # Show notifications where the keyboard has foucs.
-          font = "${font.normal.family} ${font.normal.style} ${toString (font.size)}";
+          font = "${font.normal.family} ${font.normal.style} ${toString font.size}";
           word_wrap = "yes";
           format = "<b>%s</b>\\n%b";
           frame_width = borderWidth; # Border size.

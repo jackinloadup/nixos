@@ -4,12 +4,12 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkForce mkEnableOption genAttrs optionals attrNames;
+  inherit (lib) mkIf mkForce genAttrs optionals attrNames;
   cfg = config.machine;
   ifTui = cfg.sizeTarget > 0;
   ifGraphical = cfg.sizeTarget > 1;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+  addExtraGroups = users: groups: (genAttrs users (_user: { extraGroups = groups; }));
 in
 {
   config = mkIf config.virtualisation.libvirtd.enable {

@@ -4,10 +4,8 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault mkEnableOption mkOption types attrNames genAttrs optional literalExpression;
+  inherit (lib) mkIf mkEnableOption mkOption types literalExpression;
   cfg = config.services.rtl_433;
-  normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
   configFile = pkgs.writeText "rtl_433.conf" cfg.configText;
 in
 {

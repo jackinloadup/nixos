@@ -1,6 +1,6 @@
 { inputs, pkgs, lib, ... }:
 let
-  inherit (lib) mkIf mkDefault mkForce mkSetuidRoot;
+  inherit (lib) mkDefault mkForce;
 in
 {
   imports = [

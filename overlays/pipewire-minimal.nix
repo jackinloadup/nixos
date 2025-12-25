@@ -1,8 +1,5 @@
-flake:
-let
-  #cp = f: (super.callPackage f) {};
-in
-self: super: {
+_flake:
+_self: super: {
   pipewire =
     (super.pipewire.override {
       libcameraSupport = false;

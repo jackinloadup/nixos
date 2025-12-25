@@ -1,5 +1,5 @@
 # flake-parts module
-{ self, config, inputs, ... }:
+_:
 let
   # Define modules in let-block to avoid self-reference
   lriutzelTuiModule.imports = [ ./lriutzel/tui.nix ];

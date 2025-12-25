@@ -1,10 +1,8 @@
-{ lib
-, config
+{ config
 , ...
 }:
 
 let
-  inherit (lib) mkDefault;
   swayConfig = config.wayland.windowManager.sway.config;
 
   # Vim keys

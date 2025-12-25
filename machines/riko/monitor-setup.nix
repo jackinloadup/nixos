@@ -1,5 +1,4 @@
-{ ...
-}: {
+_: {
   config = {
     home-manager.sharedModules = [
       {

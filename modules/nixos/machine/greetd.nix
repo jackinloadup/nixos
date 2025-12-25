@@ -4,9 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption types getBin getExe;
-  desktops = config.services.displayManager.sessionData.desktops;
-  sessions = "${desktops}/share/wayland-sessions:${desktops}/share/xsessions";
+  inherit (lib) mkIf getBin getExe;
 in
 {
   imports = [ ];
@@ -53,7 +51,7 @@ in
           };
           initial_session = {
             command = config.services.displayManager.defaultSession;
-            user = config.services.displayManager.autoLogin.user;
+            inherit (config.services.displayManager.autoLogin) user;
           };
         };
       };

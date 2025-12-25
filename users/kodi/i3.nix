@@ -1,7 +1,4 @@
-{ self
-, inputs
-, pkgs
-, lib
+{ pkgs
 , ...
 }:
 let

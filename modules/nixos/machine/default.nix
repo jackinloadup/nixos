@@ -5,9 +5,8 @@
 , ...
 }:
 let
-  inherit (lib) mkOption mkEnableOption mkDefault mkIf;
-  inherit (lib.types) listOf enum nullOr str ints;
-  cfg = config.machine;
+  inherit (lib) mkOption mkDefault mkIf;
+  inherit (lib.types) listOf enum ints;
   settings = import ../../../settings;
   ifTui = config.machine.sizeTarget > 0;
   ifGraphical = config.machine.sizeTarget > 1;

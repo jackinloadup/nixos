@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault optionals;
+  inherit (lib) mkIf mkDefault;
   inherit (builtins) elem hasAttr;
 
   sizeTarget =

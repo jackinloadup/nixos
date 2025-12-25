@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+_: {
   config = {
     programs.kitty = {
       settings = {

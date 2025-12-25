@@ -1,5 +1,4 @@
-{ flake
-, ...
+{ ...
 }: {
   imports = [
     ../../profiles/intel.nix

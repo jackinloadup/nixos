@@ -41,7 +41,7 @@ in
             genericName = "Gather";
             comment = "Open Gather in a chromeless browser";
             exec = "${pkgs.systemd}/bin/systemd-cat --identifier=gather-browser ${chromium} --app=${url}";
-            icon = icon;
+            inherit icon;
             terminal = false;
             categories = [
               "Utility"

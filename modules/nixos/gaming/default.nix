@@ -4,9 +4,8 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkDefault mkForce;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.machine;
-  settings = import ../../../settings;
 in
 {
   imports = [

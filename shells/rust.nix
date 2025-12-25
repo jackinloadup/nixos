@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 let
-  lib = pkgs.lib;
-  overrides = (builtins.fromTOML (builtins.readFile ./rust-toolchain.toml));
+  inherit (pkgs) lib;
+  overrides = builtins.fromTOML (builtins.readFile ./rust-toolchain.toml);
   libPath = with pkgs; lib.makeLibraryPath [
     # load external libraries that you need in your rust project here
     pkgs.zlib.out

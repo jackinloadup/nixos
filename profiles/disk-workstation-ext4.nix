@@ -21,16 +21,16 @@
   config = {
     # TODO should this be behind a flag limiting the script to the installer?
     environment.systemPackages = [
-      (pkgs.writeScriptBin "disko-create" (config.system.build.formatScript))
-      (pkgs.writeScriptBin "disko-mount" (config.system.build.mountScript))
-      (pkgs.writeScriptBin "disko" (config.system.build.mountScript))
+      (pkgs.writeScriptBin "disko-create" config.system.build.formatScript)
+      (pkgs.writeScriptBin "disko-mount" config.system.build.mountScript)
+      (pkgs.writeScriptBin "disko" config.system.build.mountScript)
     ];
 
     disko.devices = {
       disk = {
         main = {
           type = "disk";
-          device = device;
+          inherit device;
           content = {
             type = "table";
             format = "gpt";

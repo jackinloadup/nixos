@@ -1,54 +1,15 @@
-{ options
-, res
-, config
+{ config
 , lib
-, pkgs
-, inputs
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption mkEnableOption mkMerge types readFile configDir dotFilesDir;
+  inherit (lib) mkIf mkOption mkEnableOption mkMerge types;
   cfg = config.modules.browsers.firefox;
   # use a custom build of firefox
   # TODO: add anti tracking policies at build time
   # https://wiki.kairaven.de/open/app/firefox in german : (
-  firefoxWrapped = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-    forceWayland = config.modules.wayland.enable;
-    extraPolicies = {
-      CaptivePortal = false;
-      DisableFirefoxStudies = true;
-      DisablePocket = true;
-      DisableTelemetry = true;
-      DisableFirefoxAccounts = true;
-      FirefoxHome = {
-        Pocket = false;
-        Snippets = false;
-      };
-      UserMessaging = {
-        ExtensionRecommendations = false;
-        SkipOnboarding = true;
-      };
-    };
-    extraPrefs = ''
-      // Show more ssl cert infos
-      lockPref("security.identityblock.show_extended_validation", true);
-    '';
-  };
 
   # TODO: figure out a better way to do this.
-  searchJson = readFile "${configDir}/firefox/firefox.search.json";
-  searchJsonMozlz4 = pkgs.stdenv.mkDerivation {
-    pname = "search-json-mozlz4";
-    version = "latest";
-    src = dotFilesDir;
-    phases = "installPhase";
-    installPhase = ''
-      cat > ./firefox.search.json << EOL
-      ${searchJson}
-      EOL
-      ${pkgs.mozlz4a}/bin/mozlz4a ./firefox.search.json $out
-    '';
-  };
 in
 {
   options.modules.browsers.firefox = with types; {

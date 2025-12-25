@@ -1,6 +1,6 @@
 { lib, inputs, ... }:
 let
-  inherit (lib) mkDefault mkForce;
+  inherit (lib) mkDefault;
 in
 {
   imports = [

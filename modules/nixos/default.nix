@@ -1,5 +1,5 @@
 # flake-parts module
-{ self, inputs, ... }:
+{ inputs, ... }:
 let
   # Define services module inline to avoid self-reference
   servicesModule.imports = [

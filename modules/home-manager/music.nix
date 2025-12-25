@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
+  inherit (lib) mkIf;
 in
 {
   # Repo with lots of radio stations

@@ -1,12 +1,9 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
   inherit (lib) mkIf;
-  cfg = config.services.media-services;
-  subnet = "10.100.0.0/24";
 in
 {
   config = mkIf config.services.homepage-dashboard.enable {

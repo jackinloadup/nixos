@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
 let
-  inherit (lib) optionals mkIf;
+  inherit (lib) optionals;
 in
 {
   boot = {

@@ -1,4 +1,4 @@
-{ lib, pkgs, config, flake, ... }:
+{ pkgs, flake, ... }:
 let
   username = "lriutzel";
 in
@@ -25,9 +25,6 @@ in
     programs.chromium.enable = true;
 
     home-manager.users."${username}" =
-      let
-        homeDir = "/home/${username}";
-      in
       {
         imports = [
           flake.self.homeModules.gui

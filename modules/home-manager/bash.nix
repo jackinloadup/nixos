@@ -1,11 +1,9 @@
 { config
-, pkgs
 , lib
-, inputs
 , ...
 }:
 let
-  inherit (lib) mkIf optionalString;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf config.programs.bash.enable {

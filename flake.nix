@@ -157,12 +157,11 @@
       ];
       flake =
         let
-          inherit (inputs.nixpkgs.lib) mapAttrs;
-          inherit (inputs.flake-utils.lib) eachDefaultSystem eachSystem flattenTree mkApp;
+          inherit (inputs.flake-utils.lib) eachSystem flattenTree mkApp;
           defaultPkgs = inputs.nixpkgs;
 
           selfLib = import ./lib/default.nix {
-            lib = defaultPkgs.lib;
+            inherit (defaultPkgs) lib;
             flake = self;
             inherit inputs;
           };
@@ -195,7 +194,7 @@
 
         }
         // (eachSystem supportedSystems)
-          (system:
+          (_system:
             let
               pkgs = import defaultPkgs {
                 system = "x86_64-linux";
@@ -218,13 +217,13 @@
               # Custom packages added via the overlay are selectively added here, to
               # allow using them from other flakes that import this one.
               packages = flattenTree {
-                rtl_433-dev = pkgs.rtl_433-dev;
+                inherit (pkgs) rtl_433-dev;
                 ragenix = inputs.ragenix.packages.${system}.default;
               };
 
               apps = {
                 rtl_433-dev = mkApp { drv = packages.rtl_433-dev; } // {
-                  meta = packages.rtl_433-dev.meta;
+                  inherit (packages.rtl_433-dev) meta;
                 };
               };
             })
@@ -243,7 +242,7 @@
           };
         };
 
-      perSystem = { self', system, pkgs, lib, config, inputs', ... }:
+      perSystem = { system, pkgs, config, ... }:
         let
           nixvimLib = inputs.nixvim.lib.${system};
           nixvimPkgs = inputs.nixvim.legacyPackages.${system};
@@ -313,8 +312,8 @@
           };
 
           packages = {
-            nvimBasic = nvimBasic;
-            nvimFull = nvimFull;
+            inherit nvimBasic;
+            inherit nvimFull;
           };
         };
     };

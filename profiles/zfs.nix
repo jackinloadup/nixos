@@ -1,13 +1,10 @@
 { lib
-, flake
 , pkgs
 , config
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
-  inherit (builtins) hasAttr;
-  inherit (pkgs) writeScriptBin;
+  inherit (lib) mkDefault;
 
   # Taken from https://wiki.nixos.org/wiki/ZFS
   # Warning: This will often result in the Kernel version going backwards as

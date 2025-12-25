@@ -1,11 +1,8 @@
-flake:
-let
-  #cp = f: (super.callPackage f) {};
-in
+_flake:
 self: super: {
   plymouth = super.plymouth.overrideAttrs (old:
     let
-      remove = self.lib.lists.remove;
+      inherit (self.lib.lists) remove;
     in
     {
       buildInputs = remove self.gtk3 old.buildInputs;

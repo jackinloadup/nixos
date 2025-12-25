@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption mkOrder getBin getExe optionalString types literalExpression;
+  inherit (lib) mkIf mkOption mkOrder getExe types literalExpression;
   inherit (builtins) toString;
   cfg = config.boot.initrd.network.haveged;
 in

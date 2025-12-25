@@ -1,6 +1,5 @@
 { pkgs
 , lib
-, config
 , ...
 }:
 let
@@ -266,10 +265,6 @@ in
             let
               termCmd = "${getExe pkgs.kitty}";
               termAltCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
-              left = "h";
-              down = "j";
-              up = "k";
-              right = "l";
               menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
             in
             {

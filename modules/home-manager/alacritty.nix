@@ -1,13 +1,8 @@
-{ config
-, lib
-, pkgs
-, nixosConfig
-, ...
-}:
+_:
 let
   settings = import ../../settings;
-  theme = settings.theme;
-  font = theme.font;
+  inherit (settings) theme;
+  inherit (theme) font;
 in
 {
   config = {
@@ -16,7 +11,7 @@ in
         "live_config_reload" = true; # should work in next release
 
         font = {
-          size = font.size;
+          inherit (font) size;
         };
 
         cursor = {

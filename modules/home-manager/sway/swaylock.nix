@@ -1,7 +1,4 @@
-{ config
-, lib
-, ...
-}: {
+_: {
   config = {
     programs.swaylock.settings = {
       # --bs-hl-color <rrggbb[aa]>

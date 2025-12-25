@@ -1,7 +1,6 @@
 # Needed because "Release 22.11 " isn't new enough
 # nurl "https://github.com/merbanan/rtl_433" 767e5387e121b343f942f9903441794217e9fff6
 { pkgs
-, system
 ,
 }:
 pkgs.stdenv.mkDerivation {

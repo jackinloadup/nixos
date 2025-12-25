@@ -1,5 +1,5 @@
 # Change monitor input based on hub being connected to computer
-{ ... }:
+_:
 {
   config = {
 

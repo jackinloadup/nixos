@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption mkDefault getExe getBin optionals types;
+  inherit (lib) mkIf mkEnableOption mkOption getExe getBin optionals types;
   cfg = config.machine.lowLevelXF86keys;
   settings = import ../../../settings;
 in
@@ -56,8 +56,7 @@ in
       in
       {
         enable = true;
-        bindings = [ ]
-          ++ optionals cfg.brightness [
+        bindings = optionals cfg.brightness [
           {
             keys = [ 224 ];
             events = [ "key" ];
@@ -69,7 +68,7 @@ in
             command = "${getExe pkgs.light} -A 10";
           }
         ]
-          ++ optionals cfg.volume [
+        ++ optionals cfg.volume [
           {
             keys = [ 113 ];
             events = [ "key" ];
@@ -86,7 +85,7 @@ in
             command = "${bash} -c '${set_volume_up}   && ${notify_current_volume}'";
           }
         ]
-          ++ optionals cfg.media [
+        ++ optionals cfg.media [
           {
             keys = [ 163 ];
             events = [ "key" ];

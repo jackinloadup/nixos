@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption types;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf config.services.xserver.windowManager.i3.enable {

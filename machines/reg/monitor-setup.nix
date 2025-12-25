@@ -1,5 +1,4 @@
-{ ...
-}: {
+_: {
   home-manager.sharedModules = [
     {
       wayland.windowManager = {

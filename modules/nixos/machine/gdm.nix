@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) attrNames mkIf mkOption mkForce types;
+  inherit (lib) attrNames mkIf mkForce;
   inherit (lib.strings) concatStringsSep;
   normalUsers = attrNames config.home-manager.users;
 in
@@ -41,7 +41,7 @@ in
     # https://discourse.nixos.org/t/unable-to-change-background-in-gdm/33563/5
     nixpkgs = {
       overlays = [
-        (self: super: {
+        (_self: super: {
           #gnome = super.gnome.overrideScope' (selfg: superg: {
           gnome-shell = super.gnome-shell.overrideAttrs (old: {
             patches = (old.patches or [ ]) ++ [

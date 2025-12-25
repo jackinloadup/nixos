@@ -1,7 +1,7 @@
 { inputs, lib, config, ... }:
 # Machine runs DNS and home-assistant vm
 let
-  inherit (lib) mkForce mkDefault;
+  inherit (lib) mkForce;
 in
 {
   imports = [

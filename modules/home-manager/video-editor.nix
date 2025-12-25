@@ -1,6 +1,4 @@
-{ flake
-, pkgs
-, config
+{ pkgs
 , lib
 , ...
 }:

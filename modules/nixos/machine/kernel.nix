@@ -1,10 +1,9 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
-  inherit (lib) mkIf mkOption mkEnableOption types optional;
+  inherit (lib) mkOption mkEnableOption types optional;
   cfg = config.machine.kernel;
 in
 {
@@ -31,11 +30,7 @@ in
   };
 
   config.boot.kernelParams =
-    [ ]
-    # Allow time for vmcore memory image to be saved
-    # time require is related to memory size and storage speed.
-    # 30 secs was recommended
-    ++ optional (cfg.rebootAfterPanic ? true) "panic=${toString cfg.rebootAfterPanic}" # reboot x seconds after panic
+    optional (cfg.rebootAfterPanic ? true) "panic=${toString cfg.rebootAfterPanic}" # reboot x seconds after panic
     ++ optional cfg.panicOnWarn "panic_on_warn" # panic on warn messages
     ++ optional cfg.panicOnFailedBoot "book.panic_on_fail" # If boot fails panic
     ++ optional cfg.panicOnOOM "vm.panic_on_oom" # panic immediately if oom killer is activated

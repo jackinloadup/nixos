@@ -5,8 +5,8 @@
 , ...
 }:
 let
-  inherit (lib) mkIf getExe optionals;
-  inherit (builtins) elem readFile;
+  inherit (lib) mkIf getExe;
+  inherit (builtins) elem;
   settings = import ../../settings;
   host = nixosConfig.networking.hostName;
   hostsWithBattery = [ "riko" "obsidian" ];
@@ -132,7 +132,7 @@ in
             };
           };
           clock = {
-            timezone = settings.home.timezone;
+            inherit (settings.home) timezone;
             tooltip-format = "{:%Y-%m-%d | %H:%M}";
             format-alt = "{:%H:%M}";
             format = "{:%OI:%OM %p %m-%d}";

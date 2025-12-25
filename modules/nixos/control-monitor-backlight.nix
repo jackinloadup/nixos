@@ -1,14 +1,11 @@
-{ self
-, inputs
-, pkgs
-, lib
+{ lib
 , config
 , ...
 }:
 let
   inherit (lib) attrNames genAttrs mkDefault;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+  addExtraGroups = users: groups: (genAttrs users (_user: { extraGroups = groups; }));
 in
 {
   config = {

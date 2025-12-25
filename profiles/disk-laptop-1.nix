@@ -3,15 +3,11 @@
 , pkgs
 , config
 , device ? "/dev/sda"
-, isEncrypted ? false
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
-  inherit (builtins) hasAttr;
+  inherit (lib) mkIf;
   inherit (pkgs) writeScriptBin;
-
-  ramSize = "16GiB";
 
   hostname = config.networking.hostName;
   zfsPoolName = "zroot_${hostname}";
@@ -23,7 +19,6 @@ let
   ##   $ disko-create --disk=sd=/dev/sdb
   ##
   rootPartionName = "nixos_${hostname}";
-  impermanence = (hasAttr "machine" config) && config.machine.impermanence;
   tmpfsRoot = false;
   #isTesting = (hasAttr "backdoor" config.systemd.services);
   isTesting = true;

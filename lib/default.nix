@@ -7,7 +7,6 @@ let
   inherit
     (builtins)
     attrNames
-    attrValues
     pathExists
     readDir
     toPath
@@ -17,11 +16,6 @@ let
   inherit
     (lib)
     genAttrs
-    mapAttrs'
-    nameValuePair
-    mapAttrs
-    mapAttrsToList
-    forEach
     mkForce
     ;
   inherit (lib.strings) removeSuffix;
@@ -55,14 +49,14 @@ rec {
   nixosUsers = importDirOfModules "users";
 
   machines = attrNames (readDir (rootPath + "/machines"));
-  machinesHasConfig = (host: pathExists (rootPath + "/machines/${host}/configuration.nix"));
-  machinesWithConfig = filter (host: machinesHasConfig host) machines;
+  machinesHasConfig = host: pathExists (rootPath + "/machines/${host}/configuration.nix");
+  machinesWithConfig = filter machinesHasConfig machines;
 
   allNixosSystems = genAttrs machinesWithConfig mkNixosSystem;
 
-  mkNixosSystem = (name:
+  mkNixosSystem = name:
     let
-      flakeArg = { inherit inputs; self = inputs.self; };
+      flakeArg = { inherit inputs; inherit (inputs) self; };
     in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; inherit (inputs) self; flake = flakeArg; };
@@ -74,10 +68,9 @@ rec {
         }
         (rootPath + "/machines/${name}/configuration.nix")
       ];
-    }
-  );
+    };
 
-  mkNixosSystemGenerator = pkgs: system: hostname:
+  mkNixosSystemGenerator = _pkgs: system: _hostname:
     nixos-generators.nixosGenerate {
       inherit system specialArgs;
       format = "install-iso";

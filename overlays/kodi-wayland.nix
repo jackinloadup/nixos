@@ -1,4 +1,4 @@
-flake: self: super: {
+_flake: self: _super: {
   kodi-wayland =
     (self.unstable.kodi-wayland.overrideAttrs (old: {
       passthru =

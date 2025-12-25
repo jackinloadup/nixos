@@ -1,19 +1,15 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
   inherit (lib) attrNames mkIf mkDefault;
-  inherit (lib.types) nullOr enum;
-  inherit (builtins) filter readFile elem pathExists hasAttr;
+  inherit (builtins) filter readFile elem hasAttr;
   selfLib = import ../../../lib/secrets.nix { };
-  inherit (selfLib) machines hostExists hostHasService
-    smachine shostExists shostHasService;
+  inherit (selfLib) machines hostHasService shostHasService;
 
 
   hostname = config.networking.hostName;
-  settings = import ../../../settings;
   normalUsers =
     if (hasAttr "home-manager" config)
     then attrNames config.home-manager.users
@@ -105,10 +101,10 @@ in
     # TODO add tor hosts
     programs.ssh.knownHosts =
       let
-        addNixosHost = (name: {
+        addNixosHost = name: {
           extraHostNames = [ "${name}.home.lucasr.com" ];
           publicKeyFile = ../../../machines/${name}/sshd/public_key;
-        });
+        };
       in
       {
         reg = addNixosHost "reg";

@@ -18,7 +18,7 @@ in
 
     security.acme.certs."mumble.lucasr.com" = {
       email = "lriutzel@gmail.com";
-      group = config.services.murmur.group;
+      inherit (config.services.murmur) group;
     };
 
     #services.nginx.virtualHosts."mumble.lucasr.com" = {

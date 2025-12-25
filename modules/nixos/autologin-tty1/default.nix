@@ -9,7 +9,6 @@ let
   inherit (builtins) concatStringsSep;
 
   cfg = config.machine.autologin-tty1;
-  settings = import ../../../settings;
 in
 {
   imports = [ ];

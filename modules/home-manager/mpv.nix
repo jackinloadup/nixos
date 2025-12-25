@@ -1,8 +1,5 @@
-{ inputs
-, pkgs
-, config
+{ config
 , lib
-, nixosConfig
 , ...
 }:
 let
@@ -91,6 +88,6 @@ in
       "video/x-theora"
       "video/x-theora+ogg"
     ]
-      (name: "mpv.desktop");
+      (_name: "mpv.desktop");
   };
 }

@@ -1,10 +1,9 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
-  inherit (lib) attrNames mkIf mkEnableOption genAttrs types;
+  inherit (lib) mkIf mkEnableOption;
 in
 {
   options.gumdrop.scanned-document-handling.enable = mkEnableOption "Setup services to handle scanned document collection and handling";

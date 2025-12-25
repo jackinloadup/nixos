@@ -1,13 +1,6 @@
-{ inputs
-, pkgs
-, config
-, lib
-, nixosConfig
+{ nixosConfig
 , ...
 }:
-let
-  inherit (lib) mkDefault;
-in
 {
   imports = [ ];
 

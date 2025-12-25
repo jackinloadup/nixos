@@ -6,7 +6,7 @@
 , ...
 }:
 let
-  inherit (lib) mkDefault getBin;
+  inherit (lib) mkDefault;
   settings = import ../../settings;
   ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in

@@ -1,9 +1,4 @@
-{ config, lib, ... }:
-let
-  inherit (lib) mkIf;
-  #cfg = config.services.nebula.networks.gumdrop;
-  #in mkIf cfg.enable {
-in
+_:
 {
   config = {
     #boot.kernel.sysctl."net.ipv4.ip_forward" = 1;

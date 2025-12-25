@@ -1,7 +1,4 @@
-{ pkgs, lib, config, flake, ... }:
-let
-  inherit (lib) optionals mkIf;
-in
+{ pkgs, flake, ... }:
 {
   # workaround for https://github.com/e-tho/ucodenix/issues/59
   disabledModules = [ "hardware/cpu/amd-microcode.nix" ];

@@ -1,4 +1,4 @@
-flake: self: super: {
+_flake: _self: super: {
   kodi-wayland = super.kodi-wayland.override { x11Support = false; };
   pipewire =
     (super.pipewire.override {

@@ -4,8 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
-  settings = import ../../../settings;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf config.programs.steam.enable {

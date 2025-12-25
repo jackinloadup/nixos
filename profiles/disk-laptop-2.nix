@@ -8,7 +8,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
+  inherit (lib) mkIf;
   inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
 

@@ -1,7 +1,7 @@
 { config, flake, lib, ... }:
 let
-  inherit (lib) attrNames mergeAttrsList mkIf;
-  inherit (builtins) readDir filter elem;
+  inherit (lib) mergeAttrsList mkIf;
+  inherit (builtins) filter elem;
 
   selfLib = import ./lib/secrets.nix { };
   inherit (selfLib) smachines shostHasService;
@@ -11,15 +11,15 @@ let
   servers = [ "marulk" ];
   lucasDevHosts = [ "reg" "riko" ];
 
-  mkWgHost = (host: {
+  mkWgHost = host: {
     "wg-vpn-${host}" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/wg-vpn/private.age;
     };
-  });
+  };
   wgHosts = filter (host: shostHasService host "wg-vpn") smachines;
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
 
-  mkTorHost = (host: {
+  mkTorHost = host: {
     "tor-service-${host}-hostname" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/tor-service/hostname.age;
     };
@@ -29,24 +29,24 @@ let
     "tor-service-${host}-hs_ed25519_secret_key" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/tor-service/hs_ed25519_secret_key.age;
     };
-  });
+  };
   torHosts = filter (host: shostHasService host "tor-service") smachines;
   torHostsConfig = mergeAttrsList (map mkTorHost torHosts);
 
   # ssh host private keys aren't stored here and public keys are not encrypted
-  mkSshdHost = (host: {
+  mkSshdHost = host: {
     "sshd-${host}-private-key" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/sshd/private_key.age;
     };
-  });
+  };
   sshdHosts = filter (host: shostHasService host "sshd") smachines;
   sshdHostsConfig = mergeAttrsList (map mkSshdHost sshdHosts);
 
-  mkInitSshdHost = (host: {
+  mkInitSshdHost = host: {
     "init-sshd-${host}-private-key" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/init-sshd/private_key.age;
     };
-  });
+  };
   initSshdHosts = filter (host: shostHasService host "init-sshd") smachines;
   initSshdHostsConfig = mergeAttrsList (map mkInitSshdHost initSshdHosts);
 

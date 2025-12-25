@@ -10,14 +10,12 @@
 , gnused
 , lib
 , makeWrapper
-, perl
 , psutils
 , which
 ,
 }:
 let
   model = "mfc9130cw";
-  humanModel = "MFC-9130CW";
   cupsVersion = "1.1.4-0";
   lprVersion = "1.1.2-1";
 
@@ -79,7 +77,7 @@ rec {
 
     meta = {
       description = "Brother ${lib.strings.toUpper model} driver";
-      homepage = http://www.brother.com/;
+      homepage = "http://www.brother.com/";
       license = lib.licenses.unfree;
       platforms = [ "x86_64-linux" "i686-linux" ];
       maintainers = [ lib.maintainers.syd ];
@@ -153,7 +151,7 @@ rec {
 
     meta = {
       description = "Brother ${lib.strings.toUpper model} CUPS wrapper driver";
-      homepage = http://www.brother.com/;
+      homepage = "http://www.brother.com/";
       license = lib.licenses.gpl2;
       platforms = [ "x86_64-linux" "i686-linux" ];
       maintainers = [ lib.maintainers.syd ];

@@ -4,16 +4,16 @@
 , ...
 }:
 let
-  inherit (lib) mkDefault mkIf mkOption mkOrder getBin getExe optionalString types literalExpression;
+  inherit (lib) mkDefault mkIf mkOption mkOrder getExe types literalExpression;
   inherit (builtins) hasAttr;
   cfg = config.boot.initrd.network.tor;
-  torRc = (pkgs.writeText "tor.rc" ''
+  torRc = pkgs.writeText "tor.rc" ''
     DataDirectory /etc/tor
     SOCKSPort 127.0.0.1:9050 IsolateDestAddr
     SOCKSPort 127.0.0.1:9063
     HiddenServiceDir /etc/tor/onion/bootup
     HiddenServicePort 22 127.0.0.1:22
-  '');
+  '';
 in
 {
   options.boot.initrd.network.tor = {

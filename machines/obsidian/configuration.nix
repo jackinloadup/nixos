@@ -5,7 +5,7 @@
 }:
 # Machine is a work computer for obsidian.systems
 let
-  inherit (lib) mkForce mkDefault;
+  inherit (lib) mkForce;
 in
 {
   imports = [

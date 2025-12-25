@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkForce mkDefault getExe;
+  inherit (lib) mkForce;
   debug = false;
 in
 {

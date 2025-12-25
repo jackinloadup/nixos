@@ -12,7 +12,7 @@ in
       ];
 
       nixpkgs.overlays = [
-        (self: super: {
+        (_self: _super: {
           inherit (unstable) homeassistant home-assistant-component-tests;
           #inherit (unstable) home-assistant-custom-components;
           #inherit (unstable) home-assistant-custom-lovelace-modules;

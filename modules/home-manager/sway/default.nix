@@ -2,25 +2,19 @@
 , pkgs
 , nixosConfig
 , lib
-, inputs
 , ...
 }:
 let
   inherit (lib) mkIf getBin getExe optionals;
-  inherit (builtins) elem mul;
+  inherit (builtins) mul;
 
   settings = import ../../../settings;
-  hostName = nixosConfig.networking.hostName;
-  theme = settings.theme;
+  inherit (settings) theme;
   fontConf = {
     names = [ theme.font.mono.family ];
     size = mul theme.font.size 1.0; # typecast to float
   };
   swayConfig = config.wayland.windowManager.sway.config;
-  footTERM =
-    if config.programs.foot.settings ? main.term
-    then config.programs.foot.settings.main.term
-    else "foot";
   termCmd = "${getBin pkgs.foot}/bin/footclient --client-environment";
   mode_record = "Capture: [p]icture [f]ullscreen or [enter] to leave mode this mode";
   background = "${config.xdg.cacheHome}/satellite-images/goes-east/current.jpg";
@@ -225,7 +219,7 @@ in
 
         keybindings =
           let
-            inherit (swayConfig) left down up right menu terminal modifier;
+            inherit (swayConfig) menu terminal modifier;
             mod = modifier;
           in
           {
@@ -308,7 +302,6 @@ in
 
         modes =
           let
-            terminal = swayConfig.terminal;
             Escape = "mode default";
           in
           {
@@ -333,7 +326,7 @@ in
               "p" = ''exec ${getExe pkgs.slurp} | ${getExe pkgs.grim} -g- $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
               "f" = ''${getExe pkgs.grim} $(${getBin pkgs.xdg-user-dirs}/bin/xdg-user-dir PICTURES)/$(${getBin pkgs.coreutils-full}/bin/date +'%Y-%m-%d-%H%M%S_grim.png') && notify-send -u low alert "screenshot taken", mode "default"'';
               Return = Escape;
-              Escape = Escape;
+              inherit Escape;
             };
           };
 
@@ -445,7 +438,7 @@ in
       enable = true;
       timeouts =
         let
-          timeouts = settings.timeouts;
+          inherit (settings) timeouts;
         in
         [
           { timeout = timeouts.screenLock; command = "${getExe lockCmd}"; }

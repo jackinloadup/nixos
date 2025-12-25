@@ -2,11 +2,10 @@
 , pkgs
 , nixosConfig
 , lib
-, inputs
 , ...
 }:
 let
-  inherit (lib) mkIf getExe concatStrings mkForce mkDefault optionals;
+  inherit (lib) mkIf mkDefault;
   interactive = nixosConfig.programs.zsh.interactiveShellInit;
 in
 {
@@ -49,7 +48,7 @@ in
         in
         lib.mkMerge [ setWindowTitle interactiveOrder ];
 
-      shellAliases = nixosConfig.environment.shellAliases;
+      inherit (nixosConfig.environment) shellAliases;
 
       loginExtra = ''
         alias -s txt=nvim
@@ -69,6 +68,7 @@ in
           "@noerr" = "2> /dev/null";
           "@noboth" = "&> /dev/null";
           "@errtostd" = "2&>1";
+          # Example: $ long-running-command @notify
           "bell" = "tput bel && sleep 0.1 && tput bel && sleep 0.1 && tput bel";
           "@notify" = "&& pw-play ${successSound} || pw-play ${failureSound}";
         };

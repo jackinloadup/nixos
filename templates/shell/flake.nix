@@ -2,16 +2,15 @@
   description = "Project";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs;
-    flake-parts.url = github:hercules-ci/flake-parts;
-    flake-utils.url = github:numtide/flake-utils;
-    treefmt-nix.url = github:numtide/treefmt-nix;
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-utils.url = "github:numtide/flake-utils";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    { self
-    , nixpkgs
+    { nixpkgs
     , flake-utils
     ,
     }:

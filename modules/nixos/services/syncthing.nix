@@ -1,13 +1,5 @@
-{ lib
-, pkgs
-, config
-, ...
+{ ...
 }:
-let
-  inherit (lib) mkIf attrNames any;
-  normalUsers = attrNames config.home-manager.users;
-  userHasService = users: service: any (user: config.home-manager.users.${user}.services.${service}.enable) users;
-in
 {
   imports = [ ];
 

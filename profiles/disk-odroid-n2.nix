@@ -1,12 +1,9 @@
-{ lib
-, inputs
+{ inputs
 , pkgs
 , config
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
-  inherit (builtins) hasAttr;
   inherit (pkgs) writeScriptBin;
 
   ## TODOS
@@ -16,10 +13,7 @@ let
   ## disko-create should have an ability to override disks by name:
   ##   $ disko-create --disk=sd=/dev/sdb
   ##
-  hostname = config.networking.hostName;
   device = "/dev/sda"; # TODO change per host
-  impermanence = (hasAttr "machine" config) && config.machine.impermanence;
-  tmpfsRoot = false;
 in
 {
   # inputs is made accessible by passing it as a specialArg to nixosSystem{}

@@ -1,7 +1,4 @@
 { pkgs, ... }:
-let
-  flake = import ./flake.nix;
-in
 {
   # ssh setup
   boot.initrd.network.enable = true;

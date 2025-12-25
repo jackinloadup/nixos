@@ -1,7 +1,4 @@
-{ pkgs, lib, inputs, config, ... }:
-let
-  inherit (lib) mkDefault mkForce;
-in
+{ inputs, config, ... }:
 {
   imports = [
     inputs.self.nixosModules.default

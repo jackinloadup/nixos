@@ -1,7 +1,7 @@
 { pkgs }:
 let
-  buildVimPluginFrom2Nix = pkgs.vimUtils.buildVimPluginFrom2Nix;
-  fetchgit = pkgs.fetchgit;
+  inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+  inherit (pkgs) fetchgit;
 in
 buildVimPluginFrom2Nix {
   pname = "lsp_lines.nvim";

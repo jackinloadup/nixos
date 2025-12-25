@@ -5,8 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem getExe;
-  inherit (lib.types) listOf enum;
+  inherit (lib) mkOverride optionals;
 
   first_and_last = "Lucas Riutzel";
   username = "lriutzel";

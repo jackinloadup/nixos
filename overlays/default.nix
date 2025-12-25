@@ -1,7 +1,4 @@
 flake:
-let
-  #cp = f: (super.callPackage f) {};
-in
 self: super: {
   # make all unstable packages available;
   unstable = import flake.inputs.nixpkgs-unstable {
@@ -55,23 +52,23 @@ self: super: {
   #home-assistant = self.unstable.home-assistant.override {
   #  extraPackages = py: with py; [ psycopg2 librouteros ];
   #};
-  lidarr = self.unstable.lidarr;
-  clblast = self.unstable.clblast; # needed for https://github.com/NixOS/nixpkgs/issues/445447
-  ollama = self.unstable.ollama; # needed for https://github.com/NixOS/nixpkgs/issues/445447
-  openrct2 = self.unstable.openrct2;
-  obsidian = self.unstable.obsidian;
-  bark = self.unstable.bark;
-  claude-code = self.unstable.claude-code;
+  inherit (self.unstable) lidarr;
+  inherit (self.unstable) clblast; # needed for https://github.com/NixOS/nixpkgs/issues/445447
+  inherit (self.unstable) ollama; # needed for https://github.com/NixOS/nixpkgs/issues/445447
+  inherit (self.unstable) openrct2;
+  inherit (self.unstable) obsidian;
+  inherit (self.unstable) bark;
+  inherit (self.unstable) claude-code;
   rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix { };
 
   ragenix = flake.inputs.ragenix.packages."x86_64-linux".default;
-  nvimBasic = flake.packages.${self.stdenv.hostPlatform.system}.nvimBasic;
-  nvimFull = flake.packages.${self.stdenv.hostPlatform.system}.nvimFull;
+  inherit (flake.packages.${self.stdenv.hostPlatform.system}) nvimBasic;
+  inherit (flake.packages.${self.stdenv.hostPlatform.system}) nvimFull;
 
   # update in unstable broke b/c of schema version mismatch in config file
-  adguardhome = self.stable.adguardhome;
+  inherit (self.stable) adguardhome;
   #j4-dmenu-desktop = self.stable.j4-dmenu-desktop;
-  snes9x-gtk = self.stable.snes9x-gtk;
+  inherit (self.stable) snes9x-gtk;
 
   # use printers ppd file. CUPS 3.0 will eliminate ppd and use ipp everywhere eta ~2023
   mfc9130cwlpr = (super.callPackage ../packages/mfc9130cw.nix { }).driver;
@@ -81,7 +78,7 @@ self: super: {
   wineApps = {
     polyhub = super.callPackage ../packages/polyhub.nix { };
   };
-  zoom-us = self.unstable.zoom-us;
+  inherit (self.unstable) zoom-us;
 
   # neovim is up to v8 and plugins are good too
   #neovimUtils = self.unstable.neovimUtils;

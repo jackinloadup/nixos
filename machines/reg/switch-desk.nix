@@ -1,7 +1,4 @@
-{ self
-, inputs
-, pkgs
-, lib
+{ pkgs
 , ...
 }:
 let
@@ -118,11 +115,6 @@ let
 
     main $@
   '';
-
-  package = pkgs.stdenv.mkDerivation {
-    name = "switch-desktop";
-    builder = script;
-  };
 in
 {
   config = {

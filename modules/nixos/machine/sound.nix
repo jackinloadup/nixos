@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf config.services.pipewire.enable {

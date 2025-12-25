@@ -1,7 +1,6 @@
 # This only work on i686-linux and x86_64-linux as far as i know. Maybe i386 as well. unsure about aarch
 # isAllowedArch = source: builtins.any (x: source == x) [ "i686-linux" "x86_64-linux" ];
 { pkgs
-, system
 ,
 }:
 let

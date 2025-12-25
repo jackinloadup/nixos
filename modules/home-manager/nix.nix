@@ -1,10 +1,4 @@
-{ flake
-, pkgs
-, config
-, lib
-, nixosConfig
-, ...
-}: {
+_: {
   config = {
     # doesn't work when home-manager.useGlobalPkgs is true
     #nixpkgs.config.allowUnfree = true;

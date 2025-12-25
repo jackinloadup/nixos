@@ -1,8 +1,8 @@
 # flake-parts module
-{ self, config, ... }:
+_:
 {
   # Configuration common to all Linux systems
-  perSystem = { config, ... }: {
+  perSystem = _: {
     apps = { };
   };
 }

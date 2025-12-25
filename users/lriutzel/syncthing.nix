@@ -1,12 +1,4 @@
-{ ... }:
-let
-  # .stignore at root of folder
-  ignore = ''
-    .git
-    /node_modules
-    /dist
-  '';
-in
+_:
 {
   services.syncthing.folder = {
     "/persist/home/lriutzel/Documents" = {

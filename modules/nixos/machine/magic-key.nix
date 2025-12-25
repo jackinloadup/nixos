@@ -1,9 +1,4 @@
-{ self
-, inputs
-, pkgs
-, lib
-, ...
-}: {
+_: {
   # Source: https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
   #
   ## What is the magic SysRq key?

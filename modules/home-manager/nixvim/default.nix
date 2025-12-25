@@ -1,7 +1,5 @@
-{ lib
-, config
+{ config
 , pkgs
-, nixosConfig
 , ...
 }: {
   config = {

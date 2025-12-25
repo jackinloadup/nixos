@@ -1,11 +1,10 @@
 { flake
-, pkgs
 , lib
 , config
 , ...
 }:
 let
-  inherit (lib) mkIf mkDefault;
+  inherit (lib) mkIf;
 in
 {
   imports = [

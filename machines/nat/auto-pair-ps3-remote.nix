@@ -1,7 +1,4 @@
-{ self
-, inputs
-, pkgs
-, lib
+{ pkgs
 , ...
 }:
 # TODO make this a user service

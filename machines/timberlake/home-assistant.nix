@@ -1,7 +1,4 @@
-{ config, lib, ... }:
-let
-  inherit (lib) mkIf;
-in
+_:
 {
   config = {
     networking.firewall.allowedTCPPorts = [

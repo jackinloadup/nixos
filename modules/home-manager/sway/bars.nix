@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   bars = [
     {
       command = "${pkgs.waybar}/bin/waybar";

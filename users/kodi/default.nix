@@ -7,7 +7,6 @@
 let
   inherit (lib) mkIf mkOption types;
   inherit (builtins) elem;
-  home-manager = flake.inputs.home-manager;
 in
 {
   imports = [

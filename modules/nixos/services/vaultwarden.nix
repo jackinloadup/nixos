@@ -1,7 +1,6 @@
 { lib, config, ... }:
 let
   inherit (lib) mkIf;
-  inherit (builtins) replaceStrings;
   cfg = config.services.vaultwarden;
   #vaultHost = replaceStrings ["https://"] [""] cfg.config.DOMAIN;
 in

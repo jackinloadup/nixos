@@ -4,10 +4,9 @@
 , ...
 }:
 let
-  inherit (lib) attrNames mkIf mkEnableOption genAttrs types;
-  cfg = config.machine;
+  inherit (lib) attrNames mkIf mkEnableOption genAttrs;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+  addExtraGroups = users: groups: (genAttrs users (_user: { extraGroups = groups; }));
   printer = {
     make = "Brother";
     model = "MFC-9130CW";
@@ -40,7 +39,7 @@ in
       {
         name = "${make}_${model}";
         deviceUri = "ipp://${address}:631/ipp";
-        location = location;
+        inherit location;
         #model = "everywhere"; # keeping for reference for any future printers in a pinch
         model = "Brother/brother_mfc9130cw_printer_en.ppd";
         ppdOptions = {

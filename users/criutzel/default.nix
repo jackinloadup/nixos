@@ -1,11 +1,10 @@
 { lib
 , pkgs
-, config
 , flake
 , ...
 }:
 let
-  inherit (lib) mkOption mkIf mkDefault mkOverride optionals elem;
+  inherit (lib) mkOption mkDefault;
   inherit (lib.types) listOf enum;
 
   first_and_last = "Christine Riutzel";

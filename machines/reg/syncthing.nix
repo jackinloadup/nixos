@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   config = {
     services.syncthing.settings.devices.reg = {
       addresses = [

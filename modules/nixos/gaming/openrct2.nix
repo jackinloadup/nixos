@@ -1,12 +1,9 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption genAttrs attrNames;
-  normalUsers = attrNames config.users.users;
-  addHomeFile = users: path: file: (genAttrs users (user: { home.file.${path} = file; }));
+  inherit (lib) mkIf;
 
   cfg = config.machine;
 in

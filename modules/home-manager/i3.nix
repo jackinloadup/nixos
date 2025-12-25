@@ -1,19 +1,10 @@
-{ config
-, pkgs
+{ pkgs
 , nixosConfig
 , lib
-, inputs
 , ...
 }:
 let
   inherit (lib) mkIf getExe;
-  settings = import ../../settings;
-  theme = settings.theme;
-  fontsConfig = {
-    names = [ theme.font.mono.family ];
-    style = theme.font.mono.style;
-    size = builtins.mul theme.font.size 1.0; # typecast to float
-  };
 in
 {
   config = mkIf nixosConfig.services.xserver.windowManager.i3.enable {
@@ -21,24 +12,20 @@ in
     programs.kitty.enable = true;
 
     xsession.windowManager.i3 =
-      let
-        left = "h"; # vim directions ftw
-        down = "j";
-        up = "k";
-        right = "l";
+      let # vim directions ftw
         terminal = "alacritty";
         menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${terminal}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
       in
       {
         enable = true;
         config = {
-          terminal = terminal;
+          inherit terminal;
           modifier = "Mod4";
           defaultWorkspace = "workspace number 1";
           assigns = {
             "10" = [{ class = "^Spotify$"; }];
           };
-          menu = menu;
+          inherit menu;
 
           workspaceAutoBackAndForth = true;
           window.hideEdgeBorders = "smart";

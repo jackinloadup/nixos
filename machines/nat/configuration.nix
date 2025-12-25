@@ -1,8 +1,7 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, lib, ... }:
 # machine runs kodi
 let
-  inherit (lib) mkDefault mkForce;
-  kodiSplash = "${pkgs.kodi}/share/kodi/media/splash.jpg";
+  inherit (lib) mkForce;
 in
 {
   imports = [

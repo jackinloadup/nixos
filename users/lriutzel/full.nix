@@ -87,9 +87,6 @@ in
     #    ";
 
     home-manager.users."${username}" =
-      let
-        homeDir = "/home/${username}";
-      in
       {
         imports = [
           flake.self.homeModules.video-editor

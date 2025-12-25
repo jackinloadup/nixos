@@ -6,7 +6,7 @@
 let
   inherit (lib) mkIf;
   settings = import ../../settings;
-  sizeTarget = nixosConfig.machine.sizeTarget;
+  inherit (nixosConfig.machine) sizeTarget;
   ifGraphical = sizeTarget > 1;
 in
 {
@@ -57,8 +57,8 @@ in
 
     settings = {
       user = {
-        name = settings.user.name;
-        email = settings.user.email;
+        inherit (settings.user) name;
+        inherit (settings.user) email;
       };
 
       alias = {
@@ -194,7 +194,7 @@ in
   };
 
   programs.lazydocker = {
-    enable = nixosConfig.virtualisation.docker.enable;
+    inherit (nixosConfig.virtualisation.docker) enable;
     settings = {
       # makes diagnosing why you can't connect to container impossible
       #gui.returnImmediately = true;

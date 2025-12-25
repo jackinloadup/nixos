@@ -6,7 +6,7 @@
 let
   inherit (lib) mkIf genAttrs attrNames;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+  addExtraGroups = users: groups: (genAttrs users (_user: { extraGroups = groups; }));
 in
 {
   config = mkIf config.virtualisation.docker.enable {

@@ -6,7 +6,6 @@
 let
   inherit (lib) mkIf mkDefault;
   settings = import ../../../settings;
-  ifTui = config.machine.sizeTarget > 0;
   ifGraphical = config.machine.sizeTarget > 1;
 in
 {

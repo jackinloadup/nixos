@@ -1,12 +1,11 @@
 { lib
-, pkgs
 , config
 , ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption genAttrs attrNames;
+  inherit (lib) mkIf genAttrs attrNames;
   normalUsers = attrNames config.home-manager.users;
-  addExtraGroups = users: groups: (genAttrs users (user: { extraGroups = groups; }));
+  addExtraGroups = users: groups: (genAttrs users (_user: { extraGroups = groups; }));
 in
 {
   imports = [ ];

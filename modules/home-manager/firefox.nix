@@ -1,7 +1,6 @@
 { config
 , pkgs
 , lib
-, inputs
 , ...
 }:
 let
@@ -38,7 +37,7 @@ in
         "x-scheme-handler/about"
         "x-scheme-handler/unknown"
       ]
-        (name: "firefox.desktop");
+        (_name: "firefox.desktop");
     };
 
     wayland.windowManager.sway.config.floating.criteria = [

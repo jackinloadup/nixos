@@ -1,14 +1,6 @@
-{ self
-, inputs
-, pkgs
-, lib
-, config
+{ config
 , ...
 }:
-let
-  swayConfig = config.wayland.windowManager.sway.config;
-  kodiSplash = "${pkgs.kodi-wayland}/share/kodi/media/splash.jpg";
-in
 {
   imports = [
   ];
