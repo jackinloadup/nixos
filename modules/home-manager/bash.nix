@@ -8,7 +8,7 @@ in
 {
   config = mkIf config.programs.bash.enable {
     programs.bash = {
-      historyFile = "~/.local/state/bash/history";
+      historyFile = "$XDG_STATE_HOME/bash/history";
       historyControl = [
         "ignoredups"
         "ignorespace"

@@ -11,12 +11,12 @@ in
 {
   config = mkIf config.programs.zsh.enable {
     home.sessionVariables = {
-      _Z_DATA = "${config.home.homeDirectory}/.local/state/z";
+      # zsh-z
+      _Z_DATA = "$XDG_STATE_HOME/z";
     };
 
     # Needed for vars like XGD_STATE_HOME
     xdg.enable = mkDefault true;
-
 
     programs.zsh = {
       autosuggestion.enable = mkDefault false;

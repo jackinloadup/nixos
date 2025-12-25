@@ -40,5 +40,8 @@
       pkgs.usbutils # an alternative could be busybox cope toybox
       pkgs.hwloc # can show hardware topo with lstopo
     ];
+
+    # Needed for vars like XGD_STATE_HOME
+    xdg.enable = mkDefault true;
   };
 }
