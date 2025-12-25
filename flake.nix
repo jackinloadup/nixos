@@ -261,7 +261,11 @@
         {
           treefmt.config = {
             projectRootFile = "flake.nix";
-            programs.nixpkgs-fmt.enable = true;
+            programs = {
+              nixpkgs-fmt.enable = true;
+              deadnix.enable = true; # Find unused code
+              statix.enable = true; # Lint for anti-patterns
+            };
             #formatter.x86_64-linux = defaultPkgs.legacyPackages.x86_64-linux.alejandra;
           };
 
@@ -279,6 +283,8 @@
               #};
               # Optional: also run the formatter
               treefmt.enable = true;
+              statix.enable = true;
+              deadnix.enable = true;
             };
           };
 
