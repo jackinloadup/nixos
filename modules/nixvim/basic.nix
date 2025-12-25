@@ -256,7 +256,8 @@
     neo-tree = {
       enable = true;
       settings = {
-        log_level = "off"; # Disable logging to avoid errors in nix sandbox
+        log_level = "fatal"; # Minimize logging to avoid errors in nix sandbox
+        log_to_file = false; # Don't attempt to write log file
         window.width = 30;
         closeIfLastWindow = true;
         extraOptions = {
