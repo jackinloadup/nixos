@@ -41,6 +41,9 @@ Personal home lab nixos setup exposed as a flake.
  - [nextcloud](https://nextcloud.com/) - Documents
  - [collabora](https://www.collabora.com/) - multi user document editing
 
+# Make install iso
+ - `nix build github:jackinloadup/nixos#install-iso`
+
 # Install 2.0
 - (new machine) boot nixos iso via PXE or usb
 - (new machine) set password for nixos user `passwd`
