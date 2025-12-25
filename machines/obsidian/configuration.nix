@@ -46,6 +46,12 @@ in
       }
     ];
 
+    gumdrop = {
+      vpn.server.endpoint = "vpn.lucasr.com:51820";
+      vpn.client.enable = true;
+      vpn.client.ip = "10.100.0.13/24";
+    };
+
     programs.hyprland.enable = true;
     programs.hyprland.xwayland.enable = true;
     programs.niri.enable = true;
