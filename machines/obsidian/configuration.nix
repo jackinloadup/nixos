@@ -17,6 +17,7 @@ in
     inputs.self.nixosModules.work
     inputs.self.nixosModules.lriutzelGui
     ./hardware-configuration.nix
+    ./ai.nix
   ];
 
   config = {
