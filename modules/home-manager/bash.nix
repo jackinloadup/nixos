@@ -16,9 +16,6 @@ in
       historyIgnore = [ "l" "ll" "lll" "bg" "fg" "clear" "ls" "cd" "exit" ];
       initExtra =
         ''
-        ''
-        + optionalString config.programs.starship.enable ''
-          eval "$(starship init bash)"
         '';
       shellOptions = [
         "dirspell"
