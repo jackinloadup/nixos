@@ -125,6 +125,11 @@ in
               publicKey = "r8sTKseZP43FCXkTWvjmuhQv92wnbVKtvXlrPNM6IjU=";
               allowedIPs = [ "10.100.0.12/32" ];
             }
+            {
+              name = "obsidian";
+              publicKey = "r8sTKseZP43FCXkTWvjmuhQv92wnbVKtvXlrPNM6IjU=";
+              allowedIPs = [ "10.100.0.13/32" ];
+            }
           ];
 
         };
