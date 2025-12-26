@@ -1,6 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: let
+  inherit (lib) mkDefault;
+in {
   config = {
     #programs.bash.enable = true;
+
+    programs.carapace.enable = true;
 
     programs.htop.enable = true;
     #home.file."${config.xdg.configHome}/htop/htoprc".source = ./htoprc;
@@ -31,6 +35,7 @@
         "jk": vi-movement-mode
       '';
     };
+    programs.zoxide.enable = true;
 
 
     home.packages = [

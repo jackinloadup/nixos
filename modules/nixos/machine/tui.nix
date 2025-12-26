@@ -147,6 +147,7 @@ in
           LESSHISTSIZE = "1000";
         };
       };
+      zoxide.enable = true;
     };
 
     environment.sessionVariables = {

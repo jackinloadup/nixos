@@ -10,10 +10,7 @@ let
 in
 {
   config = mkIf config.programs.zsh.enable {
-    home.sessionVariables = {
-      # zsh-z
-      _Z_DATA = "$XDG_STATE_HOME/z";
-    };
+    home.sessionVariables = { };
 
     # Needed for vars like XGD_STATE_HOME
     xdg.enable = mkDefault true;
@@ -97,11 +94,6 @@ in
       };
 
       plugins = [
-        {
-          name = "zsh-z";
-          file = "share/zsh-z/zsh-z.plugin.zsh";
-          src = pkgs.zsh-z;
-        }
         {
           name = "zsh-nix-shell";
           file = "nix-shell.plugin.zsh";
