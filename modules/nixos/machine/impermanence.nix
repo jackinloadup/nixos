@@ -122,8 +122,10 @@ in
       };
     };
 
-    # works to force dir to exist!!
     systemd.tmpfiles.rules = [
+      # force correct permissions on /var/lib/private
+      "d! /var/lib/private 0700 root root -"
+      # works to force dir to exist!!
       "d /persist/home/lriutzel 0700 lriutzel users"
       "d /persist/home/criutzel 0700 criutzel users"
     ]
