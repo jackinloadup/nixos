@@ -59,6 +59,7 @@ in
 
     services.bpftune.enable = true;
     services.hardware.bolt.enable = true; # thunderbolt
+    services.technitium-dns-server.enable = true;
 
     powerManagement.cpuFreqGovernor = mkForce "performance";
 
