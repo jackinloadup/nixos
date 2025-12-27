@@ -192,7 +192,11 @@
     lsp = {
       enable = true;
       servers = {
-        nixd.enable = true;
+        nixd = {
+          enable = true;
+          # https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
+          #settings.options.nixvim.expr = ''(builtins.getFlake "./").packages.${system}.neovimNixvim.options'';
+        };
         rust_analyzer = {
           enable = true;
           installCargo = true;

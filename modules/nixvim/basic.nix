@@ -281,7 +281,10 @@
       enable = true;
       settings = {
         pickers.find_files = {
+          theme = "ivy";
           hidden = true;
+          # TODO find_files should include hidden files like .github
+          #find_command = "${getExe pkgs.rg}";
         };
       };
       keymaps = {
