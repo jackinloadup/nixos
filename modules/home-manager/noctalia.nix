@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) getBin getExe mkIf;
+  inherit (lib) mkIf;
 in
 {
   imports = [ flake.inputs.noctalia.homeModules.default ];

@@ -20,6 +20,7 @@
           ./starship.nix
           ./task-warrior
           ./zoom.nix
+          ./claude.nix
         ];
       };
       tui.imports = [

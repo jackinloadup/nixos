@@ -19,6 +19,7 @@
         #wayland.windowManager.sway.enable = config.programs.sway.enable;
         #wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
         programs.niri.enable = config.programs.niri.enable;
+        programs.claude-code.enable = true;
 
         services.satellite-images.enable = false;
 
