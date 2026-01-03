@@ -127,7 +127,7 @@ in
             }
             {
               name = "obsidian";
-              publicKey = "r8sTKseZP43FCXkTWvjmuhQv92wnbVKtvXlrPNM6IjU=";
+              publicKey = "0MI5G0S6UM17g/0XNCU9SVx3tU2MncitIBT3vwmh7z0=";
               allowedIPs = [ "10.100.0.13/32" ];
             }
           ];
