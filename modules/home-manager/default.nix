@@ -36,6 +36,7 @@
         ./satellite-images.nix
         #./i3.nix
         ./nixvim
+        ./noctalia.nix
         ./sway
         ./syncthing.nix
         ./waybar.nix

@@ -16,8 +16,8 @@
 
     home-manager.sharedModules = [
       {
-        wayland.windowManager.sway.enable = config.programs.sway.enable;
-        wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
+        #wayland.windowManager.sway.enable = config.programs.sway.enable;
+        #wayland.windowManager.hyprland.enable = config.programs.hyprland.enable;
         programs.niri.enable = config.programs.niri.enable;
 
         services.satellite-images.enable = false;
@@ -34,10 +34,10 @@
       }
     ];
 
-    programs.hyprland.enable = true;
-    programs.hyprland.xwayland.enable = true;
+    #programs.hyprland.enable = false;
+    #programs.hyprland.xwayland.enable = true;
     programs.niri.enable = true;
-    programs.sway.enable = false;
+    #programs.sway.enable = false;
 
     programs.steam.enable = true;
 

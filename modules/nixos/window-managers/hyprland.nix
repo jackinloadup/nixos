@@ -3,7 +3,7 @@
 , ...
 }:
 let
-  inherit (lib) getBin getExe;
+  inherit (lib) getBin getExe mkIf;
 in
 {
   config = {
@@ -99,7 +99,7 @@ in
               main "$@"
             '';
           };
-        in
+        in mkIf config.wayland.windowManager.hyprland.enable
         {
           home.packages = [
             pkgs.hyprlock

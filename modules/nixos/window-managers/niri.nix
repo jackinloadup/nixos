@@ -25,7 +25,8 @@ in
 
           xcursor_theme = config.gtk.cursorTheme.name;
           termCmd = "${getExe pkgs.kitty}";
-          menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
+          #menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
+          menu = "${getExe flake.inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default} ipc call launcher toggle";
         in
         {
           imports = [ flake.inputs.niri.homeModules.niri ];
@@ -36,6 +37,8 @@ in
             #  enable = true;
             #};
             programs.kitty.enable = true;
+            programs.noctalia-shell.enable = true;
+
 
             programs.niri = {
               settings = {
@@ -60,14 +63,15 @@ in
                 };
 
                 spawn-at-startup = [
-                  {
-                    command = [
-                      "systemctl"
-                      "--user"
-                      "start"
-                      "waybar.service"
-                    ];
-                  }
+                  #{
+                  #  command = [
+                  #    "systemctl"
+                  #    "--user"
+                  #    "start"
+                  #    "waybar.service"
+                  #  ];
+                  #}
+
                   # {
                   #   sh = "${noctalia}/bin/noctalia-shell";
                   # }
@@ -165,6 +169,12 @@ in
                     open-floating = true;
                   }
                 ];
+
+                # for noctalia
+                #debug {
+                #  // Allows notification actions and window activation from Noctalia.
+                #  honor-xdg-activation-with-invalid-serial
+                #}
 
                 binds = {
                   "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
