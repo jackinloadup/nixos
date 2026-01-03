@@ -34,6 +34,12 @@
         }
         {
           event = "FileType";
+          pattern = [ "json" "jsonc" ];
+          command = "setlocal conceallevel=0";
+          desc = "Show quotes in JSON files";
+        }
+        {
+          event = "FileType";
           pattern = [ "markdown" "org" "norg" ];
           command = "setlocal spell spelllang=en";
           desc = "Spell Checking";
