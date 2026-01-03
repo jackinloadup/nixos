@@ -20,13 +20,15 @@ in
         right_format = concatStrings [
           "$localip"
           "$shlvl"
-          "$kubernetes"
+          #"$kubernetes"
           "$directory"
-          "$git_branch"
-          "$git_commit"
-          "$git_state"
-          "$git_metrics"
-          "$git_status"
+          # I think git might be slowing
+          #"$git_branch"
+          #"$git_commit"
+          #"$git_state"
+          #"$git_metrics"
+          #"$git_status"
+
           #"$docker_context"
           #"$package"
           #"$golang"
@@ -50,7 +52,7 @@ in
           "$battery"
           "$status"
           "$os"
-          "$container"
+          #"$container"
           "$shell"
           "$character"
         ];
