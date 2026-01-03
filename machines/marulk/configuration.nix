@@ -17,7 +17,7 @@ in
     machine = {
       users = [ "lriutzel" ];
       sizeTarget = 1;
-      home-assistant = true;
+      home-assistant.enable = true;
       tui = true;
     };
 

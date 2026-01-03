@@ -131,7 +131,10 @@
     ucodenix.url = "github:e-tho/ucodenix";
 
     # NixVirt lets you declare virtual machines
-    #nixvirt.url = "AshleyYakeley/NixVirt";
+    NixVirt = {
+      url = "github:AshleyYakeley/NixVirt";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Exploring the integration between Nix and AI coding agents
     #nix-ai-tools.url = "github:numtide/nix-ai-tools";

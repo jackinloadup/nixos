@@ -61,6 +61,7 @@ in
       linux = linuxModule;
 
       server.imports = [
+        inputs.NixVirt.nixosModules.default
         ./home-assistant
         ./hydra
         ./nextcloud
