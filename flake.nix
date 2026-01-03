@@ -287,7 +287,8 @@
               #};
               # Optional: also run the formatter
               treefmt.enable = true;
-              statix.enable = true;
+              # statix shows valid corrections but no way to fix it
+              # statix.enable = true;
               deadnix.enable = true;
             };
           };
@@ -296,6 +297,8 @@
             inputsFrom = with self.outputs.devShells.${system}; [ secrets ];
             buildInputs = [
               pkgs.nixpkgs-fmt
+              pkgs.statix
+              pkgs.deadnix
               #pkgs.sops
               #pkgs.ssh-to-age
             ];
