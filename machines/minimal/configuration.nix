@@ -40,6 +40,9 @@ in
   environment.defaultPackages = mkForce [ ];
 
   boot.enableContainers = false;
+  virtualisation.containers.enable = mkForce false;
+  # needed due to missing systemd-bsod.service
+  boot.initrd.systemd.enable = mkForce false; # Use traditional initrd, not systemd-based
   xdg.menus.enable = false;
   powerManagement.cpuFreqGovernor = mkForce null;
 
@@ -49,6 +52,7 @@ in
   programs.command-not-found.enable = mkDefault false;
 
   services.timesyncd.enable = false; # systemdMinimal doesn't have timesyncd
+  services.udev.enable = mkForce false; # systemdMinimal doesn't generate hwdb files
   nix.enable = false;
   system.disableInstallerTools = true;
   systemd = {
@@ -56,6 +60,18 @@ in
     # following command builds result
     # sudo nix build --override-input nixpkgs ~/Projects/nixpkgs ./dotfiles#nixosConfigurations.minimal.config.system.build.toplevel                                                                                                ~ took 15s
     package = pkgs.systemdMinimal;
+    coredump.enable = false;
+    oomd.enable = false;
+    suppressedSystemUnits = [
+      # needed due to systemd-minimal
+      "dbus-org.freedesktop.login1.service"
+      "systemd-logind.service"
+      "systemd-nspawn@.service"
+      "systemd-oomd.service"
+      "systemd-oomd.socket"
+      "systemd-user-sessions.service"
+      "systemd-vconsole-setup.service"
+    ];
     #package = pkgs.systemdMinimal.override {
     #  withCoredump = true;
     #  withCompression = true;
