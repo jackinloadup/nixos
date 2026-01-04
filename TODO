@@ -1,6 +1,3 @@
-# partial
-kexec reboot
-yubikey
 
 # proposed
 - clamav - OnAccessScan
@@ -8,57 +5,35 @@ yubikey
 - quickemu
 - tpm remote attestation
 - vim https://github.com/anordal/shellharden
-- git pre-commit hooks https://github.com/cachix/pre-commit-hooks.nix
 - connect to p2p NAT64 network https://p2p.nat64.dk
-- tui disk image writer
 - custom kernel that cuts out cruft like support for sandards or subsystems the computer will never need
 - explore kernelshark debug tool
 - possible to customize bios with tool like AMI Firmware Update linux (like amibcp?)
 - uefi tools and isos to keep on me.
 - pkgs.netdata - Real-time performance monitoring tool
-monitioring:
-  metrics collection
-  logging collection
+- monitioring:
+  - metrics collection
+  - logging collection
+- kexec reboot
+- self host ntfy.sh or other ntfy for push notifications
+- show updated packages on nix flake update?
+- unify machine list in encrypt.sh machines/ secret/machines?
+- TinyCoreLinux or similar as a alt boot?
+- ephemeral boot option
+- nixops deploy to other computer
+- Some clipboard manager example: CopyQ - https://hluk.github.io/CopyQ/
+- kexec emergency - already exists but explore options
+- mpd - more use
+- profile-sync-daemon possible/useful with impermance?
+- hybernation, I don't think this works for any machines. Certainly not zfs systems
 
-self host ntfy.sh or other ntfy for push notifications
+# services to add into secrets
+- syncthing
+- nebula
 
+# Projects
+- kms glsl shader boot experience like plymouth?
 
-
-# Requires secret storage
-- autostart fractal - matrix client
-- yubikey
-- gnupg
-- signal
-- steam compartment?
-- fractal?
-
-
-move machines to hosts to allow easier external configuration like github.com
-
-
-TinyCoreLinux or similar as a alt boot?
-ephemeral boot option
-nixops deploy to other computer
-
-zsh: set window titles based on what applications we run
-
-vault secrets nix
-https://github.com/serokell/vault-secrets
-
-direnv – unclutter your .profile
-https://direnv.net/
-
-CopyQ - Clipboard manager
-https://hluk.github.io/CopyQ/
-
-
-kexec emergency - already exists but explore options
-mpd
-profile-sync-daemon possible/useful with impermance?
-
-kms glsl shader boot experience like plymouth?
-
-+ hybernation
 
 # new/alt browser?
 https://nyxt.atlas.engineer/
@@ -86,4 +61,3 @@ ddccontrol -r 0x10 -w 50 dev:/dev/i2c-6
 ddccontrol -r 0x15 -w 32 dev:/dev/i2c-5
 ### reader mode
 ddccontrol -r 0x15 -w 1 dev:/dev/i2c-5
-
