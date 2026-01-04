@@ -315,7 +315,13 @@
             # Run `nix flake check .` to verify that your config is not broken
             nvimBasic = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimBasicModule;
             nvimFull = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimFullModule;
-          };
+            # Add NixOS configuration checks
+            # This builds all machines' toplevel without installing
+          } // (pkgs.lib.mapAttrs'
+            (name: cfg:
+              pkgs.lib.nameValuePair "nixos-${name}" cfg.config.system.build.toplevel
+            )
+            self.nixosConfigurations);
 
           packages = {
             inherit nvimBasic;

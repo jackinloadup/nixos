@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }: let
+{ pkgs, lib, ... }:
+let
   inherit (lib) mkDefault;
-in {
+in
+{
   config = {
     #programs.bash.enable = true;
 
