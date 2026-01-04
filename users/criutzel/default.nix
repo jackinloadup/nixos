@@ -27,7 +27,6 @@ in
         "video"
         "input"
         "networkmanager"
-        "ipfs"
         "plugdev"
         "adbusers"
       ];
