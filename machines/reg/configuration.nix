@@ -232,6 +232,10 @@ in
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "23.11"; # Did you read the comment?
 
+    home-manager.users.lriutzel.imports = [
+      ./users/lriutzel/syncthing.nix
+    ];
+
     home-manager.sharedModules = [
       {
         wayland.windowManager.sway.enable = config.programs.sway.enable;
