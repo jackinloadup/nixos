@@ -101,8 +101,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-unified.url = "github:srid/nixos-unified";
-
     scripts = {
       url = "github:jackinloadup/scripts";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -158,7 +156,6 @@
       imports = [
         inputs.treefmt-nix.flakeModule
         inputs.git-hooks.flakeModule
-        inputs.nixos-unified.flakeModule
         ./modules/nixos
         ./modules/home-manager
         ./users
@@ -179,8 +176,6 @@
           supportedSystems = supportedX86Systems ++ [ "aarch64-linux" ];
         in
         {
-          nixos-unified.primary-inputs = [ "nixpkgs" "home-manager" "nix-darwin" ];
-
           # Expose overlay to flake outputs, to allow using it from other flakes.
           overlays = importDirOfOverlays "overlays";
 
