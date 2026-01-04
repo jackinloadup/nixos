@@ -53,7 +53,7 @@ in
         "reg.home.lucasr.com-1:8L950S9ptxIIUxhA541X119u8yUxu1PFCchAHHDJ3rY="
         "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
-      allowed-users = [ "root" "@wheel" ];
+      allowed-users = [ "root" "@wheel" "@users" ];
       trusted-users = [ "root" "@wheel" ];
       auto-optimise-store = mkDefault ifTui;
       builders-use-substitutes = true;
