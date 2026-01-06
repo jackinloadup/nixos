@@ -4,7 +4,7 @@
 - wfvm https://git.m-labs.hk/M-Labs/wfvm
 - quickemu
 - tpm remote attestation
-- vim https://github.com/anordal/shellharden
+- https://github.com/anordal/shellharden
 - connect to p2p NAT64 network https://p2p.nat64.dk
 - custom kernel that cuts out cruft like support for sandards or subsystems the computer will never need
 - explore kernelshark debug tool
@@ -25,6 +25,7 @@
 - mpd - more use
 - profile-sync-daemon possible/useful with impermance?
 - hybernation, I don't think this works for any machines. Certainly not zfs systems
+- add https://github.com/huseyinbabal/taws when added to nixpkgs or add myself
 
 # services to add into secrets
 - syncthing
