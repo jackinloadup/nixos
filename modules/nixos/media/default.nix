@@ -251,6 +251,7 @@ in
         acmeRoot = null; # Use DNS Challenege
 
         extraConfig = ''
+          client_max_body_size 50000M;
           ${allowSubnets}
           deny all;
         '';
