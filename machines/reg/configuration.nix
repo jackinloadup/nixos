@@ -63,7 +63,7 @@ in
 
     powerManagement.cpuFreqGovernor = mkForce "performance";
 
-    programs.hyprland.enable = true;
+    programs.hyprland.enable = false;
     programs.hyprland.xwayland.enable = true;
     programs.niri.enable = true;
     programs.sway.enable = false;
