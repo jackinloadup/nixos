@@ -95,6 +95,18 @@ in
           pkgs.terminal-parrot # parrot in your terminal
           pkgs.pipes-rs # pipes terminal screensaver
           # https://tattoy.sh/ not yet in nixpkgs
+          pkgs.cbonsai # grow bonsai
+          pkgs.neo # better cmatrix alt - neo -D --noglitch
+
+          #games
+          pkgs.ninvaders
+          pkgs.tetris
+          pkgs.sl # train across screen
+          pkgs.tarts # lots of different visualizers, life, maze, crab, pipes
+          pkgs.confetty
+          pkgs.nethack
+          pkgs.cacademo
+
         ];
       };
   };
