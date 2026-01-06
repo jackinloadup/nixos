@@ -28,6 +28,7 @@ in
     ./gnome.nix
     ./greetd.nix
     ./impermanence.nix
+    ./kexec.nix
     ./kernel.nix
     ./lowLevelXF86keys.nix
     ./locale.nix

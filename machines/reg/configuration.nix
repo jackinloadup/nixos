@@ -202,6 +202,7 @@ in
       gaming = true;
       impermanence = true;
       lowLevelXF86keys.enable = true;
+      kexec.enable = true;
     };
 
     gumdrop = {

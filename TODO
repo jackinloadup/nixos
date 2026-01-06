@@ -14,7 +14,6 @@
 - monitioring:
   - metrics collection
   - logging collection
-- kexec reboot
 - self host ntfy.sh or other ntfy for push notifications
 - show updated packages on nix flake update?
 - unify machine list in encrypt.sh machines/ secret/machines?

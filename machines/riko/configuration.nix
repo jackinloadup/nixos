@@ -71,6 +71,7 @@
       encryptedRoot = true;
       lowLevelXF86keys.enable = true;
       gaming = true;
+      kexec.enable = true;
     };
 
     gumdrop = {
