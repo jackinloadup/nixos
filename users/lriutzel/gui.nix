@@ -105,7 +105,7 @@ in
           pkgs.tarts # lots of different visualizers, life, maze, crab, pipes
           pkgs.confetty
           pkgs.nethack
-          pkgs.cacademo
+          #pkgs.cacademo # works with comma... idk
 
         ];
       };
