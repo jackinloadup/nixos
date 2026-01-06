@@ -180,6 +180,7 @@ in
                   "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
                   "Super+Return".action.spawn = [ "${termCmd}" ];
                   "Super+Shift+Return".action.spawn = [ "${getBin pkgs.foot}/bin/footclient" "--client-environment" ];
+                  "super+Shift+E".action.spawn = [ "noctalia-shell ipc call launcher emoji" ];
                   # "Mod+D".action.spawn = "fuzzel";
                   #"Mod+D".action.spawn-sh = "${noctaliaIPC} launcher toggle";
                   #"Super+Alt+L".action.spawn-sh = "${noctaliaIPC} lockScreen lock";
