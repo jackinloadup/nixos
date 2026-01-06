@@ -43,6 +43,7 @@ in
     ./virtualization.nix
     ./magic-key.nix
     ./wayland.nix
+    ./monitoring.nix
   ];
 
   ## TODO disable user mutab
@@ -71,6 +72,9 @@ in
     users.mutableUsers = mkDefault false; # Users may only be added via nix config
 
     time.timeZone = mkDefault settings.home.timezone;
+
+    # Enable metrics collection on all machines by default
+    machine.monitoring.enable = mkDefault true;
 
     machine.kernel = {
       rebootAfterPanic = mkDefault 10;

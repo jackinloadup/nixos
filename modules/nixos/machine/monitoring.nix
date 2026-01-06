@@ -23,20 +23,20 @@ let
 
   # vmagent scrape configuration
   vmagentConfig = pkgs.writeText "vmagent.yml" ''
-    global:
-      scrape_interval: 15s
-      scrape_timeout: 10s
+        global:
+          scrape_interval: 15s
+          scrape_timeout: 10s
 
-    scrape_configs:
-      - job_name: 'node'
-        static_configs:
-          - targets:
-${lib.concatMapStringsSep "\n" (t: "              - '${t}'") (scrapeTargets ++ cfg.server.extraScrapeTargets)}
-        relabel_configs:
-          - source_labels: [__address__]
-            regex: '([^:]+)\.home\.lucasr\.com:.*'
-            target_label: instance
-            replacement: '$1'
+        scrape_configs:
+          - job_name: 'node'
+            static_configs:
+              - targets:
+    ${lib.concatMapStringsSep "\n" (t: "              - '${t}'") (scrapeTargets ++ cfg.server.extraScrapeTargets)}
+            relabel_configs:
+              - source_labels: [__address__]
+                regex: '([^:]+)\.home\.lucasr\.com:.*'
+                target_label: instance
+                replacement: '$1'
   '';
 
 in
@@ -67,7 +67,7 @@ in
 
       extraScrapeTargets = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         description = "Additional scrape targets (e.g., 'truenas.home.lucasr.com:9100')";
         example = [ "truenas.home.lucasr.com:9100" "mikrotik.home.lucasr.com:9100" ];
       };
@@ -101,7 +101,7 @@ in
       services.victoriametrics = {
         enable = true;
         listenAddress = "127.0.0.1:${toString cfg.server.victoriaMetricsPort}";
-        retentionPeriod = cfg.server.retentionPeriod;
+        inherit (cfg.server) retentionPeriod;
         extraOptions = [
           "-selfScrapeInterval=15s"
         ];

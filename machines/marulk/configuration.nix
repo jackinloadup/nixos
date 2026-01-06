@@ -19,6 +19,7 @@ in
       sizeTarget = 1;
       home-assistant.enable = true;
       tui = true;
+      monitoring.server.enable = true;
     };
 
     gumdrop.vpn.server.enable = true;
