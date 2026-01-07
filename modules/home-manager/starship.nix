@@ -23,7 +23,7 @@ in
           #"$kubernetes"
           "$directory"
           # I think git might be slowing
-          #"$git_branch"
+          "$git_branch"
           #"$git_commit"
           #"$git_state"
           #"$git_metrics"
