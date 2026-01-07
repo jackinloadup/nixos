@@ -1,3 +1,7 @@
+# in progress
+- syncthing with managed secrets
+- bitwarden/vaultwarden
+- k9s with ctrl-z bg # can't resolve due to https://github.com/derailed/k9s/issues/625
 
 # proposed
 - clamav - OnAccessScan
@@ -9,7 +13,6 @@
 - custom kernel that cuts out cruft like support for sandards or subsystems the computer will never need
 - explore kernelshark debug tool
 - possible to customize bios with tool like AMI Firmware Update linux (like amibcp?)
-- uefi tools and isos to keep on me.
 - pkgs.netdata - Real-time performance monitoring tool
 - monitioring:
   - metrics collection
@@ -17,6 +20,7 @@
 - self host ntfy.sh or other ntfy for push notifications
 - show updated packages on nix flake update?
 - unify machine list in encrypt.sh machines/ secret/machines?
+- uefi tools and isos to keep on me.
 - TinyCoreLinux or similar as a alt boot?
 - ephemeral boot option
 - nixops deploy to other computer
