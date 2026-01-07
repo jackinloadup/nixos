@@ -39,6 +39,26 @@ let
                 replacement: '$1'
   '';
 
+  # Grafana dashboards fetched from grafana.com
+  # Using revision IDs for reproducibility
+  grafanaDashboards = pkgs.runCommand "grafana-dashboards" { } ''
+    mkdir -p $out
+
+    # Node Exporter Full (ID: 1860, rev: 37)
+    cp ${pkgs.fetchurl {
+      url = "https://grafana.com/api/dashboards/1860/revisions/37/download";
+      hash = "sha256-1DE1aaanRHHeCOMWDGdOS1wBXxOF84UXAjJzT5Ek6mM=";
+      name = "node-exporter-full.json";
+    }} $out/node-exporter-full.json
+
+    # VictoriaMetrics single-node (ID: 10229, rev: 35)
+    cp ${pkgs.fetchurl {
+      url = "https://grafana.com/api/dashboards/10229/revisions/35/download";
+      hash = "sha256-jDSQLKexiYh6Fx099NwYC/8F3nl2KC3psHLpUcjpcjk=";
+      name = "victoriametrics.json";
+    }} $out/victoriametrics.json
+  '';
+
 in
 {
   options.machine.monitoring = {
@@ -146,7 +166,11 @@ in
 
           security = {
             allow_embedding = true;
+            cookie_secure = true;
           };
+
+          # Required when behind reverse proxy
+          server.enforce_domain = false;
         };
 
         provision = {
@@ -161,6 +185,14 @@ in
               editable = false;
             }
           ];
+
+          dashboards.settings.providers = [
+            {
+              name = "default";
+              options.path = grafanaDashboards;
+              disableDeletion = true;
+            }
+          ];
         };
       };
 
@@ -173,6 +205,12 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString cfg.server.grafanaPort}";
           proxyWebsockets = true;
+          extraConfig = ''
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+          '';
         };
       };
 
