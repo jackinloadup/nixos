@@ -10,7 +10,7 @@ in
   config = {
     environment.systemPackages = [ pkgs.xwayland-satellite ];
 
-    security.pam.services.hyprlock = {
+    security.pam.services.swaylock = {
       text = "auth include login";
       enableGnomeKeyring = true;
       sshAgentAuth = true;
@@ -39,6 +39,42 @@ in
             programs.kitty.enable = true;
             programs.noctalia-shell.enable = true;
 
+            # Idle and lock screen configuration (replaces hypridle/hyprlock)
+            services.swayidle = {
+              enable = true;
+              events = [
+                { event = "lock"; command = "${getExe pkgs.swaylock-effects} -f"; }
+                { event = "before-sleep"; command = "${getExe pkgs.swaylock-effects} -f"; }
+                { event = "after-resume"; command = "niri msg action power-on-monitors"; }
+              ];
+              timeouts = [
+                { timeout = 300; command = "${getExe pkgs.swaylock-effects} -f"; }
+                {
+                  timeout = 360;
+                  command = "niri msg action power-off-monitors";
+                  resumeCommand = "niri msg action power-on-monitors";
+                }
+              ];
+            };
+
+            programs.swaylock = {
+              enable = true;
+              package = pkgs.swaylock-effects;
+              settings = {
+                image = "${config.home.homeDirectory}/Pictures/background.jpg";
+                clock = true;
+                timestr = "%I:%M";
+                datestr = "%A, %B %d";
+                indicator = true;
+                indicator-radius = 100;
+                indicator-thickness = 7;
+                #effect-blur = "7x5";
+                grace = 0;
+                fade-in = 0.2;
+
+                font-size = 32;
+              };
+            };
 
             programs.niri = {
               settings = {
@@ -178,12 +214,13 @@ in
 
                 binds = {
                   "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
-                  "Super+Return".action.spawn = [ "${termCmd}" ];
-                  "Super+Shift+Return".action.spawn = [ "${getBin pkgs.foot}/bin/footclient" "--client-environment" ];
-                  "super+Shift+E".action.spawn = [ "noctalia-shell ipc call launcher emoji" ];
+                  "Mod+Return".action.spawn = [ "${termCmd}" ];
+                  "Mod+Shift+Return".action.spawn = [ "${getBin pkgs.foot}/bin/footclient" "--client-environment" ];
+                  "Mod+Shift+E".action.spawn = [ "noctalia-shell ipc call launcher emoji" ];
                   # "Mod+D".action.spawn = "fuzzel";
                   #"Mod+D".action.spawn-sh = "${noctaliaIPC} launcher toggle";
-                  #"Super+Alt+L".action.spawn-sh = "${noctaliaIPC} lockScreen lock";
+                  #"Mod+Alt+L".action.spawn-sh = "${noctaliaIPC} lockScreen lock";
+                  "Mod+Alt+L".action.spawn = [ "loginctl" "lock-session" ];
 
                   # handing media via lowLevelXF86keys and actkbd
                   #"XF86AudioRaiseVolume" = {
