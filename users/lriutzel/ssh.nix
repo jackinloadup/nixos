@@ -59,6 +59,9 @@ _: {
             UserKnownHostsFile = "/dev/null";
           };
         };
+        # Get ssh to use dtcc keys and such when in that repo
+        # ~/Projects/obsidian-systems/dtcc contains all repos that require this
+        # treatment
         "dtcc github" = {
           match = ''Host github.com exec "pwd | grep ~/Projects/obsidian-systems/dtcc"'';
           forwardAgent = false;
@@ -71,6 +74,7 @@ _: {
             IdentitiesOnly = "yes";
           };
         };
+        # Normal github use-case. Check not in repo as a precaution
         "github github.com" = {
           match = ''Host github.com !exec "pwd | grep ~/Projects/obsidian-systems/dtcc"'';
           hostname = "github.com";
