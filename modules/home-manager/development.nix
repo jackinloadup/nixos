@@ -187,9 +187,58 @@ in
     settings = {
       skin = "skin"; # use stylix skin
       # following doesn't work for some reason
-      #logoless = true;
-      #noIcons = false;
       #enableMouse = true;
+      k9s = {
+        ui = {
+          headless = false;
+          logoless = true;
+          #noIcons = false; # default true
+        };
+        skipLatestRevCheck = true;
+        # doesn't work due to https://github.com/derailed/k9s/issues/625
+        #keyBindings = {
+        #  faults = {
+        #    toggle = "Alt-F";
+        #  };
+        #};
+      };
+    };
+    hotKeys = {
+      alt-1 = {
+        shortCut = "Alt-1";
+        description = "Show pods";
+        command = "pods";
+      };
+      alt-2 = {
+        shortCut = "Alt-2";
+        description = "Show deployments";
+        command = "dp";
+      };
+      alt-3 = {
+        shortCut = "Alt-3";
+        description = "Show nodes";
+        command = "nodes";
+      };
+      alt-4 = {
+        shortCut = "Alt-4";
+        description = "Show services";
+        command = "services";
+      };
+      alt-5 = {
+        shortCut = "Alt-5";
+        description = "Show Ingress";
+        command = "ingress";
+      };
+      alt-6 = {
+        shortCut = "Alt-6";
+        description = "Show Pulses";
+        command = "pulses";
+      };
+      alt-7 = {
+        shortCut = "Alt-7";
+        description = "Show Events";
+        command = "events";
+      };
     };
   };
 
