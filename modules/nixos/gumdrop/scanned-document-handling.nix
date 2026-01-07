@@ -14,6 +14,12 @@ in
     gumdrop.storageServer.backup = true;
     gumdrop.storageServer.printerScanShare = true;
 
+    # Create subdirectories for different services
+    systemd.tmpfiles.rules = [
+      "d /mnt/gumdrop/printerScanShare/paperless 2775 serviceftp serviceftp - -"
+      "d /mnt/gumdrop/printerScanShare/immich 2775 serviceftp serviceftp - -"
+    ];
+
     #TODO must define gid and uid
     users.users.serviceftp = {
       isSystemUser = true;
@@ -64,7 +70,7 @@ in
       address = "127.0.0.1";
       #address = "paperless.home.lucasr.com";
       mediaDir = "/mnt/gumdrop/backup/paperless";
-      consumptionDir = "/mnt/gumdrop/printerScanShare";
+      consumptionDir = "/mnt/gumdrop/printerScanShare/paperless";
       #exporter = {
       #  enable = true;
       #  #directory = "/mnt/gumdrop/backup/paperless";

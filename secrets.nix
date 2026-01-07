@@ -72,6 +72,7 @@ in
   "secrets/services/nix/signing-key.pub.age".publicKeys = servers;
 
   "secrets/services/immich/secretsFile".publicKeys = servers;
+  "secrets/services/immich/api-key.age".publicKeys = servers;
 
   "secrets/commonPass.age".publicKeys = all;
 

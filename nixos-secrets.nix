@@ -78,6 +78,12 @@ in
         group = "immich";
       };
 
+      immich-api-key = mkIf (elem hostname servers) {
+        file = ./secrets/services/immich/api-key.age;
+        owner = "immich";
+        group = "immich";
+      };
+
       namecheap-api-user = mkIf (elem hostname servers) {
         file = ./secrets/services/namecheap/api-user.age;
 
