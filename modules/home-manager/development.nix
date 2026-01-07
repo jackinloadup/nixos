@@ -5,6 +5,7 @@
 }:
 let
   inherit (lib) mkIf;
+  #inherit (pkgs) writeShellApplication;
   settings = import ../../settings;
   inherit (nixosConfig.machine) sizeTarget;
   ifGraphical = sizeTarget > 1;
@@ -12,6 +13,7 @@ in
 {
   # TO REVIEW https://www.brendangregg.com/blog/2024-03-24/linux-crisis-tools.html
   home.packages = mkIf ifGraphical [
+    #pkgs.act # github local action runner
     pkgs.gdb # debugger
     pkgs.hyperfine
     pkgs.valgrind
@@ -28,6 +30,12 @@ in
     pkgs.graphviz
     pkgs.rustscan # faster than nmap port scanner
 
+    #pkgs.kubectl-neat
+    #pkgs.kubectl-tree
+    #pkgs.kubelogin
+    #pkgs.kubelogin-oidc
+    #pkgs.kubernetes-helm
+
     #    # TUI tools but loading if graphical
     #    mqttui # mqtt tui
 
@@ -37,6 +45,32 @@ in
     #    mdr # tui viewer
     #    # mdv # tui viewer not in nixpkgs yet
     #pkgs.mr # multi repo
+    #(writeShellApplication {
+    #    name = "kctx";
+    #    runtimeinputs = [ pkgs.kubectl pkgs.fzf ];
+    #    text = ''
+    #      kubectl config get-contexts -o name \
+    #      | fzf --height=10 \
+    #      | xargs kubectl config use-context
+    #    '';
+    #  })
+    #  (writeShellApplication {
+    #    name = "kctn";
+    #    runtimeInputs = [ pkgs.kubectl pkgs.fzf ];
+    #    text = ''
+    #      kubectl get namespaces -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' \
+    #        | fzf --height=10 \
+    #        | xargs kubectl config set-context --current --namespace
+    #    '';
+    #  })
+    #  (writeShellApplication {
+    #    name = "prod";
+    #    runtimeInputs = [ ];
+    #    text = ''
+    #      tmux new -ds prod 2>/dev/null  # create if doesn't exist
+    #      exec tmux attach -t prod
+    #    '';
+    #  })
   ];
 
   home.file.".gdbinit".text = ''
@@ -238,6 +272,21 @@ in
         shortCut = "Alt-7";
         description = "Show Events";
         command = "events";
+      };
+    };
+    plugins = {
+      # https://github.com/derailed/k9s/blob/master/plugins/debug-container.yaml
+      debug = {
+        shortCut = "Shift-D";
+        description = "Add debug container";
+        dangerous = true;
+        scopes = [ "containers" ];
+        command = "bash";
+        background = false;
+        args = [
+          "-c"
+          "kubectl debug -it --context $CONTEXT -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.13 --share-processes -- bash"
+        ];
       };
     };
   };
