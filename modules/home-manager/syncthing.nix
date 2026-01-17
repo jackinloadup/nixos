@@ -4,6 +4,12 @@
 , ...
 }: {
   config = lib.mkIf config.services.syncthing.enable {
+    # Use --home to match the path that syncthing-init expects
+    # (home-manager hardcodes syncthing_dir to $XDG_STATE_HOME/syncthing)
+    services.syncthing.extraOptions = [
+      "--home=${config.xdg.stateHome}/syncthing"
+    ];
+
     xdg.desktopEntries.syncthing = {
       name = "Syncthing";
       genericName = "Syncthing";
@@ -16,11 +22,5 @@
       ];
     };
 
-    services.syncthing = {
-      extraOptions = [
-        "--config=${config.xdg.configHome}/syncthing"
-        "--data=${config.xdg.dataHome}/syncthing"
-      ];
-    };
   };
 }
