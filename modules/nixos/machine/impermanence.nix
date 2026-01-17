@@ -17,6 +17,17 @@ in
   options.machine.impermanence = mkEnableOption "Enable impermanence";
 
   config = mkIf config.machine.impermanence {
+    # Fix /var/lib/private permissions before impermanence bind mounts
+    # See: https://github.com/nix-community/impermanence/issues/254
+    system.activationScripts.fixPrivatePermissions = {
+      text = ''
+        if [ -d /persist/var/lib/private ]; then
+          chmod 0700 /persist/var/lib/private
+        fi
+      '';
+      deps = [ ];
+    };
+
     programs.fuse.userAllowOther = true;
 
     environment.persistence = {
