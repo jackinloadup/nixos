@@ -30,6 +30,5 @@
       applications = 0.95;
     };
 
-    targets.plymouth.showLogo = false;
   };
 }

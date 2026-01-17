@@ -47,7 +47,7 @@ in
 
       plymouth = {
         enable = mkDefault true;
-        theme = "stylix-bg";
+        theme = "stylix-spinfinity";
         #theme = mkDefault "colorful";
 
         #themePackages = [ pkgs.adi1090x-plymouth-themes ];
