@@ -2,7 +2,8 @@
 {
   stylix = {
     enable = lib.mkDefault true;
-    image = lib.mkDefault "${pkgs.gnome-backgrounds}/share/backgrounds/gnome/symbolic-d.png";
+    #image = lib.mkDefault "${pkgs.gnome-backgrounds}/share/backgrounds/gnome/symbolic-d.png";
+    image = lib.mkDefault "${pkgs.budgie-backgrounds}/share/backgrounds/budgie/ocean-waves.jpg";
     base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     fonts = {
       serif = {
@@ -28,5 +29,7 @@
       popups = 1.0;
       applications = 0.95;
     };
+
+    targets.plymouth.showLogo = false;
   };
 }

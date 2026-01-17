@@ -1,5 +1,4 @@
 { lib
-, pkgs
 , config
 , ...
 }:
@@ -48,11 +47,14 @@ in
 
       plymouth = {
         enable = mkDefault true;
-        themePackages = [ pkgs.adi1090x-plymouth-themes ];
+        theme = "stylix-bg";
+        #theme = mkDefault "colorful";
+
+        #themePackages = [ pkgs.adi1090x-plymouth-themes ];
         # I thought this might be delaying the boot but after
         # going back to basic it was pretty much the same
         #theme = "deus_ex";
-        theme = mkDefault "colorful";
+        #theme = mkDefault "colorful";
         # spaces are underscore
         # abstract-rings
         # blockchain

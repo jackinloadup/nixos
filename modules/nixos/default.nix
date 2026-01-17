@@ -47,6 +47,7 @@ let
     inputs.stylix.nixosModules.stylix
     ./stylix.nix
     ./control-monitor-backlight.nix
+    ./plymouth-stylix-bg.nix
   ];
 in
 {
