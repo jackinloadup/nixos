@@ -45,6 +45,7 @@ let
 
   guiModule.imports = [
     inputs.stylix.nixosModules.stylix
+    ./stylix.nix
     ./control-monitor-backlight.nix
   ];
 in

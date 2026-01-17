@@ -25,10 +25,6 @@ in
           #  "space-bar@luchrioh"
         ];
       };
-      "org/gnome/desktop/background" = {
-        picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/keys-l.webp";
-        picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/keys-d.webp";
-      };
       "org/gnome/simple-scan" = {
         document-type = "text";
         #paper-height = 2794;
