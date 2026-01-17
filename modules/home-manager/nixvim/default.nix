@@ -492,8 +492,14 @@
         telescope = {
           enable = true;
           settings = {
-            pickers.find_files = {
-              hidden = true;
+            pickers = {
+              find_files = {
+                hidden = true;
+                no_ignore = true;
+              };
+              live_grep = {
+                additional_args.__raw = ''function() return { "--hidden", "--no-ignore" } end'';
+              };
             };
           };
           keymaps = {
