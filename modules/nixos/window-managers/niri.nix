@@ -26,7 +26,8 @@ in
           xcursor_theme = config.gtk.cursorTheme.name;
           termCmd = "${getExe pkgs.kitty}";
           #menu = "${getExe pkgs.j4-dmenu-desktop} --no-generic --term='${termCmd}' --dmenu='${getExe pkgs.bemenu} --ignorecase --list 10 --center --border-radius 12 --width-factor \"0.2\" --border 2 --margin 20 --fixed-height --prompt \"\" --prefix \">\" --line-height 20 --ch 15'";
-          menu = "${getExe flake.inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default} ipc call launcher toggle";
+          noctalia-shell = "${getExe flake.inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}";
+          menu = "${noctalia-shell} ipc call launcher toggle";
         in
         {
           imports = [ flake.inputs.niri.homeModules.niri ];
@@ -45,14 +46,14 @@ in
               events = [
                 { event = "lock"; command = "${getExe pkgs.swaylock-effects} -f"; }
                 { event = "before-sleep"; command = "${getExe pkgs.swaylock-effects} -f"; }
-                { event = "after-resume"; command = "niri msg action power-on-monitors"; }
+                { event = "after-resume"; command = "${getExe pkgs.niri} msg action power-on-monitors"; }
               ];
               timeouts = [
                 { timeout = 300; command = "${getExe pkgs.swaylock-effects} -f"; }
                 {
                   timeout = 360;
-                  command = "niri msg action power-off-monitors";
-                  resumeCommand = "niri msg action power-on-monitors";
+                  command = "${getExe pkgs.niri} msg action power-off-monitors";
+                  resumeCommand = "${getExe pkgs.niri} msg action power-on-monitors";
                 }
               ];
             };
@@ -216,7 +217,7 @@ in
                   "Mod+Shift+Slash".action.show-hotkey-overlay = [ ];
                   "Mod+Return".action.spawn = [ "${termCmd}" ];
                   "Mod+Shift+Return".action.spawn = [ "${getBin pkgs.foot}/bin/footclient" "--client-environment" ];
-                  "Mod+Shift+E".action.spawn = [ "noctalia-shell ipc call launcher emoji" ];
+                  "Mod+Shift+E".action.spawn = [ "${noctalia-shell}" "ipc" "call" "launcher" "emoji" ];
                   # "Mod+D".action.spawn = "fuzzel";
                   #"Mod+D".action.spawn-sh = "${noctaliaIPC} launcher toggle";
                   #"Mod+Alt+L".action.spawn-sh = "${noctaliaIPC} lockScreen lock";
