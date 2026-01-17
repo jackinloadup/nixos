@@ -405,9 +405,13 @@ in
             xdg = {
               portal = {
                 enable = true;
-                extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+                extraPortals = [
+                  pkgs.xdg-desktop-portal-gtk
+                  pkgs.xdg-desktop-portal-gnome
+                ];
                 config.niri = {
-                  default = [ "gnome" ];
+                  default = [ "gtk" ];
+                  # GNOME portal only for ScreenCast (needed for screen sharing)
                   "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
                 };
               };

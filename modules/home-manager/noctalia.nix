@@ -10,6 +10,8 @@ in
   imports = [ flake.inputs.noctalia.homeModules.default ];
 
   config = mkIf config.programs.noctalia-shell.enable {
+    # @NOTE Gnome portal causes 14 second delay with noctalia-shell
+
     programs.noctalia-shell = {
       systemd.enable = true;
 
