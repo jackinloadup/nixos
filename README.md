@@ -1,89 +1,124 @@
-# Documentation
-Personal home lab nixos setup exposed as a flake.
+# NixOS Configuration
 
-## Nixos Links
- - Local Manual `man configuration.nix`
- - [Remote Manual](https://nixos.org/manual/nixos/stable/)
- - [Wiki](https://wiki.nixos.org/wiki/NixOS_Wiki)
- - [Package Search](https://search.nixos.org/packages?channel=22.11&from=0&size=50&sort=relevance&type=packages&query=)
- - [Options Search](https://search.nixos.org/packages?channel=22.11&from=0&size=50&sort=relevance&type=packages&query=)
- - [nixos/nixpkgs repo](https://github.com/NixOS/nixpkgs/)
+Personal home lab NixOS setup exposed as a flake.
 
+## Quick Start
+
+```bash
+# Enter development shell
+nix develop
+
+# Build a machine
+nix build .#nixosConfigurations.<machine>.config.system.build.toplevel
+
+# Deploy to local machine
+sudo nixos-rebuild switch --flake .#<machine>
+
+# Deploy to remote machine
+nixos-rebuild switch --flake .#<machine> --target-host root@<hostname>
+```
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Repository Structure](docs/repository-structure.md) | Directory layout and key files |
+| [Modules](docs/modules.md) | Available nixosModules |
+| [Machines](docs/machines.md) | Machine overview and VPN assignments |
+| [Secrets](docs/secrets.md) | Agenix/ragenix secrets management |
+| [Development](docs/development.md) | Development workflow and tools |
+| [Profiles](docs/profiles.md) | Disk layouts and hardware profiles |
+| [Scripts](docs/scripts.md) | Helper scripts |
+| [Upgrade Notes](docs/upgrade-notes.md) | Service upgrade procedures |
+| [New Machine](NEW-MACHINE.md) | Adding a new machine |
+
+## NixOS Resources
+
+- Local Manual: `man configuration.nix`
+- [NixOS Manual](https://nixos.org/manual/nixos/stable/)
+- [NixOS Wiki](https://wiki.nixos.org/wiki/NixOS_Wiki)
+- [Package Search](https://search.nixos.org/packages)
+- [Options Search](https://search.nixos.org/options)
+- [nixos/nixpkgs repo](https://github.com/NixOS/nixpkgs/)
 
 ## Home-Manager
- - Local Manual `man home-configuration.nix`
- - [Remote](https://nix-community.github.io/home-manager/options.html)
- - [Repo](https://github.com/nix-community/home-manager)
 
+- Local Manual: `man home-configuration.nix`
+- [Options Reference](https://nix-community.github.io/home-manager/options.html)
+- [Repository](https://github.com/nix-community/home-manager)
 
-## Other nix projects in use
- - [impermanence](https://github.com/nix-community/impermanence/)
- - [disko](https://github.com/nix-community/disko)
- - [nixos-hardware](https://github.com/NixOS/nixos-hardware)
- - [nixos-facter](https://github.com/nix-community/nixos-facter)
- - [stylix](https://github.com/nix-community/stylix)
- - [nix-ld](https://github.com/nix-community/nix-ld)
- - [nixvim](https://github.com/nix-community/nixvim)
- - [ucodenix](https://github.com/e-tho/ucodenix/)
- - [nix-flatpak](https://github.com/e-tho/ucodenix/)
+## Flake Inputs
+
+Projects used in this configuration:
+
+| Project | Purpose |
+|---------|---------|
+| [impermanence](https://github.com/nix-community/impermanence/) | Ephemeral root filesystem |
+| [disko](https://github.com/nix-community/disko) | Declarative disk partitioning |
+| [nixos-hardware](https://github.com/NixOS/nixos-hardware) | Hardware quirks |
+| [nixos-facter](https://github.com/nix-community/nixos-facter) | Hardware detection |
+| [stylix](https://github.com/nix-community/stylix) | System-wide theming |
+| [nix-ld](https://github.com/nix-community/nix-ld) | Run unpatched binaries |
+| [nixvim](https://github.com/nix-community/nixvim) | Neovim configuration |
+| [ucodenix](https://github.com/e-tho/ucodenix/) | AMD microcode updates |
+| [nix-flatpak](https://github.com/gmodena/nix-flatpak) | Declarative Flatpak |
+| [ragenix](https://github.com/yaxitech/ragenix) | Secrets management |
 
 ## Services
- - [Home Assistant](https://www.home-assistant.io/) - Home automation
- - [Murmur](https://mumble.info/) - Mumble audio chat
- - [Frigate](https://github.com/blakeblackshear/frigate) - Camera NVR
- - [Adguard Home](https://adguard.com) - Network adblock
- - [immich](https://immich.app/) - Family images
- - [wireguard](https://www.wireguard.com/) - Family VPN
- - [syncthing](https://syncthing.net/) - File sync for backup
- - [paperless-ngx](https://docs.paperless-ngx.com/) - Document manager my printer is connected to
- - [go2rtc](https://github.com/AlexxIT/go2rtc) - Camera Streaming
- - [smokeping](https://oss.oetiker.ch/smokeping/) - service monitor
- - [nextcloud](https://nextcloud.com/) - Documents
- - [collabora](https://www.collabora.com/) - multi user document editing
 
-# Make install iso
- - `nix build github:jackinloadup/nixos#install-iso`
+Services running on the homelab:
 
-# Install 2.0
-- (new machine) boot nixos iso via PXE or usb
-- (new machine) set password for nixos user `passwd`
-- (new machine) get ip `ip addr`
-- (new machine) check disk `lsblk`
-- (new machine) install keys `curl "https://github.com/jackinloadup.keys" > ~/.ssh/authorized_keys`
-- (new machine) get factor.json `sudo nix run --option experimental-features "nix-command flakes" nixpkgs#nixos-facter -- -o facter.json`
-- (existing machine) add disk encryption key into /tmp/disk.key
-- (existing machine) nix run github:nix-community/nixos-anywhere -- --build-on local --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --disk-encryption-keys /tmp/disk.key /tmp/disk.key nixos@10.16.1.159
+| Service | Description |
+|---------|-------------|
+| [Home Assistant](https://www.home-assistant.io/) | Home automation |
+| [Frigate](https://github.com/blakeblackshear/frigate) | Camera NVR |
+| [Adguard Home](https://adguard.com) | Network ad blocking |
+| [immich](https://immich.app/) | Photo management |
+| [Nextcloud](https://nextcloud.com/) | File sync and sharing |
+| [Collabora](https://www.collabora.com/) | Document editing |
+| [Vaultwarden](https://github.com/dani-garcia/vaultwarden) | Password manager |
+| [Murmur](https://mumble.info/) | Voice chat (Mumble) |
+| [WireGuard](https://www.wireguard.com/) | VPN |
+| [Syncthing](https://syncthing.net/) | File synchronization |
+| [Paperless-ngx](https://docs.paperless-ngx.com/) | Document management |
+| [go2rtc](https://github.com/AlexxIT/go2rtc) | Camera streaming |
+| [Smokeping](https://oss.oetiker.ch/smokeping/) | Network monitoring |
+| [Jellyfin](https://jellyfin.org/) | Media server |
 
-## test with vm. Must comment out or disable all encryption due to vm-test not supporting disk key transfer
-- (existing machine) nix run github:nix-community/nixos-anywhere -- --flake ~/Projects/nixos-config/master#lyza -i ~/.ssh/id_rsa --vm-test
+## Install ISO
 
+Build a custom install ISO:
 
+```bash
+nix build .#install-iso
+```
 
-If mounts didn't come up immediately, re apply tmpfiles
-`sudo systemctl restart systemd-tmpfiles-resetup.service`
+## Installation
 
-## Install 1.0
- - boot nixos-install iso
- - format disk using [disko](https://github.com/nix-community/disko/blob/master/docs/quickstart.md)
-   - Prepare disk layout config
-      - Copy layout over: `scp ./profile/disks/disko-laptop-1.nix#TBD <target>:/tmp/disko-config.nix`
-      - Find disk name: `sudo fdisk -l`
-      - Place disk in device variable `vim /tmp/disk-config.nix`
-   - Create temp file with the password which will be applied to the disk
-      - `vim /tmp/disk.key`
-   - Perform the format
-      - `sudo nix run github:nix-community/disko -- --mode disko /tmp/disko-config.nix`
-   - Follow [Complete the NixOS
-     installation](https://github.com/nix-community/disko/blob/master/docs/quickstart.md#step-7-complete-the-nixos-installation)
-   - Before running `nixos-install`
-      - Set
-        [networking.hostId](https://search.nixos.org/options?channel=23.05&show=networking.hostId&from=0&size=50&sort=relevance&type=packages&query=networking.hostId)
-      - Add the following config to enable ssh ```
-        services.openssh.enable = true;
-        services.openssh.settings.PermitRootLogin = "yes";
-      ```
+See [NEW-MACHINE.md](NEW-MACHINE.md) for detailed instructions.
 
-- reboot
-- Apply machine config from local donor build machine
-  - `NIX_SSHOPTS="-t" nixos-rebuild boot --flake ~/Projects/nixos-config/master#zen --target-host root@zen`
+### Quick Install with nixos-anywhere
 
+```bash
+# Boot target with NixOS ISO, set password, get IP
+# From existing machine:
+nix run github:nix-community/nixos-anywhere -- \
+  --build-on local \
+  --flake .#<machine> \
+  --disk-encryption-keys /tmp/disk.key /tmp/disk.key \
+  nixos@<target-ip>
+```
+
+### Test in VM
+
+```bash
+# Note: Disable encryption for VM testing
+nix run github:nix-community/nixos-anywhere -- --flake .#<machine> --vm-test
+```
+
+### Troubleshooting
+
+If mounts don't come up after install:
+```bash
+sudo systemctl restart systemd-tmpfiles-resetup.service
+```

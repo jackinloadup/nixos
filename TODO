@@ -1,7 +1,9 @@
 # in progress
 - syncthing with managed secrets
-- bitwarden/vaultwarden
+- bitwarden/vaultwarden backup validator
 - k9s with ctrl-z bg # can't resolve due to https://github.com/derailed/k9s/issues/625
+- change freenas boot disk
+- remove freenas small pool
 
 # proposed
 - clamav - OnAccessScan
