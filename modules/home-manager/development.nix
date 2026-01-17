@@ -156,6 +156,11 @@ in
         #protocol.keybase.allow = "always";
         #credential.helper = "store --file ~/.git-credentials";
         rebase.autosquash = true;
+        # When set to true, Git will automatically create a temporary stash before
+        # starting a rebase operation and attempt to apply it afterward. Be mindful
+        # that the post-rebase application might introduce conflicts if the stashed
+        # work overlaps significantly with the fetched changes.
+        rebase.autostash = true;
         "url \"git@github.com:\"".insteadOf = "https://github.com/";
       };
 
