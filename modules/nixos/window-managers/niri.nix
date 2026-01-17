@@ -114,7 +114,8 @@ in
                   # }
                   #{sh = "${noctaliaInit}/bin/noctalia-init";}
                   #{sh = "systemctl restart --user kanshi.service";}
-                  { sh = "${pkgs.wpaperd}/bin/wpaperd --daemon"; }
+                  # use systemd --user wpaperd
+                  #{ sh = "${pkgs.wpaperd}/bin/wpaperd --daemon"; }
                 ];
 
                 hotkey-overlay.skip-at-startup = true;
