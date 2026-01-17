@@ -238,38 +238,38 @@ in
       };
     };
     hotKeys = {
-      alt-1 = {
-        shortCut = "Alt-1";
+      ctrl-1 = {
+        shortCut = "Ctrl-1";
         description = "Show pods";
         command = "pods";
       };
-      alt-2 = {
-        shortCut = "Alt-2";
+      ctrl-2 = {
+        shortCut = "Ctrl-2";
         description = "Show deployments";
         command = "dp";
       };
-      alt-3 = {
-        shortCut = "Alt-3";
+      ctrl-3 = {
+        shortCut = "Ctrl-3";
         description = "Show nodes";
         command = "nodes";
       };
-      alt-4 = {
-        shortCut = "Alt-4";
+      ctrl-4 = {
+        shortCut = "Ctrl-4";
         description = "Show services";
         command = "services";
       };
-      alt-5 = {
-        shortCut = "Alt-5";
+      ctrl-5 = {
+        shortCut = "Ctrl-5";
         description = "Show Ingress";
         command = "ingress";
       };
-      alt-6 = {
-        shortCut = "Alt-6";
+      ctrl-6 = {
+        shortCut = "Ctrl-6";
         description = "Show Pulses";
         command = "pulses";
       };
-      alt-7 = {
-        shortCut = "Alt-7";
+      ctrl-7 = {
+        shortCut = "Ctrl-7";
         description = "Show Events";
         command = "events";
       };
