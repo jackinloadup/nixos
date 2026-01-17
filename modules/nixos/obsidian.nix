@@ -19,7 +19,7 @@ in
         programs.claude-code.enable = true;
         programs.k9s.enable = true; # Kubernetes CLI To Manage Your Clusters In Style
 
-        programs.zoom-us.enable = false; #  didn't work with niri
+        programs.zoom-us.enable = true; #  didn't work with niri
         programs.firefox.profiles."${config.home.username}".extensions.packages = [
           # automatically select to use zoom in browser
           pkgs.nur.repos.rycee.firefox-addons.zoom-redirector
