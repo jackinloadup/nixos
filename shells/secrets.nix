@@ -8,6 +8,8 @@ pkgs.mkShell {
     pkgs.wireguard-tools
     pkgs.ragenix
     pkgs.age
+    pkgs.libargon2 # for vaultwarden - https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
+    pkgs.openssl # for vaultwarden
   ];
   #NIX_LD_LIBRARY_PATH = with pkgs; nixpkgs.lib.makeLibraryPath [
   #  stdenv.cc.cc

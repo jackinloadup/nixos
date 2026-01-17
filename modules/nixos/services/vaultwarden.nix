@@ -8,13 +8,12 @@ in
   config = mkIf cfg.enable {
     services = {
       vaultwarden = {
-        backupDir = "/var/lib/vaultwarden";
-        #environmentFile = secrets;
+        backupDir = "/mnt/gumdrop/backup/vaultwarden";
+        configureNginx = true;
+        domain = "vaultwarden.lucasr.com";
+        environmentFile = config.age.secrets.vaultwarden-env.path;
         config = {
-          DOMAIN = "https://vaultwarden.lucasr.com";
           SIGNUPS_ALLOWED = false;
-          ROCKET_ADDRESS = "127.0.0.1";
-          ROCKET_PORT = 8222;
           ROCKET_LOG = "critical";
           #    PASSWORD_ITERATIONS = 600000;
 
@@ -28,14 +27,14 @@ in
       };
 
       nginx.virtualHosts."vaultwarden.lucasr.com" = {
-        forceSSL = true;
+        #forceSSL = true;
         enableACME = true;
         acmeRoot = null; # Use DNS Challenege
 
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.config.ROCKET_PORT}/";
-          proxyWebsockets = true;
-        };
+        #locations."/" = {
+        #  proxyPass = "http://127.0.0.1:${toString cfg.config.ROCKET_PORT}/";
+        #  proxyWebsockets = true;
+        #};
       };
     };
   };

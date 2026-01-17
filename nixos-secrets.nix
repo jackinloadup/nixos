@@ -99,6 +99,12 @@ in
         group = "nextcloud";
       };
 
+      vaultwarden-env = mkIf (elem hostname servers) {
+        file = ./secrets/services/vaultwarden/env.age;
+        owner = "vaultwarden";
+        group = "vaultwarden";
+      };
+
       nix-signing-key = mkIf (elem hostname servers) {
         file = ./secrets/services/nix/signing-key.age;
       };
