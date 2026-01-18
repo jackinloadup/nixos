@@ -89,7 +89,7 @@ in
         ++ optionals config.programs.zsh.enable [ ".local/state/zsh" ]
         ++ optionals config.services.syncthing.enable [
           ".local/share/syncthing"
-          ".config/syncthing"
+          ".local/state/syncthing"
         ];
 
       #files =
