@@ -75,6 +75,7 @@ in
         services.ssh-agent.enable = true;
 
         home.packages = [
+          pkgs.opencode # AI coding agent for the terminal
           pkgs.isd # systemd tui
 
           #pkgs.inxi # cli extensive system information

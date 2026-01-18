@@ -17,21 +17,19 @@
         "llama3.2:1b"
         "codellama"
         "gemma2:9b"
-        #"gemma2:27b" # too big
-        "mistral"
-        "moondream"
-        "starling-lm"
-        "solar"
-        "llava"
-        "llama2-uncensored"
-        "phi4"
-        "phi3"
+        "dolphin3"
+        "ministral-3:8b"
+        "mistral:7b"
+        "deepseek-coder-v2:16b"
+        "qwen2.5-coder:32b-q4_K_M"
       ];
 
       package = pkgs.unstable.ollama;
 
       environmentVariables = {
         OLLAMA_ORIGINS = "*";
+        OLLAMA_NUM_GPU = "999"; # Use max GPU layers possible
+        OLLAMA_GPU_MEMORY_FRACTION = "0.9"; # Use 90% of VRAM
       };
     };
 

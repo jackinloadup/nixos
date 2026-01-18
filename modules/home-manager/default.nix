@@ -21,6 +21,7 @@
           ./task-warrior
           ./zoom.nix
           ./claude.nix
+          ./opencode.nix
         ];
       };
       tui.imports = [
