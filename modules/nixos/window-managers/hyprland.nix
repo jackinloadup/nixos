@@ -3,7 +3,7 @@
 , ...
 }:
 let
-  inherit (lib) getBin getExe mkIf;
+  inherit (lib) getBin getExe mkIf mkForce;
 in
 {
   config = {
@@ -193,7 +193,7 @@ in
                 # force over stylix
                 background = lib.mkForce [{
                   #  monitor = "";
-                  path = "/home/lriutzel/Pictures/background.jpg";
+                  path = mkForce "/home/lriutzel/Pictures/background.jpg";
                   #  color = "rgba(25, 20, 20, 1.0)";
                   #  blur_passes = 1;
                   #  blur_size = 0;

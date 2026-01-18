@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }:
+let
+  inherit (lib) mkForce;
+in
+{
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [
@@ -28,7 +32,7 @@
     "org/gnome/desktop/background" =
       let
         #file = "file:///run/current-system/sw/share/backgrounds/gnome/pills-d.webp";
-        file = "file:///persist/home/criutzel/Pictures/wallpaper/heyastrovoi.jpg";
+        file = mkForce "file:///persist/home/criutzel/Pictures/wallpaper/heyastrovoi.jpg";
       in
       {
         picture-uri = file;

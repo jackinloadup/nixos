@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault mkForce;
 in
 {
   config = {
@@ -62,7 +62,7 @@ in
               enable = true;
               package = pkgs.swaylock-effects;
               settings = {
-                image = "${config.home.homeDirectory}/Pictures/background.jpg";
+                image = mkForce "${config.home.homeDirectory}/Pictures/background.jpg";
                 clock = true;
                 timestr = "%I:%M";
                 datestr = "%A, %B %d";
