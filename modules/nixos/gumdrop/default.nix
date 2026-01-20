@@ -35,7 +35,7 @@ in
     ./frigate.nix
     ./homepage.nix
     ./immich.nix
-    ./nebula-lighthouse.nix
+    ./nebula.nix
     ./murmur.nix
     ./printer-scanner.nix
     ./pihole.nix

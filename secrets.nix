@@ -1,6 +1,6 @@
 let
   selfLib = import ./lib/secrets.nix { };
-  inherit (selfLib) machines hostHasService smachines shostHasService;
+  inherit (selfLib) machines hostHasService smachines shostHasService sdevices;
   inherit (builtins) filter readFile pathExists;
   inherit ((import <nixpkgs> { }).pkgs) lib;
   inherit (lib) mergeAttrsList replaceStrings;
@@ -38,6 +38,19 @@ let
   wgHosts = filter (host: shostHasService host "wg-vpn") smachines;
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
 
+  mkNebulaHost = host: {
+    "secrets/machines/${host}/nebula/host.crt.age".publicKeys = users ++ (sshKeyMap [ host ]);
+    "secrets/machines/${host}/nebula/host.key.age".publicKeys = users ++ (sshKeyMap [ host ]);
+  };
+  nebulaHosts = filter (host: shostHasService host "nebula") smachines;
+  nebulaHostsConfig = mergeAttrsList (map mkNebulaHost nebulaHosts);
+
+  # Nebula CA - key only accessible by users, cert accessible by all machines
+  nebulaCAConfig = {
+    "secrets/services/nebula/ca.key.age".publicKeys = users;
+    "secrets/services/nebula/ca.crt.age".publicKeys = all;
+  };
+
   mkTorHost = host: {
     "secrets/machines/${host}/tor-service/hostname.age".publicKeys = users ++ (sshKeyMap [ host ]);
     "secrets/machines/${host}/tor-service/hs_ed25519_public_key.age".publicKeys = all;
@@ -57,6 +70,12 @@ let
   };
   initSshdHosts = filter (host: shostHasService host "init-sshd") smachines;
   initSshdHostsConfig = mergeAttrsList (map mkInitSshdHost initSshdHosts);
+
+  # Device certificates (phones, external clients) - only users can decrypt
+  mkDeviceCert = device: {
+    "secrets/devices/${device}/host.crt.age".publicKeys = users;
+  };
+  devicesConfig = mergeAttrsList (map mkDeviceCert sdevices);
 in
 {
   "secrets/services/namecheap/api-key.age".publicKeys = servers;
@@ -92,7 +111,10 @@ in
   "secrets/users/briutzel/hashed-password.age".publicKeys = all;
 }
 // wgHostsConfig
+// nebulaHostsConfig
+// nebulaCAConfig
 // torHostsConfig
 // sshdHostsConfig
-  // initSshdHostsConfig
-#// mkWgHost "mike-laptop"
+// initSshdHostsConfig
+// devicesConfig
+  // mkWgHost "mike-laptop"

@@ -63,6 +63,9 @@ in
       vpn.server.endpoint = "vpn.lucasr.com:51820";
       vpn.client.enable = false;
       vpn.client.ip = "10.100.0.9/24";
+
+      nebula.client.enable = false;
+      nebula.client.ip = "10.101.0.9/24";
     };
 
     virtualisation = rec {

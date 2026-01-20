@@ -19,6 +19,32 @@ let
   wgHosts = filter (host: shostHasService host "wg-vpn") smachines;
   wgHostsConfig = mergeAttrsList (map mkWgHost wgHosts);
 
+  mkNebulaHost = host: {
+    "nebula-${host}-cert" = mkIf (hostname == host) {
+      file = ./secrets/machines/${host}/nebula/host.crt.age;
+      mode = "660";
+      owner = "nebula-gumdrop";
+      group = "nebula-gumdrop";
+    };
+    "nebula-${host}-key" = mkIf (hostname == host) {
+      file = ./secrets/machines/${host}/nebula/host.key.age;
+      mode = "660";
+      owner = "nebula-gumdrop";
+      group = "nebula-gumdrop";
+    };
+  };
+  nebulaHosts = filter (host: shostHasService host "nebula") smachines;
+  nebulaHostsConfig = mergeAttrsList (map mkNebulaHost nebulaHosts);
+
+  # Nebula CA cert - shared across all nebula hosts
+  nebulaCAConfig = {
+    nebula-ca = mkIf (elem hostname nebulaHosts) {
+      file = ./secrets/services/nebula/ca.crt.age;
+      owner = "nebula-gumdrop";
+      group = "nebula-gumdrop";
+    };
+  };
+
   mkTorHost = host: {
     "tor-service-${host}-hostname" = mkIf (hostname == host) {
       file = ./secrets/machines/${host}/tor-service/hostname.age;
@@ -140,6 +166,8 @@ in
     // initSshdHostsConfig
     // sshdHostsConfig
     // torHostsConfig
-    // wgHostsConfig;
+    // wgHostsConfig
+    // nebulaHostsConfig
+    // nebulaCAConfig;
   };
 }

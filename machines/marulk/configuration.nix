@@ -44,7 +44,7 @@ in
     services.searx.enable = true;
 
 
-    services.nebula.networks.gumdrop.enable = false;
+    gumdrop.nebula.lighthouse.enable = true;
 
     #networking.useNetworkd = true;
     systemd.network.enable = true;

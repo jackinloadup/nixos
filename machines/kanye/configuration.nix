@@ -57,6 +57,9 @@ in
     vpn.server.endpoint = "vpn.lucasr.com:51820";
     vpn.client.enable = true;
     vpn.client.ip = "10.100.0.5/24";
+
+    nebula.client.enable = true;
+    nebula.client.ip = "10.101.0.5/24";
   };
 
   powerManagement.cpuFreqGovernor = "powersave";
