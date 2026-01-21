@@ -151,6 +151,7 @@ in
         pull.ff = "only";
         pull.rebase = "true";
         push.default = "current";
+        push.autoSetupRemote = true;
         #push.autoSetupRemote = "current"; #broke `git push origin HEAD`
         branch.autoSetupRebase = "remote";
         #protocol.keybase.allow = "always";
