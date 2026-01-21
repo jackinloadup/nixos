@@ -13,6 +13,7 @@ pkgs.mkShell {
     pkgs.age
     pkgs.libargon2 # for vaultwarden - https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
     pkgs.openssl # for vaultwarden
+    pkgs.qrencode # for transering certificates ex qrencode -t ansiutf8 < file
     provision-secrets # generate and encrypt machine secrets
   ];
   #NIX_LD_LIBRARY_PATH = with pkgs; nixpkgs.lib.makeLibraryPath [
