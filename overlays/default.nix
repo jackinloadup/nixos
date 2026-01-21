@@ -58,7 +58,7 @@ self: super: {
   inherit (self.unstable) openrct2;
   inherit (self.unstable) obsidian;
   inherit (self.unstable) bark;
-  inherit (self.unstable) claude-code;
+  claude-code = flake.inputs.claude-code.packages.${self.stdenv.hostPlatform.system}.default;
   rtl_433-dev = super.callPackage ../packages/rtl_433-dev.nix { };
 
   ragenix = flake.inputs.ragenix.packages."x86_64-linux".default;

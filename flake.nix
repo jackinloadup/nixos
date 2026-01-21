@@ -140,6 +140,8 @@
     affinity.url = "github:mrshmllow/affinity-nix";
     niri.url = "github:sodiboo/niri-flake";
 
+    claude-code.url = "github:sadjow/claude-code-nix";
+
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -334,6 +336,10 @@
     extra-substituters = [
       "https://aseipp-nix-cache.global.ssl.fastly.net"
       "https://niri.cachix.org"
+      "https://claude-code.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
     ];
   };
 }
