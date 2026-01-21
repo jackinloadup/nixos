@@ -32,24 +32,30 @@ head -c4 /dev/urandom | od -A none -t x4
 
 ## 3. Add Secrets
 
-Public keys must be in place for ragenix encryption to work.
+Use the `provision-secrets` tool to generate all machine secrets.
 
 ```bash
 # Enter secrets shell
 nix develop .#secrets
 
-# Create directory for machine secrets
-mkdir -p secrets/machines/<name>/sshd
+# Generate all secrets at once
+provision-secrets <name> --all --nebula-ip 10.101.0.X/24
 
-# Generate SSH host keys
-ssh-keygen -t ed25519 -f secrets/machines/<name>/sshd/ssh_host_ed25519_key -N ""
+# Or generate specific secrets
+provision-secrets <name> --ssh           # SSH host key only
+provision-secrets <name> --wireguard     # WireGuard keys only
+provision-secrets <name> --nebula --nebula-ip 10.101.0.X/24  # Nebula cert only
 
-# Add public key to secrets.nix
-vim secrets.nix
-
-# Re-encrypt all secrets with new key
-./scripts/encrypt.sh
+# Or use interactive mode
+provision-secrets <name>
 ```
+
+After generation:
+1. Add the SSH public key to `secrets.nix`
+2. Add the WireGuard public key to `modules/nixos/gumdrop/vpn.nix` peers
+3. Run `ragenix --rekey` to re-encrypt all secrets with the new key
+
+See [docs/secrets.md](docs/secrets.md) for detailed secrets management.
 
 ## 4. Build and Deploy
 
@@ -99,6 +105,14 @@ The machine template creates these files:
   machine = {
     users = [ "lriutzel" ];
     # ... other options
+  };
+
+  gumdrop = {
+    vpn.client.enable = true;
+    vpn.client.ip = "10.100.0.X/24";
+
+    nebula.client.enable = true;
+    nebula.client.ip = "10.101.0.X/24";
   };
 
   system.stateVersion = "25.11";
