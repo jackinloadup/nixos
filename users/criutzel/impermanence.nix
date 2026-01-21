@@ -1,19 +1,13 @@
-{ flake
-, config
+{ config
 , lib
 , ...
 }:
 let
   inherit (lib) optionals;
-  inherit (config.home) username;
 in
 {
-  imports = [
-    flake.inputs.impermanence.nixosModules.home-manager.impermanence
-  ];
-
   config = {
-    home.persistence."/persist/home/${username}" = {
+    home.persistence."/persist" = {
       directories =
         [
           "Desktop"

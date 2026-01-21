@@ -1,24 +1,19 @@
-{ flake
-, config
+{ config
 , lib
 , nixosConfig
 , ...
 }:
 let
   inherit (lib) optionals;
-  inherit (config.home) username;
   cfg = nixosConfig.machine;
   ifGraphical = cfg.sizeTarget > 1;
 in
 {
-  imports = [
-    flake.inputs.impermanence.nixosModules.home-manager.impermanence
-  ];
-
   config = {
-    home.persistence."/persist/home/${username}" = {
+    home.persistence."/persist" = {
       enable = ifGraphical;
-      allowOther = true;
+      # As real bind mounts are now used instead of bindfs, `allowOther' is no longer needed.
+      #allowOther = true;
 
       directories =
         [
