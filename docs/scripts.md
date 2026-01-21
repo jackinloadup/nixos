@@ -8,10 +8,19 @@ Utility scripts located in the `scripts/` directory.
 |--------|---------|
 | `anywhere.sh` | Deploy NixOS using nixos-anywhere |
 | `build-sign-send.sh` | Build, sign, and push to binary cache |
-| `encrypt.sh` | Re-encrypt all secrets with ragenix |
-| `wg-vpn-setup.sh` | Set up WireGuard VPN client |
 | `fix-bluetooth.sh` | Reset Bluetooth adapter |
 | `connect-trackpad.sh` | Connect Bluetooth trackpad |
+
+## Secrets Shell Tools
+
+Secret management tools are available via `nix develop .#secrets`:
+
+| Tool | Purpose |
+|------|---------|
+| `provision-secrets` | Generate all secrets for a new machine |
+| `ragenix` | Encrypt/decrypt individual secrets |
+
+See [secrets.md](secrets.md) for detailed usage.
 
 ## Script Details
 
@@ -29,31 +38,6 @@ Build a NixOS configuration, sign it, and push to a binary cache.
 
 ```bash
 ./scripts/build-sign-send.sh <machine>
-```
-
-### encrypt.sh
-
-Re-encrypt all secrets after adding new machine keys or changing `secrets.nix`.
-
-```bash
-# Enter secrets shell first
-nix develop .#secrets
-
-# Run encryption
-./scripts/encrypt.sh
-```
-
-This script:
-1. Reads public keys from `secrets.nix`
-2. Re-encrypts all `.age` files in `secrets/`
-3. Updates files in place
-
-### wg-vpn-setup.sh
-
-Configure WireGuard VPN client on a new machine.
-
-```bash
-./scripts/wg-vpn-setup.sh
 ```
 
 ### fix-bluetooth.sh

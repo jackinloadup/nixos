@@ -21,10 +21,13 @@ Overview of all configured machines in the homelab.
 
 ## VPN IP Assignments
 
+### WireGuard VPN (Hub-and-Spoke)
+
 All machines connect via WireGuard VPN (`vpn.lucasr.com:51820`):
 
-| Machine | VPN IP |
-|---------|--------|
+| Machine | WireGuard IP |
+|---------|--------------|
+| marulk | 10.100.0.1/24 (server) |
 | riko | 10.100.0.3/24 |
 | lyza | 10.100.0.4/24 |
 | kanye | 10.100.0.5/24 |
@@ -33,7 +36,22 @@ All machines connect via WireGuard VPN (`vpn.lucasr.com:51820`):
 | nat | 10.100.0.9/24 |
 | reg | 10.100.0.11/24 |
 | obsidian | 10.100.0.13/24 |
-| marulk | VPN server |
+
+### Nebula VPN (Mesh)
+
+Machines also connect via Nebula mesh VPN (`vpn.lucasr.com:4242`):
+
+| Machine | Nebula IP |
+|---------|-----------|
+| marulk | 10.101.0.1/24 (lighthouse) |
+| riko | 10.101.0.3/24 |
+| lyza | 10.101.0.4/24 |
+| kanye | 10.101.0.5/24 |
+| zen | 10.101.0.6/24 |
+| timberlake | 10.101.0.8/24 |
+| nat | 10.101.0.9/24 |
+| reg | 10.101.0.11/24 |
+| obsidian | 10.101.0.13/24 |
 
 ## Machine Categories
 
@@ -105,8 +123,14 @@ gumdrop = {
   storageServer.roms = true;       # Mount ROMs share
   storageServer.backup = true;     # Mount backup share
 
+  # WireGuard VPN (hub-and-spoke)
   vpn.server.enable = true;        # Run as VPN server (marulk only)
   vpn.client.enable = true;        # Connect as VPN client
   vpn.client.ip = "10.100.0.X/24"; # VPN IP address
+
+  # Nebula VPN (mesh network)
+  nebula.lighthouse.enable = true; # Run as lighthouse (marulk only)
+  nebula.client.enable = true;     # Connect as mesh client
+  nebula.client.ip = "10.101.0.X/24"; # Nebula IP address
 };
 ```
