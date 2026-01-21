@@ -56,6 +56,11 @@
       };
     };
 
+    # Disable USB autosuspend for Lenovo dock components to prevent enumeration failures
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="17ef", ATTR{power/autosuspend}="-1"
+    '';
+
     #swapDevices = [
     #  { device = "/var/swapfile"; size = 34000; } # this big for hibernation 34Gb~
     #];
