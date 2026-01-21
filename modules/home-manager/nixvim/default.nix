@@ -721,6 +721,18 @@
         }
         {
           mode = "n";
+          key = "<leader>cp";
+          action = "<cmd>let @+ = expand(\"%\")<cr>";
+          options.desc = "Copy file path into clipboard";
+        }
+        {
+          mode = "n";
+          key = "<leader>cf";
+          action = "<cmd>%y+<cr>";
+          options.desc = "Copy file into clipboard";
+        }
+        {
+          mode = "n";
           key = "<leader>r";
           action = ":! ";
         }
