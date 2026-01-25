@@ -21,6 +21,12 @@
     }
     {
       event = "FileType";
+      pattern = [ "json" "jsonc" ];
+      command = "setlocal conceallevel=0";
+      desc = "Show quotes in JSON files";
+    }
+    {
+      event = "FileType";
       pattern = [ "markdown" "org" "norg" ];
       command = "setlocal conceallevel=2";
       desc = "Conceal Syntax Attribute";

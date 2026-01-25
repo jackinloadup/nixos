@@ -210,6 +210,17 @@
         java_language_server.enable = true;
       };
     };
+
+    # Override telescope settings from basic.nix to include hidden/ignored files
+    telescope.settings.pickers = {
+      find_files = {
+        hidden = true;
+        no_ignore = true;
+      };
+      live_grep = {
+        additional_args.__raw = ''function() return { "--hidden", "--no-ignore" } end'';
+      };
+    };
   };
 
   keymaps = [
