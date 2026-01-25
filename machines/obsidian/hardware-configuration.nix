@@ -1,7 +1,4 @@
 { flake, pkgs, config, lib, ... }:
-let
-  inherit (lib) mkForce;
-in
 {
   imports = [
     flake.inputs.nixos-hardware.nixosModules.common-pc
@@ -24,7 +21,7 @@ in
   config = {
     boot.initrd.availableKernelModules = [ "nvme" "ahci" "thunderbolt" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelPackages = mkForce pkgs.linuxPackages_6_17;
+    #boot.kernelPackages = mkForce pkgs.linuxPackages_6_17;
     boot.kernelParams = [
       # Try disabling ASPM (this fixes 90% of MT7925 suspend issues
       # try to remove after kernel > 6.12

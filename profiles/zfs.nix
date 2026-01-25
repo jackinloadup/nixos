@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkOverride;
 
   # Taken from https://wiki.nixos.org/wiki/ZFS
   # Warning: This will often result in the Kernel version going backwards as
@@ -32,10 +32,12 @@ in
     boot.supportedFilesystems = [ "zfs" ];
 
     services.zfs.autoScrub.enable = true;
+    boot.zfs.package = pkgs.zfs_2_4;
     boot.zfs.forceImportRoot = true;
     #boot.zfs.package = pkgs.zfs_unstable;
 
-    boot.kernelPackages = mkDefault latestKernelPackage;
+    # Force = 50 Default = 1000
+    boot.kernelPackages = mkOverride 500 latestKernelPackage;
 
     # tried to set due to Zen kernel set in another place?
     #boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
