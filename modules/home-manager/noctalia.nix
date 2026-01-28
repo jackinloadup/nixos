@@ -40,6 +40,8 @@ in
               {
                 id = "Clock";
                 usePrimaryColor = false;
+                formatHorizontal = "HH:mm | h:mm AP ddd, MMM dd";
+                formatVertical = "h mm - dd MM";
               }
               {
                 id = "SystemMonitor";
