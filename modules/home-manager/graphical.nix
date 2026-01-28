@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  inherit (lib) mkDefault;
+  inherit (lib) mkDefault mkForce;
   settings = import ../../settings;
   ifGraphical = nixosConfig.machine.sizeTarget > 1;
 in
@@ -197,6 +197,10 @@ in
     ];
 
     programs.chromium.enable = true;
+
+    # Stylix only fully supports qtct as the Qt platform theme.
+    # When it's set to gnome, Stylix can't properly theme Qt applications.
+    qt.platformTheme.name = mkForce "adwaita";
 
     services = lib.mkIf ifGraphical {
       playerctld.enable = true;
