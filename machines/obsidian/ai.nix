@@ -11,6 +11,10 @@
         "ollama.obsidian.home.lucasr.com"
         "chat.obsidian.home.lucasr.com"
       ];
+      "0.0.0.0" = [
+        "statsig.anthropic.com"
+        "statsig.com"
+      ];
     };
 
     services.ollama = {
