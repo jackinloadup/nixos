@@ -1,14 +1,11 @@
 { lib, pkgs, config, ... }:
 let
-  inherit (lib) mkIf mkDefault mkEnableOption;
-  cfg = config.machine;
+  inherit (lib) mkDefault;
 in
 {
   imports = [ ];
 
-  options.machine.tui = mkEnableOption "Extensive tui tools";
-
-  config = mkIf cfg.tui {
+  config = {
     environment.systemPackages =
       (with pkgs; [
         pkgs.nvimBasic

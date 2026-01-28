@@ -46,7 +46,6 @@ in
       ];
       sizeTarget = 2;
       minimal = false;
-      tui = false;
       kernel = {
         rebootAfterPanic = mkForce 10;
         panicOnOOM = mkForce true;

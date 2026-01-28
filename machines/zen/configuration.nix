@@ -114,7 +114,6 @@ in
 
     machine = {
       users = [ "criutzel" ];
-      tui = true;
       sizeTarget = 3;
       impermanence = true;
       lowLevelXF86keys.enable = true;

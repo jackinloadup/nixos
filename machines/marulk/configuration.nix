@@ -18,7 +18,6 @@ in
       users = [ "lriutzel" ];
       sizeTarget = 1;
       home-assistant.enable = true;
-      tui = true;
       monitoring.server.enable = true;
       #machine.monitoring.server.extraScrapeTargets = [
       #  "truenas.home.lucasr.com:9100"

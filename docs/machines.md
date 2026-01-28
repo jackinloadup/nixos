@@ -101,7 +101,6 @@ The `machine` option set provides common configuration:
 machine = {
   users = [ "lriutzel" ];     # Users to create
   sizeTarget = 2;             # 1=minimal, 2=normal, 3=full
-  tui = true;                 # Enable TUI tools
   minimal = false;            # Minimal system (fewer packages)
   gaming = true;              # Gaming support (Steam, etc.)
   impermanence = true;        # Ephemeral root with /persist

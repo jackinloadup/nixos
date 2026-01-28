@@ -68,7 +68,6 @@ in
       users = mkDefault [ ];
       sizeTarget = 2; # was 1
       minimal = false;
-      tui = true;
       impermanence = mkDefault true;
       lowLevelXF86keys.enable = isUserFacing;
       kernel = {

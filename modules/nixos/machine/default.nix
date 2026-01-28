@@ -37,7 +37,6 @@ in
     ./sound.nix
     ./ssh.nix
     ./time.nix
-    ./tui.nix
     ./minimal.nix
     ./nix.nix
     ./virtualization.nix

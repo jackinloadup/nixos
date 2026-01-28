@@ -39,6 +39,7 @@ let
   ];
 
   tuiModule.imports = [
+    ./tui.nix
     ./tmux.nix
     ./zsh
   ];

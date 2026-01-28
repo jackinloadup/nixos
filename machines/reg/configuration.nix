@@ -197,7 +197,6 @@ in
         "lriutzel"
         "criutzel"
       ];
-      tui = true;
       sizeTarget = 3;
       gaming = true;
       impermanence = true;

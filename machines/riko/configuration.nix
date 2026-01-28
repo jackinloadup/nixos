@@ -66,7 +66,6 @@
 
     machine = {
       users = [ "lriutzel" ];
-      tui = true;
       sizeTarget = 2;
       encryptedRoot = true;
       lowLevelXF86keys.enable = true;

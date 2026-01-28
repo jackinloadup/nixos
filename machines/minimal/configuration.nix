@@ -9,7 +9,6 @@ in
   ];
 
   machine = {
-    tui = false;
     sizeTarget = 0;
     encryptedRoot = false;
     lowLevelXF86keys.enable = false;
