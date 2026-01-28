@@ -503,6 +503,7 @@
       mode = "n";
       key = "<leader>r";
       action = ":! ";
+      options.desc = "Run external command";
     }
     {
       mode = "n";
@@ -521,6 +522,18 @@
         desc = "Toggle zoom";
         silent = true;
       };
+    }
+    {
+      mode = "n";
+      key = "<M-j>";
+      action = "<cmd>cnext<CR>";
+      options.desc = "Quickfix list next";
+    }
+    {
+      mode = "n";
+      key = "<M-k>";
+      action = "<cmd>cprev<CR>";
+      options.desc = "Quickfix list previous";
     }
   ];
 }
