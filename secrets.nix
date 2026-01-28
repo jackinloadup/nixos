@@ -88,6 +88,8 @@ in
   "secrets/services/nextcloud/db-pass.age".publicKeys = servers;
   "secrets/services/vaultwarden/env.age".publicKeys = servers;
 
+  "secrets/services/gmail/smtp-password.age".publicKeys = servers;
+
   "secrets/services/nix/signing-key.age".publicKeys = servers;
   "secrets/services/nix/signing-key.pub.age".publicKeys = servers;
 

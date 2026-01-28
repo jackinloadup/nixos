@@ -3,6 +3,7 @@
 let
   # Define services module inline to avoid self-reference
   servicesModule.imports = [
+    ./services/mail-relay.nix
     ./services/searx.nix
     ./services/smokeping.nix
     ./services/docker.nix

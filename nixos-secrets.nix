@@ -131,6 +131,10 @@ in
         group = "vaultwarden";
       };
 
+      gmail-smtp-password = mkIf (elem hostname servers) {
+        file = ./secrets/services/gmail/smtp-password.age;
+      };
+
       nix-signing-key = mkIf (elem hostname servers) {
         file = ./secrets/services/nix/signing-key.age;
       };

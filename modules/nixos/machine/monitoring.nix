@@ -173,6 +173,14 @@ in
 
           # Required when behind reverse proxy
           server.enforce_domain = false;
+
+          # SMTP for alerting (uses local Postfix relay)
+          smtp = {
+            enabled = true;
+            host = "localhost:25";
+            from_address = "grafana@lucasr.com";
+            from_name = "Grafana Alerts";
+          };
         };
 
         provision = {

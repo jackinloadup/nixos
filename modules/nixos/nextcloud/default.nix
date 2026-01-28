@@ -56,6 +56,13 @@ in
         csrf.optout = [ "/Nextcloud-android/" ];
         default_phone_region = "US";
 
+        # Mail configuration (uses local Postfix relay)
+        mail_smtpmode = "smtp";
+        mail_smtphost = "127.0.0.1";
+        mail_smtpport = 25;
+        mail_from_address = "nextcloud";
+        mail_domain = "lucasr.com";
+
         redis = {
           host = "/run/redis-nextcloud/redis.sock";
           port = 0;

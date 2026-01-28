@@ -21,8 +21,8 @@ in
           SMTP_PORT = 25;
           SMTP_SSL = false;
 
-          SMTP_FROM = "admin@vaultwarden.lucasr.com";
-          SMTP_FROM_NAME = "vaultwarden server";
+          SMTP_FROM = "vaultwarden@lucasr.com";
+          SMTP_FROM_NAME = "Vaultwarden";
         };
       };
 
