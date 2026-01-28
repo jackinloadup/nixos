@@ -222,7 +222,7 @@ in
                   # "Mod+D".action.spawn = "fuzzel";
                   #"Mod+D".action.spawn-sh = "${noctaliaIPC} launcher toggle";
                   #"Mod+Alt+L".action.spawn-sh = "${noctaliaIPC} lockScreen lock";
-                  "Mod+Alt+L".action.spawn = [ "loginctl" "lock-session" ];
+                  "Mod+Alt+Shift+L".action.spawn = [ "loginctl" "lock-session" ];
 
                   # handing media via lowLevelXF86keys and actkbd
                   #"XF86AudioRaiseVolume" = {
