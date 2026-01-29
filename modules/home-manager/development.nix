@@ -71,7 +71,13 @@ in
     #      exec tmux attach -t prod
     #    '';
     #  })
+
+    pkgs.unstable.git-wt # git worktrees
   ];
+
+  programs.zsh.initContent = mkIf ifGraphical ''
+    eval "$(git wt --init zsh)"
+  '';
 
   home.file.".gdbinit".text = ''
     set disassembly-flavor intel
@@ -137,34 +143,44 @@ in
         cdroot = "!cd `git root`"; # show path of the root of repo
       };
 
-      extraConfig = {
-        color.ui = true;
-        core.editor = "nvim";
-        #credential.helper = "store --file ~/.git-credentials";
-        credential.helper = "store";
-        merge.conflictStyle = "diff3";
-        merge.guitool = "nvimdiff";
-        merge.tool = "vimdiff";
-        mergetool.prompt = true;
-        "mergetool \"vimdiff\"".cmd = "nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
+    };
 
-        pull.ff = "only";
-        pull.rebase = "true";
-        push.default = "current";
-        push.autoSetupRemote = true;
-        #push.autoSetupRemote = "current"; #broke `git push origin HEAD`
-        branch.autoSetupRebase = "remote";
-        #protocol.keybase.allow = "always";
-        #credential.helper = "store --file ~/.git-credentials";
-        rebase.autosquash = true;
-        # When set to true, Git will automatically create a temporary stash before
-        # starting a rebase operation and attempt to apply it afterward. Be mindful
-        # that the post-rebase application might introduce conflicts if the stashed
-        # work overlaps significantly with the fetched changes.
-        rebase.autostash = true;
-        "url \"git@github.com:\"".insteadOf = "https://github.com/";
+    extraConfig = {
+      color.ui = true;
+      core.editor = "nvim";
+      #credential.helper = "store --file ~/.git-credentials";
+      credential.helper = "store";
+      merge.conflictStyle = "diff3";
+      merge.guitool = "nvimdiff";
+      merge.tool = "vimdiff";
+      mergetool.prompt = true;
+      "mergetool \"vimdiff\"".cmd = "nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
+
+      pull.ff = "only";
+      pull.rebase = "true";
+      push.default = "current";
+      push.autoSetupRemote = true;
+      #push.autoSetupRemote = "current"; #broke `git push origin HEAD`
+      branch.autoSetupRebase = "remote";
+      #protocol.keybase.allow = "always";
+      #credential.helper = "store --file ~/.git-credentials";
+      rebase.autosquash = true;
+      # When set to true, Git will automatically create a temporary stash before
+      # starting a rebase operation and attempt to apply it afterward. Be mindful
+      # that the post-rebase application might introduce conflicts if the stashed
+      # work overlaps significantly with the fetched changes.
+      rebase.autostash = true;
+
+      "url \"git@github.com:\"".insteadOf = "https://github.com/";
+
+      # git-wt worktree settings
+      wt = {
+        basedir = ".."; # worktrees as siblings to .bare
+        copyignored = true;
+        copyuntracked = true;
+        copymodified = true;
+        copy = ".envrc.private";
       };
-
     };
 
     ignores = [
