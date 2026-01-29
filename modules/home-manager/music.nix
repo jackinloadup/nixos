@@ -53,12 +53,12 @@ in
           enabled = true;
           media_dirs = [
             "$XDG_MUSIC_DIR|Music"
-            "/mnt/gumdrop/media/Music/Lossless|Lossless"
-            "/mnt/gumdrop/media/Music/Lossy|Lossy"
+            "/mnt/gumdrop/media/Music/Managed|Managed"
             "/mnt/gumdrop/media/Music/Linux|iTunes Library"
           ];
           follow_symlinks = true;
           excluded_file_extensions = [
+            ".nfo"
             ".html"
             ".zip"
             ".jpg"
