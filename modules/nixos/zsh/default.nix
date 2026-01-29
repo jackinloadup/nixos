@@ -77,24 +77,37 @@ let
     export LESS_TERMCAP_ZV="$(tput rsubm)";
     export LESS_TERMCAP_ZO="$(tput ssupm)";
     export LESS_TERMCAP_ZW="$(tput rsupm)";
+  ''
+
+  # Vivid LS_COLORS (gruvbox to match stylix)
+  + ''
+    export LS_COLORS="$(vivid generate gruvbox-dark)"
+  ''
+
+  # GRC generic colorizer
+  + ''
+    source ${pkgs.grc}/etc/grc.zsh
   '';
 in
 {
   # might break current auto start sway script
   #users.defaultUserShell = "${pkgs.zsh}/bin/zsh";
 
-  #environment.systemPackages = with pkgs; [
-  #  starship
-  #];
+  environment.systemPackages = [
+    pkgs.zsh-completions # additional completions for many tools
+    pkgs.vivid # LS_COLORS generator
+    pkgs.grc # generic colorizer
+  ];
 
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = [ "/share/zsh" "/share/bash-completion" ];
   environment.shells = [ pkgs.zsh ];
 
   programs.zsh = {
     enable = true;
+    enableBashCompletion = true;
 
     syntaxHighlighting = {
-      enable = false;
+      enable = true;
       highlighters = [
         "main"
         "brackets"

@@ -16,9 +16,9 @@ in
     xdg.enable = mkDefault true;
 
     programs.zsh = {
-      autosuggestion.enable = mkDefault false;
+      autosuggestion.enable = mkDefault true;
       enableCompletion = mkDefault true;
-      syntaxHighlighting.enable = mkDefault false;
+      syntaxHighlighting.enable = mkDefault true;
       #enableVteIntegration = mkDefault true; # adds 300mb
       defaultKeymap = "viins";
       historySubstringSearch.enable = true;

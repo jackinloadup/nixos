@@ -39,6 +39,16 @@ in
     };
     programs.zoxide.enable = true;
 
+    programs.atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      flags = [ "--disable-up-arrow" ]; # Keep up-arrow for history-substring-search
+      settings = {
+        style = "compact";
+        inline_height = 20;
+      };
+    };
+
 
     home.packages = [
       # Debug / system info
