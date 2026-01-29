@@ -55,8 +55,8 @@ in
       nebula.client.ip = "10.101.0.13/24";
     };
 
-    programs.hyprland.enable = true;
-    programs.hyprland.xwayland.enable = true;
+    programs.hyprland.enable = false;
+    programs.hyprland.xwayland.enable = false;
     programs.niri.enable = true;
 
     services.displayManager.autoLogin.enable = true;
