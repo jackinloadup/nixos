@@ -12,8 +12,45 @@ in
   config = mkIf config.programs.noctalia-shell.enable {
     # @NOTE Gnome portal causes 14 second delay with noctalia-shell
 
+    # Required for clipper plugin
+    services.cliphist.enable = true;
+
     programs.noctalia-shell = {
       systemd.enable = true;
+
+      plugins = {
+        version = 1;
+        sources = [
+          {
+            enabled = true;
+            name = "Noctalia Plugins";
+            url = "https://github.com/noctalia-dev/noctalia-plugins";
+          }
+        ];
+        states = {
+          "world-clock" = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
+          "clipper" = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
+        };
+      };
+
+      pluginSettings = {
+        "world-clock" = {
+          timezones = [
+            { name = "New York"; timezone = "America/New_York"; enabled = true; }
+            { name = "London"; timezone = "Europe/London"; enabled = true; }
+            { name = "Tokyo"; timezone = "Asia/Tokyo"; enabled = true; }
+          ];
+          rotationInterval = 5000;
+          showDate = true;
+          timeFormat = "HH:mm";
+        };
+      };
 
       settings = {
         bar = {
@@ -44,6 +81,9 @@ in
                 formatVertical = "h mm - dd MM";
               }
               {
+                id = "plugin:world-clock";
+              }
+              {
                 id = "SystemMonitor";
               }
               {
@@ -61,6 +101,9 @@ in
             right = [
               {
                 id = "ScreenRecorder";
+              }
+              {
+                id = "plugin:clipper";
               }
               {
                 id = "Tray";
@@ -194,7 +237,7 @@ in
           wallhavenResolutionHeight = "";
         };
         appLauncher = {
-          enableClipboardHistory = false;
+          enableClipboardHistory = true;
           enableClipPreview = true;
           position = "center";
           pinnedExecs = [ ];

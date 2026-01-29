@@ -6,6 +6,7 @@
       pkgs.wlr-randr
       pkgs.wlrctl # control mouse keyboard windows
       pkgs.wl-clipboard-rs # wl-copy
+      pkgs.cliphist # clipboard history for clipper plugin
     ];
 
     # try these again later. Spent minimal time playing with them

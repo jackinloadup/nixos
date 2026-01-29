@@ -85,7 +85,8 @@ in
         ++ optionals config.services.syncthing.enable [
           ".local/share/syncthing"
           ".local/state/syncthing"
-        ];
+        ]
+        ++ optionals config.programs.noctalia-shell.enable [ ".config/noctalia" ];
 
       #files =
       #  [
