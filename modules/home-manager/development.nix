@@ -234,6 +234,7 @@ in
           # Doesn't feel right to whitelist anything in my projects. I'll have
           # to review each one to make sure there isn't execution I dislike.
           #"$HOME/Projects/rust"
+          "$HOME/Projects/obsidian-systems/dtcc/app"
         ];
       };
     };
