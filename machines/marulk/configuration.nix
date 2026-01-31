@@ -31,6 +31,13 @@ in
 
     gumdrop.scanned-document-handling.enable = true;
 
+    gumdrop.nebula.lighthouse = {
+      enable = true;
+      routeToLan = true;
+      lanSubnet = "10.16.1.0/24";
+      lanInterface = "br0";
+    };
+
     services.media-services.enable = true;
     services.smokeping.enable = true;
     services.vaultwarden.enable = true;
@@ -41,9 +48,6 @@ in
     services.homepage-dashboard.enable = true;
     services.nextcloud.enable = true;
     services.searx.enable = true;
-
-
-    gumdrop.nebula.lighthouse.enable = true;
 
     #networking.useNetworkd = true;
     systemd.network.enable = true;

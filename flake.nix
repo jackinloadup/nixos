@@ -317,8 +317,13 @@
             # Run `nix flake check .` to verify that your config is not broken
             nvimBasic = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimBasicModule;
             nvimFull = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimFullModule;
-            # Add NixOS configuration checks
-            # This builds all machines' toplevel without installing
+
+            # VPN/Network integration tests
+            vpn-config = import ./tests/vpn-config.nix { inherit pkgs; inherit (pkgs) lib; };
+            nebula-routing = import ./tests/nebula-routing.nix { inherit pkgs; inherit (pkgs) lib; };
+            wireguard-server = import ./tests/wireguard-server.nix { inherit pkgs; inherit (pkgs) lib; };
+
+            # NixOS configuration checks - builds all machines' toplevel without installing
           } // (pkgs.lib.mapAttrs'
             (name: cfg:
               pkgs.lib.nameValuePair "nixos-${name}" cfg.config.system.build.toplevel
