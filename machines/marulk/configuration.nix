@@ -38,6 +38,12 @@ in
       lanInterface = "br0";
     };
 
+    services.mail-relay = {
+      enable = true;
+      smtpUser = "lriutzel@gmail.com";
+      smtpPasswordFile = config.age.secrets.gmail-smtp-password.path;
+    };
+
     services.media-services.enable = true;
     services.smokeping.enable = true;
     services.vaultwarden.enable = true;

@@ -59,6 +59,7 @@ in
     # Systemd service to set up SASL credentials before Postfix starts
     systemd.services.postfix-sasl-setup = {
       description = "Setup Postfix SASL credentials for Gmail relay";
+      after = [ "agenix.service" ];
       before = [ "postfix.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
@@ -66,6 +67,7 @@ in
         RemainAfterExit = true;
       };
       script = ''
+        set -euo pipefail
         mkdir -p /etc/postfix
         echo "[smtp.gmail.com]:587 ${cfg.smtpUser}:$(cat ${cfg.smtpPasswordFile})" > /etc/postfix/sasl_passwd
         chmod 600 /etc/postfix/sasl_passwd
