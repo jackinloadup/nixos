@@ -122,6 +122,9 @@ in
           ]
           ++ optionals config.virtualisation.waydroid.enable [
             "/var/lib/waydroid"
+          ]
+          ++ optionals config.machine.monitoring.server.enable [
+            "/var/lib/private/vmagent"
           ];
         files = [
           #"/etc/machine-id"
