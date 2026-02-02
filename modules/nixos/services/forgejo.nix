@@ -61,8 +61,13 @@ in
       };
     };
 
-    # Allow gitea-runner to access nix daemon
+    # Allow gitea-runner to access nix daemon and use IFD
     nix.settings.trusted-users = [ "gitea-runner" ];
+    # SECURITY NOTE: IFD allows derivations to be built during evaluation.
+    # Required for stylix/base16 but can be risky for untrusted code.
+    nix.settings.allow-import-from-derivation = true;
+    # Accept flake configuration (extra-substituters, etc.) from trusted sources
+    nix.settings.accept-flake-config = true;
 
     # Podman for Actions runner container support
     virtualisation.podman = {

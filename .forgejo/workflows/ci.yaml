@@ -7,7 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Nix Flake Check
-        run: nix flake check --no-build
+        # --allow-import-from-derivation needed for stylix/base16 color schemes
+        run: nix flake check --no-build --allow-import-from-derivation
 
   build-marulk:
     runs-on: nixos
@@ -15,4 +16,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build marulk configuration
-        run: nix build .#nixosConfigurations.marulk.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.marulk.config.system.build.toplevel --allow-import-from-derivation
