@@ -189,6 +189,19 @@ in
         group = "kanidm";
         mode = "0400";
       };
+      kanidm-oidc-forgejo = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-forgejo.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0440";
+      };
+      # Forgejo needs to read the OIDC secret for OAuth setup
+      forgejo-oidc-secret = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-forgejo.age;
+        owner = "forgejo";
+        group = "forgejo";
+        mode = "0400";
+      };
 
       # Grafana needs to read its OIDC secret
       grafana-oidc-secret = mkIf (elem hostname servers) {
@@ -216,6 +229,10 @@ in
 
       nix-signing-pub-key = mkIf (elem hostname servers) {
         file = ./secrets/services/nix/signing-key.pub.age;
+      };
+
+      forgejo-runner-token = mkIf (elem hostname servers) {
+        file = ./secrets/services/forgejo/runner-token.age;
       };
 
       lriutzel-hashed-password = {

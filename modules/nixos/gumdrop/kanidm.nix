@@ -33,6 +33,16 @@ let
       url = "https://raw.githubusercontent.com/advplyr/audiobookshelf/master/client/static/Logo.png";
       hash = "sha256-JGPk+WNT1C4DC4lSMb0K0YmAMT5LvmSOeO0QRzkc7Lk=";
     };
+    forgejo = pkgs.fetchurl {
+      url = "https://codeberg.org/forgejo/forgejo/raw/branch/forgejo/assets/logo.svg";
+      hash = "sha256-rP7aZURtHBfF2OYuGLcKZhbvIN+B596T/3kaOxHUvig=";
+    };
+  };
+
+  # Kanidm instance branding
+  brandingIcon = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/scan-face.svg";
+    hash = "sha256-BIz8AjgtThnSBVj0MtpVW9zQ9zi82OVsJhtLTsJcxJE=";
   };
 in
 {
@@ -77,13 +87,14 @@ in
           "grafana.users" = { };
           "open-webui.users" = { };
           "audiobookshelf.users" = { };
+          "forgejo.users" = { };
         };
 
         persons = {
           lriutzel = {
             displayName = "Lucas Riutzel";
             mailAddresses = [ "lriutzel@gmail.com" ];
-            groups = [ "homelab.admins" "nextcloud.users" "jellyfin.users" "immich.users" "paperless.users" "grafana.users" "open-webui.users" "audiobookshelf.users" ];
+            groups = [ "homelab.admins" "nextcloud.users" "jellyfin.users" "immich.users" "paperless.users" "grafana.users" "open-webui.users" "audiobookshelf.users" "forgejo.users" ];
           };
           criutzel = {
             displayName = "Christine Riutzel";
@@ -169,6 +180,17 @@ in
             scopeMaps."audiobookshelf.users" = [ "openid" "profile" "email" ];
             imageFile = icons.audiobookshelf;
           };
+          forgejo = {
+            displayName = "Forgejo";
+            originUrl = "https://git.lucasr.com/user/oauth2/kanidm/callback";
+            originLanding = "https://git.lucasr.com";
+            basicSecretFile = config.age.secrets.kanidm-oidc-forgejo.path;
+            # Forgejo doesn't support PKCE
+            allowInsecureClientDisablePkce = true;
+            preferShortUsername = true;
+            scopeMaps."forgejo.users" = [ "openid" "profile" "email" ];
+            imageFile = icons.forgejo;
+          };
         };
       };
     };
@@ -203,5 +225,33 @@ in
 
     # Allow nginx to read the kanidm certificate
     users.users.nginx.extraGroups = [ "kanidm" ];
+
+    # Configure Kanidm branding after service starts
+    systemd.services.kanidm-branding = {
+      description = "Configure Kanidm instance branding";
+      after = [ "kanidm.service" ];
+      wants = [ "kanidm.service" ];
+      wantedBy = [ "multi-user.target" ];
+      path = [ config.services.kanidm.package ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        # Wait for Kanidm to be ready
+        sleep 10
+
+        # Authenticate as admin using password file (non-interactive)
+        KANIDM_PASSWORD=$(cat ${config.age.secrets.kanidm-admin-password.path})
+        kanidm login -D admin --password "$KANIDM_PASSWORD"
+
+        # Set display name and logo
+        kanidm system domain set-displayname "Riutzel Identity Provider"
+        kanidm system domain set-image ${brandingIcon}
+
+        # Logout
+        kanidm logout -D admin
+      '';
+    };
   };
 }

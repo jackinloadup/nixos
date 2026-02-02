@@ -235,6 +235,14 @@
         // {
           packages.x86_64-linux.install-iso = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "lyza";
           #packages.x86_64-linux.iso-image = mkNixosSystemGenerator defaultPkgs "x86_64-linux" "zen";
+
+          # Hydra CI jobs - builds all NixOS configurations
+          hydraJobs = {
+            nixos = defaultPkgs.lib.mapAttrs
+              (name: cfg: cfg.config.system.build.toplevel)
+              self.nixosConfigurations;
+          };
+
           templates = {
             machine = {
               path = ./templates/machine;

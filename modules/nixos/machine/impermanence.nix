@@ -93,6 +93,12 @@ in
           ++ optionals config.services.hydra.enable [
             "/var/lib/hydra"
           ]
+          ++ optionals config.services.forgejo.enable [
+            "/var/lib/forgejo"
+          ]
+          ++ optionals config.services.harmonia.enable [
+            "/var/lib/harmonia"
+          ]
           ++ optionals config.services.mosquitto.enable [
             config.services.mosquitto.dataDir
           ]

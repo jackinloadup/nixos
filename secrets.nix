@@ -96,6 +96,8 @@ in
   "secrets/services/immich/secretsFile".publicKeys = servers;
   "secrets/services/immich/api-key.age".publicKeys = servers;
 
+  "secrets/services/forgejo/runner-token.age".publicKeys = servers;
+
   "secrets/services/kanidm/admin-password.age".publicKeys = servers;
   "secrets/services/kanidm/idm-admin-password.age".publicKeys = servers;
   "secrets/services/kanidm/oidc-nextcloud.age".publicKeys = servers;
@@ -105,6 +107,7 @@ in
   "secrets/services/kanidm/oidc-grafana.age".publicKeys = servers;
   "secrets/services/kanidm/oidc-open-webui.age".publicKeys = servers;
   "secrets/services/kanidm/oidc-audiobookshelf.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-forgejo.age".publicKeys = servers;
 
   "secrets/services/paperless/oidc-env.age".publicKeys = servers;
   "secrets/services/open-webui/oidc-env.age".publicKeys = users ++ (sshKeyMap [ "reg" "obsidian" ]);

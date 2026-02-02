@@ -56,6 +56,10 @@ in
     services.nextcloud.enable = true;
     services.searx.enable = true;
 
+    services.forgejo.enable = true;
+    services.harmonia.enable = true;
+    services.hydra.enable = true;
+
     #networking.useNetworkd = true;
     systemd.network.enable = true;
 

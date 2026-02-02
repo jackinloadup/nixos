@@ -3,6 +3,8 @@
 let
   # Define services module inline to avoid self-reference
   servicesModule.imports = [
+    ./services/forgejo.nix
+    ./services/harmonia.nix
     ./services/mail-relay.nix
     ./services/searx.nix
     ./services/smokeping.nix
