@@ -32,11 +32,11 @@ pkgs.testers.nixosTest {
 
       networking.hostName = "lighthouse";
 
-      # Mock secrets
+      # Mock secrets (use string literals, not derivations)
       age.secrets = {
-        nebula-ca.path = pkgs.writeText "mock-ca" "";
-        "nebula-lighthouse-cert".path = pkgs.writeText "mock-cert" "";
-        "nebula-lighthouse-key".path = pkgs.writeText "mock-key" "";
+        nebula-ca.path = "/run/agenix/mock-ca";
+        "nebula-lighthouse-cert".path = "/run/agenix/mock-cert";
+        "nebula-lighthouse-key".path = "/run/agenix/mock-key";
       };
 
       # Configure as lighthouse with LAN routing
@@ -64,9 +64,9 @@ pkgs.testers.nixosTest {
       networking.hostName = "lighthouse-no-routing";
 
       age.secrets = {
-        nebula-ca.path = pkgs.writeText "mock-ca" "";
-        "nebula-lighthouse-no-routing-cert".path = pkgs.writeText "mock-cert" "";
-        "nebula-lighthouse-no-routing-key".path = pkgs.writeText "mock-key" "";
+        nebula-ca.path = "/run/agenix/mock-ca";
+        "nebula-lighthouse-no-routing-cert".path = "/run/agenix/mock-cert";
+        "nebula-lighthouse-no-routing-key".path = "/run/agenix/mock-key";
       };
 
       # Lighthouse without routeToLan
@@ -86,9 +86,9 @@ pkgs.testers.nixosTest {
       networking.hostName = "nebula-client";
 
       age.secrets = {
-        nebula-ca.path = pkgs.writeText "mock-ca" "";
-        "nebula-nebula-client-cert".path = pkgs.writeText "mock-cert" "";
-        "nebula-nebula-client-key".path = pkgs.writeText "mock-key" "";
+        nebula-ca.path = "/run/agenix/mock-ca";
+        "nebula-nebula-client-cert".path = "/run/agenix/mock-cert";
+        "nebula-nebula-client-key".path = "/run/agenix/mock-key";
       };
 
       gumdrop.nebula.client = {

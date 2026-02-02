@@ -235,6 +235,28 @@ in
         file = ./secrets/services/forgejo/runner-token.age;
       };
 
+      hydra-builder-ssh-key = mkIf (elem hostname servers) {
+        file = ./secrets/services/hydra/builder-ssh-key.age;
+        path = "/var/lib/hydra/queue-runner/.ssh/id_ed25519";
+        owner = "hydra-queue-runner";
+        group = "hydra";
+        mode = "0600";
+      };
+
+      # Same key but root-owned for nix-daemon git fetches
+      hydra-builder-ssh-key-root = mkIf (elem hostname servers) {
+        file = ./secrets/services/hydra/builder-ssh-key.age;
+        path = "/etc/nix/hydra-builder-ssh-key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+
+      # Forgejo access token for nix git fetches over HTTPS
+      hydra-forgejo-token = mkIf (elem hostname servers) {
+        file = ./secrets/services/hydra/forgejo-token.age;
+      };
+
       lriutzel-hashed-password = {
         file = ./secrets/users/lriutzel/hashed-password.age;
       };

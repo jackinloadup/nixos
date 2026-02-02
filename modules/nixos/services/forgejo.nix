@@ -47,8 +47,22 @@ in
           "ubuntu-latest:docker://node:18-bookworm"
           "nixos:host"
         ];
+        hostPackages = with pkgs; [
+          bash
+          coreutils
+          curl
+          gawk
+          git
+          gnused
+          nix
+          nodejs
+          wget
+        ];
       };
     };
+
+    # Allow gitea-runner to access nix daemon
+    nix.settings.trusted-users = [ "gitea-runner" ];
 
     # Podman for Actions runner container support
     virtualisation.podman = {

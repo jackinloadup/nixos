@@ -192,6 +192,9 @@ in
       QT_QPA_PLATFORM = "wayland;xcb";
     };
 
+    hydra.builder.enable = true;
+    hydra.builder.maxJobs = 4;
+
     machine = {
       users = [
         "lriutzel"

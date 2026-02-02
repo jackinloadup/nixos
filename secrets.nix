@@ -98,6 +98,9 @@ in
 
   "secrets/services/forgejo/runner-token.age".publicKeys = servers;
 
+  "secrets/services/hydra/builder-ssh-key.age".publicKeys = servers;
+  "secrets/services/hydra/forgejo-token.age".publicKeys = servers;
+
   "secrets/services/kanidm/admin-password.age".publicKeys = servers;
   "secrets/services/kanidm/idm-admin-password.age".publicKeys = servers;
   "secrets/services/kanidm/oidc-nextcloud.age".publicKeys = servers;

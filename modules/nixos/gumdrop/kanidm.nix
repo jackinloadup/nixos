@@ -59,7 +59,8 @@ in
       enableServer = true;
       enableClient = true;
       # Required for adminPasswordFile, idmAdminPasswordFile, and basicSecretFile
-      package = pkgs.kanidm.withSecretProvisioning;
+      # Use kanidm 1.8 (1.7 is deprecated/EOL)
+      package = pkgs.kanidm_1_8.withSecretProvisioning;
 
       serverSettings = {
         domain = cfg.domain;

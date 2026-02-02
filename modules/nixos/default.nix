@@ -35,6 +35,7 @@ let
   linuxModule.imports = [
     ./boot-tor-service
     #./autologin-tty1
+    ./hydra/builder.nix
     ./k3s
     ./machine
     ./media

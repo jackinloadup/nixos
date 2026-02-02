@@ -33,11 +33,11 @@ pkgs.testers.nixosTest {
 
       networking.hostName = "test-server";
 
-      # Mock secrets for Nebula
+      # Mock secrets for Nebula (use string literals, not derivations)
       age.secrets = {
-        nebula-ca.path = pkgs.writeText "mock-ca" "";
-        "nebula-test-server-cert".path = pkgs.writeText "mock-cert" "";
-        "nebula-test-server-key".path = pkgs.writeText "mock-key" "";
+        nebula-ca.path = "/run/agenix/mock-ca";
+        "nebula-test-server-cert".path = "/run/agenix/mock-cert";
+        "nebula-test-server-key".path = "/run/agenix/mock-key";
       };
 
       # Enable Nebula lighthouse with LAN routing
@@ -71,11 +71,11 @@ pkgs.testers.nixosTest {
 
       networking.hostName = "test-client";
 
-      # Mock secrets for Nebula
+      # Mock secrets for Nebula (use string literals, not derivations)
       age.secrets = {
-        nebula-ca.path = pkgs.writeText "mock-ca" "";
-        "nebula-test-client-cert".path = pkgs.writeText "mock-cert" "";
-        "nebula-test-client-key".path = pkgs.writeText "mock-key" "";
+        nebula-ca.path = "/run/agenix/mock-ca";
+        "nebula-test-client-cert".path = "/run/agenix/mock-cert";
+        "nebula-test-client-key".path = "/run/agenix/mock-key";
       };
 
       # Enable Nebula client

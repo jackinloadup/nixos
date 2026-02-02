@@ -29,11 +29,11 @@ in
   config = mkIf cfg.enable {
     services.postfix = {
       enable = true;
-      hostname = "${config.networking.hostName}.home.${cfg.fromDomain}";
-      domain = cfg.fromDomain;
-      origin = cfg.fromDomain;
 
       settings.main = {
+        myhostname = "${config.networking.hostName}.home.${cfg.fromDomain}";
+        mydomain = cfg.fromDomain;
+        myorigin = cfg.fromDomain;
         # Relay through Gmail
         relayhost = [ "[smtp.gmail.com]:587" ];
 
