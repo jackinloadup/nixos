@@ -31,7 +31,8 @@ in
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
         inherit calendar contacts notes tasks cookbook qownnotesapi
-          richdocuments# Collabora Online for Nextcloud - https://apps.nextcloud.com/apps/richdocuments
+          richdocuments # Collabora Online for Nextcloud - https://apps.nextcloud.com/apps/richdocuments
+          user_oidc     # OpenID Connect authentication
           ;
         # onlyoffice
         # Custom app example.
@@ -52,6 +53,8 @@ in
         apcu = true;
       };
       settings = {
+        # Allow Nextcloud to connect to local IPs (needed for Kanidm OIDC on local network)
+        allow_local_remote_servers = true;
         trusted_proxies = [ "127.0.0.1/32" "10.16.1.0/24" "10.100.0.0/24" ];
         csrf.optout = [ "/Nextcloud-android/" ];
         default_phone_region = "US";

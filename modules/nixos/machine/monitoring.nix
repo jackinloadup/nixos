@@ -181,6 +181,21 @@ in
             from_address = "grafana@lucasr.com";
             from_name = "Grafana Alerts";
           };
+
+          # Kanidm OIDC authentication
+          "auth.generic_oauth" = {
+            enabled = true;
+            name = "Kanidm";
+            client_id = "grafana";
+            client_secret = "$__file{${config.age.secrets.grafana-oidc-secret.path}}";
+            auth_url = "https://auth.lucasr.com/ui/oauth2";
+            token_url = "https://auth.lucasr.com/oauth2/token";
+            api_url = "https://auth.lucasr.com/oauth2/openid/grafana/userinfo";
+            scopes = "openid profile email";
+            allow_sign_up = true;
+            auto_login = false;
+            use_pkce = true;
+          };
         };
 
         provision = {

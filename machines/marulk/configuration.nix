@@ -30,6 +30,7 @@ in
     gumdrop.printerScanner = true;
 
     gumdrop.scanned-document-handling.enable = true;
+    gumdrop.kanidm.enable = true;
 
     gumdrop.nebula.lighthouse = {
       enable = true;
@@ -178,7 +179,10 @@ in
         proxyPass = "http://127.0.0.1:${toString config.services.paperless.port}/";
         proxyWebsockets = true;
         extraConfig = ''
-          proxy_set_header Host localhost;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
         '';
       };
     };

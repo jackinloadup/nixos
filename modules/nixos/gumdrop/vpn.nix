@@ -215,6 +215,7 @@ in
             "/music-assistant.home.lucasr.com/10.100.0.1"
             "/music-assistant-streams.home.lucasr.com/10.100.0.1"
             "/vaultwarden.lucasr.com/10.100.0.1"
+            "/auth.lucasr.com/10.100.0.1"
           ];
           # cnames apparently only work if the value is in /etc/hosts?? crazy.
           # Maybe look for alternative to dnsmasq

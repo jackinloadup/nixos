@@ -367,6 +367,20 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:8096/";
           proxyWebsockets = true;
+          extraConfig = ''
+            # Disable compression so sub_filter can rewrite content
+            proxy_set_header Accept-Encoding "";
+
+            # Rewrite localhost URLs in SSO plugin responses to public URL
+            sub_filter 'https://127.0.0.1:8096' 'https://jellyfin.home.lucasr.com';
+            sub_filter 'http://127.0.0.1:8096' 'https://jellyfin.home.lucasr.com';
+
+            # Auto-redirect to SSO on login page
+            sub_filter '</body>' '<script>(function(){var c=0;function r(){if(window.location.hash.includes("/login")){window.location.href="/sso/OID/start/kanidm";}else if(c++<20){setTimeout(r,200);}}window.addEventListener("hashchange",r);r();})();</script></body>';
+
+            sub_filter_once off;
+            sub_filter_types text/html application/javascript;
+          '';
         };
       };
 
@@ -379,7 +393,10 @@ in
           proxyPass = "http://127.0.0.1:${toString config.services.audiobookshelf.port}/";
           proxyWebsockets = true;
           extraConfig = ''
-            proxy_set_header Host localhost;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
           '';
         };
       };

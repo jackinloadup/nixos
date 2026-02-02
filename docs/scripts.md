@@ -19,8 +19,36 @@ Secret management tools are available via `nix develop .#secrets`:
 |------|---------|
 | `provision-secrets` | Generate all secrets for a new machine |
 | `ragenix` | Encrypt/decrypt individual secrets |
+| `age` | Low-level encryption/decryption |
+| `openssl` | Generate random secrets, certificates |
+| `nebula-cert` | Nebula certificate management |
+| `wg` | WireGuard key generation |
+| `libargon2` | Password hashing (for Vaultwarden) |
+| `qrencode` | QR codes for certificate transfer |
 
 See [secrets.md](secrets.md) for detailed usage.
+
+### Common Operations
+
+```bash
+# Enter secrets shell
+nix develop .#secrets
+
+# Generate a random secret
+openssl rand -base64 32
+
+# Encrypt a secret interactively
+ragenix -e secrets/services/myservice/secret.age
+
+# Encrypt from stdin (pipe)
+openssl rand -base64 32 | ragenix --editor - -e secrets/services/myservice/secret.age
+
+# Decrypt a secret to view
+age -d -i ~/.ssh/id_ed25519 secrets/services/myservice/secret.age
+
+# Re-encrypt all secrets after key changes
+ragenix --rekey
+```
 
 ## Script Details
 

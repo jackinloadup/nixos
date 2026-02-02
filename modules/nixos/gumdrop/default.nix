@@ -35,6 +35,7 @@ in
     ./frigate.nix
     ./homepage.nix
     ./immich.nix
+    ./kanidm.nix
     ./nebula.nix
     ./murmur.nix
     ./printer-scanner.nix

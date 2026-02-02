@@ -96,6 +96,19 @@ in
   "secrets/services/immich/secretsFile".publicKeys = servers;
   "secrets/services/immich/api-key.age".publicKeys = servers;
 
+  "secrets/services/kanidm/admin-password.age".publicKeys = servers;
+  "secrets/services/kanidm/idm-admin-password.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-nextcloud.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-jellyfin.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-immich.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-paperless.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-grafana.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-open-webui.age".publicKeys = servers;
+  "secrets/services/kanidm/oidc-audiobookshelf.age".publicKeys = servers;
+
+  "secrets/services/paperless/oidc-env.age".publicKeys = servers;
+  "secrets/services/open-webui/oidc-env.age".publicKeys = users ++ (sshKeyMap [ "reg" "obsidian" ]);
+
   "secrets/commonPass.age".publicKeys = all;
 
   "secrets/machines/lyza/frigate/environment.age".publicKeys = studio;

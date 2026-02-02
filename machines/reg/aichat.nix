@@ -41,22 +41,28 @@
       stateDir = "/var/lib/private/open-webui";
       host = "ollama.home.lucasr.com";
       environment = {
-        # PYDANTIC_SKIP_VALIDATING_CORE_SCHEMAS = "True";
         OLLAMA_BASE_URL = "http://ollama.home.lucasr.com:${toString config.services.ollama.port}";
         ENABLE_OLLAMA_API = "true";
         DEFAULT_USER_ROLE = "user";
-        WEBUI_AUTH = "False";
-        #WEBUI_AUTH_TRUSTED_EMAIL_HEADER = "X-Webauth-Email";
-        #WEBUI_AUTH_TRUSTED_NAME_HEADER = "X-Webauth-Name";
-        ENABLE_OAUTH_SIGNUP = "false";
+
+        # Kanidm OIDC authentication
+        WEBUI_AUTH = "True";
+        ENABLE_OAUTH_SIGNUP = "true";
+        OAUTH_PROVIDER_NAME = "Kanidm";
+        OAUTH_CLIENT_ID = "open-webui";
+        OPENID_PROVIDER_URL = "https://auth.lucasr.com/oauth2/openid/open-webui/.well-known/openid-configuration";
+        OAUTH_SCOPES = "openid profile email";
+        ENABLE_LOGIN_FORM = "false";
         ENABLE_SIGNUP = "false";
         WEBUI_URL = "https://chat.lucasr.com";
-        OAUTH_MERGE_ACCOUNTS_BY_EMAIL = "false";
+        OAUTH_MERGE_ACCOUNTS_BY_EMAIL = "true";
 
         ANONYMIZED_TELEMETRY = "False";
         DO_NOT_TRACK = "True";
         SCARF_NO_ANALYTICS = "True";
       };
+      # OIDC client secret from agenix
+      environmentFile = config.age.secrets.open-webui-oidc-env.path;
     };
   };
 }

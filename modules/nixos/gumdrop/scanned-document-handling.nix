@@ -1,5 +1,6 @@
 { lib
 , config
+, pkgs
 , ...
 }:
 let
@@ -81,12 +82,18 @@ in
       #    no-progress-bar = true;
       #  };
       #};
+
+      # Environment file containing OIDC secret configuration
+      environmentFile = config.age.secrets.paperless-oidc-env.path;
+
       settings = {
-        PAPERLESS_ALLOWED_HOSTS = "paperless.home.lucasr.com,localhost";
+        # Required for OIDC callback URL construction
+        PAPERLESS_URL = "https://paperless.home.lucasr.com";
+        PAPERLESS_ALLOWED_HOSTS = "paperless.home.lucasr.com,localhost,auth.lucasr.com";
         PAPERLESS_CSRF_TRUSTED_ORIGINS =
-          "https://paperless.home.lucasr.com,http://localhost";
+          "https://paperless.home.lucasr.com,http://localhost,https://auth.lucasr.com";
         PAPERLESS_CORS_ALLOWED_HOSTS =
-          "https://paperless.home.lucasr.com,http://localhost";
+          "https://paperless.home.lucasr.com,http://localhost,https://auth.lucasr.com";
         PAPERLESS_CONSUMER_IGNORE_PATTERN = [
           ".DS_STORE/*"
           "desktop.ini"
@@ -96,6 +103,10 @@ in
           optimize = 1;
           pdfa_image_compression = "lossless";
         };
+
+        # OIDC Authentication with Kanidm
+        PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
+        PAPERLESS_REDIRECT_LOGIN_TO_SSO = true;
       };
     };
 

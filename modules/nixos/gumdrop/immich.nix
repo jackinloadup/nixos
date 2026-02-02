@@ -19,6 +19,19 @@ in
           template = "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}";
         };
         #newVersionCheck.enable = false;
+
+        # OAuth/OIDC with Kanidm
+        oauth = {
+          enabled = true;
+          issuerUrl = "https://auth.lucasr.com/oauth2/openid/immich";
+          clientId = "immich";
+          autoRegister = true;
+          autoLaunch = false;
+          buttonText = "Login with Kanidm";
+          defaultStorageQuota = 0; # unlimited
+          # Kanidm uses ES256 for JWT signing
+          signingAlgorithm = "ES256";
+        };
       };
       database.host = "postgres.home.lucasr.com";
       mediaLocation = "/mnt/gumdrop/backup/immich";

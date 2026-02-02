@@ -135,6 +135,81 @@ in
         file = ./secrets/services/gmail/smtp-password.age;
       };
 
+      kanidm-admin-password = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/admin-password.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-idm-admin-password = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/idm-admin-password.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-nextcloud = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-nextcloud.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-jellyfin = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-jellyfin.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-immich = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-immich.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-paperless = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-paperless.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-grafana = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-grafana.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-open-webui = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-open-webui.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+      kanidm-oidc-audiobookshelf = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-audiobookshelf.age;
+        owner = "kanidm";
+        group = "kanidm";
+        mode = "0400";
+      };
+
+      # Grafana needs to read its OIDC secret
+      grafana-oidc-secret = mkIf (elem hostname servers) {
+        file = ./secrets/services/kanidm/oidc-grafana.age;
+        owner = "grafana";
+        group = "grafana";
+        mode = "0400";
+      };
+
+      # Open-WebUI OIDC environment file (on machines running open-webui)
+      open-webui-oidc-env = mkIf (elem hostname [ "reg" "obsidian" ]) {
+        file = ./secrets/services/open-webui/oidc-env.age;
+      };
+
+      paperless-oidc-env = mkIf (elem hostname servers) {
+        file = ./secrets/services/paperless/oidc-env.age;
+        owner = "paperless";
+        group = "paperless";
+        mode = "0400";
+      };
+
       nix-signing-key = mkIf (elem hostname servers) {
         file = ./secrets/services/nix/signing-key.age;
       };
